@@ -584,6 +584,63 @@ def get_questions(department: Optional[str] = None, level: Optional[str] = None,
     questions = query.all()
     return questions
 
+@app.post("/questions")
+def create_question(question: QuestionCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "teacher":
+        raise HTTPException(status_code=403, detail="Only teachers can create questions")
+    
+    new_question = Question(
+        question_text=question.question_text,
+        question_type=question.question_type,
+        options=question.options,
+        correct_answer=question.correct_answer,
+        points=question.points,
+        department=question.department,
+        level=question.level,
+        lesson_id=question.lesson_id,
+        created_by=current_user.id
+    )
+    db.add(new_question)
+    db.commit()
+    db.refresh(new_question)
+    return new_question
+
+@app.post("/upload-questions")
+async def upload_questions(file: UploadFile = File(...), current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "teacher":
+        raise HTTPException(status_code=403, detail="Only teachers can upload questions")
+    
+    try:
+        content = await file.read()
+        text = content.decode('utf-8')
+        
+        # Simple AI parser simulation - parse questions from text
+        questions = []
+        lines = text.split('\n')
+        current_question = None
+        
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            
+            # Detect question (starts with number or "Q:")
+            if line[0].isdigit() or line.startswith('Q:'):
+                if current_question:
+                    questions.append(current_question)
+                current_question = {'text': line, 'options': [], 'answer': ''}
+            elif current_question and line.startswith(('A)', 'B)', 'C)', 'D)')):
+                current_question['options'].append(line[3:].strip())
+            elif current_question and line.lower().startswith('answer:'):
+                current_question['answer'] = line.split(':', 1)[1].strip()
+        
+        if current_question:
+            questions.append(current_question)
+        
+        return {"success": True, "questions": questions, "count": len(questions)}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Upload failed: {str(e)}")
+
 @app.put("/questions/{question_id}")
 def update_question(question_id: int, question_data: QuestionCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
