@@ -204,14 +204,11 @@ def grade_open_ended_question(
         (['process', 'procedure', 'method', 'way', 'system'], 0.1),
         (['step', 'stage', 'phase', 'instruction'], 0.1),
         (['problem', 'issue', 'task', 'challenge'], 0.1),
-<<<<<<< HEAD
         (['decentralization', 'decentralisation', 'distributed', 'spread', 'no central'], 0.15),
         (['control', 'controls', 'manage', 'power', 'authority'], 0.15),
         (['entity', 'party', 'organization', 'person', 'group'], 0.15),
         (['blockchain', 'ledger', 'database', 'record', 'platform'], 0.15),
         (['transaction', 'transfer', 'exchange', 'data'], 0.1),
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
     ]
     for syn_group, boost in synonyms:
         if any(s in student_norm for s in syn_group) and any(s in correct_norm for s in syn_group):
@@ -224,7 +221,6 @@ def grade_open_ended_question(
     if contains_answer or is_subset:
         score_ratio = 1.0
         feedback = "Correct"
-<<<<<<< HEAD
     elif coverage >= 0.70 and similarity >= 0.60:  # More lenient
         score_ratio = 0.95
         feedback = "Excellent - covers all key concepts"
@@ -241,24 +237,6 @@ def grade_open_ended_question(
         score_ratio = 0.4
         feedback = "Partial - some correct elements"
     elif coverage >= 0.10 or similarity >= 0.10:  # More lenient
-=======
-    elif coverage >= 0.85 and similarity >= 0.75:
-        score_ratio = 0.95
-        feedback = "Excellent - covers all key concepts"
-    elif coverage >= 0.7 and similarity >= 0.65:
-        score_ratio = 0.85
-        feedback = "Very good - covers most key concepts"
-    elif coverage >= 0.55 and similarity >= 0.55:
-        score_ratio = 0.75
-        feedback = "Good - covers main concepts"
-    elif coverage >= 0.4 or similarity >= 0.45:
-        score_ratio = 0.6
-        feedback = "Fair - shows understanding"
-    elif coverage >= 0.25 or similarity >= 0.3:
-        score_ratio = 0.4
-        feedback = "Partial - some correct elements"
-    elif coverage >= 0.15 or similarity >= 0.2:
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
         score_ratio = 0.2
         feedback = "Limited understanding"
     else:
@@ -324,7 +302,6 @@ def grade_with_rubric(
         feedback = "Needs improvement - missing key concepts"
     
     return round(total_points, 2), feedback
-<<<<<<< HEAD
 
 def enhanced_grade_with_confidence(
     student_answer: str,
@@ -362,5 +339,3 @@ def enhanced_grade_with_confidence(
         confidence = 0.20  # Very low confidence - needs review
     
     return points, feedback, confidence
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
