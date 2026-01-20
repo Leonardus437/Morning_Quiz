@@ -85,7 +85,6 @@
 <div class="min-h-screen bg-gray-50">
   <div class="max-w-6xl mx-auto px-6 py-8">
     <div class="mb-8">
-<<<<<<< HEAD
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-3xl font-bold text-gray-900 mb-2"> My Performance</h1>
@@ -99,10 +98,6 @@
           <span>Back to Home</span>
         </button>
       </div>
-=======
-      <h1 class="text-3xl font-bold text-gray-900 mb-2"> My Performance</h1>
-      <p class="text-gray-600">Track your quiz results and download detailed reports</p>
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
     </div>
 
     {#if loading}
