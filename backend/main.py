@@ -630,7 +630,6 @@ async def upload_questions(file: UploadFile = File(...), current_user: User = De
                 for para in doc.paragraphs:
                     text += para.text + "\n"
             except:
-                # Fallback: try to decode as text
                 try:
                     text = content.decode('utf-8', errors='ignore')
                 except:
@@ -645,28 +644,55 @@ async def upload_questions(file: UploadFile = File(...), current_user: User = De
                 except:
                     text = content.decode('cp1252', errors='ignore')
         
-        # Simple AI parser - parse questions from text
+        # Improved parser - more flexible question detection
         questions = []
-        lines = text.split('\n')
+        lines = [l.strip() for l in text.split('\n') if l.strip()]
         current_question = None
         
-        for line in lines:
-            line = line.strip()
-            if not line:
-                continue
+        for i, line in enumerate(lines):
+            # Detect question - multiple patterns
+            is_question = (
+                (line[0].isdigit() and ('?' in line or len(line) > 20)) or  # "1. What is..."
+                line.startswith(('Q:', 'Q.', 'Question', 'QUESTION')) or
+                (i > 0 and '?' in line and len(line) > 15)  # Any line with ? that's long enough
+            )
             
-            # Detect question (starts with number or "Q:")
-            if line and (line[0].isdigit() or line.startswith('Q:') or line.startswith('Question')):
-                if current_question:
+            if is_question:
+                if current_question and current_question.get('text'):
                     questions.append(current_question)
                 current_question = {'text': line, 'options': [], 'answer': ''}
-            elif current_question and line.startswith(('A)', 'B)', 'C)', 'D)', 'a)', 'b)', 'c)', 'd)')):
-                current_question['options'].append(line[3:].strip())
-            elif current_question and line.lower().startswith('answer:'):
-                current_question['answer'] = line.split(':', 1)[1].strip()
+            
+            # Detect options - multiple patterns
+            elif current_question:
+                option_match = False
+                for prefix in ['A)', 'B)', 'C)', 'D)', 'E)', 'a)', 'b)', 'c)', 'd)', 'e)', 
+                               'A.', 'B.', 'C.', 'D.', 'E.', 'a.', 'b.', 'c.', 'd.', 'e.',
+                               '(A)', '(B)', '(C)', '(D)', '(E)', '(a)', '(b)', '(c)', '(d)', '(e)']:
+                    if line.startswith(prefix):
+                        current_question['options'].append(line[len(prefix):].strip())
+                        option_match = True
+                        break
+                
+                # Detect answer
+                if not option_match:
+                    for prefix in ['Answer:', 'ANSWER:', 'Ans:', 'ANS:', 'Correct:', 'CORRECT:']:
+                        if line.startswith(prefix):
+                            current_question['answer'] = line.split(':', 1)[1].strip()
+                            break
         
-        if current_question:
+        # Add last question
+        if current_question and current_question.get('text'):
             questions.append(current_question)
+        
+        if not questions:
+            # Return raw text for debugging
+            return {
+                "success": False, 
+                "questions": [], 
+                "count": 0,
+                "debug_text": text[:500],  # First 500 chars for debugging
+                "message": "No questions found. Please format as: '1. Question text? A) Option B) Option Answer: A'"
+            }
         
         return {"success": True, "questions": questions, "count": len(questions)}
     except Exception as e:
