@@ -26,22 +26,12 @@ export default {
     rollupOptions: {
       output: {
         manualChunks: undefined,
-<<<<<<< HEAD
-        entryFileNames: `[name].${Date.now()}.js`,
-        chunkFileNames: `[name].${Date.now()}.js`,
-        assetFileNames: `[name].${Date.now()}.[ext]`
-      }
-    },
-    cssCodeSplit: false,
-    minify: false
-=======
         entryFileNames: '[name].[hash].js',
         chunkFileNames: '[name].[hash].js',
         assetFileNames: '[name].[hash].[ext]'
       }
     },
     cssCodeSplit: false
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
   },
   optimizeDeps: {
     exclude: ['@sveltejs/kit']
