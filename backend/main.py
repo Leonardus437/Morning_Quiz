@@ -606,7 +606,14 @@ def create_question(question: QuestionCreate, current_user: User = Depends(get_c
     return new_question
 
 @app.post("/upload-questions")
-async def upload_questions(file: UploadFile = File(...), current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+async def upload_questions(
+    file: UploadFile = File(...),
+    department: str = Form(...),
+    level: str = Form(...),
+    lesson_id: Optional[int] = Form(None),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can upload questions")
     
@@ -652,9 +659,9 @@ async def upload_questions(file: UploadFile = File(...), current_user: User = De
         for i, line in enumerate(lines):
             # Detect question - multiple patterns
             is_question = (
-                (line[0].isdigit() and ('?' in line or len(line) > 20)) or  # "1. What is..."
+                (line[0].isdigit() and ('?' in line or len(line) > 20)) or
                 line.startswith(('Q:', 'Q.', 'Question', 'QUESTION')) or
-                (i > 0 and '?' in line and len(line) > 15)  # Any line with ? that's long enough
+                (i > 0 and '?' in line and len(line) > 15)
             )
             
             if is_question:
@@ -685,17 +692,37 @@ async def upload_questions(file: UploadFile = File(...), current_user: User = De
             questions.append(current_question)
         
         if not questions:
-            # Return raw text for debugging
             return {
                 "success": False, 
                 "questions": [], 
                 "count": 0,
-                "debug_text": text[:500],  # First 500 chars for debugging
+                "debug_text": text[:500],
                 "message": "No questions found. Please format as: '1. Question text? A) Option B) Option Answer: A'"
             }
         
-        return {"success": True, "questions": questions, "count": len(questions)}
+        # Save questions to database
+        created_count = 0
+        for q in questions:
+            if q.get('text') and q.get('options'):
+                new_question = Question(
+                    question_text=q['text'],
+                    question_type='multiple_choice' if len(q['options']) > 1 else 'true_false',
+                    options=q['options'],
+                    correct_answer=q.get('answer', q['options'][0] if q['options'] else ''),
+                    points=1,
+                    department=department,
+                    level=level,
+                    lesson_id=lesson_id,
+                    created_by=current_user.id
+                )
+                db.add(new_question)
+                created_count += 1
+        
+        db.commit()
+        
+        return {"success": True, "questions": questions, "count": created_count, "created": created_count}
     except Exception as e:
+        db.rollback()
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=400, detail=f"Upload failed: {str(e)}")
