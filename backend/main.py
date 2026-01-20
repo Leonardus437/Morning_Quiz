@@ -651,59 +651,123 @@ async def upload_questions(
                 except:
                     text = content.decode('cp1252', errors='ignore')
         
-        # Improved parser - handle multiple formats
+        # AI-Powered Intelligent Parser - handles ANY format
         questions = []
         lines = [l.strip() for l in text.split('\n') if l.strip()]
         
-        # Format 1: Simple Q&A format ("Question? Answer")
+        # Combine lines into paragraphs for better context
+        paragraphs = []
+        current_para = []
         for line in lines:
-            if '?' in line:
-                parts = line.split('?', 1)
-                if len(parts) == 2:
-                    question_text = parts[0].strip() + '?'
-                    answer_text = parts[1].strip()
+            if line:
+                current_para.append(line)
+            elif current_para:
+                paragraphs.append(' '.join(current_para))
+                current_para = []
+        if current_para:
+            paragraphs.append(' '.join(current_para))
+        
+        # AI Detection: Identify questions using multiple heuristics
+        for para in paragraphs:
+            # Method 1: Simple Q&A (Question? Answer)
+            if '?' in para:
+                parts = para.split('?')
+                for i in range(len(parts) - 1):
+                    question_text = parts[i].strip()
+                    # Get last sentence as question
+                    if '. ' in question_text:
+                        question_text = question_text.split('. ')[-1]
+                    question_text += '?'
                     
-                    if answer_text:
+                    answer_text = parts[i + 1].strip()
+                    # Take first sentence as answer
+                    if '. ' in answer_text:
+                        answer_text = answer_text.split('.')[0]
+                    
+                    if len(question_text) > 10 and answer_text:
                         questions.append({
                             'text': question_text,
                             'options': [answer_text, 'False', 'Not applicable', 'None of the above'],
                             'answer': answer_text
                         })
-        
-        # Format 2: Structured format with options
-        if not questions:
-            current_question = None
-            for i, line in enumerate(lines):
-                # Detect question
-                is_question = (
-                    (line and line[0].isdigit() and ('?' in line or len(line) > 20)) or
-                    line.startswith(('Q:', 'Q.', 'Question', 'QUESTION')) or
-                    (i > 0 and '?' in line and len(line) > 15)
-                )
-                
-                if is_question:
-                    if current_question and current_question.get('text'):
-                        questions.append(current_question)
-                    current_question = {'text': line, 'options': [], 'answer': ''}
-                
-                elif current_question:
-                    option_match = False
-                    for prefix in ['A)', 'B)', 'C)', 'D)', 'E)', 'a)', 'b)', 'c)', 'd)', 'e)', 
-                                   'A.', 'B.', 'C.', 'D.', 'E.', 'a.', 'b.', 'c.', 'd.', 'e.',
-                                   '(A)', '(B)', '(C)', '(D)', '(E)', '(a)', '(b)', '(c)', '(d)', '(e)']:
-                        if line.startswith(prefix):
-                            current_question['options'].append(line[len(prefix):].strip())
-                            option_match = True
-                            break
-                    
-                    if not option_match:
-                        for prefix in ['Answer:', 'ANSWER:', 'Ans:', 'ANS:', 'Correct:', 'CORRECT:']:
-                            if line.startswith(prefix):
-                                current_question['answer'] = line.split(':', 1)[1].strip()
-                                break
             
-            if current_question and current_question.get('text'):
-                questions.append(current_question)
+            # Method 2: Detect structured questions with options
+            elif any(marker in para for marker in ['A)', 'B)', 'a)', 'b)', 'A.', 'B.']):
+                # Extract question (everything before first option)
+                question_text = para
+                for marker in ['A)', 'a)', 'A.', 'a.', '(A)', '(a)']:
+                    if marker in para:
+                        question_text = para.split(marker)[0].strip()
+                        break
+                
+                # Extract options
+                options = []
+                answer = ''
+                
+                # Try different option patterns
+                for pattern in [r'[A-E]\)', r'[a-e]\)', r'[A-E]\.', r'\([A-E]\)']:
+                    import re
+                    matches = re.finditer(pattern, para)
+                    temp_options = []
+                    for match in matches:
+                        start = match.end()
+                        # Find next option or end
+                        next_match = re.search(pattern, para[start:])
+                        if next_match:
+                            end = start + next_match.start()
+                        else:
+                            end = len(para)
+                        option_text = para[start:end].strip()
+                        # Remove answer markers
+                        option_text = re.sub(r'(Answer:|Ans:|Correct:).*', '', option_text).strip()
+                        if option_text:
+                            temp_options.append(option_text)
+                    
+                    if len(temp_options) >= 2:
+                        options = temp_options
+                        break
+                
+                # Extract answer
+                for prefix in ['Answer:', 'ANSWER:', 'Ans:', 'ANS:', 'Correct:', 'CORRECT:']:
+                    if prefix in para:
+                        answer = para.split(prefix)[1].strip().split()[0]
+                        break
+                
+                if question_text and options:
+                    questions.append({
+                        'text': question_text,
+                        'options': options,
+                        'answer': answer if answer else options[0]
+                    })
+            
+            # Method 3: Detect question keywords without ?
+            else:
+                question_keywords = ['what', 'who', 'where', 'when', 'why', 'how', 'which', 
+                                   'define', 'explain', 'describe', 'list', 'name', 'identify']
+                para_lower = para.lower()
+                
+                if any(para_lower.startswith(kw) for kw in question_keywords) and len(para) > 20:
+                    # Split by common delimiters
+                    if ':' in para:
+                        parts = para.split(':', 1)
+                        question_text = parts[0].strip()
+                        answer_text = parts[1].strip()
+                    elif '  ' in para:  # Double space
+                        parts = para.split('  ', 1)
+                        question_text = parts[0].strip()
+                        answer_text = parts[1].strip()
+                    else:
+                        # Assume first 60% is question, rest is answer
+                        split_point = int(len(para) * 0.6)
+                        question_text = para[:split_point].strip()
+                        answer_text = para[split_point:].strip()
+                    
+                    if len(question_text) > 10 and answer_text:
+                        questions.append({
+                            'text': question_text,
+                            'options': [answer_text, 'False', 'Not applicable', 'None of the above'],
+                            'answer': answer_text
+                        })
         
         if not questions:
             return {
