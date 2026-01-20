@@ -612,9 +612,40 @@ async def upload_questions(file: UploadFile = File(...), current_user: User = De
     
     try:
         content = await file.read()
-        text = content.decode('utf-8')
+        filename = file.filename.lower()
+        text = ""
         
-        # Simple AI parser simulation - parse questions from text
+        # Handle different file formats
+        if filename.endswith('.pdf'):
+            import PyPDF2
+            import io
+            pdf = PyPDF2.PdfReader(io.BytesIO(content))
+            for page in pdf.pages:
+                text += page.extract_text() + "\n"
+        elif filename.endswith('.doc') or filename.endswith('.docx'):
+            try:
+                import docx
+                import io
+                doc = docx.Document(io.BytesIO(content))
+                for para in doc.paragraphs:
+                    text += para.text + "\n"
+            except:
+                # Fallback: try to decode as text
+                try:
+                    text = content.decode('utf-8', errors='ignore')
+                except:
+                    text = content.decode('latin-1', errors='ignore')
+        else:
+            # Text files - try multiple encodings
+            try:
+                text = content.decode('utf-8')
+            except:
+                try:
+                    text = content.decode('latin-1')
+                except:
+                    text = content.decode('cp1252', errors='ignore')
+        
+        # Simple AI parser - parse questions from text
         questions = []
         lines = text.split('\n')
         current_question = None
@@ -625,11 +656,11 @@ async def upload_questions(file: UploadFile = File(...), current_user: User = De
                 continue
             
             # Detect question (starts with number or "Q:")
-            if line[0].isdigit() or line.startswith('Q:'):
+            if line and (line[0].isdigit() or line.startswith('Q:') or line.startswith('Question')):
                 if current_question:
                     questions.append(current_question)
                 current_question = {'text': line, 'options': [], 'answer': ''}
-            elif current_question and line.startswith(('A)', 'B)', 'C)', 'D)')):
+            elif current_question and line.startswith(('A)', 'B)', 'C)', 'D)', 'a)', 'b)', 'c)', 'd)')):
                 current_question['options'].append(line[3:].strip())
             elif current_question and line.lower().startswith('answer:'):
                 current_question['answer'] = line.split(':', 1)[1].strip()
@@ -639,6 +670,8 @@ async def upload_questions(file: UploadFile = File(...), current_user: User = De
         
         return {"success": True, "questions": questions, "count": len(questions)}
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=400, detail=f"Upload failed: {str(e)}")
 
 @app.put("/questions/{question_id}")
