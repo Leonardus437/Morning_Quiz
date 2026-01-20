@@ -16,10 +16,10 @@ import json
 import io
 import re
 import PyPDF2
-<<<<<<< HEAD
+
 from ai_grader import grade_open_ended_question
 from performance_reports import get_student_performance
-=======
+
 
 # Import AI grader with fallback
 try:
@@ -45,7 +45,7 @@ except Exception as e:
             return max_points * 0.8, "Mostly correct"
         else:
             return 0, "Incorrect"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
 
 # Rwanda timezone (CAT/EAT - UTC+2)
 RWANDA_TZ = timezone(timedelta(hours=2))
@@ -122,10 +122,10 @@ class Quiz(Base):
     level = Column(String)
     created_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
-<<<<<<< HEAD
+
     results_released = Column(Boolean, default=False)
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
+
 
 class QuizQuestion(Base):
     __tablename__ = "quiz_questions"
@@ -139,21 +139,21 @@ class QuizAttempt(Base):
     id = Column(Integer, primary_key=True, index=True)
     quiz_id = Column(Integer, ForeignKey("quizzes.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
-<<<<<<< HEAD
+
     score = Column(Float, default=0.0)
-=======
+
     score = Column(Integer, default=0)
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
     total_questions = Column(Integer)
     answers = Column(JSON)
     started_at = Column(DateTime, default=datetime.utcnow)
     completed_at = Column(DateTime)
-<<<<<<< HEAD
+
     needs_review = Column(Boolean, default=False)
     reviewed_by = Column(Integer, ForeignKey("users.id"))
     final_score = Column(Float)
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
+
 
 class StudentAnswer(Base):
     __tablename__ = "student_answers"
@@ -164,11 +164,11 @@ class StudentAnswer(Base):
     is_correct = Column(Boolean)
     points_earned = Column(Float, default=0.0)
     ai_feedback = Column(String)
-<<<<<<< HEAD
+
     teacher_score = Column(Float)
     teacher_feedback = Column(Text)
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
+
 
 class Lesson(Base):
     __tablename__ = "lessons"
@@ -518,23 +518,23 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
         if not questions:
             raise HTTPException(status_code=400, detail="Quiz has no questions")
         
-<<<<<<< HEAD
+
         score = 0.0
-=======
+
         score = 0
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
         total_marks = sum(q.points for q in questions)
         answers_dict = {ans.question_id: ans.answer for ans in submission.answers}
         grading_details = []
         
         for question in questions:
             user_answer = answers_dict.get(question.id, "")
-<<<<<<< HEAD
+
             # Clean answer: remove newlines and extra spaces
             if user_answer:
                 user_answer = str(user_answer).replace('\n', ' ').replace('\r', ' ').strip()
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
+
             points_earned = 0
             feedback = "Not answered"
             
@@ -543,7 +543,7 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
                 if not user_answer or not str(user_answer).strip():
                     points_earned = 0
                     feedback = "No answer provided"
-<<<<<<< HEAD
+
                     grading_details.append({
                         "question_id": question.id,
                         "points_earned": 0.0,
@@ -572,7 +572,7 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
                         else:
                             points_earned = 0
                             feedback = "Incorrect"
-=======
+
                 elif question.question_type == "short_answer" or question.question_type == "fill_blanks":
                     # Use AI grader for intelligent grading
                     points_earned, feedback = grade_open_ended_question(
@@ -582,7 +582,7 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
                         question_text=str(question.question_text or "")
                     )
                     score += points_earned
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
                 else:
                     # MCQ/True-False/Code Analysis - exact match
                     if str(user_answer).strip() == str(question.correct_answer or "").strip():
@@ -619,12 +619,12 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
             score=score,
             total_questions=total_marks,
             answers=[{"question_id": ans.question_id, "answer": ans.answer} for ans in submission.answers],
-<<<<<<< HEAD
+
             completed_at=now(),
             needs_review=True  # All quizzes need teacher review
-=======
+
             completed_at=now()
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
         )
         db.add(attempt)
         db.flush()
@@ -664,16 +664,16 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
             print(f"Error creating notification: {e}")
         
         return {
-<<<<<<< HEAD
+
             "needs_review": True,
             "message": "Quiz submitted successfully! Your answers are under review by your teacher. Results will be available soon.",
             "quiz_title": quiz.title
-=======
+
             "score": round(score, 2),
             "total_questions": total_marks,
             "grading_details": grading_details,
             "message": "Quiz graded successfully"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
         }
     except HTTPException:
         raise
@@ -729,16 +729,16 @@ def health_check():
         "rwanda_time": rwanda_time.strftime("%H:%M:%S"),
         "timezone": "CAT/EAT (UTC+2)",
         "service": "Morning Quiz API",
-<<<<<<< HEAD
+
         "version": "1.8-SUBMISSION-FIX",
         "cors": "enabled",
         "fix_deployed": "2026-01-10-12:40"
-=======
+
         "version": "2.0-AI-GRADER-RESTORED",
         "cors": "enabled",
         "ai_grader": "enabled" if AI_GRADER_AVAILABLE else "fallback",
         "fix_deployed": "2026-01-13"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
     }
 
 @app.get("/auth/test")
@@ -915,7 +915,7 @@ def get_questions(department: Optional[str] = None, level: Optional[str] = None,
     questions = query.all()
     return questions
 
-<<<<<<< HEAD
+
 @app.put("/questions/{question_id}")
 def update_question(question_id: int, question_data: QuestionCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
@@ -933,8 +933,8 @@ def update_question(question_id: int, question_data: QuestionCreate, current_use
     db.commit()
     return question
 
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
+
 @app.delete("/questions/{question_id}")
 def delete_question(question_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
@@ -944,16 +944,16 @@ def delete_question(question_id: int, current_user: User = Depends(get_current_u
     if not question:
         raise HTTPException(status_code=404, detail="Question not found")
     
-<<<<<<< HEAD
+
     # Delete student answers first
     db.query(StudentAnswer).filter(StudentAnswer.question_id == question_id).delete(synchronize_session=False)
     # Remove question from quizzes
     db.query(QuizQuestion).filter(QuizQuestion.question_id == question_id).delete(synchronize_session=False)
-=======
+
     # Remove question from any quizzes first
     db.query(QuizQuestion).filter(QuizQuestion.question_id == question_id).delete(synchronize_session=False)
     
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
     # Delete the question
     db.delete(question)
     db.commit()
@@ -968,16 +968,16 @@ def clear_all_teacher_questions(current_user: User = Depends(get_current_user), 
     questions = db.query(Question).filter(Question.created_by == current_user.id).all()
     question_ids = [q.id for q in questions]
     
-<<<<<<< HEAD
+
     # Delete student answers first
     db.query(StudentAnswer).filter(StudentAnswer.question_id.in_(question_ids)).delete(synchronize_session=False)
     # Remove questions from quizzes
     db.query(QuizQuestion).filter(QuizQuestion.question_id.in_(question_ids)).delete(synchronize_session=False)
-=======
+
     # Remove questions from any quizzes first
     db.query(QuizQuestion).filter(QuizQuestion.question_id.in_(question_ids)).delete(synchronize_session=False)
     
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
     # Delete all questions
     deleted = db.query(Question).filter(Question.created_by == current_user.id).delete(synchronize_session=False)
     db.commit()
@@ -1062,20 +1062,20 @@ def export_quiz_results(quiz_id: int, current_user: User = Depends(get_current_u
     elements.append(Spacer(1, 0.2*inch))
     
     data = [['#', 'Student Name', 'Username', 'Score', 'Percentage']]
-<<<<<<< HEAD
+
     for idx, attempt in enumerate(sorted(attempts, key=lambda x: (x.final_score if x.final_score is not None else x.score), reverse=True), 1):
         student = db.query(User).filter(User.id == attempt.user_id).first()
         if student:
             display_score = attempt.final_score if attempt.final_score is not None else attempt.score
             percentage = round((display_score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1)
             data.append([str(idx), student.full_name, student.username, f"{display_score}/{attempt.total_questions}", f"{percentage}%"])
-=======
+
     for idx, attempt in enumerate(sorted(attempts, key=lambda x: x.score, reverse=True), 1):
         student = db.query(User).filter(User.id == attempt.user_id).first()
         if student:
             percentage = round((attempt.score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1)
             data.append([str(idx), student.full_name, student.username, f"{attempt.score}/{attempt.total_questions}", f"{percentage}%"])
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
     
     table = Table(data, colWidths=[0.5*inch, 2*inch, 1.5*inch, 1*inch, 1*inch])
     table.setStyle(TableStyle([
@@ -1213,7 +1213,7 @@ def get_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user
     for attempt in attempts:
         student = db.query(User).filter(User.id == attempt.user_id).first()
         if student:
-<<<<<<< HEAD
+
             # Use final_score (teacher-reviewed) if available, otherwise use initial score
             display_score = attempt.final_score if attempt.final_score is not None else attempt.score
             results.append({
@@ -1222,14 +1222,14 @@ def get_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user
                 "score": display_score,
                 "total": attempt.total_questions,
                 "percentage": round((display_score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1),
-=======
+
             results.append({
                 "student_name": student.full_name,
                 "username": student.username,
                 "score": attempt.score,
                 "total": attempt.total_questions,
                 "percentage": round((attempt.score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1),
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
                 "completed_at": attempt.completed_at.isoformat() if attempt.completed_at else None
             })
     
@@ -1596,7 +1596,7 @@ def register_teacher(teacher_data: UserCreate, current_user: User = Depends(get_
     
     return {"teacher": {"id": teacher.id, "username": teacher.username, "full_name": teacher.full_name, "departments": teacher.departments}}
 
-<<<<<<< HEAD
+
 @app.get("/student/progress")
 def get_student_progress_endpoint(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "student":
@@ -1781,8 +1781,8 @@ def download_student_report(quiz_id: int, current_user: User = Depends(get_curre
         headers={"Content-Disposition": f"attachment; filename=Quiz_Report_{quiz.title.replace(' ', '_')}_{current_user.username}.pdf"}
     )
 
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
+
 @app.post("/admin/generate-student-credentials/{department}/{level}")
 async def generate_student_credentials(department: str, level: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "admin":
@@ -1896,7 +1896,7 @@ def startup_event():
         print(f"Startup error: {e}")
         db.rollback()
     finally:
-<<<<<<< HEAD
+
         db.close()# Teacher Review Endpoints - Add to main.py
 
 from pydantic import BaseModel
@@ -2144,6 +2144,6 @@ def report_cheating(data: Dict, current_user: User = Depends(get_current_user), 
     except Exception as e:
         print(f"Error reporting cheating: {e}")
         return {"message": "Failed to report"}
-=======
+
         db.close()
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
+
