@@ -511,7 +511,7 @@ def get_quiz_status(quiz_id: int, current_user: User = Depends(get_current_user)
         "level": quiz.level
     }
 
-@app.head("/health")
+@app.get("/health")
 def health_check():
     rwanda_time = now()
     return {
