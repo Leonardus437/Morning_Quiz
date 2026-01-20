@@ -1393,6 +1393,32 @@ class ApiClient {
     
     return blob;
   }
+
+  // Review Quiz Endpoints
+  async getPendingReviews() {
+    return this.request('/teacher/pending-reviews');
+  }
+
+  async getAttemptForReview(attemptId) {
+    return this.request(`/teacher/review/${attemptId}`);
+  }
+
+  async submitReview(attemptId, grades) {
+    return this.request(`/teacher/review/${attemptId}/grade`, {
+      method: 'POST',
+      body: { grades }
+    });
+  }
+
+  async releaseQuizResults(quizId) {
+    return this.request(`/teacher/quiz/${quizId}/release-results`, {
+      method: 'POST'
+    });
+  }
+
+  async getReviewStatus(quizId) {
+    return this.request(`/teacher/quiz/${quizId}/review-status`);
+  }
 }
 
 export const api = new ApiClient();
