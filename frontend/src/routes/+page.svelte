@@ -3,10 +3,7 @@
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores.js';
   import { api } from '$lib/api.js';
-<<<<<<< HEAD
   import { notificationStore } from '$lib/notificationStore.js';
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
 
   let username = '';
   let password = '';
@@ -19,11 +16,8 @@
 
   let isLoggedIn = false;
   let quizRefreshInterval;
-<<<<<<< HEAD
   let notificationInterval;
   let seenNotificationIds = new Set();
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
   
   // Carousel state
   let currentSlide = 0;
@@ -52,10 +46,7 @@
           user.login(userData);
           await loadQuizzes();
           startQuizRefresh();
-<<<<<<< HEAD
           startNotificationPolling();
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
         }
       } catch (err) {
         console.error('Session restore failed:', err);
@@ -63,10 +54,7 @@
     } else if (isLoggedIn) {
       await loadQuizzes();
       startQuizRefresh();
-<<<<<<< HEAD
       startNotificationPolling();
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
     }
     
     // Start carousel auto-rotation
@@ -76,12 +64,9 @@
       if (quizRefreshInterval) {
         clearInterval(quizRefreshInterval);
       }
-<<<<<<< HEAD
       if (notificationInterval) {
         clearInterval(notificationInterval);
       }
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
       if (carouselInterval) {
         clearInterval(carouselInterval);
       }
@@ -136,10 +121,7 @@
       } else {
         showLoginModal = false;
         await loadQuizzes();
-<<<<<<< HEAD
         startNotificationPolling();
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
       }
     } catch (err) {
       console.error(' Login error:', err);
@@ -199,7 +181,6 @@
     }, 2000);
   }
 
-<<<<<<< HEAD
   function startNotificationPolling() {
     if (notificationInterval) {
       clearInterval(notificationInterval);
@@ -237,18 +218,13 @@
     }, 5000);
   }
 
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
   function handleLogout() {
     if (quizRefreshInterval) {
       clearInterval(quizRefreshInterval);
     }
-<<<<<<< HEAD
     if (notificationInterval) {
       clearInterval(notificationInterval);
     }
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
     api.logout();
     user.logout();
     localStorage.removeItem('user');

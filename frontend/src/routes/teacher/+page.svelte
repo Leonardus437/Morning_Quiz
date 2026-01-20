@@ -1437,20 +1437,13 @@
         {/if}
 
         <!-- Navigation Tabs -->
-<<<<<<< HEAD
         <div class="flex space-x-1 mb-8 bg-white p-2 rounded-xl shadow-sm overflow-x-auto">
           <button
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'dashboard' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-=======
-        <div class="flex space-x-1 mb-8 bg-white p-2 rounded-xl shadow-sm">
-          <button
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'dashboard' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
             on:click={() => activeTab = 'dashboard'}
           >
              Dashboard
           </button>
-<<<<<<< HEAD
           <a
             href="/teacher/reviews"
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap text-center bg-orange-100 text-orange-700 hover:bg-orange-200 border-2 border-orange-300"
@@ -1459,70 +1452,42 @@
           </a>
           <button
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'questions' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-=======
-          <button
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'questions' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
             on:click={() => activeTab = 'questions'}
           >
              My Questions
           </button>
           <button
-<<<<<<< HEAD
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'notifications' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-=======
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'notifications' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
             on:click={() => activeTab = 'notifications'}
           >
              Notifications {#if unreadCount > 0}<span class="ml-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full">{unreadCount}</span>{/if}
           </button>
           <button
-<<<<<<< HEAD
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'create-question' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-=======
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'create-question' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
             on:click={() => activeTab = 'create-question'}
           >
              Add Question
           </button>
           <button
-<<<<<<< HEAD
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'create-quiz' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-=======
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'create-quiz' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
             on:click={() => activeTab = 'create-quiz'}
           >
              Create Quiz
           </button>
           <button
-<<<<<<< HEAD
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'quizzes' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-=======
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'quizzes' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
             on:click={() => activeTab = 'quizzes'}
           >
              My Quizzes
           </button>
           <button
-<<<<<<< HEAD
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'courses' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-=======
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'courses' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
             on:click={() => { activeTab = 'courses'; loadMyCourses(); }}
           >
              My Courses
           </button>
           <button
-<<<<<<< HEAD
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'students' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-=======
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'students' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
             on:click={() => activeTab = 'students'}
           >
              Students
