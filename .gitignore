@@ -61,7 +61,6 @@ backend/enhanced_*.py
 backend/extract_*.py
 backend/fix_*.py
 backend/pdf_student_parser.py
-backend/performance_reports.py
 backend/question_upload_api.py
 backend/quiz_expiry_fix.py
 backend/rtb_*.py
@@ -82,7 +81,8 @@ backend/working_excel_parser.py
 # - init_db.py
 # - requirements.txt
 # - Dockerfile
-<<<<<<< HEAD
+# - ai_grader.py
+# - performance_reports.py
 
 # Frontend
 frontend/node_modules/
@@ -104,5 +104,3 @@ yarn-error.log*
 # Environment
 .env.local
 .env.*.local
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
