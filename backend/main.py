@@ -608,8 +608,8 @@ def create_question(question: QuestionCreate, current_user: User = Depends(get_c
 @app.post("/upload-questions")
 async def upload_questions(
     file: UploadFile = File(...),
-    department: str = Form(...),
-    level: str = Form(...),
+    department: Optional[str] = Form(None),
+    level: Optional[str] = Form(None),
     lesson_id: Optional[int] = Form(None),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -659,7 +659,7 @@ async def upload_questions(
         for i, line in enumerate(lines):
             # Detect question - multiple patterns
             is_question = (
-                (line[0].isdigit() and ('?' in line or len(line) > 20)) or
+                (line and line[0].isdigit() and ('?' in line or len(line) > 20)) or
                 line.startswith(('Q:', 'Q.', 'Question', 'QUESTION')) or
                 (i > 0 and '?' in line and len(line) > 15)
             )
@@ -699,6 +699,12 @@ async def upload_questions(
                 "debug_text": text[:500],
                 "message": "No questions found. Please format as: '1. Question text? A) Option B) Option Answer: A'"
             }
+        
+        # Use teacher's first department if not provided
+        if not department and current_user.departments:
+            department = current_user.departments[0]
+        if not level:
+            level = "General"
         
         # Save questions to database
         created_count = 0
