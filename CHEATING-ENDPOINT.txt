@@ -1,0 +1,29 @@
+# Add this to the END of backend/main.py (after all other routes, before startup_event)
+
+@app.post("/report-cheating")
+def report_cheating(data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Report student cheating attempt to teacher"""
+    try:
+        quiz_id = data.get('quiz_id')
+        warnings = data.get('warnings', 0)
+        reason = data.get('reason', 'Unknown')
+        
+        quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
+        if not quiz:
+            return {"message": "Quiz not found"}
+        
+        teacher = db.query(User).filter(User.id == quiz.created_by).first()
+        if teacher:
+            notification = Notification(
+                user_id=teacher.id,
+                title=f"⚠️ Cheating Alert: {quiz.title}",
+                message=f"{current_user.full_name} was caught attempting to cheat ({warnings} violations). Reason: {reason}. Quiz was auto-submitted.",
+                type="cheating_alert"
+            )
+            db.add(notification)
+            db.commit()
+        
+        return {"message": "Cheating reported to teacher"}
+    except Exception as e:
+        print(f"Error reporting cheating: {e}")
+        return {"message": "Failed to report"}

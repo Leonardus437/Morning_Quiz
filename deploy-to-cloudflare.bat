@@ -1,36 +1,28 @@
 @echo off
 cd /d "d:\Morning_Quiz-master"
 echo ========================================
-echo DEPLOYING FRONTEND TO CLOUDFLARE PAGES
+echo PUSHING TO MASTER BRANCH FOR CLOUDFLARE
 echo ========================================
 echo.
-echo [1/3] Adding all frontend files...
+echo [1/4] Adding frontend files...
 "C:\Program Files\Git\bin\git.exe" add frontend/
+"C:\Program Files\Git\bin\git.exe" add backend/
 "C:\Program Files\Git\bin\git.exe" add .gitignore
-echo [2/3] Committing changes...
+echo [2/4] Committing...
 "C:\Program Files\Git\bin\git.exe" commit -m "Deploy anti-cheating system to production"
 if errorlevel 1 (
-    echo No changes to commit, trying to push anyway...
+    echo No new changes, continuing...
 )
-echo [3/3] Pushing to GitHub...
+echo [3/4] Pushing to main...
 "C:\Program Files\Git\bin\git.exe" push origin main
-if errorlevel 1 (
-    echo ERROR: Push failed
-    pause
-    exit /b 1
-)
+echo [4/4] Pushing to master for Cloudflare...
+"C:\Program Files\Git\bin\git.exe" push origin main:master -f
 echo.
 echo ========================================
-echo SUCCESS! Frontend pushed to GitHub
+echo SUCCESS! Cloudflare will auto-deploy now
 echo ========================================
 echo.
-echo Cloudflare Pages will auto-deploy in 2-3 minutes
 echo Monitor: https://dash.cloudflare.com/86089f0bb941af81d975a82b892fe038/pages/view/tsskwizi
-echo.
-echo If auto-deploy doesn't start:
-echo 1. Go to Cloudflare dashboard
-echo 2. Click "Create deployment"
-echo 3. Select branch: main
-echo 4. Click "Save and Deploy"
+echo Wait 2-3 minutes for build to complete
 echo.
 pause
