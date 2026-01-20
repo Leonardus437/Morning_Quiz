@@ -4,21 +4,15 @@
   import { user, connectionStatus, syncStore } from '$lib/stores.js';
   import { api } from '$lib/api.js';
   import OfflineStatus from '$lib/OfflineStatus.svelte';
-<<<<<<< HEAD
   import NotificationToast from '$lib/NotificationToast.svelte';
   import { notificationStore } from '$lib/notificationStore.js';
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
   
   let isOffline = false;
   let showOfflineToast = false;
   let offlineToastMessage = '';
-<<<<<<< HEAD
   let notifications = [];
   
   $: notifications = $notificationStore || [];
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
   
   onMount(() => {
     user.init();
@@ -36,12 +30,9 @@
 <!-- Offline Status Component re-enabled with clean state -->
 <OfflineStatus />
 
-<<<<<<< HEAD
 <!-- Notification Toast -->
 <NotificationToast {notifications} />
 
-=======
->>>>>>> a6f256911bd91da0b979b46a8d9484a08d4142a9
 <!-- Connection Status Toast -->
 {#if showOfflineToast}
   <div class="fixed top-4 right-4 z-50 max-w-sm">
