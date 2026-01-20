@@ -20,7 +20,6 @@ import PyPDF2
 from ai_grader import grade_open_ended_question
 from performance_reports import get_student_performance
 
-
 # Import AI grader with fallback
 try:
     from ai_grader import grade_open_ended_question
@@ -45,7 +44,6 @@ except Exception as e:
             return max_points * 0.8, "Mostly correct"
         else:
             return 0, "Incorrect"
-
 
 # Rwanda timezone (CAT/EAT - UTC+2)
 RWANDA_TZ = timezone(timedelta(hours=2))
@@ -125,8 +123,6 @@ class Quiz(Base):
 
     results_released = Column(Boolean, default=False)
 
-
-
 class QuizQuestion(Base):
     __tablename__ = "quiz_questions"
     id = Column(Integer, primary_key=True, index=True)
@@ -153,8 +149,6 @@ class QuizAttempt(Base):
     reviewed_by = Column(Integer, ForeignKey("users.id"))
     final_score = Column(Float)
 
-
-
 class StudentAnswer(Base):
     __tablename__ = "student_answers"
     id = Column(Integer, primary_key=True, index=True)
@@ -167,8 +161,6 @@ class StudentAnswer(Base):
 
     teacher_score = Column(Float)
     teacher_feedback = Column(Text)
-
-
 
 class Lesson(Base):
     __tablename__ = "lessons"
@@ -416,7 +408,6 @@ def get_quizzes(current_user: User = Depends(get_current_user), db: Session = De
     
     return result
 
-@app.get("/quizzes/{quiz_id}/questions")
 def get_quiz_questions(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
     if not quiz:
@@ -486,204 +477,6 @@ async def submit_quiz_options():
     return {"message": "OK"}
 
 @app.post("/quizzes/submit")
-def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    try:
-        print(f"Quiz submission started for user {current_user.id}, quiz {submission.quiz_id}")
-        
-        quiz = db.query(Quiz).filter(Quiz.id == submission.quiz_id).first()
-        if not quiz:
-            raise HTTPException(status_code=404, detail="Quiz not found")
-        
-        if current_user.role == "student":
-            if quiz.department != current_user.department or quiz.level != current_user.level:
-                raise HTTPException(status_code=403, detail="You can only submit quizzes for your class")
-            
-            if not quiz.is_active:
-                raise HTTPException(status_code=403, detail="Quiz is not active. Please wait for teacher to broadcast it.")
-        
-        existing_attempt = db.query(QuizAttempt).filter(
-            QuizAttempt.quiz_id == submission.quiz_id,
-            QuizAttempt.user_id == current_user.id
-        ).first()
-        
-        if existing_attempt:
-            raise HTTPException(status_code=400, detail="Quiz already attempted")
-        
-        questions = db.query(Question).join(QuizQuestion).filter(
-            QuizQuestion.quiz_id == submission.quiz_id
-        ).all()
-        
-        print(f"Found {len(questions)} questions for quiz {submission.quiz_id}")
-        
-        if not questions:
-            raise HTTPException(status_code=400, detail="Quiz has no questions")
-        
-
-        score = 0.0
-
-        score = 0
-
-        total_marks = sum(q.points for q in questions)
-        answers_dict = {ans.question_id: ans.answer for ans in submission.answers}
-        grading_details = []
-        
-        for question in questions:
-            user_answer = answers_dict.get(question.id, "")
-
-            # Clean answer: remove newlines and extra spaces
-            if user_answer:
-                user_answer = str(user_answer).replace('\n', ' ').replace('\r', ' ').strip()
-
-
-            points_earned = 0
-            feedback = "Not answered"
-            
-            try:
-                # Handle empty/missing answers gracefully
-                if not user_answer or not str(user_answer).strip():
-                    points_earned = 0
-                    feedback = "No answer provided"
-
-                    grading_details.append({
-                        "question_id": question.id,
-                        "points_earned": 0.0,
-                        "max_points": int(question.points or 1),
-                        "feedback": feedback
-                    })
-                    continue  # Skip to next question
-                elif question.question_type == "short_answer" or question.question_type == "fill_blanks":
-                    try:
-                        # Use CONCEPT-BASED grader - understands meaning globally
-                        from concept_grader import concept_based_grade
-                        points_earned, feedback, confidence = concept_based_grade(
-                            student_answer=str(user_answer),
-                            correct_answer=str(question.correct_answer or ""),
-                            max_points=int(question.points or 1),
-                            question_text=str(question.question_text or "")
-                        )
-                        score += points_earned
-                    except Exception as grade_err:
-                        print(f"AI grading failed for question {question.id}, using fallback: {grade_err}")
-                        # Fallback: simple string comparison
-                        if str(user_answer).strip().lower() == str(question.correct_answer or "").strip().lower():
-                            points_earned = question.points
-                            score += points_earned
-                            feedback = "Correct"
-                        else:
-                            points_earned = 0
-                            feedback = "Incorrect"
-
-                elif question.question_type == "short_answer" or question.question_type == "fill_blanks":
-                    # Use AI grader for intelligent grading
-                    points_earned, feedback = grade_open_ended_question(
-                        student_answer=str(user_answer),
-                        correct_answer=str(question.correct_answer or ""),
-                        max_points=int(question.points or 1),
-                        question_text=str(question.question_text or "")
-                    )
-                    score += points_earned
-
-                else:
-                    # MCQ/True-False/Code Analysis - exact match
-                    if str(user_answer).strip() == str(question.correct_answer or "").strip():
-                        points_earned = question.points
-                        score += points_earned
-                        feedback = "Correct"
-                    else:
-                        points_earned = 0
-                        feedback = "Incorrect"
-                
-                grading_details.append({
-                    "question_id": question.id,
-                    "points_earned": float(points_earned),
-                    "max_points": int(question.points or 1),
-                    "feedback": str(feedback)
-                })
-            except Exception as e:
-                print(f"Error grading question {question.id}: {e}")
-                import traceback
-                traceback.print_exc()
-                # Add zero points but don't fail the entire submission
-                grading_details.append({
-                    "question_id": question.id,
-                    "points_earned": 0.0,
-                    "max_points": int(question.points or 1),
-                    "feedback": "Grading error - contact teacher"
-                })
-        
-        print(f"Grading complete. Score: {score}/{total_marks}")
-        
-        attempt = QuizAttempt(
-            quiz_id=submission.quiz_id,
-            user_id=current_user.id,
-            score=score,
-            total_questions=total_marks,
-            answers=[{"question_id": ans.question_id, "answer": ans.answer} for ans in submission.answers],
-
-            completed_at=now(),
-            needs_review=True  # All quizzes need teacher review
-
-            completed_at=now()
-
-        )
-        db.add(attempt)
-        db.flush()
-        
-        print(f"Attempt created with ID: {attempt.id}")
-        
-        for idx, question in enumerate(questions):
-            user_answer = answers_dict.get(question.id, "")
-            detail = grading_details[idx]
-            is_correct = detail['points_earned'] >= (detail['max_points'] * 0.7)
-            
-            student_answer = StudentAnswer(
-                attempt_id=attempt.id,
-                question_id=question.id,
-                student_answer=user_answer,
-                is_correct=is_correct,
-                points_earned=detail['points_earned'],
-                ai_feedback=detail['feedback']
-            )
-            db.add(student_answer)
-        
-        db.commit()
-        print(f"Submission complete for user {current_user.id}")
-        
-        try:
-            teacher = db.query(User).filter(User.id == quiz.created_by).first()
-            if teacher:
-                notification = Notification(
-                    user_id=teacher.id,
-                    title=f"Quiz Submitted: {quiz.title}",
-                    message=f"{current_user.full_name} submitted the quiz. Score: {score}/{total_marks}",
-                    type="quiz_submission"
-                )
-                db.add(notification)
-                db.commit()
-        except Exception as e:
-            print(f"Error creating notification: {e}")
-        
-        return {
-
-            "needs_review": True,
-            "message": "Quiz submitted successfully! Your answers are under review by your teacher. Results will be available soon.",
-            "quiz_title": quiz.title
-
-            "score": round(score, 2),
-            "total_questions": total_marks,
-            "grading_details": grading_details,
-            "message": "Quiz graded successfully"
-
-        }
-    except HTTPException:
-        raise
-    except Exception as e:
-        print(f"Quiz submission error: {e}")
-        import traceback
-        traceback.print_exc()
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Submission failed: {str(e)}")
-
 @app.get("/quizzes/{quiz_id}/status")
 def get_quiz_status(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
@@ -718,8 +511,6 @@ def get_quiz_status(quiz_id: int, current_user: User = Depends(get_current_user)
         "level": quiz.level
     }
 
-@app.get("/health")
-@app.post("/health")
 @app.head("/health")
 def health_check():
     rwanda_time = now()
@@ -730,18 +521,13 @@ def health_check():
         "timezone": "CAT/EAT (UTC+2)",
         "service": "Morning Quiz API",
 
-        "version": "1.8-SUBMISSION-FIX",
-        "cors": "enabled",
-        "fix_deployed": "2026-01-10-12:40"
-
-        "version": "2.0-AI-GRADER-RESTORED",
+        "version": "2.0-ANTI-CHEAT",
         "cors": "enabled",
         "ai_grader": "enabled" if AI_GRADER_AVAILABLE else "fallback",
         "fix_deployed": "2026-01-13"
 
     }
 
-@app.get("/auth/test")
 def test_auth(current_user: User = Depends(get_current_user)):
     return {
         "message": "Authentication successful",
@@ -753,135 +539,14 @@ def test_auth(current_user: User = Depends(get_current_user)):
         }
     }
 
-@app.post("/questions/bulk")
-async def create_bulk_questions(questions: List[Dict], current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403, detail="Only teachers can create questions")
-    
-    try:
-        questions_added = 0
-        for q in questions:
-            question = Question(
-                question_text=q['question_text'],
-                question_type=q.get('question_type', 'short_answer'),
-                options=q.get('options'),
-                correct_answer=q['correct_answer'],
-                points=q.get('points', 1),
-                department=current_user.departments[0] if current_user.departments else "General",
-                level="All Levels",
-                created_by=current_user.id
-            )
-            db.add(question)
-            questions_added += 1
-        
-        db.commit()
-        return {"message": f"Successfully created {questions_added} questions", "count": questions_added}
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=400, detail=f"Failed to create questions: {str(e)}")
-
-@app.post("/upload-questions")
-async def upload_questions(file: UploadFile = File(...), department: str = Form(None), level: str = Form(None), current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403, detail="Only teachers can upload questions")
-    
-    # Use provided department/level or fallback to teacher's first department
-    question_department = department or (current_user.departments[0] if current_user.departments else "General")
-    question_level = level or "All Levels"
-    
-    try:
-        content = await file.read()
-        filename = file.filename.lower()
-        text = ''
-        
-        # Handle PDF files
-        if filename.endswith('.pdf'):
-            import PyPDF2
-            pdf = PyPDF2.PdfReader(io.BytesIO(content))
-            for page in pdf.pages:
-                text += page.extract_text() + '\n'
-        # Handle Word documents
-        elif filename.endswith('.doc') or filename.endswith('.docx'):
-            try:
-                import docx
-                doc = docx.Document(io.BytesIO(content))
-                for para in doc.paragraphs:
-                    text += para.text + '\n'
-            except:
-                raise HTTPException(status_code=400, detail="Unable to read Word document. Please save as PDF or TXT.")
-        # Handle text files
-        else:
-            for encoding in ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']:
-                try:
-                    text = content.decode(encoding)
-                    break
-                except UnicodeDecodeError:
-                    continue
-            else:
-                raise HTTPException(status_code=400, detail="Unable to read file. Please save as UTF-8 text.")
-        
-        # Clean and split text
-        text = text.replace('\r\n', '\n').replace('\r', '\n')
-        lines = [line.strip() for line in text.split('\n') if line.strip()]
-        questions_added = 0
-        
-        print(f"DEBUG: Processing {len(lines)} lines from {filename}")
-        print(f"DEBUG: First 3 lines: {lines[:3] if len(lines) >= 3 else lines}")
-        
-        # Parse questions
-        for i, line in enumerate(lines):
-            # Skip very short lines
-            if len(line) < 10:
-                continue
-            
-            # Look for question mark
-            if '?' in line:
-                parts = line.split('?', 1)
-                if len(parts) == 2:
-                    question_text = parts[0].strip()
-                    answer = parts[1].strip()
-                    
-                    print(f"DEBUG Line {i}: Q='{question_text[:30]}...' A='{answer[:30]}...'")
-                    
-                    # Must have both question and answer
-                    if question_text and answer and len(question_text) > 3 and len(answer) > 1:
-                        question = Question(
-                            question_text=question_text + '?',
-                            question_type="short_answer",
-                            correct_answer=answer,
-                            points=1,
-                            department=question_department,
-                            level=question_level,
-                            created_by=current_user.id
-                        )
-                        db.add(question)
-                        questions_added += 1
-        
-        print(f"DEBUG: Total questions added: {questions_added}")
-        
-        if questions_added == 0:
-            raise HTTPException(status_code=400, detail="No questions found. Format: 'Question? Answer' (one per line)")
-        
-        db.commit()
-        return {"message": f"Successfully uploaded {questions_added} questions", "count": questions_added}
-    
-    except HTTPException:
-        raise
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=400, detail=f"Upload failed: {str(e)}")
-
-@app.get("/notifications")
 def get_notifications(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     notifications = db.query(Notification).filter(Notification.user_id == current_user.id).order_by(Notification.created_at.desc()).all()
     return [{"id": n.id, "title": n.title, "message": n.message, "type": n.type, "is_read": n.is_read, "created_at": n.created_at.isoformat()} for n in notifications]
 
-@app.get("/lessons")
 def get_lessons(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     lessons = db.query(Lesson).filter(Lesson.is_active == True).all()
     return lessons
 
-@app.post("/lessons")
 def create_lesson(lesson: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role not in ["teacher", "admin"]:
         raise HTTPException(status_code=403, detail="Only teachers and admins can create lessons")
@@ -900,7 +565,6 @@ def create_lesson(lesson: Dict, current_user: User = Depends(get_current_user), 
     db.refresh(new_lesson)
     return {"id": new_lesson.id, "title": new_lesson.title, "code": new_lesson.code, "department": new_lesson.department, "level": new_lesson.level}
 
-@app.get("/questions")
 def get_questions(department: Optional[str] = None, level: Optional[str] = None, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can view questions")
@@ -914,7 +578,6 @@ def get_questions(department: Optional[str] = None, level: Optional[str] = None,
     
     questions = query.all()
     return questions
-
 
 @app.put("/questions/{question_id}")
 def update_question(question_id: int, question_data: QuestionCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -932,8 +595,6 @@ def update_question(question_id: int, question_data: QuestionCreate, current_use
     question.level = question_data.level
     db.commit()
     return question
-
-
 
 @app.delete("/questions/{question_id}")
 def delete_question(question_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -959,7 +620,6 @@ def delete_question(question_id: int, current_user: User = Depends(get_current_u
     db.commit()
     return {"message": "Question deleted successfully"}
 
-@app.delete("/teacher/questions/clear")
 def clear_all_teacher_questions(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can clear questions")
@@ -983,7 +643,6 @@ def clear_all_teacher_questions(current_user: User = Depends(get_current_user), 
     db.commit()
     return {"message": f"Successfully deleted {deleted} questions", "count": deleted}
 
-@app.delete("/quizzes/{quiz_id}")
 def delete_quiz(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can delete quizzes")
@@ -1030,7 +689,6 @@ def get_quiz_leaderboard(quiz_id: int, current_user: User = Depends(get_current_
     
     return sorted(leaderboard, key=lambda x: x["score"], reverse=True)
 
-@app.get("/quizzes/{quiz_id}/export")
 def export_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can export results")
@@ -1098,7 +756,6 @@ def export_quiz_results(quiz_id: int, current_user: User = Depends(get_current_u
     
     return StreamingResponse(buffer, media_type="application/pdf", headers={"Content-Disposition": f"attachment; filename=Quiz_Results_{quiz.title.replace(' ', '_')}.pdf"})
 
-@app.get("/quizzes/{quiz_id}/export/excel")
 def export_quiz_results_excel(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can export results")
@@ -1223,7 +880,6 @@ def get_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user
                 "total": attempt.total_questions,
                 "percentage": round((display_score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1),
 
-            results.append({
                 "student_name": student.full_name,
                 "username": student.username,
                 "score": attempt.score,
@@ -1239,15 +895,12 @@ def get_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user
         "results": sorted(results, key=lambda x: x["score"], reverse=True)
     }
 
-@app.get("/schedules")
 def get_schedules(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return []
 
-@app.get("/announcements")
 def get_announcements(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return []
 
-@app.get("/teacher-lessons/{teacher_id}")
 def get_teacher_lessons(teacher_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     assignments = db.query(TeacherLesson).filter(TeacherLesson.teacher_id == teacher_id).all()
     result = []
@@ -1299,7 +952,6 @@ def assign_lesson_to_teacher(assignment: Dict, current_user: User = Depends(get_
     db.commit()
     return {"message": "Lesson assigned successfully", "teacher_id": teacher_id, "lesson_id": lesson_id}
 
-@app.get("/my-courses")
 def get_my_courses(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can access courses")
@@ -1324,7 +976,6 @@ def get_my_courses(current_user: User = Depends(get_current_user), db: Session =
             })
     return result
 
-@app.post("/quizzes")
 def create_quiz(quiz: QuizCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can create quizzes")
@@ -1415,7 +1066,6 @@ def get_students(department: Optional[str] = None, level: Optional[str] = None, 
     students = query.all()
     return {"students": [{"id": s.id, "username": s.username, "full_name": s.full_name, "department": s.department, "level": s.level} for s in students]}
 
-@app.get("/teachers")
 def get_teachers(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     teachers = db.query(User).filter(User.role == "teacher").all()
     return [{"id": t.id, "username": t.username, "full_name": t.full_name, "departments": t.departments} for t in teachers]
@@ -1596,7 +1246,6 @@ def register_teacher(teacher_data: UserCreate, current_user: User = Depends(get_
     
     return {"teacher": {"id": teacher.id, "username": teacher.username, "full_name": teacher.full_name, "departments": teacher.departments}}
 
-
 @app.get("/student/progress")
 def get_student_progress_endpoint(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "student":
@@ -1666,7 +1315,6 @@ def get_student_progress_endpoint(current_user: User = Depends(get_current_user)
         "improvement_tips": improvement_tips
     }
 
-@app.get("/student-report/{quiz_id}")
 def download_student_report(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "student":
         raise HTTPException(status_code=403, detail="Only students can download their reports")
@@ -1781,8 +1429,6 @@ def download_student_report(quiz_id: int, current_user: User = Depends(get_curre
         headers={"Content-Disposition": f"attachment; filename=Quiz_Report_{quiz.title.replace(' ', '_')}_{current_user.username}.pdf"}
     )
 
-
-
 @app.post("/admin/generate-student-credentials/{department}/{level}")
 async def generate_student_credentials(department: str, level: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "admin":
@@ -1847,6 +1493,35 @@ except Exception as e:
     raise
 
 # Initialize database
+
+@app.post("/report-cheating")
+def report_cheating(data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Report student cheating attempt to teacher"""
+    try:
+        quiz_id = data.get('quiz_id')
+        warnings = data.get('warnings', 0)
+        reason = data.get('reason', 'Unknown')
+        
+        quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
+        if not quiz:
+            return {"message": "Quiz not found"}
+        
+        teacher = db.query(User).filter(User.id == quiz.created_by).first()
+        if teacher:
+            notification = Notification(
+                user_id=teacher.id,
+                title=f"⚠️ Cheating Alert: {quiz.title}",
+                message=f"{current_user.full_name} was caught attempting to cheat ({warnings} violations). Reason: {reason}. Quiz was auto-submitted.",
+                type="cheating_alert"
+            )
+            db.add(notification)
+            db.commit()
+        
+        return {"message": "Cheating reported to teacher"}
+    except Exception as e:
+        print(f"Error reporting cheating: {e}")
+        return {"message": "Failed to report"}
+
 @app.on_event("startup")
 def startup_event():
     Base.metadata.create_all(bind=engine)
@@ -1937,7 +1612,6 @@ def get_pending_reviews(current_user: User = Depends(get_current_user), db: Sess
     return result
 
 # 2. Get attempt details for review
-@app.get("/teacher/review/{attempt_id}")
 def get_attempt_for_review(attempt_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403)
@@ -2003,7 +1677,6 @@ def submit_review(attempt_id: int, review: ReviewRequest, current_user: User = D
     return {"message": "Review submitted", "final_score": new_total}
 
 # 4. Release results to students
-@app.post("/teacher/quiz/{quiz_id}/release-results")
 def release_results(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403)
@@ -2038,8 +1711,6 @@ def get_review_status(quiz_id: int, current_user: User = Depends(get_current_use
         "results_released": quiz.results_released if quiz else False
     }
 
-
-
 # Teacher Review Endpoints
 class GradeAdjustment(BaseModel):
     answer_id: int
@@ -2049,75 +1720,6 @@ class GradeAdjustment(BaseModel):
 class ReviewRequest(BaseModel):
     grades: List[GradeAdjustment]
 
-@app.get("/teacher/pending-reviews")
-def get_pending_reviews(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    attempts = db.query(QuizAttempt).join(Quiz).filter(Quiz.created_by == current_user.id, QuizAttempt.needs_review == True, QuizAttempt.reviewed_by == None).all()
-    result = []
-    for attempt in attempts:
-        quiz = db.query(Quiz).filter(Quiz.id == attempt.quiz_id).first()
-        student = db.query(User).filter(User.id == attempt.user_id).first()
-        result.append({"attempt_id": attempt.id, "quiz_title": quiz.title, "student_name": student.full_name, "score": attempt.score, "submitted_at": attempt.completed_at})
-    return result
-
-@app.get("/teacher/review/{attempt_id}")
-def get_attempt_for_review(attempt_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    attempt = db.query(QuizAttempt).filter(QuizAttempt.id == attempt_id).first()
-    if not attempt:
-        raise HTTPException(status_code=404)
-    quiz = db.query(Quiz).filter(Quiz.id == attempt.quiz_id).first()
-    student = db.query(User).filter(User.id == attempt.user_id).first()
-    answers = db.query(StudentAnswer).filter(StudentAnswer.attempt_id == attempt_id).all()
-    answer_details = []
-    for ans in answers:
-        question = db.query(Question).filter(Question.id == ans.question_id).first()
-        answer_details.append({"answer_id": ans.id, "question_text": question.question_text, "correct_answer": question.correct_answer, "student_answer": ans.student_answer, "ai_score": ans.points_earned, "ai_feedback": ans.ai_feedback, "max_points": question.points, "teacher_score": ans.teacher_score, "teacher_feedback": ans.teacher_feedback})
-    return {"attempt_id": attempt.id, "quiz_title": quiz.title, "student_name": student.full_name, "total_score": attempt.score, "answers": answer_details}
-
-@app.post("/teacher/review/{attempt_id}/grade")
-def submit_review(attempt_id: int, review: ReviewRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    attempt = db.query(QuizAttempt).filter(QuizAttempt.id == attempt_id).first()
-    if not attempt:
-        raise HTTPException(status_code=404)
-    new_total = 0.0
-    for grade in review.grades:
-        answer = db.query(StudentAnswer).filter(StudentAnswer.id == grade.answer_id).first()
-        if answer:
-            answer.teacher_score = grade.score
-            answer.teacher_feedback = grade.feedback
-            new_total += grade.score
-    attempt.final_score = new_total
-    attempt.reviewed_by = current_user.id
-    attempt.needs_review = False
-    db.commit()
-    return {"message": "Review submitted", "final_score": new_total}
-
-@app.post("/teacher/quiz/{quiz_id}/release-results")
-def release_results(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
-    if not quiz or quiz.created_by != current_user.id:
-        raise HTTPException(status_code=404)
-    quiz.results_released = True
-    db.commit()
-    return {"message": "Results released to students"}
-
-@app.get("/teacher/quiz/{quiz_id}/review-status")
-def get_review_status(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    total = db.query(QuizAttempt).filter(QuizAttempt.quiz_id == quiz_id).count()
-    pending = db.query(QuizAttempt).filter(QuizAttempt.quiz_id == quiz_id, QuizAttempt.needs_review == True, QuizAttempt.reviewed_by == None).count()
-    quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
-    return {"total_submissions": total, "pending_review": pending, "results_released": quiz.results_released if quiz else False}
-
-@app.post("/report-cheating")
 def report_cheating(data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     """Report student cheating attempt to teacher"""
     try:
