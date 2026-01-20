@@ -528,6 +528,7 @@ def health_check():
 
     }
 
+@app.get("/auth/test")
 def test_auth(current_user: User = Depends(get_current_user)):
     return {
         "message": "Authentication successful",
@@ -539,14 +540,17 @@ def test_auth(current_user: User = Depends(get_current_user)):
         }
     }
 
+@app.get("/notifications")
 def get_notifications(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     notifications = db.query(Notification).filter(Notification.user_id == current_user.id).order_by(Notification.created_at.desc()).all()
     return [{"id": n.id, "title": n.title, "message": n.message, "type": n.type, "is_read": n.is_read, "created_at": n.created_at.isoformat()} for n in notifications]
 
+@app.get("/lessons")
 def get_lessons(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     lessons = db.query(Lesson).filter(Lesson.is_active == True).all()
     return lessons
 
+@app.post("/lessons")
 def create_lesson(lesson: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role not in ["teacher", "admin"]:
         raise HTTPException(status_code=403, detail="Only teachers and admins can create lessons")
@@ -565,6 +569,7 @@ def create_lesson(lesson: Dict, current_user: User = Depends(get_current_user), 
     db.refresh(new_lesson)
     return {"id": new_lesson.id, "title": new_lesson.title, "code": new_lesson.code, "department": new_lesson.department, "level": new_lesson.level}
 
+@app.get("/questions")
 def get_questions(department: Optional[str] = None, level: Optional[str] = None, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can view questions")
@@ -620,6 +625,7 @@ def delete_question(question_id: int, current_user: User = Depends(get_current_u
     db.commit()
     return {"message": "Question deleted successfully"}
 
+@app.delete("/teacher/questions/clear")
 def clear_all_teacher_questions(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can clear questions")
@@ -643,6 +649,7 @@ def clear_all_teacher_questions(current_user: User = Depends(get_current_user), 
     db.commit()
     return {"message": f"Successfully deleted {deleted} questions", "count": deleted}
 
+@app.delete("/quizzes/{quiz_id}")
 def delete_quiz(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can delete quizzes")
@@ -689,6 +696,7 @@ def get_quiz_leaderboard(quiz_id: int, current_user: User = Depends(get_current_
     
     return sorted(leaderboard, key=lambda x: x["score"], reverse=True)
 
+@app.get("/quizzes/{quiz_id}/export")
 def export_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can export results")
@@ -756,6 +764,7 @@ def export_quiz_results(quiz_id: int, current_user: User = Depends(get_current_u
     
     return StreamingResponse(buffer, media_type="application/pdf", headers={"Content-Disposition": f"attachment; filename=Quiz_Results_{quiz.title.replace(' ', '_')}.pdf"})
 
+@app.get("/quizzes/{quiz_id}/export/excel")
 def export_quiz_results_excel(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can export results")
@@ -895,12 +904,15 @@ def get_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user
         "results": sorted(results, key=lambda x: x["score"], reverse=True)
     }
 
+@app.get("/schedules")
 def get_schedules(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return []
 
+@app.get("/announcements")
 def get_announcements(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     return []
 
+@app.get("/teacher-lessons/{teacher_id}")
 def get_teacher_lessons(teacher_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     assignments = db.query(TeacherLesson).filter(TeacherLesson.teacher_id == teacher_id).all()
     result = []
@@ -952,6 +964,7 @@ def assign_lesson_to_teacher(assignment: Dict, current_user: User = Depends(get_
     db.commit()
     return {"message": "Lesson assigned successfully", "teacher_id": teacher_id, "lesson_id": lesson_id}
 
+@app.get("/my-courses")
 def get_my_courses(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can access courses")
@@ -976,6 +989,7 @@ def get_my_courses(current_user: User = Depends(get_current_user), db: Session =
             })
     return result
 
+@app.post("/quizzes")
 def create_quiz(quiz: QuizCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
         raise HTTPException(status_code=403, detail="Only teachers can create quizzes")
@@ -1066,6 +1080,7 @@ def get_students(department: Optional[str] = None, level: Optional[str] = None, 
     students = query.all()
     return {"students": [{"id": s.id, "username": s.username, "full_name": s.full_name, "department": s.department, "level": s.level} for s in students]}
 
+@app.get("/teachers")
 def get_teachers(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     teachers = db.query(User).filter(User.role == "teacher").all()
     return [{"id": t.id, "username": t.username, "full_name": t.full_name, "departments": t.departments} for t in teachers]
@@ -1315,6 +1330,7 @@ def get_student_progress_endpoint(current_user: User = Depends(get_current_user)
         "improvement_tips": improvement_tips
     }
 
+@app.get("/student-report/{quiz_id}")
 def download_student_report(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "student":
         raise HTTPException(status_code=403, detail="Only students can download their reports")
