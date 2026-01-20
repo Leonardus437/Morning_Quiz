@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVET Quiz System - API Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .test-header {
+            background: #f5f5f5;
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .test-body {
+            padding: 20px;
+        }
+        
+        .test-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #ccc;
+        }
+        
+        .test-item.success {
+            border-left-color: #4caf50;
+            background: #e8f5e9;
+        }
+        
+        .test-item.error {
+            border-left-color: #f44336;
+            background: #ffebee;
+        }
+        
+        .test-item.pending {
+            border-left-color: #ff9800;
+            background: #fff3e0;
+        }
+        
+        .test-name {
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .test-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .status-success {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .status-error {
+            background: #f44336;
+            color: white;
+        }
+        
+        .status-pending {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .test-details {
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-family: 'Courier New', monospace;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-item {
+            text-align: center;
+        }
+        
+        .summary-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .summary-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .success-color { color: #4caf50; }
+        .error-color { color: #f44336; }
+        .pending-color { color: #ff9800; }
+        
+        .url-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+        
+        .url-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 TVET Quiz System</h1>
+            <p>API Verification & Testing Tool</p>
+        </div>
+        
+        <div class="content">
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: bold; display: block; margin-bottom: 10px;">Backend API URL:</label>
+                <input type="text" id="apiUrl" class="url-input" value="https://tvet-quiz-backend.onrender.com" placeholder="Enter backend URL">
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <button class="btn" onclick="runAllTests()">🧪 Run All Tests</button>
+                <button class="btn" onclick="runQuickTest()">⚡ Quick Test</button>
+                <button class="btn" onclick="clearResults()">🗑️ Clear Results</button>
+            </div>
+            
+            <div class="summary" id="summary" style="display: none;">
+                <div class="summary-item">
+                    <div class="summary-value success-color" id="passedCount">0</div>
+                    <div class="summary-label">Passed</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value error-color" id="failedCount">0</div>
+                    <div class="summary-label">Failed</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value pending-color" id="totalCount">0</div>
+                    <div class="summary-label">Total</div>
+                </div>
+            </div>
+            
+            <div id="results"></div>
+        </div>
+    </div>
+    
+    <script>
+        let testResults = [];
+        
+        const tests = {
+            'Backend Health': [
+                { name: 'Health Check', endpoint: '/health', method: 'GET', auth: false },
+                { name: 'API Documentation', endpoint: '/docs', method: 'GET', auth: false, skipJson: true }
+            ],
+            'Authentication': [
+                { name: 'Admin Login', endpoint: '/auth/login', method: 'POST', auth: false, 
+                  body: { username: 'admin', password: 'admin123' } },
+                { name: 'Teacher Login', endpoint: '/auth/login', method: 'POST', auth: false,
+                  body: { username: 'teacher001', password: 'teacher123' } },
+                { name: 'Student Login', endpoint: '/auth/login', method: 'POST', auth: false,
+                  body: { username: 'student001', password: 'pass123' } }
+            ],
+            'Core Features': [
+                { name: 'Get Quizzes', endpoint: '/quizzes', method: 'GET', auth: true },
+                { name: 'Get Questions', endpoint: '/questions', method: 'GET', auth: true },
+                { name: 'Get Lessons', endpoint: '/lessons', method: 'GET', auth: true },
+                { name: 'Get Notifications', endpoint: '/notifications', method: 'GET', auth: true }
+            ],
+            'Admin Features': [
+                { name: 'Get Students', endpoint: '/admin/students', method: 'GET', auth: true },
+                { name: 'Get Teachers', endpoint: '/teachers', method: 'GET', auth: true }
+            ]
+        };
+        
+        let authToken = null;
+        
+        async function runTest(test, apiUrl) {
+            const url = `${apiUrl}${test.endpoint}`;
+            const options = {
+                method: test.method,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            
+            if (test.auth && authToken) {
+                options.headers['Authorization'] = `Bearer ${authToken}`;
+            }
+            
+            if (test.body) {
+                options.body = JSON.stringify(test.body);
+            }
+            
+            try {
+                const startTime = Date.now();
+                const response = await fetch(url, options);
+                const duration = Date.now() - startTime;
+                
+                let data = null;
+                if (!test.skipJson) {
+                    try {
+                        data = await response.json();
+                    } catch (e) {
+                        data = { error: 'Could not parse JSON response' };
+                    }
+                }
+                
+                // Store token from login
+                if (test.endpoint === '/auth/login' && response.ok && data && data.access_token) {
+                    authToken = data.access_token;
+                }
+                
+                return {
+                    success: response.ok,
+                    status: response.status,
+                    duration: duration,
+                    data: data,
+                    error: response.ok ? null : `HTTP ${response.status}`
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    status: 0,
+                    duration: 0,
+                    data: null,
+                    error: error.message
+                };
+            }
+        }
+        
+        async function runAllTests() {
+            const apiUrl = document.getElementById('apiUrl').value.trim();
+            if (!apiUrl) {
+                alert('Please enter a valid API URL');
+                return;
+            }
+            
+            clearResults();
+            document.getElementById('summary').style.display = 'flex';
+            
+            testResults = [];
+            authToken = null;
+            
+            for (const [category, categoryTests] of Object.entries(tests)) {
+                const section = createTestSection(category);
+                document.getElementById('results').appendChild(section);
+                
+                for (const test of categoryTests) {
+                    const result = await runTest(test, apiUrl);
+                    testResults.push({ ...test, ...result, category });
+                    updateTestItem(section, test, result);
+                    updateSummary();
+                    await new Promise(resolve => setTimeout(resolve, 500)); // Delay between tests
+                }
+            }
+        }
+        
+        async function runQuickTest() {
+            const apiUrl = document.getElementById('apiUrl').value.trim();
+            if (!apiUrl) {
+                alert('Please enter a valid API URL');
+                return;
+            }
+            
+            clearResults();
+            document.getElementById('summary').style.display = 'flex';
+            
+            testResults = [];
+            authToken = null;
+            
+            const quickTests = [
+                { name: 'Health Check', endpoint: '/health', method: 'GET', auth: false },
+                { name: 'Admin Login', endpoint: '/auth/login', method: 'POST', auth: false,
+                  body: { username: 'admin', password: 'admin123' } },
+                { name: 'Get Quizzes', endpoint: '/quizzes', method: 'GET', auth: true }
+            ];
+            
+            const section = createTestSection('Quick Test');
+            document.getElementById('results').appendChild(section);
+            
+            for (const test of quickTests) {
+                const result = await runTest(test, apiUrl);
+                testResults.push({ ...test, ...result, category: 'Quick Test' });
+                updateTestItem(section, test, result);
+                updateSummary();
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+        }
+        
+        function createTestSection(category) {
+            const section = document.createElement('div');
+            section.className = 'test-section';
+            section.innerHTML = `
+                <div class="test-header">
+                    <span>${category}</span>
+                    <span class="category-status"></span>
+                </div>
+                <div class="test-body"></div>
+            `;
+            return section;
+        }
+        
+        function updateTestItem(section, test, result) {
+            const body = section.querySelector('.test-body');
+            const item = document.createElement('div');
+            item.className = `test-item ${result.success ? 'success' : 'error'}`;
+            
+            const statusClass = result.success ? 'status-success' : 'status-error';
+            const statusText = result.success ? '✅ PASS' : '❌ FAIL';
+            
+            let details = '';
+            if (result.success) {
+                details = `
+                    <div class="test-details">
+                        <strong>Status:</strong> ${result.status}<br>
+                        <strong>Duration:</strong> ${result.duration}ms<br>
+                        <strong>Response:</strong> ${JSON.stringify(result.data, null, 2).substring(0, 200)}...
+                    </div>
+                `;
+            } else {
+                details = `
+                    <div class="test-details">
+                        <strong>Error:</strong> ${result.error}<br>
+                        <strong>Status:</strong> ${result.status || 'N/A'}
+                    </div>
+                `;
+            }
+            
+            item.innerHTML = `
+                <div class="test-name">${test.name}</div>
+                <div class="test-status ${statusClass}">${statusText}</div>
+                ${details}
+            `;
+            
+            body.appendChild(item);
+        }
+        
+        function updateSummary() {
+            const passed = testResults.filter(r => r.success).length;
+            const failed = testResults.filter(r => !r.success).length;
+            const total = testResults.length;
+            
+            document.getElementById('passedCount').textContent = passed;
+            document.getElementById('failedCount').textContent = failed;
+            document.getElementById('totalCount').textContent = total;
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('summary').style.display = 'none';
+            testResults = [];
+            authToken = null;
+        }
+        
+        // Auto-run quick test on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                runQuickTest();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

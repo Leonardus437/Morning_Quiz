@@ -1,0 +1,44 @@
+{
+  "name": "quiz-system-desktop",
+  "version": "1.0.0",
+  "description": "TVET Quiz System - Offline Desktop Application",
+  "main": "electron/main.js",
+  "scripts": {
+    "electron": "electron .",
+    "electron-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
+    "build": "npm run build:frontend && npm run build:backend && npm run build:electron",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "pyinstaller --onefile --distpath dist/backend backend/main.py",
+    "build:electron": "electron-builder",
+    "dist": "npm run build && electron-builder --publish=never"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.0.1"
+  },
+  "build": {
+    "appId": "com.tvet.quizsystem",
+    "productName": "TVET Quiz System",
+    "directories": {
+      "output": "dist/installers"
+    },
+    "files": [
+      "electron/**/*",
+      "frontend/build/**/*",
+      "dist/backend/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

@@ -1,0 +1,71 @@
+========================================
+HOW TO UPLOAD STUDENTS FROM EXCEL
+========================================
+
+METHOD 1: Drag and Drop (Easiest)
+----------------------------------
+1. Drag your Excel file onto UPLOAD_EXCEL.bat
+2. Wait for processing
+3. Done! Check credentials.txt for login details
+
+METHOD 2: Command Line
+----------------------
+1. Open Command Prompt in this folder
+2. Run: UPLOAD_EXCEL.bat "your_file.xlsx" DEPARTMENT LEVEL
+   Example: UPLOAD_EXCEL.bat "L5_LSV.xls" LSV L5
+3. Check credentials.txt for login details
+
+EXCEL FILE FORMAT
+-----------------
+Your Excel file should have a column named one of:
+- Name
+- NAMES
+- Student Name
+- Full Name
+
+Example:
+| Name          | Other columns... |
+|---------------|------------------|
+| John Doe      | ...              |
+| Jane Smith    | ...              |
+
+DEPARTMENTS
+-----------
+LSV, ICT, ENG, AUTO, CONST, ELECT, etc.
+
+LEVELS
+------
+L3, L4, L5, L6
+
+WHAT HAPPENS
+------------
+✅ Reads names from Excel
+✅ Generates unique usernames (student001, student002, etc.)
+✅ Generates random passwords
+✅ Saves to database
+✅ Creates credentials.txt file with all login details
+
+CREDENTIALS FILE
+----------------
+After upload, you'll get a credentials.txt file with:
+- Student names
+- Usernames
+- Passwords
+
+Print this and distribute to students!
+
+TROUBLESHOOTING
+---------------
+❌ "File not found" → Check file path
+❌ "No column named..." → Rename your column to "Name"
+❌ "Container not running" → Run: docker-compose up -d
+
+QUICK START
+-----------
+1. Make sure system is running (docker-compose up -d)
+2. Drag Excel file onto UPLOAD_EXCEL.bat
+3. Print credentials.txt
+4. Give to students
+5. Students login at http://YOUR-IP:3000
+
+========================================

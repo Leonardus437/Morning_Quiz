@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Morning Quiz - New Features Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 15px; margin: 5px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin: 10px 0; padding: 10px; background: #f8f9fa; border-left: 4px solid #007bff; }
+        input { padding: 8px; margin: 5px; width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>🎓 Morning Quiz System - New Features</h1>
+    
+    <div class="section">
+        <h2>🔐 Login</h2>
+        <input type="text" id="username" placeholder="Username" value="admin">
+        <input type="password" id="password" placeholder="Password" value="admin123">
+        <button onclick="login()">Login</button>
+        <div id="loginResult" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h2>📊 Student Progress Tracking</h2>
+        <button onclick="getProgress()">Get Student Progress</button>
+        <div id="progressResult" class="result" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+        <h2>📋 DOS Quiz Reports</h2>
+        <button onclick="getReport('daily')">Daily Report</button>
+        <button onclick="getReport('weekly')">Weekly Report</button>
+        <button onclick="getReport('monthly')">Monthly Report</button>
+        <br><br>
+        <input type="text" id="department" placeholder="Department (optional)" value="Software Development">
+        <input type="text" id="level" placeholder="Level (optional)" value="Level 3">
+        <button onclick="getFilteredReport()">Filtered Daily Report</button>
+        <div id="reportResult" class="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        let token = '';
+
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('http://localhost:8000/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                if (data.access_token) {
+                    token = data.access_token;
+                    document.getElementById('loginResult').innerHTML = `✅ Login successful! Role: ${data.user.role}`;
+                    document.getElementById('loginResult').style.display = 'block';
+                } else {
+                    throw new Error('Login failed');
+                }
+            } catch (error) {
+                document.getElementById('loginResult').innerHTML = `❌ Login failed: ${error.message}`;
+                document.getElementById('loginResult').style.display = 'block';
+            }
+        }
+
+        async function getProgress() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://localhost:8000/student/progress', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await response.json();
+                document.getElementById('progressResult').innerHTML = `
+                    <h3>📈 Progress Summary</h3>
+                    <p><strong>Overall Percentage:</strong> ${data.overall_percentage}%</p>
+                    <p><strong>Total Quizzes:</strong> ${data.total_quizzes}</p>
+                    <h4>💡 Improvement Tips:</h4>
+                    <ul>${data.improvement_tips.map(tip => `<li>${tip}</li>`).join('')}</ul>
+                    <h4>📚 Recent Quizzes:</h4>
+                    ${data.recent_quizzes.length > 0 ? 
+                        `<ul>${data.recent_quizzes.slice(0,5).map(quiz => 
+                            `<li>${quiz.quiz_title} - ${quiz.percentage}% (${quiz.grade})</li>`
+                        ).join('')}</ul>` : 
+                        '<p>No quiz attempts yet.</p>'
+                    }
+                `;
+                document.getElementById('progressResult').style.display = 'block';
+            } catch (error) {
+                document.getElementById('progressResult').innerHTML = `❌ Error: ${error.message}`;
+                document.getElementById('progressResult').style.display = 'block';
+            }
+        }
+
+        async function getReport(type) {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`http://localhost:8000/admin/quiz-reports/${type}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${type}_report.pdf`;
+                    a.click();
+                    
+                    document.getElementById('reportResult').innerHTML = `✅ ${type.charAt(0).toUpperCase() + type.slice(1)} report downloaded successfully!`;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                document.getElementById('reportResult').style.display = 'block';
+            } catch (error) {
+                document.getElementById('reportResult').innerHTML = `❌ Error: ${error.message}`;
+                document.getElementById('reportResult').style.display = 'block';
+            }
+        }
+
+        async function getFilteredReport() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            const dept = document.getElementById('department').value;
+            const level = document.getElementById('level').value;
+            
+            let url = 'http://localhost:8000/admin/quiz-reports/daily';
+            const params = new URLSearchParams();
+            if (dept) params.append('department', dept);
+            if (level) params.append('level', level);
+            if (params.toString()) url += '?' + params.toString();
+            
+            try {
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url2 = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url2;
+                    a.download = `filtered_daily_report.pdf`;
+                    a.click();
+                    
+                    document.getElementById('reportResult').innerHTML = `✅ Filtered report downloaded successfully!`;
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                document.getElementById('reportResult').style.display = 'block';
+            } catch (error) {
+                document.getElementById('reportResult').innerHTML = `❌ Error: ${error.message}`;
+                document.getElementById('reportResult').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

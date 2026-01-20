@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Blockchain Questions - TVET Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-input-label:hover {
+            background: #e8eaf6;
+            border-color: #5568d3;
+        }
+        
+        .file-name {
+            margin-top: 10px;
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+        
+        .info-box h3 {
+            color: #1976D2;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .info-box p {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Upload Blockchain Questions</h1>
+        <p class="subtitle">Import 50 Blockchain Fundamentals questions into the quiz system</p>
+        
+        <div class="info-box">
+            <h3>ℹ️ File Information</h3>
+            <p>The system will automatically parse your text file and extract all 50 questions with their options and correct answers.</p>
+        </div>
+        
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="department">Department *</label>
+                <select id="department" required>
+                    <option value="">Select Department</option>
+                    <option value="Software Development">Software Development</option>
+                    <option value="Computer System and Architecture">Computer System and Architecture</option>
+                    <option value="Information Technology">Information Technology</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="level">Level *</label>
+                <select id="level" required>
+                    <option value="">Select Level</option>
+                    <option value="Level 3">Level 3</option>
+                    <option value="Level 4">Level 4</option>
+                    <option value="Level 5">Level 5</option>
+                    <option value="ND1">ND1</option>
+                    <option value="ND2">ND2</option>
+                    <option value="HND1">HND1</option>
+                    <option value="HND2">HND2</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="lesson">Lesson/Course *</label>
+                <select id="lesson" required>
+                    <option value="">Select Lesson First (Department & Level required)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Question File *</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="fileInput" accept=".txt" required>
+                    <label for="fileInput" class="file-input-label">
+                        📄 Click to select .txt file
+                    </label>
+                </div>
+                <div class="file-name" id="fileName"></div>
+            </div>
+            
+            <button type="submit" id="submitBtn">
+                🚀 Upload Questions
+            </button>
+        </form>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px; color: #667eea;">Processing questions...</p>
+        </div>
+        
+        <div class="message" id="message"></div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:8000';
+        let authToken = '';
+        
+        // File input handler
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || '';
+            document.getElementById('fileName').textContent = fileName ? `Selected: ${fileName}` : '';
+        });
+        
+        // Load lessons when department and level are selected
+        document.getElementById('department').addEventListener('change', loadLessons);
+        document.getElementById('level').addEventListener('change', loadLessons);
+        
+        async function loadLessons() {
+            const department = document.getElementById('department').value;
+            const level = document.getElementById('level').value;
+            const lessonSelect = document.getElementById('lesson');
+            
+            if (!department || !level) {
+                lessonSelect.innerHTML = '<option value="">Select Department & Level first</option>';
+                return;
+            }
+            
+            try {
+                // First, try to get token (you'll need to implement login)
+                if (!authToken) {
+                    authToken = prompt('Please enter your teacher access token:');
+                    if (!authToken) return;
+                }
+                
+                const response = await fetch(`${API_URL}/lessons?department=${encodeURIComponent(department)}&level=${encodeURIComponent(level)}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load lessons');
+                
+                const lessons = await response.json();
+                
+                lessonSelect.innerHTML = '<option value="">Select Lesson</option>';
+                lessons.forEach(lesson => {
+                    const option = document.createElement('option');
+                    option.value = lesson.id;
+                    option.textContent = `${lesson.code} - ${lesson.title}`;
+                    lessonSelect.appendChild(option);
+                });
+                
+            } catch (error) {
+                console.error('Error loading lessons:', error);
+                lessonSelect.innerHTML = '<option value="">Error loading lessons</option>';
+            }
+        }
+        
+        // Form submission
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const department = document.getElementById('department').value;
+            const level = document.getElementById('level').value;
+            const lessonId = document.getElementById('lesson').value;
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showMessage('Please select a file', 'error');
+                return;
+            }
+            
+            if (!authToken) {
+                authToken = prompt('Please enter your teacher access token:');
+                if (!authToken) return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('message').style.display = 'none';
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('department', department);
+                formData.append('level', level);
+                formData.append('lesson_id', lessonId);
+                
+                const response = await fetch(`${API_URL}/questions/upload-text`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    showMessage(`✅ ${result.message}\n\nTotal questions imported: ${result.total}`, 'success');
+                    document.getElementById('uploadForm').reset();
+                    document.getElementById('fileName').textContent = '';
+                } else {
+                    showMessage(`❌ ${result.detail || result.message || 'Upload failed'}`, 'error');
+                }
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                showMessage(`❌ Error: ${error.message}`, 'error');
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+        
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

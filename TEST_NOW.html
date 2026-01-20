@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head><title>TEST UPLOAD</title></head>
+<body>
+<h1>Upload Your .xlsx File</h1>
+<input type="file" id="file" accept=".xlsx">
+<select id="dept"><option value="LSV">LSV</option></select>
+<select id="level"><option value="L3">L3</option></select>
+<button onclick="test()">UPLOAD NOW</button>
+<div id="result"></div>
+<script>
+async function test() {
+    const token = localStorage.getItem('token');
+    const file = document.getElementById('file').files[0];
+    const dept = document.getElementById('dept').value;
+    const level = document.getElementById('level').value;
+    
+    if (!token) {
+        document.getElementById('result').innerHTML = 'ERROR: No token. Login first at http://localhost:3000/admin';
+        return;
+    }
+    
+    if (!file) {
+        document.getElementById('result').innerHTML = 'ERROR: Select a file';
+        return;
+    }
+    
+    document.getElementById('result').innerHTML = 'Uploading...';
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('department', dept);
+    formData.append('level', level);
+    
+    try {
+        const response = await fetch('http://localhost:8000/admin/upload-students-excel', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('result').innerHTML = `
+                <h2 style="color:green">SUCCESS!</h2>
+                <p>Total: ${data.total}</p>
+                <p>Created: ${data.created}</p>
+                <p>Updated: ${data.updated}</p>
+                <pre>${JSON.stringify(data.credentials.slice(0,5), null, 2)}</pre>
+            `;
+        } else {
+            document.getElementById('result').innerHTML = `<h2 style="color:red">FAILED: ${data.detail}</h2>`;
+        }
+    } catch (error) {
+        document.getElementById('result').innerHTML = `<h2 style="color:red">ERROR: ${error.message}</h2>`;
+    }
+}
+</script>
+</body>
+</html>

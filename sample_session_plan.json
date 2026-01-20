@@ -1,0 +1,128 @@
+{
+  "template_type": "session_plan",
+  "header_info": {
+    "sector": "ICT & MULTIMEDIA",
+    "sub_sector": "Software Development",
+    "date": "15/10/2025",
+    "trainer_name": "TUYISINGIZE Leonard",
+    "term": "I",
+    "module": "SWDPR301 Analyze project requirements",
+    "week": "I",
+    "num_learners": 54,
+    "class": "1",
+    "learning_outcome": "Design database schemas",
+    "indicative_contents": "Entity-Relationship modeling",
+    "topic": "Introduction to Database Design",
+    "range": "Methods of entity-relationship modeling\nDescription of entity-relationship modeling tools",
+    "duration": "45min",
+    "objectives": [
+      "Define clearly a term introduction to database design as used in design database schemas",
+      "Select properly 2 methods related to entity-relationship modeling",
+      "Name appropriately 2 tools used in entity-relationship modeling"
+    ],
+    "facilitation_technique": "JIGSAW"
+  },
+  "session_phases": [
+    {
+      "phase": "Introduction",
+      "duration": "5 minutes",
+      "trainer_activities": [
+        "Greets and makes roll calls",
+        "Involves the learners to set the ground rules",
+        "Involves learners to review the previous session",
+        "Announces the topic of the session",
+        "Explains objectives of the session"
+      ],
+      "learner_activities": [
+        "Greets and reply to the roll call",
+        "Participate and set the ground rules",
+        "Participate in review the previous session",
+        "Ask clarifications about the topic of the session",
+        "Read and participate in explaining the objectives of the session"
+      ],
+      "resources": [
+        "Attendance sheet",
+        "PPT",
+        "Projector",
+        "Computer",
+        "Blackboard",
+        "Chalk",
+        "Pen"
+      ]
+    },
+    {
+      "phase": "Development/Body",
+      "duration": "35 minutes",
+      "trainer_activities": [
+        "Step 1: Forming groups (home group and expert group)",
+        "Gives the instructions of how to form groups (by counting from 1 to 5)",
+        "Asks the learners to name their home group",
+        "Asks learners who counted the same number to join together to form expert groups",
+        "Step 2: Discussion and sharing in expert groups",
+        "Distributes the task sheets to the expert groups",
+        "Monitors the expert group discussion",
+        "Reminds them the remaining time accordingly",
+        "Asks them to stop expert groups discussions",
+        "Asks learners to back to their home group",
+        "Step 3: Sharing expertise in home groups",
+        "Asks the learners to share what they learnt from expert teams",
+        "Monitors home group discussion and remind them the remaining time",
+        "Declares the end of home groups discussions"
+      ],
+      "learner_activities": [
+        "Follow the instructions about how to form groups by counting",
+        "Name their home groups",
+        "Those who counted the same number join together",
+        "Receive task sheets within their expert group",
+        "Discuss on their tasks within their expert group",
+        "Become aware of remaining time and work accordingly",
+        "Stop expert groups discussion",
+        "Re-join their home groups",
+        "Everyone explains to his/her group members what he/she learned in expert group",
+        "Continue discussion accordingly to the remaining time",
+        "End home groups discussions"
+      ],
+      "resources": [
+        "Computer",
+        "Projector",
+        "PPT",
+        "Task sheets"
+      ]
+    },
+    {
+      "phase": "Conclusion",
+      "duration": "5 minutes",
+      "trainer_activities": [
+        "Involves the learners to summarize the session by asking questions reflecting on the learning objectives",
+        "Instructs students details concerning assessment",
+        "Assigns formative assessment questions to students",
+        "Monitors how assessment is being done",
+        "Collects students' papers of assessment",
+        "Involves learners in the evaluation of the session",
+        "Links the current to the next session"
+      ],
+      "learner_activities": [
+        "Summarize the session by responding the asked questions",
+        "Get assessment's instructions and ask for clarifications wherever needed",
+        "Sit for assessment questions",
+        "Work for assessment questions given",
+        "Submit assessment papers",
+        "Evaluate the session by providing answers of asked questions"
+      ],
+      "resources": [
+        "Computer",
+        "Projector",
+        "Assessment sheets",
+        "Self-assessment form"
+      ]
+    }
+  ],
+  "appendices": [
+    "PowerPoint",
+    "Task Sheets",
+    "Assessment sheet",
+    "Answer sheets"
+  ],
+  "references": [],
+  "reflection": ""
+}

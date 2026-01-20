@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complete Data Flow Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .data { background: #f5f5f5; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Morning Quiz System - Complete Data Flow Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testCompleteFlow() {
+            const results = document.getElementById('results');
+            let token = '';
+            
+            try {
+                results.innerHTML += '<h2>🔐 Testing Authentication</h2>';
+                
+                // Test login
+                const loginResponse = await fetch('http://localhost:8000/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                
+                if (!loginResponse.ok) {
+                    throw new Error('Login failed');
+                }
+                
+                const loginData = await loginResponse.json();
+                token = loginData.access_token;
+                results.innerHTML += '<p class="success">✅ Login successful</p>';
+                results.innerHTML += `<div class="data">User: ${loginData.user.full_name} (${loginData.user.role})</div>`;
+                
+                results.innerHTML += '<h2>📊 Testing Data Endpoints</h2>';
+                
+                // Test questions endpoint
+                const questionsResponse = await fetch('http://localhost:8000/questions', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!questionsResponse.ok) {
+                    throw new Error('Questions fetch failed');
+                }
+                
+                const questions = await questionsResponse.json();
+                results.innerHTML += `<p class="success">✅ Questions loaded: ${questions.length} items</p>`;
+                
+                if (questions.length > 0) {
+                    results.innerHTML += `<div class="data">Sample Question: "${questions[0].question_text}" (${questions[0].department})</div>`;
+                }
+                
+                // Test quizzes endpoint
+                const quizzesResponse = await fetch('http://localhost:8000/quizzes', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!quizzesResponse.ok) {
+                    throw new Error('Quizzes fetch failed');
+                }
+                
+                const quizzes = await quizzesResponse.json();
+                results.innerHTML += `<p class="success">✅ Quizzes loaded: ${quizzes.length} items</p>`;
+                
+                // Test lessons endpoint
+                const lessonsResponse = await fetch('http://localhost:8000/lessons', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!lessonsResponse.ok) {
+                    throw new Error('Lessons fetch failed');
+                }
+                
+                const lessons = await lessonsResponse.json();
+                results.innerHTML += `<p class="success">✅ Lessons loaded: ${lessons.length} items</p>`;
+                
+                results.innerHTML += '<h2>🎯 Summary</h2>';
+                results.innerHTML += '<p class="success"><strong>✅ ALL SYSTEMS OPERATIONAL!</strong></p>';
+                results.innerHTML += `<div class="data">
+                    <strong>Database Status:</strong><br>
+                    • Questions: ${questions.length}<br>
+                    • Quizzes: ${quizzes.length}<br>
+                    • Lessons: ${lessons.length}<br>
+                    • Authentication: Working<br>
+                    • API: Fully functional
+                </div>`;
+                
+                results.innerHTML += '<p><strong>Next Steps:</strong></p>';
+                results.innerHTML += '<ul>';
+                results.innerHTML += '<li>Login to admin panel: <a href="http://localhost:3000/admin" target="_blank">http://localhost:3000/admin</a></li>';
+                results.innerHTML += '<li>Use credentials: admin / admin123</li>';
+                results.innerHTML += '<li>Clear browser cache if still showing 0 records</li>';
+                results.innerHTML += '</ul>';
+                
+            } catch (error) {
+                results.innerHTML += `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+        
+        testCompleteFlow();
+    </script>
+</body>
+</html>

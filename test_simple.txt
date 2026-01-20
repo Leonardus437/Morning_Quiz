@@ -1,0 +1,7 @@
+1. What is Python?
+a) Programming language
+b) Snake
+Answer: a
+
+2. True or False?
+Answer: True

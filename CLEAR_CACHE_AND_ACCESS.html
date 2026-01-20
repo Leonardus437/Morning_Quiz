@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Cache & Access Admin</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .warning { background: #fff3cd; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #ffc107; }
+        .success { background: #d4edda; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #28a745; }
+        .button { display: inline-block; padding: 15px 30px; margin: 10px; background: #007cba; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .button:hover { background: #005a8c; }
+        .steps { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0; }
+        .steps ol { margin: 10px 0; padding-left: 20px; }
+        .steps li { margin: 10px 0; }
+        code { background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Fix Admin Panel Access Issue</h1>
+        
+        <div class="warning">
+            <h3>⚠️ Problem Detected</h3>
+            <p>Your browser has cached two different versions of the admin panel:</p>
+            <ul>
+                <li><code>http://localhost:3000/admin</code> - Old cached version</li>
+                <li><code>http://127.0.0.1:3000/admin</code> - Old cached version</li>
+            </ul>
+            <p><strong>Both should show the same modern admin panel with student management features.</strong></p>
+        </div>
+        
+        <div class="steps">
+            <h3>📋 Follow These Steps to Fix:</h3>
+            <ol>
+                <li><strong>Close ALL browser windows</strong> completely</li>
+                <li><strong>Clear browser cache:</strong>
+                    <ul>
+                        <li>Chrome/Edge: Press <code>Ctrl+Shift+Delete</code></li>
+                        <li>Select "All time" for time range</li>
+                        <li>Check "Cached images and files"</li>
+                        <li>Check "Cookies and other site data"</li>
+                        <li>Click "Clear data"</li>
+                    </ul>
+                </li>
+                <li><strong>Open browser in Incognito/Private mode</strong> (Ctrl+Shift+N)</li>
+                <li><strong>Click the button below to access admin panel</strong></li>
+            </ol>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="http://localhost:3000/admin" class="button" target="_blank">
+                🚀 Open Admin Panel (localhost)
+            </a>
+        </div>
+        
+        <div class="success">
+            <h3>✅ What You Should See:</h3>
+            <ul>
+                <li>Modern login page with "DOS Portal" title</li>
+                <li>Blue/purple gradient design</li>
+                <li>After login: Navigation with "👥 Students" tab</li>
+                <li>In Students tab: "📄 Upload Students" and "🔑 Generate Credentials" buttons</li>
+            </ul>
+            <p><strong>Login Credentials:</strong></p>
+            <ul>
+                <li>Username: <code>admin</code></li>
+                <li>Password: <code>admin123</code></li>
+            </ul>
+        </div>
+        
+        <div class="warning">
+            <h3>🔄 Alternative: Force Refresh</h3>
+            <p>If clearing cache doesn't work, try this:</p>
+            <ol>
+                <li>Go to <code>http://localhost:3000/admin</code></li>
+                <li>Press <code>Ctrl+Shift+R</code> (Windows) or <code>Cmd+Shift+R</code> (Mac)</li>
+                <li>This forces a hard refresh bypassing cache</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Clear localStorage and sessionStorage
+        try {
+            localStorage.clear();
+            sessionStorage.clear();
+            console.log('✅ Storage cleared');
+        } catch(e) {
+            console.log('⚠️ Could not clear storage:', e);
+        }
+    </script>
+</body>
+</html>

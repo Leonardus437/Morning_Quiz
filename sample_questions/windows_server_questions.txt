@@ -1,0 +1,20 @@
+What is a server? A computer that provides services and resources to other computers on a network
+What is a client? A computer that requests and uses services from a server
+What does NOS stand for? Network Operating System
+What is a hypervisor? Software that creates and manages virtual machines
+What is server virtualization? Technology that allows multiple virtual servers to run on a single physical server
+What is RAID? Redundant Array of Independent Disks - a data storage technology
+What does ADDS stand for? Active Directory Domain Services
+What is a domain controller? A server that manages network security and user authentication in a Windows domain
+What is the main benefit of server virtualization? Efficient use of hardware resources and cost reduction
+What is RAID Level 0? Disk striping without redundancy for improved performance
+What is RAID Level 1? Disk mirroring for data redundancy
+What is RAID Level 5? Disk striping with distributed parity for performance and redundancy
+What are the two types of hypervisors? Type 1 (bare-metal) and Type 2 (hosted)
+What is a virtual machine? A software-based emulation of a physical computer
+What is the purpose of Active Directory? Centralized management of network resources and user accounts
+What is promotion in server administration? Converting a regular server into a domain controller
+What is a guest OS? An operating system installed on a virtual machine
+What are the main hardware requirements for a server? Sufficient RAM, CPU cores, storage capacity, and network interface
+What is the advantage of RAID 1? Complete data redundancy and fault tolerance
+What is the disadvantage of RAID 0? No fault tolerance - data loss if one disk fails

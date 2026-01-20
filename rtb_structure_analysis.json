@@ -1,0 +1,600 @@
+{
+  "session_plan": {
+    "header_info": {
+      "sector": "Sector :    ICT & MULTIMEDIA",
+      "sub_sector": "Sub-sector: Software Development",
+      "date": "Date : …/…/ 2023",
+      "trainer_name": "Lead Trainer’s name : TUYISINGIZE Leonard",
+      "term": "TERM : I",
+      "module": "Module(Code&Name): SWDPR301 Analyze project requirements",
+      "week": "Week : I",
+      "num_learners": "No. Learners: 54",
+      "class": "Class:1",
+      "learning_outcome": "1.Identify customer needs",
+      "indicative_contents": "1.1 Data gathering",
+      "topic": "Topic of the session: Identification of requirements Gathering  methodologies.",
+      "range": "Range: \nMethods of collecting data\nDescription of data collection Tools (Traditional and online forms Peripherals )",
+      "duration": "Duration of the session: 40min",
+      "objectives": "Objectives: By the end of this session every learner should be able to:\nDefine clearly a term gathering methodologies as used in identifying customer needs.\nSelect properly 2 methods of collecting data used in data gathering.\nName appropriately 2 data collection Tools (both Traditional and online forms Peripherals) as used in data gathering.",
+      "facilitation_technique": "Facilitation technique(s):   JIGSAW"
+    },
+    "learning_details": {},
+    "session_phases": [
+      {
+        "phase": "Introduction",
+        "activities": "Trainer’s activity: \nGreets and Makes roll calls\nInvolves the learners to set the ground rules\nInvolves learners to review the previous session\nAnnounces the topic of the session.\nExplains objectives of the session\nLearner’s activity: \nGreets and Reply to the roll call.\nParticipate and set the ground rules\nParticipate in review the previous session\nAsk clarifications about the topic of the session\nRead and participate in explaining the objectives of the session.",
+        "resources": "Attendance sheet\nPPT\nProjector\nComputer\nBlackboard\nChalk \npen",
+        "duration": "5 minutes"
+      },
+      {
+        "phase": "Development/Body",
+        "activities": "Step 1: Forming groups (home group and expert group)\nTrainer’s activity: \nGives the instructions of how to form groups (by counting from 1 to 5)\nAsks the learners to name their home group.\nAsks learners who counted the same number to join together to form expert groups.\nLearner’s activity:\nFollow the instructions about how to form groups by counting\nName their home groups\nThose Who counted the same number join together\nStep 2: Discussion and sharing in expert groups\nTrainer’s activity: \nDistributes the task sheets to the expert groups. \nMonitors the expert group discussion.\nReminds them the remaining time accordingly \nAsks them to stop expert groups discussions\nAsks learners to back to their home group\nLearner’s activity:\nReceive task sheets within their expert group.\nDiscuss on their tasks within their expert group.\nBecame aware of remaining time and work accordingly.\nStop expert groups discussion \nRe-join their home groups \nStep 3: Sharing expertise in home groups\nTrainer’s activity: \nAsks the learners to share what they learnt from expert teams \nMonitors home group discussion and remind them the remaining time.\nDeclares the end of home groups discussions \nLearner’s activity:\nEveryone explains to his/her group members what he/she learned in expert group.\nContinue discussion accordingly to the remaining time\nEnd home groups discussions",
+        "resources": "Computer\nprojector, \nPPT",
+        "duration": "25\nminutes"
+      },
+      {
+        "phase": "Conclusion",
+        "activities": "Summary:\nThe trainer involves the learners to summarize the session by asking questions reflecting on the learning objectives.\nThe learners summarize the session by responding the asked questions.",
+        "resources": "Computer \nprojector",
+        "duration": "3 minutes"
+      }
+    ]
+  },
+  "schemes_of_work": {
+    "CSAPA 301 Scheme of work.docx": {
+      "course_info": {
+        "province": "Southern province",
+        "district": "Kamonyi district",
+        "sector": "Runda sector",
+        "school": "Runda TSS",
+        "trainer": "Trainer’s name and signature: TUYISINGIZE Leonard\t\t\t\t           "
+      },
+      "weekly_breakdown": [
+        {
+          "weeks": "8 / 9 / 2025 – 19 / 12 / 2025",
+          "learning_outcome": "LO1:   Prepare Tools, material and Equipment",
+          "duration": "10 hours",
+          "indicative_content": "IC1.1:   Preparation of workplace",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer system and architecture Workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "8 / 9 / 2025 – 19 / 12 / 2025",
+          "learning_outcome": "LO1:   Prepare Tools, material and Equipment",
+          "duration": "10 hours",
+          "indicative_content": "IC1.2:  Identification of tools, materials and equipment",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer system and architecture Workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "8 / 9 / 2025 – 19 / 12 / 2025",
+          "learning_outcome": "LO1:   Prepare Tools, material and Equipment",
+          "duration": "10 hours",
+          "indicative_content": "IC1.3:  \nCalibration of equipment",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nRouters",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer system and architecture Workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "8 / 9 / 2025 – 19 / 12 / 2025",
+          "learning_outcome": "LO2:   Assemble PCBA using SMT",
+          "duration": "50 hours",
+          "indicative_content": "IC2.1:    Introduction to PCB",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written and practical assessment",
+          "learning_place": "",
+          "observation": ""
+        },
+        {
+          "weeks": "8 / 9 / 2025 – 19 / 12 / 2025",
+          "learning_outcome": "",
+          "duration": "",
+          "indicative_content": "IC2.2:  Identification of PCBA technologies",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "",
+          "learning_place": "",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026  - April 3, 2026",
+          "learning_outcome": "LO2:   Assemble PCBA using SMT",
+          "duration": "",
+          "indicative_content": "IC2.3:  Description of Surface Mount technology for PCBA",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer system and architecture Workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026  - April 3, 2026",
+          "learning_outcome": "LO2:   Assemble PCBA using SMT",
+          "duration": "",
+          "indicative_content": "IC2.4:  Perform SMT PCB Assembly process",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer system and architecture Workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:   Connect computer system parts",
+          "duration": "20 hours",
+          "indicative_content": "IC1.1:   Description of computer hardware parts",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer system and architecture Workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:   Connect computer system parts",
+          "duration": "20 hours",
+          "indicative_content": "IC1.2:   ● Connection of Desktop Computer parts",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer system and architecture Workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:   Connect computer system parts",
+          "duration": "20 hours",
+          "indicative_content": "IC1.3:  Connection of Laptop Computer parts",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer system and architecture Workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "",
+          "duration": "",
+          "indicative_content": "IC1.3:   Test of assembled computer",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "",
+          "learning_place": "",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "",
+          "duration": "",
+          "indicative_content": "I.C 1.4 Documentation of Assembly report",
+          "learning_activities": "● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, screen, Printers",
+          "assessment": "",
+          "learning_place": "",
+          "observation": ""
+        }
+      ],
+      "assessment_schedule": [
+        {
+          "weeks": "January 5, 2026  - April 3, 2026",
+          "learning_outcome": "Integrated Assessment (for specific module)",
+          "duration": "Integrated Assessment (for specific module)",
+          "indicative_content": "Integrated Assessment (for specific module)",
+          "learning_activities": "Task",
+          "resources": "Consumables",
+          "assessment": "",
+          "learning_place": "workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "4",
+          "learning_outcome": "Integrated Assessment (for specific module)",
+          "duration": "Integrated Assessment (for specific module)",
+          "indicative_content": "Integrated Assessment (for specific module)",
+          "learning_activities": "Task",
+          "resources": "Consumables",
+          "assessment": "",
+          "learning_place": "workshop",
+          "observation": ""
+        }
+      ]
+    },
+    "SCHEME_OF_WORK_OF_C_PROGRAMMING_L4CSA.docx": {
+      "course_info": {
+        "province": "Southern province",
+        "district": "Kamonyi district",
+        "sector": "Runda sector",
+        "school": "Runda TSS",
+        "trainer": "Trainer’s name and signature: TUYISINGIZE Leonard\t\t\t\t           "
+      },
+      "weekly_breakdown": [
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "LO1:   Apply Computer programming Languages",
+          "duration": "10 hours",
+          "indicative_content": "IC1.1:  Identification of programming Language",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "LO1:   Apply Computer programming Languages",
+          "duration": "10 hours",
+          "indicative_content": "IC1.2: \nDevelopment of an algorithm",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "LO1:   Apply Computer programming Languages",
+          "duration": "10 hours",
+          "indicative_content": "IC1.3:  Development of a flowchart",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "60 hours",
+          "indicative_content": "IC2.1:   Description of C programming concepts",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written and practical assessment",
+          "learning_place": "",
+          "observation": ""
+        },
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "",
+          "duration": "",
+          "indicative_content": "IC2.2: Description of C program structure",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "",
+          "learning_place": "",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 -  on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "",
+          "indicative_content": "IC2.3: Application of condition statements",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 -  on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "",
+          "indicative_content": "IC2.4: Application of loops",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 -  on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "",
+          "indicative_content": "IC2.5: Application of functions",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 -  on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "",
+          "indicative_content": "IC 2.6 : Application of pointers",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 -  on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "",
+          "indicative_content": "IC 2.7 : Application of Arrays",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:  Perform Program Testing",
+          "duration": "10 hours",
+          "indicative_content": "IC1.1:  Identification of errors",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:  Perform Program Testing",
+          "duration": "10 hours",
+          "indicative_content": "IC1.2:  Compilation of the C program",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:  Perform Program Testing",
+          "duration": "10 hours",
+          "indicative_content": "IC1.3:  Test of the C program",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        }
+      ],
+      "assessment_schedule": [
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "Integrated Assessment (for specific module)",
+          "duration": "Integrated Assessment (for specific module)",
+          "indicative_content": "Integrated Assessment (for specific module)",
+          "learning_activities": "Task",
+          "resources": "Consumables",
+          "assessment": "",
+          "learning_place": "workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "4",
+          "learning_outcome": "Integrated Assessment (for specific module)",
+          "duration": "Integrated Assessment (for specific module)",
+          "indicative_content": "Integrated Assessment (for specific module)",
+          "learning_activities": "Task",
+          "resources": "Consumables",
+          "assessment": "",
+          "learning_place": "workshop",
+          "observation": ""
+        }
+      ]
+    },
+    "SWDPR 301 Analyze project requirement scheme of work.docx": {
+      "course_info": {
+        "province": "Southern province",
+        "district": "Kamonyi district",
+        "sector": "Runda sector",
+        "school": "Runda TSS",
+        "trainer": "Trainer’s name and signature: TUYISINGIZE Leonard\t\t\t\t           "
+      },
+      "weekly_breakdown": [
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "LO1:   Identify customer needs",
+          "duration": "30 hours",
+          "indicative_content": "IC1.1:  Data gathering",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written assessment",
+          "learning_place": "Class and\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "LO1:   Identify customer needs",
+          "duration": "30 hours",
+          "indicative_content": "IC1.2: \nInterpretation of data",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written assessment",
+          "learning_place": "Class and\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "LO1:   Identify customer needs",
+          "duration": "30 hours",
+          "indicative_content": "IC1.3:  Organization of customer needs",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written assessment",
+          "learning_place": "Class and\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "LO2:   : Gather project requirements",
+          "duration": "20 hours",
+          "indicative_content": "IC2.1:    Identification of project requirements",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "Written assessment",
+          "learning_place": "",
+          "observation": ""
+        },
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "",
+          "duration": "",
+          "indicative_content": "IC2.2:  Research methodology",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+          "assessment": "",
+          "learning_place": "",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 - on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "",
+          "indicative_content": "IC2.3:  Conduct research",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written assessment",
+          "learning_place": "Class and\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 - on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "",
+          "indicative_content": "IC2.4:  Analyse results",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written assessment",
+          "learning_place": "Class and\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 - on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "LO2:  Write C Programming codes",
+          "duration": "",
+          "indicative_content": "IC2.5:  Report findings",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written assessment",
+          "learning_place": "Class and\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:   Determine user requirement",
+          "duration": "30 hours",
+          "indicative_content": "IC1.1:   Identification of the target audience",
+          "learning_activities": "● Individual and group work\n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:   Determine user requirement",
+          "duration": "30 hours",
+          "indicative_content": "IC1.2:   Creation of user story",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        },
+        {
+          "weeks": "on April 20, 2026 - on July 3, 2026",
+          "learning_outcome": "LO3:   Determine user requirement",
+          "duration": "30 hours",
+          "indicative_content": "IC1.3:   Elaborate task flow",
+          "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise \n● Individualized \n● Trainer guided \n● Group discussion",
+          "resources": "Computers, Projector, Projection screen, Printers",
+          "assessment": "Written and practical assessment",
+          "learning_place": "Class\nComputer lab",
+          "observation": ""
+        }
+      ],
+      "assessment_schedule": [
+        {
+          "weeks": "September 8 to December 19, 2025",
+          "learning_outcome": "Integrated Assessment (for specific module)",
+          "duration": "Integrated Assessment (for specific module)",
+          "indicative_content": "Integrated Assessment (for specific module)",
+          "learning_activities": "Task",
+          "resources": "Consumables",
+          "assessment": "",
+          "learning_place": "workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "January 5, 2026 - on April 3, 2026\n\n09/12-24/2/2023",
+          "learning_outcome": "Integrated Assessment (for specific module)",
+          "duration": "Integrated Assessment (for specific module)",
+          "indicative_content": "Integrated Assessment (for specific module)",
+          "learning_activities": "Task",
+          "resources": "Consumables",
+          "assessment": "",
+          "learning_place": "workshop",
+          "observation": ""
+        },
+        {
+          "weeks": "4",
+          "learning_outcome": "Integrated Assessment (for specific module)",
+          "duration": "Integrated Assessment (for specific module)",
+          "indicative_content": "Integrated Assessment (for specific module)",
+          "learning_activities": "Task",
+          "resources": "Consumables",
+          "assessment": "",
+          "learning_place": "workshop",
+          "observation": ""
+        }
+      ]
+    }
+  },
+  "key_patterns": {
+    "common_fields": [
+      "Sector",
+      "Sub-sector",
+      "Trainer Name",
+      "Date",
+      "Term",
+      "Week",
+      "Module",
+      "Learning Outcome",
+      "Indicative Content",
+      "Duration",
+      "Learning Activities",
+      "Resources",
+      "Assessment",
+      "Learning Place"
+    ],
+    "session_phases": [
+      "Introduction",
+      "Development/Body",
+      "Conclusion"
+    ],
+    "facilitation_techniques": [
+      "JIGSAW",
+      "Demonstration and simulation",
+      "Individual and group work",
+      "Practical exercise",
+      "Trainer guided",
+      "Group discussion"
+    ],
+    "assessment_types": [
+      "Written assessment",
+      "Practical assessment",
+      "Written and practical assessment",
+      "Integrated Assessment"
+    ],
+    "learning_places": [
+      "Class",
+      "Computer lab",
+      "Workshop",
+      "Computer system and architecture Workshop"
+    ]
+  }
+}

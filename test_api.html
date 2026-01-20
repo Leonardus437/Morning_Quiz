@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Connection Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testAPI() {
+            const results = document.getElementById('results');
+            
+            try {
+                // Test login
+                const loginResponse = await fetch('http://localhost:8000/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                
+                if (!loginResponse.ok) {
+                    throw new Error('Login failed');
+                }
+                
+                const loginData = await loginResponse.json();
+                results.innerHTML += '<p>✅ Login successful</p>';
+                
+                // Test questions endpoint
+                const questionsResponse = await fetch('http://localhost:8000/questions', {
+                    headers: { 'Authorization': `Bearer ${loginData.access_token}` }
+                });
+                
+                if (!questionsResponse.ok) {
+                    throw new Error('Questions fetch failed');
+                }
+                
+                const questions = await questionsResponse.json();
+                results.innerHTML += `<p>✅ Questions loaded: ${questions.length} items</p>`;
+                
+                // Test quizzes endpoint
+                const quizzesResponse = await fetch('http://localhost:8000/quizzes', {
+                    headers: { 'Authorization': `Bearer ${loginData.access_token}` }
+                });
+                
+                if (!quizzesResponse.ok) {
+                    throw new Error('Quizzes fetch failed');
+                }
+                
+                const quizzes = await quizzesResponse.json();
+                results.innerHTML += `<p>✅ Quizzes loaded: ${quizzes.length} items</p>`;
+                
+                results.innerHTML += '<p><strong>✅ All API endpoints working correctly!</strong></p>';
+                
+            } catch (error) {
+                results.innerHTML += `<p>❌ Error: ${error.message}</p>`;
+            }
+        }
+        
+        testAPI();
+    </script>
+</body>
+</html>

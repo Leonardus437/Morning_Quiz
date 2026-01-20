@@ -1,0 +1,104 @@
+# QUICK FIX GUIDE - Student Performance Download
+
+## Problem
+Students getting **HTTP 404** error when trying to download quiz results from "My Performance" page.
+
+## Solution
+Added 2 missing backend endpoints for student performance tracking and report downloads.
+
+## Apply the Fix (Choose One)
+
+### Option 1: One-Click Fix ⭐ RECOMMENDED
+```cmd
+APPLY_PERFORMANCE_FIX.bat
+```
+
+### Option 2: Manual Fix
+```cmd
+docker-compose down
+docker-compose build backend
+docker-compose up -d
+```
+
+## Test the Fix
+
+### Quick Test
+1. Open: `TEST_PERFORMANCE_FIX.html` in browser
+2. Login as student (student001 / pass123)
+3. Run all 3 tests
+4. All should show ✅ PASS
+
+### Manual Test
+1. Login as student who completed a quiz
+2. Go to "My Performance" page
+3. Click "Download Detailed Report"
+4. PDF should download successfully
+
+## What Was Fixed
+
+### Added Endpoints
+1. **`GET /student/progress`**
+   - Shows quiz history
+   - Calculates overall performance
+   - Provides improvement tips
+
+2. **`GET /student-report/{quiz_id}`**
+   - Generates detailed PDF report
+   - Shows all questions and answers
+   - Includes score breakdown
+
+### Files Modified
+- `backend/main.py` - Added 2 new endpoints
+
+### No Breaking Changes
+- Existing features still work
+- No database changes needed
+- No frontend changes needed
+
+## Expected Results
+
+### Before Fix
+- ❌ HTTP 404 on performance page
+- ❌ Cannot download reports
+- ❌ Console errors
+
+### After Fix
+- ✅ Performance page loads
+- ✅ Shows quiz statistics
+- ✅ Downloads PDF reports
+- ✅ No errors
+
+## Troubleshooting
+
+### Still Getting 404?
+```cmd
+# Check backend is running
+docker-compose ps
+
+# View logs
+docker-compose logs backend
+
+# Restart
+docker-compose restart backend
+```
+
+### PDF Won't Download?
+- Student must have completed the quiz first
+- Check quiz ID is correct
+- Verify backend logs for errors
+
+## Time Required
+- Apply fix: 2-3 minutes
+- Test: 1 minute
+- Total: ~5 minutes
+
+## Documentation
+- Full details: `STUDENT_PERFORMANCE_FIX.md`
+- Test page: `TEST_PERFORMANCE_FIX.html`
+- Apply script: `APPLY_PERFORMANCE_FIX.bat`
+
+---
+
+**Status:** ✅ Ready to Apply
+**Difficulty:** Easy
+**Risk:** Low (only adds new features)

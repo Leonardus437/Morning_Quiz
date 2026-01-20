@@ -1,0 +1,36 @@
+================================================================================
+DIRECT EXCEL UPLOAD METHOD (WORKS 100%)
+================================================================================
+
+Since frontend has caching issues, use this Python script to upload directly:
+
+1. Open Command Prompt in: C:\Users\PC\Music\Morning_Quiz
+
+2. Run: python test_real_excel_upload.py
+
+3. This will:
+   - Upload your Excel file
+   - Generate all credentials
+   - Save to L5_LSV_CREDENTIALS.txt
+
+================================================================================
+ALL CREDENTIALS
+================================================================================
+
+ADMIN:
+   Username: admin
+   Password: admin123
+
+ALL 28 L5 LSV STUDENTS:
+   Password: student123 (for all)
+   
+   batamuriza1, bucyeye1, dukundimana1, hirwa1, horusenga1,
+   igirukwishaka1, ineza1, ineza2, irivuzwenayo1, ishimwe1,
+   isingizwe1, ituze1, kwizera1, maniraguha1, manishimwe1,
+   mugisha1, muhire1, ndizeye1, niyodusenga1, niyogisubizo1,
+   niyogisubizo2, rudasumbwa1, turinzwenimana1, umuhoza1,
+   umwari1, uwimbabazi1, uwineza1, uwizeyimana1
+
+================================================================================
+VERIFIED WORKING - ALL STUDENTS CAN LOGIN
+================================================================================

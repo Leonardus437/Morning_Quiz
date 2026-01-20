@@ -1,0 +1,24 @@
+# Cloudflare Pages Build Configuration
+
+# Build command
+build:
+  command: cd frontend && npm install && npm run build
+  publish: frontend/build
+  
+# Environment variables
+environment:
+  NODE_VERSION: 18
+  PUBLIC_API_URL: https://tvet-quiz-backend.onrender.com
+
+# Build settings
+build_settings:
+  root_dir: /
+  build_command: cd frontend && npm install && npm run build
+  build_output_directory: frontend/build
+  
+# Headers for caching
+headers:
+  /*:
+    Cache-Control: no-cache, no-store, must-revalidate
+    X-Frame-Options: DENY
+    X-Content-Type-Options: nosniff

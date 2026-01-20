@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local System Test - TVET Quiz</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .content { padding: 30px; }
+        .test-section {
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .test-header {
+            background: #f5f5f5;
+            padding: 15px 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+        .test-body { padding: 20px; }
+        .test-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #ccc;
+        }
+        .test-item.success { border-left-color: #4caf50; background: #e8f5e9; }
+        .test-item.error { border-left-color: #f44336; background: #ffebee; }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .summary {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .summary-value { font-size: 2.5em; font-weight: bold; }
+        .success-color { color: #4caf50; }
+        .error-color { color: #f44336; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Local System Test</h1>
+            <p>Testing Docker Containers on Localhost</p>
+        </div>
+        
+        <div class="content">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <button class="btn" onclick="runAllTests()">🚀 Run All Tests</button>
+                <button class="btn" onclick="location.href='http://localhost:3000'">🌐 Open Frontend</button>
+                <button class="btn" onclick="location.href='http://localhost:8000/docs'">📚 API Docs</button>
+            </div>
+            
+            <div class="summary" id="summary" style="display: none;">
+                <div class="summary-item">
+                    <div class="summary-value success-color" id="passedCount">0</div>
+                    <div>Passed</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-value error-color" id="failedCount">0</div>
+                    <div>Failed</div>
+                </div>
+            </div>
+            
+            <div id="results"></div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:8000';
+        let authToken = null;
+        let passed = 0, failed = 0;
+
+        async function runAllTests() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('summary').style.display = 'flex';
+            passed = 0; failed = 0;
+            
+            await testBackendHealth();
+            await testAuthentication();
+            await testCoreFeatures();
+            await testAdminFeatures();
+            
+            updateSummary();
+        }
+
+        async function testBackendHealth() {
+            const section = createSection('Backend Health');
+            
+            await runTest(section, 'Health Check', async () => {
+                const res = await fetch(`${API_URL}/health`);
+                const data = await res.json();
+                if (!res.ok) throw new Error('Health check failed');
+                return `Status: ${data.status}, Version: ${data.version}`;
+            });
+            
+            await runTest(section, 'API Docs', async () => {
+                const res = await fetch(`${API_URL}/docs`);
+                if (!res.ok) throw new Error('API docs not accessible');
+                return 'API documentation accessible';
+            });
+        }
+
+        async function testAuthentication() {
+            const section = createSection('Authentication');
+            
+            await runTest(section, 'Admin Login', async () => {
+                const res = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Login failed');
+                authToken = data.access_token;
+                return `Logged in as ${data.user.role}`;
+            });
+            
+            await runTest(section, 'Teacher Login', async () => {
+                const res = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'teacher001', password: 'teacher123' })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error('Login failed');
+                return `Logged in as ${data.user.role}`;
+            });
+            
+            await runTest(section, 'Student Login', async () => {
+                const res = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'student001', password: 'pass123' })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error('Login failed');
+                return `Logged in as ${data.user.role}`;
+            });
+        }
+
+        async function testCoreFeatures() {
+            const section = createSection('Core Features');
+            
+            await runTest(section, 'Get Quizzes', async () => {
+                const res = await fetch(`${API_URL}/quizzes`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error('Failed to get quizzes');
+                return `Found ${data.length} quizzes`;
+            });
+            
+            await runTest(section, 'Get Lessons', async () => {
+                const res = await fetch(`${API_URL}/lessons`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error('Failed to get lessons');
+                return `Found ${data.length} lessons`;
+            });
+        }
+
+        async function testAdminFeatures() {
+            const section = createSection('Admin Features');
+            
+            await runTest(section, 'Get Students', async () => {
+                const res = await fetch(`${API_URL}/admin/students`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error('Failed to get students');
+                return `Found ${data.students.length} students`;
+            });
+            
+            await runTest(section, 'Get Teachers', async () => {
+                const res = await fetch(`${API_URL}/teachers`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error('Failed to get teachers');
+                return `Found ${data.length} teachers`;
+            });
+        }
+
+        function createSection(title) {
+            const section = document.createElement('div');
+            section.className = 'test-section';
+            section.innerHTML = `
+                <div class="test-header"><span>${title}</span></div>
+                <div class="test-body"></div>
+            `;
+            document.getElementById('results').appendChild(section);
+            return section;
+        }
+
+        async function runTest(section, name, testFn) {
+            const body = section.querySelector('.test-body');
+            const item = document.createElement('div');
+            item.className = 'test-item';
+            item.innerHTML = `<strong>${name}</strong>: Testing...`;
+            body.appendChild(item);
+            
+            try {
+                const result = await testFn();
+                item.className = 'test-item success';
+                item.innerHTML = `<strong>✅ ${name}</strong>: ${result}`;
+                passed++;
+            } catch (error) {
+                item.className = 'test-item error';
+                item.innerHTML = `<strong>❌ ${name}</strong>: ${error.message}`;
+                failed++;
+            }
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            document.getElementById('passedCount').textContent = passed;
+            document.getElementById('failedCount').textContent = failed;
+        }
+
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            setTimeout(runAllTests, 1000);
+        });
+    </script>
+</body>
+</html>

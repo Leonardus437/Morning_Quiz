@@ -1,0 +1,59 @@
+21. In a Hartley oscillator, the feedback network uses two capacitors (True/False)
+Answer: False
+
+22. Amplification can only be achieved using transistors (True/False)
+Answer: False
+
+23. The Barkhausen criterion states that loop gain must be exactly zero for oscillation (True/False)
+Answer: False
+
+24. Positive feedback is used to create instability in oscillator circuits (True/False)
+Answer: True
+
+25. An amplifier with negative feedback has higher input impedance than without feedback (True/False)
+Answer: True
+
+26. The frequency of a crystal oscillator can be easily changed by external components (True/False)
+Answer: False
+
+27. Damped oscillations occur when energy is continuously added to the system (True/False)
+Answer: False
+
+28. A relaxation oscillator produces sinusoidal waveforms (True/False)
+Answer: False
+
+29. Voltage amplification is the ratio of output voltage to input voltage (True/False)
+Answer: True
+
+30. Positive feedback always leads to oscillation regardless of gain (True/False)
+Answer: False
+
+31. Define what is an oscillator
+Answer: An oscillator is an electronic circuit that generates a repetitive, periodic waveform such as sine, square, or triangular waves without requiring an external input signal, converting DC power into AC signals at a specific frequency.
+
+32. Explain the difference between positive feedback and negative feedback
+Answer: Positive feedback returns a portion of the output signal to the input in-phase, reinforcing the input and increasing gain, which can lead to oscillation or instability. Negative feedback returns the output signal out-of-phase with the input, opposing it, which reduces gain but improves stability, bandwidth, and reduces distortion in amplifiers.
+
+33. Describe the Barkhausen criterion for sustained oscillation
+Answer: The Barkhausen criterion states that for sustained oscillation to occur in a feedback circuit, two conditions must be met: the loop gain must equal unity and the total phase shift around the feedback loop must be zero degrees or an integer multiple of 360 degrees, ensuring positive feedback.
+
+34. Define amplification in electronic circuits
+Answer: Amplification is the process of increasing the amplitude, power, voltage, or current of an electrical signal using an active device such as a transistor or operational amplifier that draws energy from an external power source to boost the input signal to a larger output signal.
+
+35. Explain how a crystal oscillator works
+Answer: A crystal oscillator uses the mechanical resonance of a piezoelectric crystal usually quartz which vibrates at a precise frequency when voltage is applied. The crystal acts as a highly selective filter in a feedback circuit, allowing oscillation only at its natural resonant frequency, providing extremely stable and accurate frequency generation.
+
+36. Describe the main components of an LC oscillator
+Answer: An LC oscillator consists of four main components: an inductor and capacitor forming a tank circuit that determines oscillation frequency, an amplifier to compensate for energy losses, a feedback network to return output signal to input, and a DC power supply to provide energy for sustained oscillation.
+
+37. Explain the purpose of negative feedback in amplifiers
+Answer: Negative feedback in amplifiers serves multiple purposes: it stabilizes the gain making it less dependent on component variations and temperature, reduces harmonic distortion and noise, increases bandwidth, improves input and output impedance characteristics, and enhances linearity of the amplifier's response.
+
+38. Define the quality factor Q of an oscillator
+Answer: The quality factor Q is a dimensionless parameter that measures the sharpness of resonance and energy efficiency of an oscillator. It is defined as the ratio of energy stored to energy dissipated per cycle, or the ratio of resonant frequency to bandwidth. Higher Q indicates lower energy loss and better oscillator stability.
+
+39. Describe the difference between damped and undamped oscillations
+Answer: Damped oscillations are oscillations whose amplitude decreases over time due to energy loss from resistance, friction, or other dissipative forces, eventually dying out completely. Undamped sustained oscillations maintain constant amplitude indefinitely because energy losses are continuously compensated by an external energy source through positive feedback.
+
+40. Explain what is meant by loop gain in feedback systems
+Answer: Loop gain is the total gain experienced by a signal as it travels through the complete feedback loop, calculated as the product of the forward path gain and the feedback path gain. It determines whether a feedback system will be stable, oscillate, or become unstable, and is crucial in analyzing oscillator and amplifier circuits.

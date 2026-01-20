@@ -1,0 +1,370 @@
+BLOCKCHAIN FUNDAMENTALS - 50 QUESTIONS
+
+Module: Blockchain Fundamentals
+Department: Software Development 
+Level: 5
+
+===========================================
+
+1. What is a blockchain?
+A) A type of database
+B) A distributed ledger technology
+C) A programming language
+D) A web browser
+Answer: B
+
+2. Who created Bitcoin?
+A) Vitalik Buterin
+B) Satoshi Nakamoto
+C) Bill Gates
+D) Mark Zuckerberg
+Answer: B
+
+3. What is a block in blockchain?
+A) A container of transactions
+B) A type of cryptocurrency
+C) A mining tool
+D) A wallet address
+Answer: A
+
+4. What does decentralization mean in blockchain?
+A) Central authority controls everything
+B) No single point of control
+C) Only banks can access it
+D) Government regulated
+Answer: B
+
+5. What is cryptocurrency?
+A) Physical money
+B) Digital or virtual currency using cryptography
+C) Bank notes
+D) Credit cards
+Answer: B
+
+6. What is mining in blockchain?
+A) Digging for gold
+B) Process of validating transactions and adding blocks
+C) Stealing cryptocurrency
+D) Buying Bitcoin
+Answer: B
+
+7. What is a hash function?
+A) A cooking method
+B) Mathematical function that converts input to fixed output
+C) A type of blockchain
+D) A wallet
+Answer: B
+
+8. What is a node in blockchain?
+A) A computer in the network
+B) A type of coin
+C) A mining tool
+D) A transaction
+Answer: A
+
+9. What is consensus mechanism?
+A) A voting system
+B) Method to achieve agreement on blockchain state
+C) A type of cryptocurrency
+D) A wallet feature
+Answer: B
+
+10. What is Proof of Work (PoW)?
+A) Employment certificate
+B) Consensus mechanism requiring computational work
+C) A blockchain type
+D) A wallet password
+Answer: B
+
+11. What is Proof of Stake (PoS)?
+A) Gambling method
+B) Consensus mechanism based on coin ownership
+C) Mining hardware
+D) Transaction fee
+Answer: B
+
+12. What is a smart contract?
+A) Legal document
+B) Self-executing contract with code
+C) Insurance policy
+D) Bank agreement
+Answer: B
+
+13. What is Ethereum?
+A) A cryptocurrency only
+B) Blockchain platform for smart contracts
+C) A mining company
+D) A wallet brand
+Answer: B
+
+14. What is a private key?
+A) House key
+B) Secret cryptographic key for accessing wallet
+C) Password hint
+D) Public information
+Answer: B
+
+15. What is a public key?
+A) Door key
+B) Cryptographic key shared publicly for receiving funds
+C) Private password
+D) Bank account number
+Answer: B
+
+16. What is a wallet in blockchain?
+A) Physical wallet
+B) Software for storing cryptocurrency
+C) Bank account
+D) Credit card
+Answer: B
+
+17. What is a transaction fee?
+A) Bank charge
+B) Fee paid to miners for processing transactions
+C) Government tax
+D) Exchange rate
+Answer: B
+
+18. What is double spending?
+A) Spending twice at store
+B) Using same cryptocurrency twice
+C) Buying two items
+D) Paying double price
+Answer: B
+
+19. What is immutability in blockchain?
+A) Ability to change data
+B) Data cannot be altered once recorded
+C) Temporary storage
+D) Editable records
+Answer: B
+
+20. What is distributed ledger?
+A) Accounting book
+B) Database spread across multiple locations
+C) Single server
+D) Paper record
+Answer: B
+
+21. What is Bitcoin halving?
+A) Splitting coins
+B) Reduction of mining rewards by half
+C) Price decrease
+D) Wallet division
+Answer: B
+
+22. What is altcoin?
+A) Alternative to Bitcoin
+B) Fake cryptocurrency
+C) Mining equipment
+D) Wallet type
+Answer: A
+
+23. What is blockchain fork?
+A) Eating utensil
+B) Split in blockchain creating two versions
+C) Mining tool
+D) Transaction type
+Answer: B
+
+24. What is gas fee in Ethereum?
+A) Fuel cost
+B) Fee for executing smart contracts
+C) Mining reward
+D) Exchange fee
+Answer: B
+
+25. What is DeFi?
+A) Deficiency
+B) Decentralized Finance
+C) Default Interest
+D) Digital Fiat
+Answer: B
+
+26. What is NFT?
+A) New File Type
+B) Non-Fungible Token
+C) Network File Transfer
+D) National Finance Token
+Answer: B
+
+27. What is a genesis block?
+A) Last block
+B) First block in blockchain
+C) Largest block
+D) Smallest block
+Answer: B
+
+28. What is cryptography?
+A) Study of crystals
+B) Technique for secure communication
+C) Currency trading
+D) Mining process
+Answer: B
+
+29. What is peer-to-peer network?
+A) Friend network
+B) Direct connection between participants
+C) Bank network
+D) Government system
+Answer: B
+
+30. What is blockchain transparency?
+A) Clear glass
+B) All transactions are visible to network
+C) Hidden records
+D) Private data
+Answer: B
+
+31. What is a timestamp in blockchain?
+A) Clock time
+B) Record of when block was created
+C) Transaction speed
+D) Mining duration
+Answer: B
+
+32. What is 51% attack?
+A) Majority voting
+B) Control of majority mining power to manipulate blockchain
+C) Price increase
+D) Network upgrade
+Answer: B
+
+33. What is cold storage?
+A) Refrigerator
+B) Offline cryptocurrency storage
+C) Cloud storage
+D) Bank vault
+Answer: B
+
+34. What is hot wallet?
+A) Warm storage
+B) Online connected wallet
+C) Physical wallet
+D) Paper wallet
+Answer: B
+
+35. What is blockchain scalability?
+A) Weight measurement
+B) Ability to handle growing transaction volume
+C) Block size
+D) Network speed
+Answer: B
+
+36. What is tokenization?
+A) Creating game tokens
+B) Converting assets into digital tokens
+C) Password creation
+D) Mining process
+Answer: B
+
+37. What is a dApp?
+A) Mobile app
+B) Decentralized application
+C) Desktop application
+D) Web browser
+Answer: B
+
+38. What is Byzantine Fault Tolerance?
+A) Historical event
+B) System's ability to function despite malicious actors
+C) Mining algorithm
+D) Wallet security
+Answer: B
+
+39. What is sharding in blockchain?
+A) Breaking glass
+B) Splitting blockchain into smaller parts
+C) Mining technique
+D) Transaction type
+Answer: B
+
+40. What is oracle in blockchain?
+A) Database software
+B) Service providing external data to smart contracts
+C) Mining pool
+D) Wallet provider
+Answer: B
+
+41. What is staking?
+A) Gambling
+B) Locking cryptocurrency to support network
+C) Mining
+D) Trading
+Answer: B
+
+42. What is liquidity pool?
+A) Swimming pool
+B) Collection of funds locked in smart contract
+C) Bank account
+D) Mining pool
+Answer: B
+
+43. What is gas limit in Ethereum?
+A) Fuel tank size
+B) Maximum gas willing to pay for transaction
+C) Block size
+D) Network speed
+Answer: B
+
+44. What is merkle tree?
+A) Plant species
+B) Data structure for efficient verification
+C) Mining algorithm
+D) Wallet type
+Answer: B
+
+45. What is permissioned blockchain?
+A) Public blockchain
+B) Blockchain with restricted access
+C) Open network
+D) Free blockchain
+Answer: B
+
+46. What is permissionless blockchain?
+A) Restricted access
+B) Anyone can join and participate
+C) Private network
+D) Closed system
+Answer: B
+
+47. What is atomic swap?
+A) Nuclear exchange
+B) Direct cryptocurrency exchange between parties
+C) Mining process
+D) Wallet transfer
+Answer: B
+
+48. What is layer 2 solution?
+A) Second floor
+B) Protocol built on top of blockchain for scalability
+C) Mining layer
+D) Wallet feature
+Answer: B
+
+49. What is blockchain interoperability?
+A) Single blockchain
+B) Ability of blockchains to communicate
+C) Mining compatibility
+D) Wallet connection
+Answer: B
+
+50. What is DAO?
+A) Data Access Object
+B) Decentralized Autonomous Organization
+C) Digital Asset Owner
+D) Distributed Application Operation
+Answer: B
+
+===========================================
+END OF QUESTIONS
+===========================================
+
+FORMAT NOTES:
+- Each question is numbered
+- Multiple choice with options A, B, C, D
+- Answer is clearly marked
+- Module: Blockchain Fundamentals
+- Can be used for Computer Science, Information Technology, or related departments
+- Suitable for ND2, HND1, or HND2 levels
+- All questions have 1 point value (can be adjusted in system)

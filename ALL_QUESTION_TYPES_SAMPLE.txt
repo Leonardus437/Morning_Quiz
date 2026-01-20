@@ -1,0 +1,95 @@
+1. What is the capital of France?
+a) London
+b) Paris
+c) Berlin
+d) Madrid
+Answer: b
+
+2. Which programming language is used for web development?
+a) Python
+b) JavaScript
+c) Java
+d) C++
+Answer: b
+
+3. The earth is round. True
+
+4. Python is a compiled language. False
+
+5. JavaScript was created in 1995. True
+
+6. Fill in the blank: The capital of Kenya is _______.
+Answer: Nairobi
+
+7. Complete the sentence: HTML stands for _______ _______ _______ Language.
+Answer: Hyper Text Markup
+
+8. Fill the gaps: CSS is used for _______ and JavaScript for _______.
+Answer: styling, interactivity
+
+9. What is 5 + 3?
+Answer: 8
+
+10. Name the creator of Python.
+Answer: Guido van Rossum
+
+11. Explain what API stands for.
+Answer: Application Programming Interface
+
+12. Analyze the following Solidity code:
+pragma solidity ^0.8.0;
+contract SimpleStorage {
+    uint256 public storedData = 42;
+}
+What is the initial value of storedData?
+a) 0
+b) 42
+c) null
+d) undefined
+Answer: b
+
+13. Review this smart contract:
+pragma solidity ^0.8.0;
+contract Counter {
+    uint public count = 0;
+    function increment() public {
+        count += 1;
+    }
+}
+After calling increment() once, what will count be?
+a) 0
+b) 1
+c) 2
+d) Error
+Answer: b
+
+14. Which of the following is a blockchain platform?
+a) Ethereum
+b) React
+c) Angular
+d) Vue.js
+Answer: a
+
+15. Blockchain technology ensures data immutability. True
+
+16. Smart contracts can be modified after deployment. False
+
+17. What does HTML stand for?
+Answer: HyperText Markup Language
+
+18. Fill in: React is a _______ library for building user interfaces.
+Answer: JavaScript
+
+19. Complete: The three pillars of blockchain are decentralization, _______, and _______.
+Answer: transparency, immutability
+
+20. Examine this code snippet:
+function greet(name) {
+    return "Hello, " + name;
+}
+What will greet("World") return?
+a) Hello
+b) World
+c) Hello, World
+d) Error
+Answer: c

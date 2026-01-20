@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOS Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
+    <div id="app"></div>
+    
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        let token = localStorage.getItem('token');
+        let user = null;
+        let isLoggedIn = false;
+        let activeTab = 'overview';
+        let lessons = [];
+        let teachers = [];
+        let students = [];
+        
+        const departments = ['Software Development', 'Computer System and Architecture', 'Land Surveying', 'Building Construction'];
+        const levels = ['Level 3', 'Level 4', 'Level 5'];
+        
+        async function login(username, password) {
+            try {
+                const res = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({username, password})
+                });
+                const data = await res.json();
+                if (data.user.role !== 'admin') throw new Error('DOS access required');
+                token = data.access_token;
+                user = data.user;
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+                isLoggedIn = true;
+                await loadData();
+                render();
+            } catch (err) {
+                alert(err.message);
+            }
+        }
+        
+        async function loadData() {
+            try {
+                const headers = {'Authorization': `Bearer ${token}`};
+                lessons = await fetch(`${API_BASE}/lessons`, {headers}).then(r => r.json());
+                teachers = await fetch(`${API_BASE}/teachers`, {headers}).then(r => r.json());
+                students = await fetch(`${API_BASE}/admin/students`, {headers}).then(r => r.json());
+                render();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        
+        function logout() {
+            token = null;
+            user = null;
+            isLoggedIn = false;
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            render();
+        }
+        
+        function render() {
+            const app = document.getElementById('app');
+            
+            if (!isLoggedIn) {
+                app.innerHTML = `
+                    <div class="flex items-center justify-center min-h-screen p-4">
+                        <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8">
+                            <div class="text-center mb-8">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                    <span class="text-3xl text-white">✅</span>
+                                </div>
+                                <h1 class="text-3xl font-bold text-gray-900 mb-2">DOS Admin</h1>
+                                <p class="text-green-600 font-bold">Clean Dashboard - No Quiz Logic</p>
+                            </div>
+                            <form onsubmit="event.preventDefault(); login(document.getElementById('username').value, document.getElementById('password').value);" class="space-y-6">
+                                <input id="username" class="w-full px-4 py-3 border rounded-xl" type="text" placeholder="Username" required>
+                                <input id="password" class="w-full px-4 py-3 border rounded-xl" type="password" placeholder="Password" required>
+                                <button class="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700" type="submit">Sign In</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            } else {
+                app.innerHTML = `
+                    <div class="min-h-screen">
+                        <header class="bg-white shadow-lg border-b">
+                            <div class="max-w-7xl mx-auto px-4 py-6">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-green-600">✅ DOS Admin Dashboard</h1>
+                                        <p class="text-gray-600">Clean Version - ${user.full_name}</p>
+                                    </div>
+                                    <button onclick="logout()" class="bg-red-500 text-white px-6 py-2 rounded-xl hover:bg-red-600">Sign Out</button>
+                                </div>
+                            </div>
+                        </header>
+                        
+                        <div class="max-w-7xl mx-auto px-4 py-8">
+                            <div class="bg-white rounded-2xl shadow-lg mb-8 p-2">
+                                <div class="flex gap-2">
+                                    <button onclick="activeTab='overview'; render();" class="px-6 py-3 rounded-xl font-medium ${activeTab === 'overview' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100'}">📊 Overview</button>
+                                    <button onclick="activeTab='lessons'; render();" class="px-6 py-3 rounded-xl font-medium ${activeTab === 'lessons' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100'}">📚 Lessons</button>
+                                    <button onclick="activeTab='teachers'; render();" class="px-6 py-3 rounded-xl font-medium ${activeTab === 'teachers' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100'}">👨🏫 Teachers</button>
+                                    <button onclick="activeTab='students'; render();" class="px-6 py-3 rounded-xl font-medium ${activeTab === 'students' ? 'bg-green-600 text-white' : 'text-gray-600 hover:bg-gray-100'}">👥 Students</button>
+                                </div>
+                            </div>
+                            
+                            ${activeTab === 'overview' ? `
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
+                                        <p class="text-blue-100">Total Lessons</p>
+                                        <p class="text-3xl font-bold">${lessons.length}</p>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white">
+                                        <p class="text-green-100">Teachers</p>
+                                        <p class="text-3xl font-bold">${teachers.length}</p>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white">
+                                        <p class="text-purple-100">Students</p>
+                                        <p class="text-3xl font-bold">${students.length}</p>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
+                                        <p class="text-orange-100">Departments</p>
+                                        <p class="text-3xl font-bold">${departments.length}</p>
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            ${activeTab === 'lessons' ? `
+                                <div class="bg-white rounded-2xl shadow-lg p-6">
+                                    <h3 class="text-xl font-bold mb-4">All Lessons (${lessons.length})</h3>
+                                    <div class="space-y-2">
+                                        ${lessons.map(l => `
+                                            <div class="border p-4 rounded-xl">
+                                                <h4 class="font-bold">${l.title}</h4>
+                                                <p class="text-sm text-gray-600">${l.code} - ${l.department}</p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            ${activeTab === 'teachers' ? `
+                                <div class="bg-white rounded-2xl shadow-lg p-6">
+                                    <h3 class="text-xl font-bold mb-4">All Teachers (${teachers.length})</h3>
+                                    <div class="space-y-2">
+                                        ${teachers.map(t => `
+                                            <div class="border p-4 rounded-xl">
+                                                <h4 class="font-bold">${t.full_name}</h4>
+                                                <p class="text-sm text-gray-600">@${t.username}</p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            ${activeTab === 'students' ? `
+                                <div class="bg-white rounded-2xl shadow-lg p-6">
+                                    <h3 class="text-xl font-bold mb-4">All Students (${students.length})</h3>
+                                    ${students.length === 0 ? '<p class="text-gray-600 text-center py-8">No students registered yet</p>' : `
+                                        <div class="space-y-2">
+                                            ${students.slice(0, 20).map(s => `
+                                                <div class="border p-4 rounded-xl">
+                                                    <h4 class="font-bold">${s.full_name || s.username}</h4>
+                                                    <p class="text-sm text-gray-600">${s.department} - ${s.level}</p>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    `}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Check if already logged in
+        if (token) {
+            try {
+                user = JSON.parse(localStorage.getItem('user'));
+                if (user && user.role === 'admin') {
+                    isLoggedIn = true;
+                    loadData();
+                }
+            } catch (e) {}
+        }
+        
+        render();
+    </script>
+</body>
+</html>

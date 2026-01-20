@@ -1,0 +1,20 @@
+What is blockchain? A distributed ledger technology that records transactions across multiple computers
+What does decentralization mean in blockchain? No single entity controls the entire network
+What is a block in blockchain? A container that stores transaction data with a timestamp and hash
+What is a hash in blockchain? A unique cryptographic fingerprint of data
+What is mining in blockchain? The process of validating transactions and adding new blocks to the chain
+What is a cryptocurrency? A digital currency that uses cryptography for security
+What is Bitcoin? The first decentralized cryptocurrency created in 2009
+What is Ethereum? A blockchain platform that supports smart contracts
+What is a smart contract? Self-executing code that runs on the blockchain
+What is consensus in blockchain? Agreement among network nodes on the validity of transactions
+What is Proof of Work? A consensus mechanism that requires computational work to validate blocks
+What is Proof of Stake? A consensus mechanism based on holding cryptocurrency
+What is a node in blockchain? A computer that maintains a copy of the blockchain
+What is a private key? A secret code used to access and control cryptocurrency
+What is a public key? An address that others can use to send you cryptocurrency
+What is a wallet in blockchain? Software that stores private and public keys
+What is a transaction fee? A small payment to miners for processing transactions
+What is double spending? Spending the same cryptocurrency twice
+What is immutability in blockchain? Once data is recorded it cannot be altered
+What is transparency in blockchain? All transactions are visible to network participants

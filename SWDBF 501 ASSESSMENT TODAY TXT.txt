@@ -1,0 +1,210 @@
+1.	Which of the following is NOT a blockchain consensus mechanism? 
+a) Proof of Work 
+b) Proof of Stake 
+c) Proof of Authority 
+d) Proof of Encryption 
+Answer: d
+2.	Which blockchain layer is responsible for executing smart contracts? 
+a) Consensus Layer 
+b) Protocol Layer 
+c) Application Layer 
+d) Storage Layer 
+Answer: b
+3.	Merkle Trees in blockchain are used for: 
+a) Encrypting transactions 
+b) Verifying data integrity 
+c) Storing smart contracts 
+d) Managing wallets 
+Answer: b
+4.	Which of the following is a decentralized storage solution? 
+a) SQL Database 
+b) IPFS 
+c) Dropbox 
+d) Google Drive 
+Answer: b
+5.	Double spending attack means: 
+a) Spending the same coin twice 
+b) Mining two blocks simultaneously 
+c) Re-entering a smart contract 
+d) Routing traffic incorrectly 
+Answer: a
+6.	Which consensus mechanism uses token delegation? 
+a) Proof of Work 
+b) Proof of Stake 
+c) Delegated Proof of Stake 
+d) Proof of Authority 
+Answer: c
+7.	Which attack isolates a node from the network? 
+a) Eclipse Attack 
+b) Sybil Attack 
+c) Routing Attack 
+d) DDOS Attack 
+Answer: a
+8.	Ethereum’s EVM belongs to which layer? 
+a) Application Layer 
+b) Protocol Layer 
+c) Storage Layer 
+d) Governance Layer 
+Answer: b
+9.	Which of the following is a scalability solution for Bitcoin? 
+a) Lightning Network 
+b) MetaMask 
+c) Polkadot 
+d) Tezos 
+Answer: a
+10.	Which blockchain principle ensures immutability? 
+a) Consensus 
+b) Cryptography 
+c) Transparency 
+d) All of the above 
+Answer: d
+11.	Which of the following is a governance mechanism? 
+a) Tezos 
+b) IPFS 
+c) MetaMask 
+d) Infura 
+Answer: a
+12.	Smart contracts are deployed on: 
+a) Centralized servers 
+b) Blockchain networks 
+c) Cloud storage 
+d) Databases 
+Answer: b
+13.	Which of the following is a blockchain identity solution? 
+a) SelfKey 
+b) Infura 
+c) Alchemy 
+d) Ganache 
+Answer: a
+14.	Which attack manipulates transaction IDs? 
+a) Sybil Attack 
+b) Transaction Malleability 
+c) Eclipse Attack 
+d) Selfish Mining 
+Answer: b
+15.	Which of the following is a blockchain interoperability solution? 
+a) Polkadot 
+b) MetaMask 
+c) Ganache 
+d) Infura 
+Answer: a
+16.	Which of the following is a blockchain frontend tool? 
+a) MetaMask 
+b) Truffle 
+c) Hardhat 
+d) Remix 
+Answer: a
+17.	Solidity is primarily used for: 
+a) Database management 
+b) Smart contract development 
+c) Operating systems 
+d) Frontend design 
+Answer: b
+18.	Which IDE is commonly used for Solidity development? 
+a) Remix 
+b) Eclipse 
+c) IntelliJ IDEA 
+d) NetBeans 
+Answer: a
+19.	The Ethereum Virtual Machine executes: 
+a) JavaScript code 
+b) Solidity bytecode 
+c) Python scripts 
+d) SQL queries 
+Answer: b
+20.	Which of the following is NOT a Solidity data type? 
+a) uint 
+b) string 
+c) bool 
+d) float 
+Answer: d
+21.	State variables in Solidity are stored: 
+a) In memory 
+b) On blockchain storage 
+c) In cache 
+d) In temporary RAM 
+Answer: b
+22.	Which tool is used for testing smart contracts? 
+a) Hardhat 
+b) Photoshop 
+c) Excel 
+d) PowerPoint 
+Answer: a
+23.	Which keyword defines a function that cannot modify blockchain state? 
+a) pure 
+b) view 
+c) constant 
+d) immutable 
+Answer: b
+24.	Which of the following is a Solidity control structure? 
+a) if-else 
+b) for loop 
+c) while loop 
+d) All of the above 
+Answer: d
+25.	Blockchain transactions can be reversed if consensus agrees. False
+26.	Proof of Stake requires solving cryptographic puzzles. False
+27.	Merkle Trees reduce the complexity of verifying transactions. True
+28.	Smart contracts are immutable once deployed. True
+29.	IPFS is a centralized storage system. False
+30.	Sybil attack involves creating multiple fake identities. True
+31.	Solidity is dynamically typed. False
+32.	The EVM executes smart contracts written in Solidity. True
+33.	State variables in Solidity are temporary. False
+34.	Remix IDE is used for frontend development. False
+35.	Consensus ensures trust in decentralized systems. True
+36.	Double spending is impossible in blockchain. False
+37.	Analyse below smart contract and choose the correct output : 
+pragma solidity ^0.8.0;
+contract Hello {
+    string public greet = "Hello Blockchain!";
+}
+What is the output when greet is called? 
+a) Error
+b) null 
+c) Hello Blockchain!  
+d) Blockchain Active 
+Answer: a
+38. Analyse below smart contract and choose the correct output : 
+pragma solidity ^0.8.0;
+contract Storage {
+    uint public number;
+    function store(uint _num) public {
+        number = _num;
+    }
+}
+After calling store(25), what will number return? 
+a) 0 
+b) 25 
+c) Error 
+d) Undefined 
+Answer: b
+39.	pragma solidity ^0.8.0;
+
+contract Flag {
+    bool public active = false;
+    function activate() public {
+        active = true;
+    }
+}
+What is the value of active after calling activate()? 
+a) false 
+b) true 
+c) null 
+d) Error 
+Answer: b
+40.
+pragma solidity ^0.8.0;
+contract Token {
+    mapping(address => uint) public balances;
+    function mint(uint _amount) public {
+        balances[msg.sender] += _amount;
+    }
+}
+After calling mint(100), what is the balance of msg.sender? 
+a) 0 
+b) 100 
+c) Error 
+d) Undefined 
+Answer: b
+

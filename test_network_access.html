@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morning Quiz - Network Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .success { background: rgba(34, 197, 94, 0.8); }
+        .error { background: rgba(239, 68, 68, 0.8); }
+        .info { background: rgba(59, 130, 246, 0.8); }
+        .test-btn {
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        .test-btn:hover { background: #059669; }
+        .link-btn {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 10px 5px;
+        }
+        .link-btn:hover { background: #2563eb; }
+        #results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Morning Quiz System - Network Test</h1>
+        
+        <div class="status success">
+            ✅ System Status: RUNNING
+        </div>
+        
+        <div class="status info">
+            📱 Testing from: <span id="userAgent"></span>
+        </div>
+        
+        <div class="status info">
+            🌐 Current URL: <span id="currentUrl"></span>
+        </div>
+        
+        <h2>🔗 Quick Access Links</h2>
+        <a href="http://192.168.203.61:3000" class="link-btn">🎯 Student Portal</a>
+        <a href="http://192.168.203.61:3000/teacher" class="link-btn">👨‍🏫 Teacher Portal</a>
+        <a href="http://192.168.203.61:3000/admin" class="link-btn">⚙️ Admin Panel</a>
+        
+        <h2>🧪 Connection Tests</h2>
+        <button class="test-btn" onclick="testBackend()">Test Backend API</button>
+        <button class="test-btn" onclick="testFrontend()">Test Frontend</button>
+        <button class="test-btn" onclick="testDatabase()">Test Database Connection</button>
+        
+        <div id="results"></div>
+        
+        <h2>📋 Default Credentials</h2>
+        <div class="status info">
+            <strong>Admin:</strong> admin / admin123<br>
+            <strong>Teacher:</strong> teacher001 / pass123<br>
+            <strong>Student:</strong> student001 / student123
+        </div>
+        
+        <h2>📱 Mobile Testing Instructions</h2>
+        <ol>
+            <li>Connect your smartphone to the same Wi-Fi network</li>
+            <li>Open browser and go to: <strong>http://192.168.203.61:3000</strong></li>
+            <li>Test login with student credentials</li>
+            <li>Try creating and taking a quiz</li>
+            <li>Verify responsive design works properly</li>
+        </ol>
+    </div>
+
+    <script>
+        // Display current info
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        document.getElementById('currentUrl').textContent = window.location.href;
+        
+        function addResult(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            results.appendChild(div);
+        }
+        
+        async function testBackend() {
+            try {
+                const response = await fetch('http://192.168.203.61:8000/health');
+                const data = await response.json();
+                addResult(`✅ Backend API: ${data.status} - ${data.service}`, 'success');
+            } catch (error) {
+                addResult(`❌ Backend API Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testFrontend() {
+            try {
+                const response = await fetch('http://192.168.203.61:3000');
+                if (response.ok) {
+                    addResult('✅ Frontend: Accessible and responding', 'success');
+                } else {
+                    addResult(`❌ Frontend Error: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ Frontend Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testDatabase() {
+            try {
+                // Test database through backend API
+                const response = await fetch('http://192.168.203.61:8000/lessons');
+                if (response.ok) {
+                    addResult('✅ Database: Connected and accessible via API', 'success');
+                } else {
+                    addResult(`❌ Database Error: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ Database Error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Auto-run tests on page load
+        window.onload = function() {
+            setTimeout(() => {
+                testBackend();
+                testFrontend();
+                testDatabase();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

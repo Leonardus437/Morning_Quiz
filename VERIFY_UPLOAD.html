@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Student Upload - Department & Level</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .section { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        button { background: #4CAF50; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #45a049; }
+        .result { background: white; padding: 15px; margin: 10px 0; border-left: 4px solid #2196F3; }
+        .error { border-left-color: #f44336; }
+        .success { border-left-color: #4CAF50; }
+        select, input[type="file"] { padding: 10px; margin: 10px 0; width: 100%; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Verify Student Upload - Department & Level Test</h1>
+    
+    <div class="section">
+        <h2>Step 1: Login as Admin</h2>
+        <button onclick="loginAdmin()">Login as Admin</button>
+        <div id="loginResult"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Step 2: Upload Students with Department & Level</h2>
+        <label>Select Department:</label>
+        <select id="department">
+            <option value="LSV">LSV (Land Surveying)</option>
+            <option value="Software Development">Software Development</option>
+            <option value="Computer System and Architecture">Computer System and Architecture</option>
+            <option value="Building Construction">Building Construction</option>
+        </select>
+        
+        <label>Select Level:</label>
+        <select id="level">
+            <option value="L3">L3</option>
+            <option value="L4">L4</option>
+            <option value="L5">L5</option>
+            <option value="L6">L6</option>
+        </select>
+        
+        <label>Select Excel File (.xlsx):</label>
+        <input type="file" id="fileInput" accept=".xlsx,.xls" />
+        
+        <button onclick="uploadStudents()">Upload Students</button>
+        <div id="uploadResult"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Step 3: Verify Database</h2>
+        <button onclick="checkDatabase()">Check Last 10 Students in Database</button>
+        <div id="dbResult"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Step 4: Clear Test Data (Optional)</h2>
+        <button onclick="clearStudents()" style="background: #f44336;">Clear All Students</button>
+        <div id="clearResult"></div>
+    </div>
+
+    <script>
+        let token = '';
+        const API_BASE = 'http://localhost:8000';
+
+        async function loginAdmin() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = '<p>⏳ Logging in...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                
+                if (!response.ok) throw new Error('Login failed');
+                
+                const data = await response.json();
+                token = data.access_token;
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ Login Successful</h3>
+                        <p><strong>User:</strong> ${data.user.full_name}</p>
+                        <p><strong>Role:</strong> ${data.user.role}</p>
+                        <p><strong>Token:</strong> ${token.substring(0, 20)}...</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function uploadStudents() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            const fileInput = document.getElementById('fileInput');
+            const department = document.getElementById('department').value;
+            const level = document.getElementById('level').value;
+            const resultDiv = document.getElementById('uploadResult');
+            
+            if (!fileInput.files[0]) {
+                alert('Please select a file!');
+                return;
+            }
+            
+            resultDiv.innerHTML = '<p>⏳ Uploading students...</p>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('department', department);
+                formData.append('level', level);
+                
+                console.log('📤 Uploading:', { department, level, file: fileInput.files[0].name });
+                
+                const response = await fetch(`${API_BASE}/admin/upload-students-excel`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Upload failed: ${errorText}`);
+                }
+                
+                const result = await response.json();
+                console.log('📊 Upload result:', result);
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ Upload Successful</h3>
+                        <p><strong>Message:</strong> ${result.message}</p>
+                        <p><strong>Total Students:</strong> ${result.total}</p>
+                        <p><strong>New Students:</strong> ${result.created}</p>
+                        <p><strong>Updated Students:</strong> ${result.updated}</p>
+                        <p><strong>Department:</strong> ${result.department}</p>
+                        <p><strong>Level:</strong> ${result.level}</p>
+                        <hr>
+                        <h4>Sample Credentials (First 5):</h4>
+                        <table>
+                            <tr><th>Full Name</th><th>Username</th><th>Password</th><th>Department</th><th>Level</th></tr>
+                            ${result.credentials.slice(0, 5).map(c => `
+                                <tr>
+                                    <td>${c.full_name}</td>
+                                    <td>${c.username}</td>
+                                    <td>${c.password}</td>
+                                    <td>${c.department}</td>
+                                    <td>${c.level}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function checkDatabase() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('dbResult');
+            resultDiv.innerHTML = '<p>⏳ Checking database...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/students`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!response.ok) throw new Error('Failed to fetch students');
+                
+                const data = await response.json();
+                const students = data.students || [];
+                
+                console.log('📊 Database students:', students);
+                
+                if (students.length === 0) {
+                    resultDiv.innerHTML = '<div class="result">No students in database</div>';
+                    return;
+                }
+                
+                const last10 = students.slice(-10).reverse();
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ Database Check (Last 10 Students)</h3>
+                        <p><strong>Total Students in DB:</strong> ${students.length}</p>
+                        <table>
+                            <tr><th>Username</th><th>Full Name</th><th>Department</th><th>Level</th></tr>
+                            ${last10.map(s => `
+                                <tr>
+                                    <td>${s.username}</td>
+                                    <td>${s.full_name || 'N/A'}</td>
+                                    <td><strong>${s.department || 'NULL'}</strong></td>
+                                    <td><strong>${s.level || 'NULL'}</strong></td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+
+        async function clearStudents() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            if (!confirm('⚠️ This will delete ALL students. Continue?')) return;
+            
+            const resultDiv = document.getElementById('clearResult');
+            resultDiv.innerHTML = '<p>⏳ Clearing students...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/clear-all-students`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!response.ok) throw new Error('Failed to clear students');
+                
+                const result = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ Students Cleared</h3>
+                        <p><strong>Deleted:</strong> ${result.count} students</p>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

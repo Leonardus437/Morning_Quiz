@@ -1,0 +1,114 @@
+========================================
+🎨 QUICK IMAGE SETUP - 5 MINUTES!
+========================================
+
+YOUR NEW HOMEPAGE IS READY! ✅
+
+Now add Runda TSS student images to make it AMAZING!
+
+========================================
+STEP 1: GET IMAGES (2 minutes)
+========================================
+
+Visit: http://rundatss.rw/
+
+Download 6 photos of:
+✓ Students in class
+✓ Students in computer lab
+✓ Students doing practical work
+✓ Campus activities
+✓ Any student photos
+
+Right-click → "Save image as..."
+
+========================================
+STEP 2: RENAME IMAGES (1 minute)
+========================================
+
+Rename your downloaded images to:
+
+student1.jpg
+student2.jpg
+student3.jpg
+student4.jpg
+student5.jpg
+student6.jpg
+
+(You can start with just 3-4 images)
+
+========================================
+STEP 3: COPY TO PROJECT (1 minute)
+========================================
+
+Copy all images to:
+
+C:\TVETQuiz\frontend\static\images\
+
+Or your project location:
+[YOUR_PATH]\frontend\static\images\
+
+========================================
+STEP 4: RESTART DOCKER (1 minute)
+========================================
+
+Open Command Prompt:
+
+cd C:\TVETQuiz
+docker-compose down
+docker-compose up -d
+
+========================================
+STEP 5: VIEW YOUR HOMEPAGE! 🎉
+========================================
+
+Open browser:
+http://localhost:3000
+
+ENJOY YOUR STUNNING NEW HOMEPAGE!
+
+========================================
+WHAT YOU'LL SEE:
+========================================
+
+✨ Animated image carousel (auto-rotating)
+✨ Professional modern design
+✨ Smooth transitions and effects
+✨ Beautiful gradient overlays
+✨ Interactive navigation dots
+✨ Feature cards with hover effects
+✨ Statistics section
+✨ Mobile-friendly responsive design
+
+========================================
+NO IMAGES YET? NO PROBLEM!
+========================================
+
+The homepage works perfectly with gradient
+placeholders until you add real images.
+
+Just visit: http://localhost:3000
+
+Everything will work beautifully!
+
+========================================
+TIPS FOR BEST RESULTS:
+========================================
+
+✓ Use high-quality, clear photos
+✓ Mix different types of activities
+✓ Choose well-lit images
+✓ Photos with students' faces work best
+✓ Action shots are more engaging
+
+========================================
+STUDENTS WILL BE AMAZED! 🚀
+========================================
+
+Your new homepage features:
+- Modern professional design
+- Smooth animations
+- Beautiful carousel
+- Fast and responsive
+- Inspired by top banking websites
+
+========================================

@@ -1,0 +1,7 @@
+# FORCE RENDER DEPLOYMENT
+
+Timestamp: 2026-01-10 12:21:45
+Commit: e6ab5d23
+Reason: Critical fix for quiz submission 500 error
+
+This file triggers Render auto-deploy.

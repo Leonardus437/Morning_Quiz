@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Check Lessons</title></head>
+<body>
+<h1>Lesson Data Check</h1>
+<button onclick="checkLessons()">Check Teacher Lessons</button>
+<pre id="output"></pre>
+
+<script>
+async function checkLessons() {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+    
+    const response = await fetch(`http://localhost:8000/teacher-lessons/${user.id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    
+    const lessons = await response.json();
+    
+    document.getElementById('output').textContent = JSON.stringify(lessons, null, 2);
+}
+</script>
+</body>
+</html>

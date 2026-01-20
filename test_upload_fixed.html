@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Student Upload - FIXED</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Test Student Upload - FIXED</h1>
+        
+        <div class="status info">
+            <strong>🔧 System Status:</strong><br>
+            ✅ Frontend endpoint updated to /admin/upload-students-file<br>
+            ✅ Backend supports Excel and PDF files<br>
+            ✅ Container restarted
+        </div>
+
+        <div>
+            <label><strong>1. Login Token (from browser):</strong></label>
+            <input type="text" id="token" placeholder="Paste your token from localStorage">
+            <small>Open browser console and type: localStorage.getItem('token')</small>
+        </div>
+
+        <div>
+            <label><strong>2. Select File:</strong></label>
+            <input type="file" id="file" accept=".xlsx,.xls,.pdf">
+        </div>
+
+        <div>
+            <label><strong>3. Department:</strong></label>
+            <select id="department">
+                <option value="Software Development">Software Development</option>
+                <option value="Computer System and Architecture">Computer System and Architecture</option>
+                <option value="Land Surveying">Land Surveying</option>
+                <option value="Building Construction">Building Construction</option>
+            </select>
+        </div>
+
+        <div>
+            <label><strong>4. Level:</strong></label>
+            <select id="level">
+                <option value="Level 3">Level 3</option>
+                <option value="Level 4">Level 4</option>
+                <option value="Level 5">Level 5</option>
+            </select>
+        </div>
+
+        <button onclick="testUpload()" id="uploadBtn">🚀 Test Upload</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function testUpload() {
+            const token = document.getElementById('token').value;
+            const file = document.getElementById('file').files[0];
+            const department = document.getElementById('department').value;
+            const level = document.getElementById('level').value;
+            const resultDiv = document.getElementById('result');
+            const btn = document.getElementById('uploadBtn');
+
+            if (!token) {
+                resultDiv.innerHTML = '<div class="status error">❌ Please enter your token</div>';
+                return;
+            }
+
+            if (!file) {
+                resultDiv.innerHTML = '<div class="status error">❌ Please select a file</div>';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '⏳ Uploading...';
+            resultDiv.innerHTML = '<div class="status info">📤 Uploading file to /admin/upload-students-file...</div>';
+
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('department', department);
+                formData.append('level', level);
+
+                const response = await fetch('http://localhost:8000/admin/upload-students-file', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    let html = '<div class="status success">';
+                    html += `<strong>✅ ${data.message}</strong><br><br>`;
+                    html += `📊 <strong>Statistics:</strong><br>`;
+                    html += `• Total Students: ${data.total || 0}<br>`;
+                    html += `• New Students: ${data.created || 0}<br>`;
+                    html += `• Updated Students: ${data.updated || 0}<br>`;
+                    html += `• Department: ${data.department}<br>`;
+                    html += `• Level: ${data.level}<br>`;
+                    html += `• File Type: ${data.file_type || 'Unknown'}`;
+                    html += '</div>';
+                    
+                    html += '<div class="result">' + JSON.stringify(data, null, 2) + '</div>';
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `<div class="status error">❌ Error: ${data.detail || data.message || 'Upload failed'}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="status error">❌ Network Error: ${error.message}</div>`;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🚀 Test Upload';
+            }
+        }
+    </script>
+</body>
+</html>

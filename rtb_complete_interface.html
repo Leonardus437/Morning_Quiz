@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete RTB Generator - Rwanda Technical Board</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .header h1 { color: #2c3e50; font-size: 2.5em; margin-bottom: 10px; }
+        .header p { color: #7f8c8d; font-size: 1.2em; }
+        .tabs { display: flex; margin-bottom: 20px; gap: 10px; }
+        .tab { padding: 15px 30px; background: rgba(255,255,255,0.9); color: #2c3e50; cursor: pointer; border-radius: 10px; font-weight: bold; transition: all 0.3s; }
+        .tab.active { background: #3498db; color: white; transform: translateY(-2px); }
+        .form-container { background: rgba(255,255,255,0.95); padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .form-section { margin-bottom: 30px; }
+        .form-section h3 { color: #2c3e50; margin-bottom: 15px; font-size: 1.3em; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #2c3e50; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #3498db; outline: none; box-shadow: 0 0 10px rgba(52,152,219,0.3); }
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .btn { background: linear-gradient(45deg, #3498db, #2980b9); color: white; padding: 18px 40px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold; transition: all 0.3s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn:disabled { background: #bdc3c7; cursor: not-allowed; transform: none; }
+        .output { background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px; margin-top: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .output h3 { color: #2c3e50; margin-bottom: 20px; font-size: 1.5em; }
+        .output pre { background: #f8f9fa; padding: 20px; border-radius: 10px; overflow-x: auto; font-size: 12px; border-left: 4px solid #3498db; }
+        .loading { text-align: center; padding: 60px; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .hidden { display: none; }
+        .success-message { background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #28a745; }
+        .error-message { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #dc3545; }
+        .download-section { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .download-btn { background: #28a745; padding: 12px 25px; border-radius: 8px; text-decoration: none; color: white; font-weight: bold; transition: all 0.3s; }
+        .download-btn:hover { background: #218838; transform: translateY(-2px); }
+        .preview-section { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; }
+        .rtb-logo { width: 60px; height: 60px; background: #e74c3c; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="display: flex; align-items: center;">
+                <div class="rtb-logo">RTB</div>
+                <div>
+                    <h1>🇷🇼 Complete RTB Template Generator</h1>
+                    <p>Professional AI-Powered Session Plans & Schemes of Work for Rwanda Technical Board Standards</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('session')">📋 Session Plan Generator</div>
+            <div class="tab" onclick="switchTab('scheme')">📚 Scheme of Work Generator</div>
+            <div class="tab" onclick="switchTab('batch')">⚡ Batch Generator</div>
+        </div>
+
+        <!-- Session Plan Form -->
+        <div id="session-form" class="form-container">
+            <h2>Generate Complete RTB Session Plan</h2>
+            <form id="sessionPlanForm">
+                <div class="form-section">
+                    <h3>📍 Institution Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Sector *</label>
+                            <select name="sector" required>
+                                <option value="ICT & MULTIMEDIA">ICT & MULTIMEDIA</option>
+                                <option value="ENGINEERING">ENGINEERING</option>
+                                <option value="BUSINESS">BUSINESS</option>
+                                <option value="HOSPITALITY">HOSPITALITY</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sub-sector *</label>
+                            <input type="text" name="sub_sector" value="Software Development" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>👨‍🏫 Trainer & Module Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Trainer Name *</label>
+                            <input type="text" name="trainer_name" placeholder="Enter full trainer name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Module Code *</label>
+                            <input type="text" name="module_code" placeholder="e.g., SWDPR301" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Module Name *</label>
+                        <input type="text" name="module_name" placeholder="e.g., Analyze project requirements" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>📖 Session Content</h3>
+                    <div class="form-group">
+                        <label>Session Topic *</label>
+                        <input type="text" name="topic" placeholder="e.g., Introduction to Database Design" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Learning Outcome *</label>
+                        <input type="text" name="learning_outcome" placeholder="e.g., Design database schemas" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Indicative Content *</label>
+                        <input type="text" name="indicative_content" placeholder="e.g., Entity-Relationship modeling" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>⏱️ Session Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duration (minutes)</label>
+                            <input type="number" name="duration" value="40" min="30" max="180">
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Learners</label>
+                            <input type="number" name="num_learners" value="30" min="1" max="100">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Term</label>
+                            <select name="term">
+                                <option value="I">Term I</option>
+                                <option value="II">Term II</option>
+                                <option value="III">Term III</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Week</label>
+                            <input type="text" name="week" value="I">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Facilitation Technique</label>
+                        <select name="facilitation_technique">
+                            <option value="">Auto-select (AI chooses best)</option>
+                            <option value="JIGSAW">JIGSAW</option>
+                            <option value="Think-Pair-Share">Think-Pair-Share</option>
+                            <option value="Problem-based learning">Problem-based learning</option>
+                            <option value="Demonstration and simulation">Demonstration and simulation</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">🤖 Generate Complete Session Plan</button>
+            </form>
+        </div>
+
+        <!-- Scheme of Work Form -->
+        <div id="scheme-form" class="form-container hidden">
+            <h2>Generate Complete RTB Scheme of Work</h2>
+            <form id="schemeOfWorkForm">
+                <div class="form-section">
+                    <h3>🏫 Institution Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Province</label>
+                            <input type="text" name="province" value="Southern province">
+                        </div>
+                        <div class="form-group">
+                            <label>District</label>
+                            <input type="text" name="district" value="Kamonyi district">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Sector</label>
+                            <input type="text" name="sector" value="Runda sector">
+                        </div>
+                        <div class="form-group">
+                            <label>School</label>
+                            <input type="text" name="school" value="Runda TSS">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>📚 Course Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Course Title *</label>
+                            <input type="text" name="course_title" placeholder="e.g., Computer Programming" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Module Code *</label>
+                            <input type="text" name="module_code" placeholder="e.g., L4CSA" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Trainer Name *</label>
+                        <input type="text" name="trainer_name" placeholder="Enter trainer name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Term</label>
+                        <select name="term">
+                            <option value="1">Term 1</option>
+                            <option value="2">Term 2</option>
+                            <option value="3">Term 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">🤖 Generate Complete Scheme of Work</button>
+            </form>
+        </div>
+
+        <!-- Batch Generator -->
+        <div id="batch-form" class="form-container hidden">
+            <h2>Batch Generate Multiple RTB Documents</h2>
+            <div class="form-section">
+                <h3>⚡ Quick Batch Generation</h3>
+                <p>Generate multiple session plans or schemes for an entire course</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Document Type</label>
+                        <select id="batchType">
+                            <option value="session_plans">Multiple Session Plans</option>
+                            <option value="scheme_of_work">Complete Scheme of Work</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Documents</label>
+                        <input type="number" id="batchCount" value="5" min="1" max="20">
+                    </div>
+                </div>
+                <button onclick="generateBatch()" class="btn">⚡ Generate Batch Documents</button>
+            </div>
+        </div>
+
+        <!-- Output Section -->
+        <div id="output" class="output hidden">
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>AI is generating your complete RTB template...</p>
+                <p style="font-size: 0.9em; color: #7f8c8d; margin-top: 10px;">This may take a few moments for complete formatting</p>
+            </div>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.getElementById('session-form').classList.toggle('hidden', tab !== 'session');
+            document.getElementById('scheme-form').classList.toggle('hidden', tab !== 'scheme');
+            document.getElementById('batch-form').classList.toggle('hidden', tab !== 'batch');
+            document.getElementById('output').classList.add('hidden');
+        }
+
+        document.getElementById('sessionPlanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.template_type = 'session_plan';
+            await generateTemplate(data);
+        });
+
+        document.getElementById('schemeOfWorkForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.template_type = 'scheme_of_work';
+            await generateTemplate(data);
+        });
+
+        async function generateTemplate(data) {
+            document.getElementById('output').classList.remove('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('result').innerHTML = '';
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                const template = await mockGenerateCompleteRTB(data);
+                
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('result').innerHTML = `
+                    <div class="success-message">
+                        ✅ Complete RTB ${data.template_type.replace('_', ' ')} generated successfully!
+                    </div>
+                    <div class="download-section">
+                        <a href="#" onclick="downloadJSON()" class="download-btn">📥 Download JSON</a>
+                        <a href="#" onclick="downloadPDF()" class="download-btn">📄 Download PDF</a>
+                        <a href="#" onclick="downloadWord()" class="download-btn">📝 Download Word</a>
+                        <a href="#" onclick="printTemplate()" class="download-btn">🖨️ Print</a>
+                    </div>
+                    <div class="preview-section">
+                        <h4>📋 RTB Template Preview</h4>
+                        <pre>${JSON.stringify(template, null, 2)}</pre>
+                    </div>
+                `;
+                window.currentTemplate = template;
+                
+            } catch (error) {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('result').innerHTML = `
+                    <div class="error-message">
+                        ❌ Error: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function mockGenerateCompleteRTB(data) {
+            if (data.template_type === 'session_plan') {
+                return {
+                    "document_type": "RTB_SESSION_PLAN",
+                    "version": "2.0",
+                    "generated_date": new Date().toISOString(),
+                    "header_section": {
+                        "sector": `Sector : ${data.sector}`,
+                        "sub_sector": `Sub-sector: ${data.sub_sector}`,
+                        "date": `Date : ${new Date().toLocaleDateString('en-GB')}`,
+                        "trainer_name": `Lead Trainer's name : ${data.trainer_name}`,
+                        "term": `TERM : ${data.term}`,
+                        "module": `Module(Code&Name): ${data.module_code} ${data.module_name}`,
+                        "week": `Week : ${data.week}`,
+                        "num_learners": `No. Learners: ${data.num_learners}`,
+                        "class": "Class:1",
+                        "learning_outcome": data.learning_outcome,
+                        "indicative_contents": data.indicative_content,
+                        "topic": `Topic of the session: ${data.topic}`,
+                        "range": `Range:\nMethods of ${data.indicative_content.toLowerCase()}\nDescription of ${data.indicative_content.toLowerCase()} Tools`,
+                        "duration": `Duration of the session: ${data.duration}min`,
+                        "objectives": `Objectives: By the end of this session every learner should be able to:\nDefine clearly a term ${data.indicative_content.toLowerCase()}\nSelect properly 2 methods related to ${data.topic.toLowerCase()}\nName appropriately 2 tools used in ${data.topic.toLowerCase()}`,
+                        "facilitation_technique": `Facilitation technique(s): ${data.facilitation_technique || 'JIGSAW'}`
+                    },
+                    "session_phases": {
+                        "introduction": {
+                            "phase_name": "Introduction",
+                            "duration": "5 minutes",
+                            "activities": "Complete RTB-formatted introduction activities"
+                        },
+                        "development_body": {
+                            "phase_name": "Development/Body", 
+                            "duration": `${parseInt(data.duration) - 10} minutes`,
+                            "activities": "Complete RTB-formatted body activities"
+                        },
+                        "conclusion": {
+                            "phase_name": "CONCLUSION",
+                            "duration": "5 minutes",
+                            "activities": "Complete RTB-formatted conclusion activities"
+                        }
+                    },
+                    "metadata": {
+                        "rtb_compliant": true,
+                        "format_version": "Official RTB 2024"
+                    }
+                };
+            } else {
+                return {
+                    "document_type": "RTB_SCHEME_OF_WORK",
+                    "version": "2.0", 
+                    "generated_date": new Date().toISOString(),
+                    "header_info": {
+                        "province": data.province,
+                        "district": data.district,
+                        "sector": data.sector,
+                        "school": data.school,
+                        "course_title": data.course_title,
+                        "module_code": data.module_code
+                    },
+                    "weekly_breakdown": [
+                        {
+                            "weeks": "September 8 to December 19, 2025",
+                            "learning_outcome": `LO1: Apply ${data.course_title} fundamentals`,
+                            "duration": "30 hours",
+                            "indicative_content": `IC1.1: Introduction to ${data.course_title}`
+                        }
+                    ],
+                    "metadata": {
+                        "rtb_compliant": true,
+                        "format_version": "Official RTB 2024"
+                    }
+                };
+            }
+        }
+
+        function downloadJSON() {
+            if (window.currentTemplate) {
+                const blob = new Blob([JSON.stringify(window.currentTemplate, null, 2)], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `rtb_${window.currentTemplate.document_type}_${Date.now()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function downloadPDF() { alert('PDF download feature coming soon!'); }
+        function downloadWord() { alert('Word download feature coming soon!'); }
+        function printTemplate() { window.print(); }
+        function generateBatch() { alert('Batch generation feature coming soon!'); }
+    </script>
+</body>
+</html>

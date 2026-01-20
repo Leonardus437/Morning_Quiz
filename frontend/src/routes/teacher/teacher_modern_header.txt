@@ -1,0 +1,32 @@
+<!-- MODERN TEACHER PORTAL DESIGN GUIDE -->
+<!-- Apply these styles to the teacher portal -->
+
+DESIGN PRINCIPLES:
+1. Clean white backgrounds with subtle gray accents
+2. Professional blue color scheme (#0066CC primary, #003D7A dark)
+3. Card-based layout with subtle shadows
+4. Clear typography hierarchy
+5. Minimal use of emojis, focus on icons
+6. Generous whitespace
+7. Smooth transitions
+
+COLOR PALETTE:
+- Primary: #0066CC (Professional Blue)
+- Dark: #003D7A (Navy)
+- Success: #00A651 (Green)
+- Warning: #FF9900 (Orange)
+- Danger: #CC0000 (Red)
+- Gray: #F5F5F5 (Background)
+- White: #FFFFFF (Cards)
+
+TYPOGRAPHY:
+- Headings: Montserrat, Bold
+- Body: Open Sans, Regular
+- Buttons: Uppercase, Bold, Letter-spacing
+
+COMPONENTS:
+- Navigation: Horizontal tabs with underline indicator
+- Cards: White background, subtle shadow, rounded corners
+- Buttons: Solid colors, uppercase text
+- Forms: Clean inputs with focus states
+- Tables: Striped rows, hover effects

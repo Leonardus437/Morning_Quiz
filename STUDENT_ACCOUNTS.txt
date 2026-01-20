@@ -1,0 +1,84 @@
+========================================
+STUDENT ACCOUNTS - L5CSA CLASS
+========================================
+Total Students: 51
+Class Group: L5CSA
+Department: L5C
+Default Password: student123
+
+========================================
+STUDENT LIST WITH USERNAMES
+========================================
+
+1. ABAYISENGA HALLELUA -> abayisengahalle
+2. AGAHOZO Hope -> agahozohope
+3. BENIMANA ASSOUMPTA -> benimanaassoump
+4. CYIZA MUGISHA IRENE -> cyizamugishaire
+5. DUKUNDANE JEAN  DE DIEU -> dukundanejeande
+6. GATESI Delphina -> gatesidelphina
+7. GISUBIZO KEVIN -> gisubizokevin
+8. HAKIZIMANA Stiven -> hakizimanastive
+9. HUMURA IRENE PIERRE -> humurairenepier
+10. IBANGARYIMANA KWIZERA DENNY -> ibangaryimanakw
+11. IGIRANEZA ELVIS -> igiranezaelvis
+12. INEZA KARAMBIZI LOUIS -> inezakarambizil
+13. INEZA Shema Loic -> inezashemaloic
+14. IRADUKUNDA CEDRICK -> iradukundacedri
+15. IRAGUHA IDRISSA -> iraguhaidrissa
+16. IRASUBIZA DEBORAH -> irasubizadebora
+17. IRASUBIZA Naome -> irasubizanaome
+18. ISHIMWE Boris -> ishimweboris
+19. ISHIMWE NZIGIYE CLAIRE -> ishimwenzigiyec
+20. IZIJE Sweet Kalove -> izijesweetkalov
+21. JABO RUZINDAZA Marius Angelo -> jaboruzindazama
+22. KABAYIZA VALENTIN -> kabayizavalenti
+23. KAYINAMURA ERIC -> kayinamuraeric
+24. MASEZERANO BENITHA -> masezeranobenit
+25. MPOZA MUSANINYANGE HOPE -> mpozamusaninyan
+26. MUCYO LOUIS Patrick -> mucyolouispatri
+27. MUCYO OLIVIER -> mucyoolivier
+28. MUGISHA  Boaz -> mugishaboaz
+29. MUGISHA NAZILU -> mugishanazilu
+30. MURENGERANTWARI  MUSTAFA -> murengerantwari
+31. NDAYISHIMIYE KENEDDY -> ndayishimiyeken
+32. NDAYIZEYE Josiane -> ndayizeyejosian
+33. NGABO  Jean Bosco -> ngabojeanbosco
+34. NIWENKUNDA GIHOZO Kelia -> niwenkundagihoz
+35. NIYOGUSHIMWA Divine -> niyogushimwadiv
+36. NIYOMUSHUMBA GISA Prince -> niyomushumbagis
+37. NIYONSHUTI Arsene -> niyonshutiarsen
+38. NTWARI DAVID -> ntwaridavid
+39. RUKATSA Joel -> rukatsajoel
+40. RUTAYISIRE MBARAGA FABRICE -> rutayisirembara
+41. SENYANDWI Sylvestre -> senyandwisylves
+42. SIMBI CLOVER -> simbiclover
+43. SUGIRA HIRWA Chris -> sugirahirwachri
+44. UBUSHAKEBWAYO ALINE -> ubushakebwayoal
+45. UGIRASE M Goreth -> ugirasemgoreth
+46. UMUTONI KEZIA -> umutonikezia
+47. UWANYIRIGIRA Liliane -> uwanyirigiralil
+48. UWIDUHAYE Alain Romeo -> uwiduhayealainr
+49. UWIMANA JOSELYNE -> uwimanajoselyne
+50. UWIMPUHWE Sandrine -> uwimpuhwesandri
+51. UWINEMA Aline -> uwinemaaline
+
+========================================
+LOGIN INSTRUCTIONS FOR STUDENTS
+========================================
+
+1. Go to: http://[TEACHER-PC-IP]:3000
+2. Enter your username (see list above)
+3. Enter password: student123
+4. Click "Login"
+
+========================================
+NOTES FOR TEACHER
+========================================
+
+- All students can now login with their usernames
+- Default password is: student123
+- Students should change their password after first login
+- To import more students, use the same Excel template format
+- Run: python import_students_docker.py
+
+========================================

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Lessons Issue</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .warning { color: #ff9800; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Lessons & Credentials Issue</h1>
+    
+    <div class="section">
+        <h2>Step 1: Login First</h2>
+        <p>Make sure you're logged in as <strong>admin</strong> or <strong>teacher</strong> in another tab</p>
+        <button onclick="checkAuth()">✅ Check Authentication</button>
+        <pre id="authResult"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Step 2: Check Students Data</h2>
+        <p>This will show what departments and levels are actually in the database</p>
+        <button onclick="checkStudents()">👥 Check Students</button>
+        <pre id="studentsResult"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Step 3: Check Teacher's Assigned Lessons</h2>
+        <p>Enter teacher ID (check in DOS → Teachers tab)</p>
+        <input type="number" id="teacherId" placeholder="Teacher ID" value="2">
+        <button onclick="checkTeacherLessons()">📚 Check Lessons</button>
+        <pre id="lessonsResult"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Step 4: Test Credentials Generation</h2>
+        <p>Select department and level to test</p>
+        <select id="credDept">
+            <option value="">Select Department</option>
+            <option value="Software Development">Software Development</option>
+            <option value="Computer System and Architecture">Computer System and Architecture</option>
+            <option value="Land Surveying">Land Surveying</option>
+            <option value="Building Construction">Building Construction</option>
+        </select>
+        <select id="credLevel">
+            <option value="">Select Level</option>
+            <option value="Level 3">Level 3</option>
+            <option value="Level 4">Level 4</option>
+            <option value="Level 5">Level 5</option>
+        </select>
+        <button onclick="testCredentials()">🔑 Test Credentials</button>
+        <pre id="credResult"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>Step 5: Check All Lessons</h2>
+        <button onclick="checkAllLessons()">📖 Check All Lessons</button>
+        <pre id="allLessonsResult"></pre>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        
+        function getToken() {
+            return localStorage.getItem('token');
+        }
+        
+        function getHeaders() {
+            return {
+                'Authorization': `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            };
+        }
+        
+        async function checkAuth() {
+            const result = document.getElementById('authResult');
+            try {
+                const token = getToken();
+                if (!token) {
+                    result.innerHTML = '<span class="error">❌ No token found. Please login first!</span>';
+                    return;
+                }
+                
+                const response = await fetch(`${API_BASE}/auth/test`, {
+                    headers: getHeaders()
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `<span class="success">✅ Authenticated as: ${data.user.username} (${data.user.role})</span>\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    result.innerHTML = `<span class="error">❌ Authentication failed: ${response.status}</span>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function checkStudents() {
+            const result = document.getElementById('studentsResult');
+            result.innerHTML = '⏳ Loading students...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/students`, {
+                    headers: getHeaders()
+                });
+                
+                if (!response.ok) {
+                    result.innerHTML = `<span class="error">❌ Failed: ${response.status} - ${response.statusText}</span>`;
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                // Extract unique departments and levels
+                const departments = [...new Set(data.students.map(s => s.department))];
+                const levels = [...new Set(data.students.map(s => s.level))];
+                
+                // Count by department and level
+                const deptCounts = {};
+                const levelCounts = {};
+                data.students.forEach(s => {
+                    deptCounts[s.department] = (deptCounts[s.department] || 0) + 1;
+                    levelCounts[s.level] = (levelCounts[s.level] || 0) + 1;
+                });
+                
+                result.innerHTML = `<span class="success">✅ Found ${data.total} students</span>
+
+<strong>📊 Departments in Database:</strong>
+${departments.map(d => `  • ${d}: ${deptCounts[d]} students`).join('\n')}
+
+<strong>📊 Levels in Database:</strong>
+${levels.map(l => `  • ${l}: ${levelCounts[l]} students`).join('\n')}
+
+<strong>Sample Student:</strong>
+${JSON.stringify(data.students[0], null, 2)}
+
+<span class="warning">⚠️ IMPORTANT: Use EXACT names above when generating credentials!</span>`;
+            } catch (error) {
+                result.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function checkTeacherLessons() {
+            const teacherId = document.getElementById('teacherId').value;
+            const result = document.getElementById('lessonsResult');
+            
+            if (!teacherId) {
+                result.innerHTML = '<span class="error">❌ Please enter teacher ID</span>';
+                return;
+            }
+            
+            result.innerHTML = '⏳ Loading teacher lessons...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/teacher-lessons/${teacherId}`, {
+                    headers: getHeaders()
+                });
+                
+                if (!response.ok) {
+                    result.innerHTML = `<span class="error">❌ Failed: ${response.status} - ${response.statusText}</span>`;
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                if (data.length === 0) {
+                    result.innerHTML = `<span class="warning">⚠️ No lessons assigned to teacher ${teacherId}</span>
+
+<strong>Solution:</strong>
+1. Login as DOS (admin)
+2. Go to "Assignments" tab
+3. Select this teacher
+4. Assign lessons to them`;
+                    return;
+                }
+                
+                // Group by department and level
+                const grouped = {};
+                data.forEach(assignment => {
+                    const key = `${assignment.lesson.department} - ${assignment.lesson.level}`;
+                    if (!grouped[key]) grouped[key] = [];
+                    grouped[key].push(assignment.lesson);
+                });
+                
+                let output = `<span class="success">✅ Found ${data.length} assigned lessons</span>\n\n`;
+                
+                for (const [key, lessons] of Object.entries(grouped)) {
+                    output += `<strong>${key}:</strong>\n`;
+                    lessons.forEach(lesson => {
+                        output += `  • ${lesson.title} (ID: ${lesson.id})\n`;
+                    });
+                    output += '\n';
+                }
+                
+                output += `\n<strong>Full Data:</strong>\n${JSON.stringify(data, null, 2)}`;
+                
+                result.innerHTML = output;
+            } catch (error) {
+                result.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function testCredentials() {
+            const dept = document.getElementById('credDept').value;
+            const level = document.getElementById('credLevel').value;
+            const result = document.getElementById('credResult');
+            
+            if (!dept || !level) {
+                result.innerHTML = '<span class="error">❌ Please select both department and level</span>';
+                return;
+            }
+            
+            result.innerHTML = `⏳ Testing credentials for ${dept} - ${level}...`;
+            
+            try {
+                // First check if students exist
+                const studentsResponse = await fetch(`${API_BASE}/admin/students?department=${encodeURIComponent(dept)}&level=${encodeURIComponent(level)}`, {
+                    headers: getHeaders()
+                });
+                
+                if (!studentsResponse.ok) {
+                    result.innerHTML = `<span class="error">❌ Failed to check students: ${studentsResponse.status}</span>`;
+                    return;
+                }
+                
+                const studentsData = await studentsResponse.json();
+                
+                if (studentsData.total === 0) {
+                    result.innerHTML = `<span class="error">❌ No students found for ${dept} - ${level}</span>
+
+<strong>Solution:</strong>
+1. Go to Admin → Students tab
+2. Upload students for this department and level
+3. Then try generating credentials again`;
+                    return;
+                }
+                
+                result.innerHTML = `<span class="success">✅ Found ${studentsData.total} students for ${dept} - ${level}</span>
+
+<strong>Students:</strong>
+${studentsData.students.slice(0, 5).map(s => `  • ${s.full_name} (${s.username})`).join('\n')}
+${studentsData.total > 5 ? `  ... and ${studentsData.total - 5} more` : ''}
+
+<span class="success">✅ Credentials generation should work!</span>
+
+<strong>Next Step:</strong>
+Go to Admin panel and click "Generate Credentials" with these exact values:
+  Department: ${dept}
+  Level: ${level}`;
+                
+            } catch (error) {
+                result.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function checkAllLessons() {
+            const result = document.getElementById('allLessonsResult');
+            result.innerHTML = '⏳ Loading all lessons...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/lessons`, {
+                    headers: getHeaders()
+                });
+                
+                if (!response.ok) {
+                    result.innerHTML = `<span class="error">❌ Failed: ${response.status} - ${response.statusText}</span>`;
+                    return;
+                }
+                
+                const data = await response.json();
+                
+                // Group by department and level
+                const grouped = {};
+                data.forEach(lesson => {
+                    const key = `${lesson.department} - ${lesson.level}`;
+                    if (!grouped[key]) grouped[key] = [];
+                    grouped[key].push(lesson);
+                });
+                
+                let output = `<span class="success">✅ Found ${data.length} total lessons</span>\n\n`;
+                
+                for (const [key, lessons] of Object.entries(grouped)) {
+                    output += `<strong>${key}:</strong>\n`;
+                    lessons.forEach(lesson => {
+                        output += `  • ${lesson.title} (${lesson.code}) - ${lesson.classification}\n`;
+                    });
+                    output += '\n';
+                }
+                
+                result.innerHTML = output;
+            } catch (error) {
+                result.innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+        
+        // Auto-check auth on load
+        window.onload = () => {
+            checkAuth();
+        };
+    </script>
+</body>
+</html>

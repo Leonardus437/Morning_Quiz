@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head><title>FINAL TEST - Upload Students</title>
+<style>
+body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }
+.success { background: #d1fae5; padding: 15px; border-radius: 5px; margin: 10px 0; }
+.error { background: #fee2e2; padding: 15px; border-radius: 5px; margin: 10px 0; }
+button { background: #2563eb; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; margin: 10px 5px; }
+select, input { padding: 10px; margin: 5px; font-size: 16px; }
+</style>
+</head>
+<body>
+<h1>🎯 FINAL TEST - Student Upload System</h1>
+
+<h2>Step 1: Login</h2>
+<input type="text" id="username" placeholder="Username" value="admin">
+<input type="password" id="password" placeholder="Password" value="admin123">
+<button onclick="login()">Login</button>
+<div id="loginResult"></div>
+
+<h2>Step 2: Upload Students</h2>
+<select id="dept">
+<option value="LSV">LSV - Land Surveying</option>
+<option value="Software Development">SWD - Software Development</option>
+<option value="Computer System and Architecture">CSA - Computer System</option>
+<option value="Building Construction">BDC - Building Construction</option>
+</select>
+<select id="level">
+<option value="L3">L3</option>
+<option value="L4">L4</option>
+<option value="L5">L5</option>
+<option value="L6">L6</option>
+</select>
+<input type="file" id="file" accept=".xlsx">
+<button onclick="upload()">Upload Students</button>
+<div id="uploadResult"></div>
+
+<h2>Step 3: Verify Database</h2>
+<button onclick="verify()">Check Database</button>
+<div id="verifyResult"></div>
+
+<script>
+let token = '';
+
+async function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    try {
+        const response = await fetch('http://localhost:8000/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            token = data.access_token;
+            localStorage.setItem('token', token);
+            document.getElementById('loginResult').innerHTML = `<div class="success">✅ Logged in as ${data.user.full_name}</div>`;
+        } else {
+            document.getElementById('loginResult').innerHTML = `<div class="error">❌ Login failed: ${data.detail}</div>`;
+        }
+    } catch (error) {
+        document.getElementById('loginResult').innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+    }
+}
+
+async function upload() {
+    if (!token) {
+        alert('Please login first!');
+        return;
+    }
+    
+    const file = document.getElementById('file').files[0];
+    const dept = document.getElementById('dept').value;
+    const level = document.getElementById('level').value;
+    
+    if (!file) {
+        alert('Please select a file!');
+        return;
+    }
+    
+    document.getElementById('uploadResult').innerHTML = '<div>⏳ Uploading...</div>';
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('department', dept);
+    formData.append('level', level);
+    
+    try {
+        const response = await fetch('http://localhost:8000/admin/upload-students-excel', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('uploadResult').innerHTML = `
+                <div class="success">
+                    <h3>✅ ${data.message}</h3>
+                    <p><strong>Total:</strong> ${data.total}</p>
+                    <p><strong>Created:</strong> ${data.created}</p>
+                    <p><strong>Updated:</strong> ${data.updated}</p>
+                    <p><strong>Department:</strong> ${data.department}</p>
+                    <p><strong>Level:</strong> ${data.level}</p>
+                    <h4>First 5 students:</h4>
+                    <pre>${JSON.stringify(data.credentials.slice(0, 5), null, 2)}</pre>
+                </div>
+            `;
+        } else {
+            document.getElementById('uploadResult').innerHTML = `<div class="error">❌ Upload failed: ${data.detail}</div>`;
+        }
+    } catch (error) {
+        document.getElementById('uploadResult').innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+    }
+}
+
+async function verify() {
+    if (!token) {
+        alert('Please login first!');
+        return;
+    }
+    
+    document.getElementById('verifyResult').innerHTML = '<div>⏳ Checking database...</div>';
+    
+    try {
+        const response = await fetch('http://localhost:8000/admin/students', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            const students = data.students || [];
+            const byDept = {};
+            
+            students.forEach(s => {
+                const key = `${s.department} - ${s.level}`;
+                byDept[key] = (byDept[key] || 0) + 1;
+            });
+            
+            let html = `<div class="success"><h3>✅ Database Verification</h3><p><strong>Total Students:</strong> ${students.length}</p><h4>By Department/Level:</h4><ul>`;
+            
+            for (const [key, count] of Object.entries(byDept)) {
+                html += `<li>${key}: ${count} students</li>`;
+            }
+            
+            html += '</ul></div>';
+            document.getElementById('verifyResult').innerHTML = html;
+        } else {
+            document.getElementById('verifyResult').innerHTML = `<div class="error">❌ Failed to fetch students</div>`;
+        }
+    } catch (error) {
+        document.getElementById('verifyResult').innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+    }
+}
+
+// Auto-login if token exists
+window.onload = function() {
+    const savedToken = localStorage.getItem('token');
+    if (savedToken) {
+        token = savedToken;
+        document.getElementById('loginResult').innerHTML = '<div class="success">✅ Using saved token</div>';
+    }
+};
+</script>
+</body>
+</html>

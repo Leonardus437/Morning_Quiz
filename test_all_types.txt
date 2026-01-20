@@ -1,0 +1,31 @@
+1. What is the capital of France?
+a) London
+b) Paris
+c) Berlin
+d) Madrid
+Answer: b
+
+2. The sky is blue. True
+
+3. The earth is flat. False
+
+4. Fill in the blank: The capital of Kenya is _______.
+Answer: Nairobi
+
+5. Complete the sentence: Python is a _______ programming language and it was created by _______.
+Answer: high-level, Guido van Rossum
+
+6. What is 2 + 2?
+Answer: 4
+
+7. Analyze the following code:
+pragma solidity ^0.8.0;
+contract Test {
+    uint public value = 10;
+}
+What is the initial value?
+a) 0
+b) 10
+c) null
+d) undefined
+Answer: b

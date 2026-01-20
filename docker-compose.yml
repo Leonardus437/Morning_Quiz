@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: tvet_quiz-db-1
+    restart: always
+    environment:
+      POSTGRES_USER: quiz_user
+      POSTGRES_PASSWORD: quiz_pass123
+      POSTGRES_DB: morning_quiz
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tvet_quiz-backend-1
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+    environment:
+      DATABASE_URL: postgresql://quiz_user:quiz_pass123@db:5432/morning_quiz
+      SECRET_KEY: your-secret-key-change-in-production
+      OFFLINE_MODE: "true"
+      HUGGINGFACE_API_KEY: ${HUGGINGFACE_API_KEY:-your_token_here}
+    ports:
+      - "8000:8000"
+    command: >
+      uvicorn main:app
+      --host 0.0.0.0
+      --port 8000
+      --log-level debug
+      --reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: tvet_quiz-frontend-1
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:5173"
+    environment:
+      VITE_API_BASE: ""
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/static:/app/static
+
+volumes:
+  db_data:

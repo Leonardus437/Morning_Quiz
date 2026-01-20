@@ -1,0 +1,119 @@
+1. What is an oscillator?
+a) A device that converts AC to DC
+b) A circuit that generates repetitive waveforms without external input signal
+c) A device that amplifies signals
+d) A circuit that filters noise
+Answer: b
+
+2. Which type of feedback is required for oscillation?
+a) Negative feedback
+b) No feedback
+c) Positive feedback
+d) Neutral feedback
+Answer: c
+
+3. What is the Barkhausen criterion for oscillation?
+a) Loop gain must be less than 1
+b) Loop gain must equal 1 and phase shift must be 0° or 360°
+c) Loop gain must be greater than 2
+d) Phase shift must be 180°
+Answer: b
+
+4. Which oscillator uses an LC tank circuit?
+a) RC oscillator
+b) Crystal oscillator
+c) Hartley oscillator
+d) Relaxation oscillator
+Answer: c
+
+5. What is the primary function of negative feedback in amplifiers?
+a) Increase gain
+b) Stabilize gain and reduce distortion
+c) Generate oscillations
+d) Increase output power
+Answer: b
+
+6. The frequency of oscillation in an RC oscillator depends on:
+a) Resistance and capacitance values
+b) Supply voltage only
+c) Transistor type
+d) Temperature only
+Answer: a
+
+7. Which oscillator is most stable and accurate?
+a) RC oscillator
+b) LC oscillator
+c) Crystal oscillator
+d) Relaxation oscillator
+Answer: c
+
+8. In a Colpitts oscillator, the feedback network consists of:
+a) Two inductors and one capacitor
+b) Two capacitors and one inductor
+c) Three resistors
+d) One capacitor and one resistor
+Answer: b
+
+9. What is the typical frequency range of a crystal oscillator?
+a) 1 Hz to 100 Hz
+b) 100 Hz to 1 kHz
+c) 1 kHz to 200 MHz
+d) Above 1 GHz only
+Answer: c
+
+10. Amplification factor (gain) is defined as:
+a) Input voltage divided by output voltage
+b) Output voltage divided by input voltage
+c) Input current divided by output current
+d) Power supply voltage divided by output voltage
+Answer: b
+
+11. Which component is essential in a Wien bridge oscillator?
+a) Transformer
+b) Crystal
+c) RC network
+d) LC tank circuit
+Answer: c
+
+12. What happens when loop gain exceeds unity in an oscillator?
+a) Oscillations stop
+b) Amplitude increases until limited by saturation
+c) Frequency decreases
+d) Circuit becomes stable
+Answer: b
+
+13. The phase shift oscillator produces a phase shift of:
+a) 90 degrees
+b) 180 degrees
+c) 270 degrees
+d) 360 degrees
+Answer: d
+
+14. Negative feedback in amplifiers results in:
+a) Increased bandwidth and reduced gain
+b) Decreased bandwidth and increased gain
+c) No change in performance
+d) Circuit instability
+Answer: a
+
+15. Which oscillator is commonly used in radio transmitters?
+a) Relaxation oscillator
+b) LC oscillator
+c) RC oscillator
+d) Multivibrator
+Answer: b
+
+16. Positive feedback increases the stability of an amplifier (True/False)
+Answer: False
+
+17. An oscillator requires an external input signal to generate output (True/False)
+Answer: False
+
+18. The quality factor (Q) of an LC circuit affects oscillator stability (True/False)
+Answer: True
+
+19. Negative feedback reduces the gain of an amplifier (True/False)
+Answer: True
+
+20. Crystal oscillators have better frequency stability than RC oscillators (True/False)
+Answer: True

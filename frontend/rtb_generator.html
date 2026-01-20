@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTB Template Generator - AI Powered</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: #2c3e50; color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+        .tabs { display: flex; margin-bottom: 20px; }
+        .tab { padding: 15px 30px; background: #34495e; color: white; cursor: pointer; border-radius: 5px 5px 0 0; margin-right: 5px; }
+        .tab.active { background: #3498db; }
+        .form-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #2c3e50; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 14px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #3498db; outline: none; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .btn { background: #3498db; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        .btn:hover { background: #2980b9; }
+        .btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+        .output { background: #ecf0f1; padding: 20px; border-radius: 10px; margin-top: 30px; }
+        .output h3 { color: #2c3e50; margin-bottom: 15px; }
+        .output pre { background: white; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 12px; }
+        .loading { text-align: center; padding: 40px; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇷🇼 RTB Template Generator</h1>
+            <p>AI-Powered Session Plan & Scheme of Work Generator for Rwanda Technical Board Standards</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('session')">📋 Session Plan</div>
+            <div class="tab" onclick="switchTab('scheme')">📚 Scheme of Work</div>
+        </div>
+
+        <!-- Session Plan Form -->
+        <div id="session-form" class="form-container">
+            <h2>Generate RTB Session Plan</h2>
+            <form id="sessionPlanForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sector *</label>
+                        <input type="text" name="sector" value="ICT & MULTIMEDIA" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Sub-sector *</label>
+                        <input type="text" name="sub_sector" value="Software Development" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Trainer Name *</label>
+                        <input type="text" name="trainer_name" placeholder="Enter trainer name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Module *</label>
+                        <input type="text" name="module" placeholder="e.g., SWDPR301 Analyze project requirements" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Session Topic *</label>
+                    <input type="text" name="topic" placeholder="e.g., Introduction to Database Design" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Learning Outcome *</label>
+                    <input type="text" name="learning_outcome" placeholder="e.g., Design database schemas" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Duration (minutes)</label>
+                        <input type="number" name="duration" value="40" min="30" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label>Number of Learners</label>
+                        <input type="number" name="num_learners" value="30" min="1" max="100">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Term</label>
+                        <select name="term">
+                            <option value="I">Term I</option>
+                            <option value="II">Term II</option>
+                            <option value="III">Term III</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Week</label>
+                        <input type="text" name="week" value="I">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">🤖 Generate Session Plan</button>
+            </form>
+        </div>
+
+        <!-- Scheme of Work Form -->
+        <div id="scheme-form" class="form-container hidden">
+            <h2>Generate RTB Scheme of Work</h2>
+            <form id="schemeOfWorkForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Course Title *</label>
+                        <input type="text" name="course_title" placeholder="e.g., Computer Programming" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Module Code *</label>
+                        <input type="text" name="module_code" placeholder="e.g., L4CSA" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Trainer Name *</label>
+                    <input type="text" name="trainer_name" placeholder="Enter trainer name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Province</label>
+                        <input type="text" name="province" value="Southern province">
+                    </div>
+                    <div class="form-group">
+                        <label>District</label>
+                        <input type="text" name="district" value="Kamonyi district">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sector</label>
+                        <input type="text" name="sector" value="Runda sector">
+                    </div>
+                    <div class="form-group">
+                        <label>School</label>
+                        <input type="text" name="school" value="Runda TSS">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">🤖 Generate Scheme of Work</button>
+            </form>
+        </div>
+
+        <!-- Output Section -->
+        <div id="output" class="output hidden">
+            <h3>Generated RTB Template</h3>
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>AI is generating your RTB template...</p>
+            </div>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            // Update tab appearance
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show/hide forms
+            document.getElementById('session-form').classList.toggle('hidden', tab !== 'session');
+            document.getElementById('scheme-form').classList.toggle('hidden', tab !== 'scheme');
+            
+            // Hide output
+            document.getElementById('output').classList.add('hidden');
+        }
+
+        // Session Plan Form Handler
+        document.getElementById('sessionPlanForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.template_type = 'session_plan';
+            
+            await generateTemplate(data);
+        });
+
+        // Scheme of Work Form Handler  
+        document.getElementById('schemeOfWorkForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.template_type = 'scheme_of_work';
+            
+            await generateTemplate(data);
+        });
+
+        async function generateTemplate(data) {
+            // Show output section and loading
+            document.getElementById('output').classList.remove('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('result').innerHTML = '';
+            
+            try {
+                // Simulate AI processing (replace with actual API call)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Mock RTB template generation (replace with actual API call)
+                const template = await mockGenerateRTBTemplate(data);
+                
+                // Hide loading and show result
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('result').innerHTML = `
+                    <div style="margin-bottom: 20px;">
+                        <button onclick="downloadTemplate()" class="btn" style="margin-right: 10px;">📥 Download JSON</button>
+                        <button onclick="printTemplate()" class="btn">🖨️ Print Template</button>
+                    </div>
+                    <pre>${JSON.stringify(template, null, 2)}</pre>
+                `;
+                
+                // Store template for download
+                window.currentTemplate = template;
+                
+            } catch (error) {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('result').innerHTML = `
+                    <div style="color: #e74c3c; padding: 20px; background: #fadbd8; border-radius: 5px;">
+                        <strong>Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Mock RTB template generation (replace with actual API)
+        async function mockGenerateRTBTemplate(data) {
+            if (data.template_type === 'session_plan') {
+                return {
+                    "template_type": "session_plan",
+                    "header_info": {
+                        "sector": data.sector,
+                        "sub_sector": data.sub_sector,
+                        "date": new Date().toLocaleDateString('en-GB'),
+                        "trainer_name": data.trainer_name,
+                        "term": data.term,
+                        "module": data.module,
+                        "week": data.week,
+                        "num_learners": parseInt(data.num_learners),
+                        "class": "1",
+                        "learning_outcome": data.learning_outcome,
+                        "indicative_contents": data.topic.split(' ')[0],
+                        "topic": data.topic,
+                        "range": `Methods of ${data.topic.toLowerCase()}\nDescription of ${data.topic.toLowerCase()} tools`,
+                        "duration": `${data.duration}min`,
+                        "objectives": [
+                            `Define clearly a term ${data.topic.toLowerCase()} as used in ${data.learning_outcome.toLowerCase()}`,
+                            `Select properly 2 methods related to ${data.topic.toLowerCase()}`,
+                            `Name appropriately 2 tools used in ${data.topic.toLowerCase()}`
+                        ],
+                        "facilitation_technique": "JIGSAW"
+                    },
+                    "session_phases": [
+                        {
+                            "phase": "Introduction",
+                            "duration": "5 minutes",
+                            "activities": "Greets and Makes roll calls\nInvolves the learners to set the ground rules\nInvolves learners to review the previous session\nAnnounces the topic of the session\nExplains objectives of the session",
+                            "resources": "Attendance sheet\nPPT\nProjector\nComputer\nBlackboard\nChalk\npen"
+                        },
+                        {
+                            "phase": "Development/Body", 
+                            "duration": `${parseInt(data.duration) - 10} minutes`,
+                            "activities": `JIGSAW technique implementation for ${data.topic}`,
+                            "resources": "Computer\nprojector\nPPT"
+                        },
+                        {
+                            "phase": "Conclusion",
+                            "duration": "5 minutes",
+                            "activities": "Summary and assessment",
+                            "resources": "Computer\nprojector"
+                        }
+                    ]
+                };
+            } else {
+                return {
+                    "template_type": "scheme_of_work",
+                    "course_info": {
+                        "province": data.province,
+                        "district": data.district,
+                        "sector": data.sector,
+                        "school": data.school,
+                        "trainer_name": data.trainer_name,
+                        "course_title": data.course_title,
+                        "module_code": data.module_code
+                    },
+                    "weekly_breakdown": [
+                        {
+                            "weeks": "September 8 to December 19, 2025",
+                            "learning_outcome": `LO1: Apply ${data.course_title} fundamentals`,
+                            "duration": "30 hours",
+                            "indicative_content": `IC1.1: Introduction to ${data.course_title}`,
+                            "learning_activities": "● Demonstration and simulation\n● Individual and group work\n● Practical exercise\n● Individualized\n● Trainer guided\n● Group discussion",
+                            "resources": "Computers, Projector, Projection screen, Printers,\nrouters",
+                            "assessment": "Written and practical assessment",
+                            "learning_place": "Class\nComputer lab",
+                            "observation": ""
+                        }
+                    ],
+                    "assessment_schedule": [
+                        {
+                            "weeks": "",
+                            "learning_outcome": "Integrated Assessment (for specific module)",
+                            "duration": "Integrated Assessment (for specific module)",
+                            "indicative_content": "Integrated Assessment (for specific module)",
+                            "learning_activities": "Task",
+                            "resources": "Consumables",
+                            "assessment": "",
+                            "learning_place": "workshop",
+                            "observation": ""
+                        }
+                    ]
+                };
+            }
+        }
+
+        function downloadTemplate() {
+            if (window.currentTemplate) {
+                const blob = new Blob([JSON.stringify(window.currentTemplate, null, 2)], {type: 'application/json'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `rtb_${window.currentTemplate.template_type}_${Date.now()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function printTemplate() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

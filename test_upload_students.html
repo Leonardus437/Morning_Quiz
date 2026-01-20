@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Upload Students Button</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        button { padding: 10px 20px; margin: 10px 0; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Upload Students Button Test</h1>
+    
+    <div id="status"></div>
+    
+    <h2>Test Steps:</h2>
+    <ol>
+        <li>Login as teacher (teacher001 / pass123)</li>
+        <li>Click "Upload Students" tab</li>
+        <li>Check if loadMyClasses function is called</li>
+        <li>Verify no errors occur</li>
+    </ol>
+    
+    <button onclick="testBackendEndpoint()">Test Backend Endpoint</button>
+    <button onclick="testTeacherLogin()">Test Teacher Login</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        const API_URL = 'http://localhost:8000';
+        let token = null;
+        
+        function log(message, type = 'info') {
+            const div = document.getElementById('results');
+            const p = document.createElement('p');
+            p.className = type;
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            div.appendChild(p);
+        }
+        
+        async function testTeacherLogin() {
+            log('Testing teacher login...', 'info');
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: 'teacher001',
+                        password: 'pass123'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    token = data.access_token;
+                    log('✅ Teacher login successful!', 'success');
+                    log(`Token: ${token.substring(0, 20)}...`, 'info');
+                    log(`User: ${data.user.full_name} (${data.user.role})`, 'info');
+                    
+                    // Now test the my-classes endpoint
+                    await testMyClassesEndpoint();
+                } else {
+                    const error = await response.json();
+                    log(`❌ Login failed: ${error.detail}`, 'error');
+                }
+            } catch (err) {
+                log(`❌ Error: ${err.message}`, 'error');
+            }
+        }
+        
+        async function testMyClassesEndpoint() {
+            if (!token) {
+                log('❌ No token available. Login first!', 'error');
+                return;
+            }
+            
+            log('Testing /teacher/my-classes endpoint...', 'info');
+            try {
+                const response = await fetch(`${API_URL}/teacher/my-classes`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('✅ /teacher/my-classes endpoint works!', 'success');
+                    log(`Classes found: ${data.length}`, 'info');
+                    if (data.length > 0) {
+                        data.forEach(cls => {
+                            log(`  - ${cls.department} - ${cls.level}`, 'info');
+                        });
+                    } else {
+                        log('  No classes assigned yet', 'info');
+                    }
+                } else {
+                    const error = await response.json();
+                    log(`❌ Endpoint failed: ${error.detail}`, 'error');
+                }
+            } catch (err) {
+                log(`❌ Error: ${err.message}`, 'error');
+            }
+        }
+        
+        async function testBackendEndpoint() {
+            log('Testing backend health...', 'info');
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                if (response.ok) {
+                    const data = await response.json();
+                    log('✅ Backend is healthy!', 'success');
+                    log(`Status: ${data.status}`, 'info');
+                } else {
+                    log('❌ Backend health check failed', 'error');
+                }
+            } catch (err) {
+                log(`❌ Error: ${err.message}`, 'error');
+            }
+        }
+        
+        // Auto-run tests on load
+        window.onload = () => {
+            log('🚀 Test page loaded', 'success');
+            log('Click buttons above to run tests', 'info');
+        };
+    </script>
+</body>
+</html>

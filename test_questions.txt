@@ -1,0 +1,25 @@
+
+1. What is the capital of France?
+a) London
+b) Berlin
+c) Paris
+d) Madrid
+Answer: c
+
+2. Python is an interpreted programming language.
+True
+
+3. The Earth is flat.
+Answer: False
+
+4. Complete the sentence: The _____ is the largest planet in our solar system.
+Answer: Jupiter
+
+5. What does this Solidity code do?
+pragma solidity ^0.8.0;
+contract SimpleStorage {
+    uint256 public storedData;
+}
+a) Creates a storage contract
+b) Creates a token contract
+Answer: a

@@ -1,0 +1,44 @@
+{
+  "template_source": "session_plan",
+  "topic": "Introduction to Database Design",
+  "questions": [
+    {
+      "type": "multiple_choice",
+      "question": "What is the main learning outcome of this session on Introduction to Database Design?",
+      "options": [
+        "Design database schemas",
+        "Complete all practical exercises",
+        "Attend the full session",
+        "Submit assignment on time"
+      ],
+      "correct_answer": 0,
+      "explanation": "The main learning outcome is: Design database schemas"
+    },
+    {
+      "type": "true_false",
+      "question": "The facilitation technique used in this session is JIGSAW.",
+      "correct_answer": true,
+      "explanation": "Yes, the facilitation technique is JIGSAW"
+    },
+    {
+      "type": "short_answer",
+      "question": "Based on the session objectives, define clearly a term introduction to database design as used in design database schemas",
+      "sample_answer": "Students should be able to define clearly a term introduction to database design as used in design database schemas",
+      "keywords": [
+        "Define",
+        "clearly",
+        "a"
+      ]
+    },
+    {
+      "type": "short_answer",
+      "question": "Based on the session objectives, select properly 2 methods related to entity-relationship modeling",
+      "sample_answer": "Students should be able to select properly 2 methods related to entity-relationship modeling",
+      "keywords": [
+        "Select",
+        "properly",
+        "2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Statistics - Department & Level Breakdown</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 20px auto; padding: 20px; background: #f5f5f5; }
+        h1 { color: #333; text-align: center; }
+        .login-section { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        button { background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #45a049; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .dept-card { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .dept-card h3 { margin: 0 0 10px 0; color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
+        .dept-card .total { font-size: 32px; font-weight: bold; color: #4CAF50; margin: 10px 0; }
+        .dept-card .label { color: #666; font-size: 14px; }
+        .level-breakdown { margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }
+        .level-item { display: flex; justify-content: space-between; padding: 5px 0; color: #666; font-size: 14px; }
+        .delete-section { background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        .delete-btn { background: #dc3545; }
+        .delete-btn:hover { background: #c82333; }
+        table { width: 100%; border-collapse: collapse; background: white; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:hover { background-color: #f5f5f5; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .badge-dept { background: #e3f2fd; color: #1976d2; }
+        .badge-level { background: #e8f5e9; color: #388e3c; }
+    </style>
+</head>
+<body>
+    <h1>📊 Student Statistics - Department & Level Breakdown</h1>
+    
+    <div class="login-section">
+        <h3>Step 1: Login as Admin</h3>
+        <button onclick="loginAdmin()">Login as Admin (admin/admin123)</button>
+        <span id="loginStatus"></span>
+    </div>
+    
+    <div class="login-section">
+        <h3>Step 2: Load Student Statistics</h3>
+        <button onclick="loadStats()">Load Statistics</button>
+        <button onclick="loadAllStudents()">Load All Students Table</button>
+    </div>
+    
+    <div id="statsContainer"></div>
+    <div id="tableContainer"></div>
+    
+    <div class="delete-section">
+        <h3>⚠️ Danger Zone - Delete Students</h3>
+        <p>Select department and level to delete specific students, or clear all:</p>
+        <select id="deleteDept">
+            <option value="">Select Department</option>
+            <option value="Software Development">Software Development</option>
+            <option value="Computer System and Architecture">Computer System and Architecture</option>
+            <option value="Land Surveying">Land Surveying</option>
+            <option value="Building Construction">Building Construction</option>
+        </select>
+        <select id="deleteLevel">
+            <option value="">Select Level</option>
+            <option value="L3">L3</option>
+            <option value="L4">L4</option>
+            <option value="L5">L5</option>
+            <option value="L6">L6</option>
+        </select>
+        <button class="delete-btn" onclick="deleteByDeptLevel()">Delete Selected Dept/Level</button>
+        <button class="delete-btn" onclick="clearAll()">Clear ALL Students</button>
+        <div id="deleteResult"></div>
+    </div>
+
+    <script>
+        let token = '';
+        const API_BASE = 'http://localhost:8000';
+
+        async function loginAdmin() {
+            const statusEl = document.getElementById('loginStatus');
+            statusEl.innerHTML = '⏳ Logging in...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                
+                if (!response.ok) throw new Error('Login failed');
+                
+                const data = await response.json();
+                token = data.access_token;
+                
+                statusEl.innerHTML = '<span style="color: green;">✅ Logged in successfully!</span>';
+            } catch (error) {
+                statusEl.innerHTML = `<span style="color: red;">❌ ${error.message}</span>`;
+            }
+        }
+
+        async function loadStats() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            const container = document.getElementById('statsContainer');
+            container.innerHTML = '<p>⏳ Loading statistics...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/students`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load students');
+                
+                const data = await response.json();
+                const students = data.students || [];
+                
+                const departments = ['Software Development', 'Computer System and Architecture', 'Land Surveying', 'Building Construction'];
+                const levels = ['L3', 'L4', 'L5', 'L6'];
+                
+                let html = '<div class="stats-grid">';
+                
+                departments.forEach(dept => {
+                    const deptStudents = students.filter(s => s.department === dept);
+                    const total = deptStudents.length;
+                    
+                    html += `
+                        <div class="dept-card">
+                            <h3>${dept}</h3>
+                            <div class="total">${total}</div>
+                            <div class="label">Students</div>
+                            <div class="level-breakdown">
+                    `;
+                    
+                    levels.forEach(level => {
+                        const count = deptStudents.filter(s => s.level === level).length;
+                        html += `
+                            <div class="level-item">
+                                <span>${level}:</span>
+                                <span><strong>${count}</strong></span>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+                
+            } catch (error) {
+                container.innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function loadAllStudents() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            const container = document.getElementById('tableContainer');
+            container.innerHTML = '<p>⏳ Loading all students...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/students`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load students');
+                
+                const data = await response.json();
+                const students = data.students || [];
+                
+                if (students.length === 0) {
+                    container.innerHTML = '<p>No students found in database.</p>';
+                    return;
+                }
+                
+                let html = `
+                    <h2>All Students (${students.length} total)</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Full Name</th>
+                                <th>Department</th>
+                                <th>Level</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                students.forEach((student, index) => {
+                    html += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td><code>${student.username}</code></td>
+                            <td>${student.full_name || 'N/A'}</td>
+                            <td><span class="badge badge-dept">${student.department || 'N/A'}</span></td>
+                            <td><span class="badge badge-level">${student.level || 'N/A'}</span></td>
+                            <td>${student.created_at ? new Date(student.created_at).toLocaleString() : 'N/A'}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += `
+                        </tbody>
+                    </table>
+                `;
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                container.innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function deleteByDeptLevel() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            const dept = document.getElementById('deleteDept').value;
+            const level = document.getElementById('deleteLevel').value;
+            
+            if (!dept || !level) {
+                alert('Please select both department and level!');
+                return;
+            }
+            
+            if (!confirm(`⚠️ Delete all students from ${dept} - ${level}?\n\nThis action cannot be undone!`)) {
+                return;
+            }
+            
+            const resultDiv = document.getElementById('deleteResult');
+            resultDiv.innerHTML = '<p>⏳ Deleting students...</p>';
+            
+            try {
+                // Get all students
+                const response = await fetch(`${API_BASE}/admin/students`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load students');
+                
+                const data = await response.json();
+                const students = data.students || [];
+                const toDelete = students.filter(s => s.department === dept && s.level === level);
+                
+                if (toDelete.length === 0) {
+                    resultDiv.innerHTML = '<p style="color: orange;">No students found for selected department/level.</p>';
+                    return;
+                }
+                
+                // Note: You'll need to implement a delete endpoint in backend
+                // For now, show what would be deleted
+                resultDiv.innerHTML = `
+                    <p style="color: red;">⚠️ Found ${toDelete.length} students to delete:</p>
+                    <p style="font-size: 12px;">Note: Backend delete endpoint needed. Use "Clear ALL Students" button instead.</p>
+                `;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function clearAll() {
+            if (!token) {
+                alert('Please login first!');
+                return;
+            }
+            
+            if (!confirm('⚠️ WARNING: Delete ALL students from the system?\n\nThis action cannot be undone!')) {
+                return;
+            }
+            
+            if (!confirm('Final confirmation: Delete ALL students?')) {
+                return;
+            }
+            
+            const resultDiv = document.getElementById('deleteResult');
+            resultDiv.innerHTML = '<p>⏳ Deleting all students...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/clear-all-students`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!response.ok) throw new Error('Failed to clear students');
+                
+                const result = await response.json();
+                
+                resultDiv.innerHTML = `<p style="color: green;">✅ Successfully deleted ${result.count} students!</p>`;
+                
+                // Reload stats
+                setTimeout(() => {
+                    loadStats();
+                    loadAllStudents();
+                }, 1000);
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

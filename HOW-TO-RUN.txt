@@ -1,0 +1,120 @@
+========================================
+HOW TO FIX STUDENT CONNECTION ISSUE
+========================================
+
+OPTION 1: Use Command Prompt (Recommended)
+-------------------------------------------
+1. Click Windows Start button
+2. Type: cmd
+3. RIGHT-CLICK on "Command Prompt"
+4. Click "Run as administrator"
+5. Click "Yes" when asked
+
+6. Copy and paste these commands (one at a time):
+
+   cd C:\Users\PC\Music\Morning_Quiz
+
+   netsh advfirewall firewall add rule name="TVET Quiz Port 3000" dir=in action=allow protocol=TCP localport=3000
+
+   netsh advfirewall firewall add rule name="TVET Quiz Port 8000" dir=in action=allow protocol=TCP localport=8000
+
+   ipconfig
+
+7. Look for "IPv4 Address" in the output
+   Example: 192.168.61.61
+
+8. Share with students: http://192.168.61.61:3000
+   (Use YOUR IP address, not this example)
+
+
+OPTION 2: Use the Script
+-------------------------
+1. Find file: SIMPLE-FIX.bat
+2. RIGHT-CLICK on it
+3. Select "Run as administrator"
+4. Click "Yes" when asked
+5. Read the output - it shows your URL
+6. Press any key to close
+7. Share the URL with students
+
+
+OPTION 3: Manual Firewall Setup
+--------------------------------
+1. Press Windows Key
+2. Type: Windows Defender Firewall
+3. Click "Advanced settings"
+4. Click "Inbound Rules" on left
+5. Click "New Rule..." on right
+6. Select "Port" → Next
+7. Select "TCP"
+8. Type: 3000
+9. Click Next → Next → Next
+10. Name: TVET Quiz Port 3000
+11. Click Finish
+12. REPEAT steps 5-11 for port 8000
+
+
+AFTER FIXING FIREWALL
+----------------------
+1. Make sure Docker Desktop is running
+2. Find your IP address:
+   - Open Command Prompt
+   - Type: ipconfig
+   - Look for "IPv4 Address"
+
+3. Test on YOUR computer first:
+   - Open browser
+   - Go to: http://YOUR_IP:3000
+   - Example: http://192.168.61.61:3000
+
+4. If it works on your PC:
+   - Share URL with students
+   - Make sure they're on YOUR hotspot
+   - They type the EXACT same URL
+
+
+TROUBLESHOOTING
+---------------
+Q: Script closes immediately?
+A: You didn't run as administrator. RIGHT-CLICK → Run as administrator
+
+Q: Says "not recognized as internal command"?
+A: You're in wrong folder. Type: cd C:\Users\PC\Music\Morning_Quiz
+
+Q: Students still can't connect?
+A: Check:
+   - Are they on YOUR hotspot? (Not ednet, not other WiFi)
+   - Did you share the correct IP?
+   - Is Docker running?
+   - Can YOU access it on your PC first?
+
+Q: How do I know if firewall rules are added?
+A: Open Command Prompt and type:
+   netsh advfirewall firewall show rule name="TVET Quiz Port 3000"
+   
+   Should show: Enabled: Yes
+
+
+QUICK CHECKLIST
+---------------
+[ ] Docker Desktop is running (green icon in taskbar)
+[ ] Firewall rules added (run SIMPLE-FIX.bat as admin)
+[ ] Phone hotspot is ON
+[ ] Teacher PC connected to hotspot
+[ ] Test URL works on teacher PC
+[ ] Share URL with students
+[ ] Students connect to YOUR hotspot
+[ ] Students type the URL exactly
+
+
+YOUR QUIZ URL FORMAT
+--------------------
+http://[YOUR_IP]:3000
+
+Examples:
+- http://192.168.61.61:3000
+- http://192.168.43.1:3000
+- http://10.0.0.5:3000
+
+The IP changes based on your network!
+Run ipconfig to find YOUR current IP.

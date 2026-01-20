@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .button { 
+            display: inline-block; 
+            padding: 10px 20px; 
+            margin: 10px; 
+            background: #007cba; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+        }
+        .info { background: #f0f8ff; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .warning { background: #fff3cd; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Morning Quiz System - Admin Access Test</h1>
+        
+        <div class="warning">
+            <strong>⚠️ Clear Browser Cache First!</strong><br>
+            Press <strong>Ctrl+Shift+R</strong> (or Cmd+Shift+R on Mac) to hard refresh and clear cache.
+        </div>
+        
+        <div class="info">
+            <strong>📋 Admin Login Credentials:</strong><br>
+            Username: <code>admin</code><br>
+            Password: <code>admin123</code>
+        </div>
+        
+        <h2>🔗 Access Links:</h2>
+        <a href="http://localhost:3000/admin" class="button" target="_blank">
+            🎯 Admin Panel (localhost)
+        </a>
+        
+        <a href="http://127.0.0.1:3000/admin" class="button" target="_blank">
+            🎯 Admin Panel (127.0.0.1)
+        </a>
+        
+        <h2>✅ What to Expect:</h2>
+        <ul>
+            <li>Login page with "DOS Portal" title</li>
+            <li>After login: Navigation tabs including "👥 Students"</li>
+            <li>In Students tab: "📄 Upload Students" and "🔑 Generate Credentials" buttons</li>
+            <li>Upload modal supports .pdf, .docx, .doc, .txt files</li>
+        </ul>
+        
+        <h2>🔧 Troubleshooting:</h2>
+        <ol>
+            <li><strong>Clear all browser data</strong> for localhost:3000</li>
+            <li><strong>Try incognito/private mode</strong></li>
+            <li><strong>Check browser console</strong> for any JavaScript errors</li>
+            <li><strong>Verify containers are running</strong> (all should show "healthy" status)</li>
+        </ol>
+        
+        <div class="info">
+            <strong>🚀 System Status:</strong><br>
+            Frontend: <span id="frontend-status">Checking...</span><br>
+            Backend: <span id="backend-status">Checking...</span>
+        </div>
+    </div>
+    
+    <script>
+        // Clear localStorage to ensure clean session
+        localStorage.clear();
+        sessionStorage.clear();
+        
+        // Test frontend
+        fetch('http://localhost:3000/')
+            .then(response => {
+                document.getElementById('frontend-status').innerHTML = 
+                    response.ok ? '✅ Online' : '❌ Error';
+            })
+            .catch(() => {
+                document.getElementById('frontend-status').innerHTML = '❌ Offline';
+            });
+            
+        // Test backend
+        fetch('http://localhost:8000/health')
+            .then(response => {
+                document.getElementById('backend-status').innerHTML = 
+                    response.ok ? '✅ Online' : '❌ Error';
+            })
+            .catch(() => {
+                document.getElementById('backend-status').innerHTML = '❌ Offline';
+            });
+    </script>
+</body>
+</html>

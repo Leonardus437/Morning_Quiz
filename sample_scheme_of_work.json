@@ -1,0 +1,331 @@
+{
+  "template_type": "scheme_of_work",
+  "course_info": {
+    "course_title": "Database Management Systems",
+    "module_code": "DBMS301",
+    "province": "Southern province",
+    "district": "Kamonyi district",
+    "sector": "Runda sector",
+    "school": "Runda TSS",
+    "trainer_name": "TUYISINGIZE Leonard",
+    "term": 1,
+    "start_date": "September 08, 2025",
+    "end_date": "December 19, 2025"
+  },
+  "weekly_breakdown": [
+    {
+      "weeks": "Week 1",
+      "date_range": "September 08 - September 14, 2025",
+      "learning_outcome": "LO1: Apply Computer programming Languages",
+      "duration": "30 hours",
+      "indicative_content": "IC1.1: Identification of programming Language",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Routers",
+        "Projection screen",
+        "PPT",
+        "Computers"
+      ],
+      "assessment": "Oral assessment",
+      "learning_place": "Computer lab",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 2",
+      "date_range": "September 15 - September 21, 2025",
+      "learning_outcome": "LO1: Apply Computer programming Languages",
+      "duration": "",
+      "indicative_content": "IC1.2: Development of an algorithm",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Pen",
+        "Attendance sheet",
+        "Projector",
+        "Assessment sheets"
+      ],
+      "assessment": "Portfolio assessment",
+      "learning_place": "Workshop",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 3",
+      "date_range": "September 22 - September 28, 2025",
+      "learning_outcome": "LO1: Apply Computer programming Languages",
+      "duration": "",
+      "indicative_content": "IC1.3: Development of a flowchart",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Task sheets",
+        "PPT",
+        "Projection screen",
+        "Computers"
+      ],
+      "assessment": "Portfolio assessment",
+      "learning_place": "Field work",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 4",
+      "date_range": "September 29 - October 05, 2025",
+      "learning_outcome": "LO2: Write Programming codes",
+      "duration": "60 hours",
+      "indicative_content": "IC2.1: Description of programming concepts",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Blackboard",
+        "Routers",
+        "Assessment sheets",
+        "Attendance sheet"
+      ],
+      "assessment": "Project-based assessment",
+      "learning_place": "Class",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 5",
+      "date_range": "October 06 - October 12, 2025",
+      "learning_outcome": "LO2: Write Programming codes",
+      "duration": "",
+      "indicative_content": "IC2.2: Description of program structure",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Task sheets",
+        "Routers",
+        "Projector",
+        "Printers"
+      ],
+      "assessment": "Project-based assessment",
+      "learning_place": "Online platform",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 6",
+      "date_range": "October 13 - October 19, 2025",
+      "learning_outcome": "LO2: Write Programming codes",
+      "duration": "",
+      "indicative_content": "IC2.3: Application of condition statements",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Attendance sheet",
+        "Printers",
+        "Projector",
+        "PPT"
+      ],
+      "assessment": "Oral assessment",
+      "learning_place": "Computer system and architecture Workshop",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 7",
+      "date_range": "October 20 - October 26, 2025",
+      "learning_outcome": "LO2: Write Programming codes",
+      "duration": "",
+      "indicative_content": "IC2.4: Application of loops",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Printers",
+        "PPT",
+        "Projector",
+        "Projection screen"
+      ],
+      "assessment": "Written and practical assessment",
+      "learning_place": "Computer system and architecture Workshop",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 8",
+      "date_range": "October 27 - November 02, 2025",
+      "learning_outcome": "LO2: Write Programming codes",
+      "duration": "",
+      "indicative_content": "IC2.5: Application of functions",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Blackboard",
+        "Attendance sheet",
+        "Task sheets",
+        "Assessment sheets"
+      ],
+      "assessment": "Written assessment",
+      "learning_place": "Library",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 9",
+      "date_range": "November 03 - November 09, 2025",
+      "learning_outcome": "LO3: Perform Program Testing",
+      "duration": "20 hours",
+      "indicative_content": "IC3.1: Identification of errors",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Computers",
+        "PPT",
+        "Chalk",
+        "Printers"
+      ],
+      "assessment": "Written and practical assessment",
+      "learning_place": "Workshop",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 10",
+      "date_range": "November 10 - November 16, 2025",
+      "learning_outcome": "LO3: Perform Program Testing",
+      "duration": "",
+      "indicative_content": "IC3.2: Compilation of the program",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Printers",
+        "PPT",
+        "Computers",
+        "Pen"
+      ],
+      "assessment": "Project-based assessment",
+      "learning_place": "Online platform",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 11",
+      "date_range": "November 17 - November 23, 2025",
+      "learning_outcome": "LO3: Perform Program Testing",
+      "duration": "",
+      "indicative_content": "IC3.3: Test of the program",
+      "learning_activities": [
+        "Demonstration and simulation",
+        "Individual and group work",
+        "Practical exercise",
+        "Individualized",
+        "Trainer guided",
+        "Group discussion"
+      ],
+      "resources": [
+        "Chalk",
+        "Computers",
+        "Printers",
+        "Task sheets"
+      ],
+      "assessment": "Oral assessment",
+      "learning_place": "Online platform",
+      "observation": ""
+    }
+  ],
+  "assessment_schedule": [
+    {
+      "weeks": "Week 3",
+      "date_range": "September 22 - September 28, 2025",
+      "learning_outcome": "Integrated Assessment (for specific module)",
+      "duration": "Integrated Assessment (for specific module)",
+      "indicative_content": "Integrated Assessment (for specific module)",
+      "learning_activities": [
+        "Task"
+      ],
+      "resources": [
+        "Consumables"
+      ],
+      "assessment": "Integrated Assessment",
+      "learning_place": "Workshop",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 7",
+      "date_range": "October 20 - October 26, 2025",
+      "learning_outcome": "Integrated Assessment (for specific module)",
+      "duration": "Integrated Assessment (for specific module)",
+      "indicative_content": "Integrated Assessment (for specific module)",
+      "learning_activities": [
+        "Task"
+      ],
+      "resources": [
+        "Consumables"
+      ],
+      "assessment": "Integrated Assessment",
+      "learning_place": "Workshop",
+      "observation": ""
+    },
+    {
+      "weeks": "Week 11",
+      "date_range": "November 17 - November 23, 2025",
+      "learning_outcome": "Integrated Assessment (for specific module)",
+      "duration": "Integrated Assessment (for specific module)",
+      "indicative_content": "Integrated Assessment (for specific module)",
+      "learning_activities": [
+        "Task"
+      ],
+      "resources": [
+        "Consumables"
+      ],
+      "assessment": "Integrated Assessment",
+      "learning_place": "Workshop",
+      "observation": ""
+    }
+  ]
+}

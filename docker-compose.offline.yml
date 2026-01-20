@@ -1,0 +1,61 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: morning_quiz
+      POSTGRES_USER: quiz_user
+      POSTGRES_PASSWORD: quiz_pass123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - quiz_network
+
+  backend:
+    build: 
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql://quiz_user:quiz_pass123@db:5432/morning_quiz
+      SECRET_KEY: your-secret-key-change-in-production
+      OFFLINE_MODE: "true"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+    networks:
+      - quiz_network
+
+  frontend:
+    build: 
+      context: ./frontend
+      target: development
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    environment:
+      - PUBLIC_API_URL=http://localhost:8000
+      - NODE_ENV=development
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/static:/app/static
+      - ./frontend/vite.config.js:/app/vite.config.js
+      - ./frontend/svelte.config.js:/app/svelte.config.js
+    command: npm run dev -- --host 0.0.0.0
+    networks:
+      - quiz_network
+
+networks:
+  quiz_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
