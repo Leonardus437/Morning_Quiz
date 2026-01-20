@@ -651,45 +651,59 @@ async def upload_questions(
                 except:
                     text = content.decode('cp1252', errors='ignore')
         
-        # Improved parser - more flexible question detection
+        # Improved parser - handle multiple formats
         questions = []
         lines = [l.strip() for l in text.split('\n') if l.strip()]
-        current_question = None
         
-        for i, line in enumerate(lines):
-            # Detect question - multiple patterns
-            is_question = (
-                (line and line[0].isdigit() and ('?' in line or len(line) > 20)) or
-                line.startswith(('Q:', 'Q.', 'Question', 'QUESTION')) or
-                (i > 0 and '?' in line and len(line) > 15)
-            )
-            
-            if is_question:
-                if current_question and current_question.get('text'):
-                    questions.append(current_question)
-                current_question = {'text': line, 'options': [], 'answer': ''}
-            
-            # Detect options - multiple patterns
-            elif current_question:
-                option_match = False
-                for prefix in ['A)', 'B)', 'C)', 'D)', 'E)', 'a)', 'b)', 'c)', 'd)', 'e)', 
-                               'A.', 'B.', 'C.', 'D.', 'E.', 'a.', 'b.', 'c.', 'd.', 'e.',
-                               '(A)', '(B)', '(C)', '(D)', '(E)', '(a)', '(b)', '(c)', '(d)', '(e)']:
-                    if line.startswith(prefix):
-                        current_question['options'].append(line[len(prefix):].strip())
-                        option_match = True
-                        break
+        # Format 1: Simple Q&A format ("Question? Answer")
+        for line in lines:
+            if '?' in line:
+                parts = line.split('?', 1)
+                if len(parts) == 2:
+                    question_text = parts[0].strip() + '?'
+                    answer_text = parts[1].strip()
+                    
+                    if answer_text:
+                        questions.append({
+                            'text': question_text,
+                            'options': [answer_text, 'False', 'Not applicable', 'None of the above'],
+                            'answer': answer_text
+                        })
+        
+        # Format 2: Structured format with options
+        if not questions:
+            current_question = None
+            for i, line in enumerate(lines):
+                # Detect question
+                is_question = (
+                    (line and line[0].isdigit() and ('?' in line or len(line) > 20)) or
+                    line.startswith(('Q:', 'Q.', 'Question', 'QUESTION')) or
+                    (i > 0 and '?' in line and len(line) > 15)
+                )
                 
-                # Detect answer
-                if not option_match:
-                    for prefix in ['Answer:', 'ANSWER:', 'Ans:', 'ANS:', 'Correct:', 'CORRECT:']:
+                if is_question:
+                    if current_question and current_question.get('text'):
+                        questions.append(current_question)
+                    current_question = {'text': line, 'options': [], 'answer': ''}
+                
+                elif current_question:
+                    option_match = False
+                    for prefix in ['A)', 'B)', 'C)', 'D)', 'E)', 'a)', 'b)', 'c)', 'd)', 'e)', 
+                                   'A.', 'B.', 'C.', 'D.', 'E.', 'a.', 'b.', 'c.', 'd.', 'e.',
+                                   '(A)', '(B)', '(C)', '(D)', '(E)', '(a)', '(b)', '(c)', '(d)', '(e)']:
                         if line.startswith(prefix):
-                            current_question['answer'] = line.split(':', 1)[1].strip()
+                            current_question['options'].append(line[len(prefix):].strip())
+                            option_match = True
                             break
-        
-        # Add last question
-        if current_question and current_question.get('text'):
-            questions.append(current_question)
+                    
+                    if not option_match:
+                        for prefix in ['Answer:', 'ANSWER:', 'Ans:', 'ANS:', 'Correct:', 'CORRECT:']:
+                            if line.startswith(prefix):
+                                current_question['answer'] = line.split(':', 1)[1].strip()
+                                break
+            
+            if current_question and current_question.get('text'):
+                questions.append(current_question)
         
         if not questions:
             return {
