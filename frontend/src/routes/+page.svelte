@@ -23,10 +23,10 @@
   let currentSlide = 0;
   let carouselInterval;
   const slides = [
-    { image: '/images/IMG-20241006-WA0047.jpg', title: 'Kora Kwizi mu buryo bworoshye', subtitle: 'Kd bwizewe' },
-    { image: '/images/IMG-20241006-WA0050.jpg', title: 'Urabona ibisubizo byawe ako kanya', subtitle: 'Ubashe kubika ayo manota yawe' },
-    { image: '/images/IMG-20241006-WA0051.jpg', title: 'Isuzuma mu buryo bugezweho', subtitle: 'Suzuma Ubumenyi Bwawe Igihe Cyose' },
-    { image: '/images/IMG-20241006-WA0079.jpg', title: 'Ikoranabuhanga mu kwihutisha imyigire', subtitle: 'Kwihutisha itangwa rya Kwizi' }
+    { image: '/images/IMG-20241006-WA0047.jpg', title: 'Excellence in Assessment', subtitle: 'Professional Quiz Platform for Modern Education' },
+    { image: '/images/IMG-20241006-WA0050.jpg', title: 'Real-Time Results', subtitle: 'Instant Feedback & Performance Analytics' },
+    { image: '/images/IMG-20241006-WA0051.jpg', title: 'Advanced Testing', subtitle: 'Comprehensive Knowledge Evaluation System' },
+    { image: '/images/IMG-20241006-WA0079.jpg', title: 'Smart Learning', subtitle: 'Technology-Driven Educational Excellence' }
   ];
   
   // Update login status manually to prevent reactive loops
@@ -288,8 +288,8 @@
               <span class="text-white font-black text-2xl"></span>
             </div>
             <div>
-              <h1 class="text-gray-900 font-black text-2xl tracking-tight">QUIZ</h1>
-              <p class="text-blue-600 text-sm font-bold uppercase tracking-wider">System</p>
+              <h1 class="text-gray-900 font-black text-2xl tracking-tight">TVET QUIZ</h1>
+              <p class="text-blue-600 text-xs font-bold uppercase tracking-widest">Professional Assessment Platform</p>
             </div>
           </div>
           <div class="flex items-center gap-4">
@@ -339,15 +339,24 @@
             {#each slides as slide, i}
               <div class="transition-all duration-1000 ease-out {i === currentSlide ? 'opacity-100 translate-x-0 translate-y-0' : 'opacity-0 -translate-x-20 translate-y-10 absolute'}">
 
-                <h1 class="text-6xl md:text-8xl font-black text-white mb-8 leading-tight transform {i === currentSlide ? 'animate-slideInLeft' : ''}" style="animation-delay: 0.5s; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight transform {i === currentSlide ? 'animate-slideInLeft' : ''}" style="animation-delay: 0.5s; text-shadow: 3px 3px 8px rgba(0,0,0,0.7); letter-spacing: -0.02em;">
                   {slide.title}
                 </h1>
-                <p class="text-2xl md:text-4xl text-blue-100 mb-10 font-semibold transform {i === currentSlide ? 'animate-slideInRight' : ''}" style="animation-delay: 0.7s; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                <p class="text-xl md:text-3xl text-blue-50 mb-12 font-light tracking-wide transform {i === currentSlide ? 'animate-slideInRight' : ''}" style="animation-delay: 0.7s; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);">
                   {slide.subtitle}
                 </p>
                 <div class="flex flex-wrap gap-6 transform {i === currentSlide ? 'animate-fadeInUp' : ''}" style="animation-delay: 0.9s;">
-                  <button on:click={() => showLoginModal = true} class="bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 hover:from-red-700 hover:via-pink-700 hover:to-purple-700 text-white px-12 py-6 rounded-full font-black text-xl shadow-2xl hover:shadow-3xl transform hover:scale-110 hover:rotate-1 transition-all duration-300 animate-pulse">
-                    START QUIZ NOW
+                  <button on:click={() => showLoginModal = true} class="group relative bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:via-indigo-700 hover:to-purple-700 text-white px-16 py-5 rounded-full font-bold text-lg shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-500 overflow-hidden">
+                    <span class="relative z-10 flex items-center gap-3">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                      </svg>
+                      START ASSESSMENT
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  </button>
+                  <button on:click={() => goto('/teacher')} class="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-12 py-5 rounded-full font-semibold text-lg border-2 border-white/30 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
+                    Teacher Portal →
                   </button>
                 </div>
               </div>
@@ -380,10 +389,28 @@
       </div>
     </div>
 
-    <footer class="relative z-10 bg-gray-900 text-white py-8">
+    <footer class="relative z-10 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-12">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center">
-          <p class="text-gray-300 font-semibold">&copy; 2025 Quiz System. All rights reserved. Implemented by Trainer Leonard</p>
+        <div class="grid md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h3 class="font-black text-xl mb-4">TVET QUIZ SYSTEM</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">Professional assessment platform for technical and vocational education excellence.</p>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-blue-400">Quick Links</h4>
+            <div class="space-y-2">
+              <a href="/teacher" class="block text-gray-400 hover:text-white transition-colors text-sm">Teacher Portal</a>
+              <a href="/admin" class="block text-gray-400 hover:text-white transition-colors text-sm">Admin Dashboard</a>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm uppercase tracking-wider mb-4 text-blue-400">Contact</h4>
+            <p class="text-gray-400 text-sm">Developed by Trainer Leonard</p>
+            <p class="text-gray-500 text-xs mt-2">Technical & Vocational Education</p>
+          </div>
+        </div>
+        <div class="border-t border-gray-700 pt-6 text-center">
+          <p class="text-gray-400 text-sm">&copy; 2025 TVET Quiz System. All rights reserved.</p>
         </div>
       </div>
     </footer>
