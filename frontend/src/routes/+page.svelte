@@ -411,7 +411,7 @@
           </div>
         </div>
         <div class="border-t border-gray-700 pt-6 text-center">
-          <p class="text-gray-400 text-sm">&copy; 2025 TVET Quiz System. All rights reserved.</p>
+          <p class="text-gray-400 text-sm">&copy; 2026 TVET Quiz System. All rights reserved.</p>
         </div>
       </div>
     </footer>
