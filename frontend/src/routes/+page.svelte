@@ -533,22 +533,24 @@
       </div>
 
       {#if quizzes.length === 0}
-        <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-16 text-center">
-          <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center text-5xl mx-auto mb-6">
-            <span class="text-blue-600"></span>
+        <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-16 text-center transform hover:scale-105 transition-all duration-300">
+          <div class="w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center text-6xl mx-auto mb-6 shadow-xl">
+            <span>📝</span>
           </div>
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">NO ACTIVE QUIZZES</h3>
-          <p class="text-gray-600">Check back later for new assessments</p>
-          <button on:click={refreshQuizzes} class="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-             Refresh Now
+          <h3 class="text-3xl font-black text-gray-900 mb-3">NO ACTIVE QUIZZES</h3>
+          <p class="text-gray-600 text-lg mb-6">Check back later for new assessments</p>
+          <button on:click={refreshQuizzes} class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+            🔄 Refresh Now
           </button>
         </div>
       {:else}
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {#each quizzes as quiz}
-            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105">
-              <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 text-white">
-                <div class="flex items-start justify-between mb-3">
+            <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 overflow-hidden hover:shadow-3xl transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+              <div class="bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 p-6 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
+                <div class="relative flex items-start justify-between mb-3">
                   <h3 class="text-xl font-bold leading-tight">{quiz.title}</h3>
                   {#if quiz.is_active}
                     <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
