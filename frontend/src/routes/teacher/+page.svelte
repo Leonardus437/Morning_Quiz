@@ -3,6 +3,7 @@
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores.js';
   import { api } from '$lib/api.js';
+  import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
 
   let username = '';
   let password = '';
@@ -1261,12 +1262,13 @@
   <title>Teacher Dashboard - Morning Quiz</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-100">
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-blue-100 relative">
+  <AnimatedBackground variant="green" />
   {#if !isLoggedIn}
     <!-- Teacher Login -->
-    <div class="flex items-center justify-center min-h-screen px-4">
+    <div class="flex items-center justify-center min-h-screen px-4 relative z-10">
       <div class="w-full max-w-md">
-        <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-white/20">
           <div class="text-center mb-8">
             <div class="text-4xl mb-4"></div>
             <h1 class="text-3xl font-bold text-gray-800">Teacher Portal</h1>
@@ -1373,9 +1375,9 @@
     </div>
   {:else}
     <!-- Teacher Dashboard -->
-    <div class="min-h-screen">
+    <div class="min-h-screen relative z-10">
       <!-- Header -->
-      <header class="bg-white shadow-sm border-b border-gray-200">
+      <header class="bg-white/80 backdrop-blur-xl shadow-sm border-b border-white/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center py-6">
             <div class="flex items-center">
