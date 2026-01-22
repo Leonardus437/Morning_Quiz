@@ -4,6 +4,7 @@
   import { user } from '$lib/stores.js';
   import { api } from '$lib/api.js';
   import { notificationStore } from '$lib/notificationStore.js';
+  import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
 
   let username = '';
   let password = '';
@@ -498,37 +499,37 @@
     </div>
   {/if}
 {:else}
-  <div class="min-h-screen bg-gray-50">
-    <div class="cpfc-nav">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+    <AnimatedBackground variant="blue" />
+    
+    <nav class="relative z-10 bg-white/80 backdrop-blur-xl shadow-lg border-b border-white/20">
       <div class="max-w-7xl mx-auto px-6 py-4">
         <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-primary flex items-center justify-center font-black text-light">TQ</div>
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center shadow-xl transform hover:rotate-12 transition-all duration-300">
+              <span class="text-white font-black text-2xl">📚</span>
+            </div>
             <div>
-              <h1 class="text-primary font-black text-lg">QUIZ SYSTEM</h1>
-              <p class="text-secondary text-xs">Welcome, {$user.full_name || $user.username}</p>
+              <h1 class="text-gray-900 font-black text-xl tracking-tight">STUDENT DASHBOARD</h1>
+              <p class="text-blue-600 text-sm font-semibold">Welcome, {$user.full_name || $user.username}</p>
             </div>
           </div>
           <div class="flex items-center gap-4">
-            <button class="btn-cpfc-red" on:click={handleLogout}>
-              Sign Out
+            <a href="/performance" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-2.5 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+              📊 My Performance
+            </a>
+            <button class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-2.5 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300" on:click={handleLogout}>
+              🚪 Sign Out
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </nav>
 
-    <div class="max-w-7xl mx-auto px-6 py-12">
-      <div class="mb-12">
-        <div class="flex justify-between items-center">
-          <div>
-            <h2 class="text-4xl font-black text-primary mb-2">AVAILABLE QUIZZES</h2>
-            <p class="text-secondary text-lg">Select a quiz to begin your assessment</p>
-          </div>
-          <a href="/performance" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-             My Performance
-          </a>
-        </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-12">
+      <div class="mb-12 text-center">
+        <h2 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">AVAILABLE QUIZZES</h2>
+        <p class="text-gray-700 text-xl font-medium">Select a quiz to begin your assessment</p>
       </div>
 
       {#if quizzes.length === 0}
