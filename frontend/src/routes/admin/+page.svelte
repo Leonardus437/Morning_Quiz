@@ -672,10 +672,10 @@
       <div class="w-full max-w-md">
         <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20">
           <div class="text-center mb-8">
-            <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-              <span class="text-3xl text-white"></span>
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl animate-pulse">
+              <span class="text-3xl text-white">🎓</span>
             </div>
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">DOS Portal</h1>
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">DOS Portal</h1>
             <p class="text-gray-600">Deputy of Studies Dashboard</p>
           </div>
           

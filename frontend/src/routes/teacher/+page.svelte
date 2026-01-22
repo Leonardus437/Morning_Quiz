@@ -1270,8 +1270,8 @@
       <div class="w-full max-w-md">
         <div class="bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-white/20">
           <div class="text-center mb-8">
-            <div class="text-4xl mb-4"></div>
-            <h1 class="text-3xl font-bold text-gray-800">Teacher Portal</h1>
+            <div class="text-5xl mb-4 animate-bounce">🏫</div>
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">Teacher Portal</h1>
             <p class="text-gray-600 mt-2">Morning Quiz System</p>
           </div>
           
