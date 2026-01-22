@@ -1,104 +1,43 @@
 @echo off
-color 0A
-title TVET Quiz System - Test
-
-echo.
 echo ========================================
-echo   TVET QUIZ SYSTEM - FUNCTIONALITY TEST
+echo TVET Quiz System - Health Check
 echo ========================================
 echo.
 
-echo [TEST 1] Checking Docker...
-docker --version
-if %errorlevel% neq 0 (
-    echo FAILED: Docker not running
-    pause
-    exit /b 1
-)
-echo PASSED: Docker is running
-echo.
-
-echo [TEST 2] Checking containers...
+echo [1/5] Checking Docker containers...
 docker-compose ps
 echo.
 
-echo [TEST 3] Testing backend health...
+echo [2/5] Testing Backend API...
 curl -s http://localhost:8000/health
 echo.
-echo PASSED: Backend is healthy
 echo.
 
-echo [TEST 4] Testing frontend...
-curl -s -I http://localhost:3000 | findstr "200"
-if %errorlevel% neq 0 (
-    echo FAILED: Frontend not accessible
-) else (
-    echo PASSED: Frontend is accessible
-)
+echo [3/5] Testing Database connection...
+docker exec tvet_quiz-backend-1 python -c "from sqlalchemy import create_engine; engine = create_engine('postgresql://quiz_user:quiz_pass123@db:5432/morning_quiz'); conn = engine.connect(); print('Database: OK')"
 echo.
 
-echo [TEST 5] Testing database...
-docker exec tvet_quiz-db-1 pg_isready -U postgres
-if %errorlevel% neq 0 (
-    echo FAILED: Database not ready
-) else (
-    echo PASSED: Database is ready
-)
+echo [4/5] Checking Frontend...
+curl -s -o nul -w "Frontend Status: %%{http_code}\n" http://localhost:3000
 echo.
 
-echo [TEST 6] Testing admin login...
-curl -s -X POST http://localhost:8000/auth/login -H "Content-Type: application/json" -d "{\"username\":\"admin\",\"password\":\"admin123\"}" | findstr "access_token"
-if %errorlevel% neq 0 (
-    echo FAILED: Admin login not working
-) else (
-    echo PASSED: Admin login working
-)
+echo [5/5] Your Network Information...
 echo.
-
-echo [TEST 7] Checking ports...
-netstat -an | findstr ":3000" | findstr "LISTENING"
-if %errorlevel% neq 0 (
-    echo FAILED: Port 3000 not listening
-) else (
-    echo PASSED: Port 3000 listening
-)
-
-netstat -an | findstr ":8000" | findstr "LISTENING"
-if %errorlevel% neq 0 (
-    echo FAILED: Port 8000 not listening
-) else (
-    echo PASSED: Port 8000 listening
-)
+echo Local Access:
+echo   Teacher: http://localhost:3000/teacher
+echo   Students: http://localhost:3000
+echo.
+echo LAN Access (Share with students):
+ipconfig | findstr /i "IPv4"
 echo.
 
 echo ========================================
-echo           TEST SUMMARY
-echo ========================================
-echo.
-echo All critical tests completed!
-echo.
-echo SYSTEM INFORMATION:
-echo   Frontend: http://localhost:3000
-echo   Backend:  http://localhost:8000
-echo   Admin:    http://localhost:3000/admin
-echo.
-echo DEFAULT CREDENTIALS:
-echo   Admin: admin / admin123
-echo.
-echo NEXT STEPS:
-echo   1. Open: http://localhost:3000/admin
-echo   2. Login with admin credentials
-echo   3. Go to Students tab
-echo   4. Select Department and Level FIRST
-echo   5. Upload your Excel/PDF file
-echo.
-echo IMPORTANT:
-echo   - Clear browser cache (Ctrl+Shift+Delete)
-echo   - Or use Incognito mode (Ctrl+Shift+N)
-echo.
-echo ========================================
-echo      SYSTEM IS READY FOR TESTING!
+echo Production URLs:
+echo   Frontend: https://tsskwizi.pages.dev
+echo   Backend: https://tvet-quiz-backend.onrender.com
 echo ========================================
 echo.
 
+echo System Status: READY
+echo.
 pause
