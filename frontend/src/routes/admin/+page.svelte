@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { api } from '$lib/api.js';
+  import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
   
   let username = '';
   let password = '';
@@ -664,11 +665,12 @@
   <title>DOS Dashboard - TVET Quiz System</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 relative">
+  <AnimatedBackground variant="blue" />
   {#if !isLoggedIn}
-    <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="flex items-center justify-center min-h-screen p-4 relative z-10">
       <div class="w-full max-w-md">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+        <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20">
           <div class="text-center mb-8">
             <div class="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
               <span class="text-3xl text-white"></span>
@@ -727,9 +729,9 @@
       </div>
     </div>
   {:else}
-    <div class="min-h-screen">
+    <div class="min-h-screen relative z-10">
       <!-- Header -->
-      <header class="bg-white shadow-lg border-b">
+      <header class="bg-white/80 backdrop-blur-xl shadow-lg border-b border-white/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center py-6">
             <div class="flex items-center">
@@ -771,7 +773,7 @@
         {/if}
 
         <!-- Navigation -->
-        <div class="bg-white rounded-2xl shadow-lg mb-8 p-2">
+        <div class="bg-white/90 backdrop-blur-xl rounded-2xl shadow-lg mb-8 p-2 border border-white/20">
           <div class="flex flex-wrap gap-2">
             <button
               class="px-6 py-3 rounded-xl font-medium transition-all {activeTab === 'overview' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100'}"
