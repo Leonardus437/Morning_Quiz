@@ -1,7 +1,14 @@
-# FORCE RENDER DEPLOYMENT
+Deployment triggered at: 2026-01-23 18:15:00
+Reason: Force redeploy with detailed submission logging
+Commit: 762cb18 - Add detailed logging to quiz submission endpoint for debugging
 
-Timestamp: 2026-01-10 12:21:45
-Commit: e6ab5d23
-Reason: Critical fix for quiz submission 500 error
+This deployment includes:
+- Comprehensive logging in /quizzes/submit endpoint
+- Frontend API submission logging
+- Step-by-step tracking of submission process
+- Error identification and reporting
 
-This file triggers Render auto-deploy.
+Expected behavior after deployment:
+- All submission attempts will be logged in Render dashboard
+- Exact failure point will be visible in logs
+- Browser console will show detailed API calls
