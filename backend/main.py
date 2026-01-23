@@ -1813,45 +1813,59 @@ def report_cheating(data: Dict, current_user: User = Depends(get_current_user), 
         reason = data.get('reason', 'Unknown')
         auto_submitted = data.get('auto_submitted', False)
         
+        print(f"🚨 CHEATING REPORT: quiz_id={quiz_id}, warnings={warnings}, auto_submitted={auto_submitted}, student={current_user.full_name}")
+        
         quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
         if not quiz:
+            print(f"❌ Quiz {quiz_id} not found")
             return {"message": "Quiz not found"}
         
         teacher = db.query(User).filter(User.id == quiz.created_by).first()
-        if teacher:
-            # Send cheating alert
-            notification = Notification(
-                user_id=teacher.id,
-                title=f"⚠️ Cheating Alert: {quiz.title}",
-                message=f"{current_user.full_name} was caught attempting to cheat ({warnings} violations). Reason: {reason}. Quiz was auto-submitted.",
-                type="cheating_alert"
-            )
-            db.add(notification)
-            
-            # If auto-submitted, send separate submission notification with reason
-            if auto_submitted:
-                # Get the attempt to show score
-                attempt = db.query(QuizAttempt).filter(
-                    QuizAttempt.quiz_id == quiz_id,
-                    QuizAttempt.user_id == current_user.id
-                ).first()
-                
-                score_text = f"Score: {attempt.score}/{attempt.total_questions}" if attempt else "Score pending"
-                
-                submission_notification = Notification(
-                    user_id=teacher.id,
-                    title=f"📝 Auto-Submitted Quiz: {quiz.title}",
-                    message=f"{current_user.full_name}'s quiz was automatically submitted due to cheating violations ({warnings} strikes). Reason: {reason}. {score_text}. Click to review.",
-                    type="quiz_submission"
-                )
-                db.add(submission_notification)
-            
-            db.commit()
+        if not teacher:
+            print(f"❌ Teacher not found for quiz {quiz_id}")
+            return {"message": "Teacher not found"}
         
-        return {"message": "Cheating reported to teacher"}
+        print(f"📧 Sending notifications to teacher {teacher.full_name} (ID: {teacher.id})")
+        
+        # Send cheating alert
+        notification = Notification(
+            user_id=teacher.id,
+            title=f"⚠️ Cheating Alert: {quiz.title}",
+            message=f"{current_user.full_name} was caught attempting to cheat ({warnings} violations). Reason: {reason}. Quiz was auto-submitted.",
+            type="cheating_alert"
+        )
+        db.add(notification)
+        print(f"✅ Cheating alert notification created")
+        
+        # If auto-submitted, send separate submission notification
+        if auto_submitted:
+            # Get the attempt to show score
+            attempt = db.query(QuizAttempt).filter(
+                QuizAttempt.quiz_id == quiz_id,
+                QuizAttempt.user_id == current_user.id
+            ).first()
+            
+            score_text = f"Score: {attempt.score}/{attempt.total_questions}" if attempt else "Score pending"
+            
+            submission_notification = Notification(
+                user_id=teacher.id,
+                title=f"📝 Auto-Submitted Quiz: {quiz.title}",
+                message=f"{current_user.full_name}'s quiz was automatically submitted due to cheating violations ({warnings} strikes). Reason: {reason}. {score_text}. Click to review.",
+                type="quiz_submission"
+            )
+            db.add(submission_notification)
+            print(f"✅ Auto-submission notification created")
+        
+        db.commit()
+        print(f"✅ Notifications committed to database")
+        
+        return {"message": "Cheating reported to teacher", "success": True}
     except Exception as e:
-        print(f"Error reporting cheating: {e}")
-        return {"message": "Failed to report"}
+        print(f"❌ Error reporting cheating: {e}")
+        import traceback
+        traceback.print_exc()
+        db.rollback()
+        return {"message": f"Failed to report: {str(e)}", "success": False}
 
 @app.get("/teacher/quiz-submissions/{quiz_id}")
 def get_quiz_submissions(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
