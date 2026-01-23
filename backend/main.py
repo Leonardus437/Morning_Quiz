@@ -598,7 +598,7 @@ def health_check():
         "timezone": "CAT/EAT (UTC+2)",
         "service": "Morning Quiz API",
 
-        "version": "2.0-ANTI-CHEAT",
+        "version": "2.0-ANTI-CHEAT-PROD",
         "cors": "enabled",
         "ai_grader": "enabled" if AI_GRADER_AVAILABLE else "fallback",
         "fix_deployed": "2026-01-13"
