@@ -70,7 +70,13 @@ app = FastAPI(title="TVET/TSS Quiz API - Offline First")
 # CRITICAL: Add CORS middleware BEFORE any routes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://tsskwizi.pages.dev",
+        "https://d4e95bdd.tsskwizi.pages.dev",
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "*"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -137,8 +143,6 @@ class QuizAttempt(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     score = Column(Float, default=0.0)
-
-    score = Column(Integer, default=0)
 
     total_questions = Column(Integer)
     answers = Column(JSON)
@@ -408,6 +412,7 @@ def get_quizzes(current_user: User = Depends(get_current_user), db: Session = De
     
     return result
 
+@app.get("/quizzes/{quiz_id}/questions")
 def get_quiz_questions(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
     if not quiz:
@@ -477,6 +482,78 @@ async def submit_quiz_options():
     return {"message": "OK"}
 
 @app.post("/quizzes/submit")
+def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    quiz = db.query(Quiz).filter(Quiz.id == submission.quiz_id).first()
+    if not quiz:
+        raise HTTPException(status_code=404, detail="Quiz not found")
+    
+    existing = db.query(QuizAttempt).filter(
+        QuizAttempt.quiz_id == submission.quiz_id,
+        QuizAttempt.user_id == current_user.id
+    ).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Quiz already submitted")
+    
+    score = 0.0
+    needs_review = False
+    attempt = QuizAttempt(
+        quiz_id=submission.quiz_id,
+        user_id=current_user.id,
+        total_questions=len(submission.answers),
+        answers={},
+        completed_at=now()
+    )
+    db.add(attempt)
+    db.flush()
+    
+    for answer in submission.answers:
+        question = db.query(Question).filter(Question.id == answer.question_id).first()
+        if not question:
+            continue
+        
+        is_correct = False
+        points = 0.0
+        feedback = ""
+        
+        if question.question_type in ['short_answer', 'essay']:
+            points, feedback = grade_open_ended_question(
+                answer.answer, question.correct_answer, question.points
+            )
+            needs_review = True
+        else:
+            is_correct = str(answer.answer).strip().lower() == str(question.correct_answer).strip().lower()
+            points = question.points if is_correct else 0.0
+            feedback = "Correct" if is_correct else "Incorrect"
+        
+        score += points
+        student_answer = StudentAnswer(
+            attempt_id=attempt.id,
+            question_id=question.id,
+            student_answer=answer.answer,
+            is_correct=is_correct,
+            points_earned=points,
+            ai_feedback=feedback
+        )
+        db.add(student_answer)
+    
+    attempt.score = score
+    attempt.needs_review = needs_review
+    db.commit()
+    
+    # Notify teacher about submission (no auto-submit reason here - manual submission)
+    teacher = db.query(User).filter(User.id == quiz.created_by).first()
+    if teacher:
+        notification = Notification(
+            user_id=teacher.id,
+            title=f"📝 New Quiz Submission: {quiz.title}",
+            message=f"{current_user.full_name} has submitted the quiz. Score: {score}/{len(submission.answers)}. Click to review.",
+            type="quiz_submission"
+        )
+        db.add(notification)
+        db.commit()
+    
+    return {"score": score, "total": len(submission.answers), "needs_review": needs_review}
+
 @app.get("/quizzes/{quiz_id}/status")
 def get_quiz_status(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
@@ -842,9 +919,6 @@ def delete_question(question_id: int, current_user: User = Depends(get_current_u
     db.query(StudentAnswer).filter(StudentAnswer.question_id == question_id).delete(synchronize_session=False)
     # Remove question from quizzes
     db.query(QuizQuestion).filter(QuizQuestion.question_id == question_id).delete(synchronize_session=False)
-
-    # Remove question from any quizzes first
-    db.query(QuizQuestion).filter(QuizQuestion.question_id == question_id).delete(synchronize_session=False)
     
 
     # Delete the question
@@ -865,9 +939,6 @@ def clear_all_teacher_questions(current_user: User = Depends(get_current_user), 
     # Delete student answers first
     db.query(StudentAnswer).filter(StudentAnswer.question_id.in_(question_ids)).delete(synchronize_session=False)
     # Remove questions from quizzes
-    db.query(QuizQuestion).filter(QuizQuestion.question_id.in_(question_ids)).delete(synchronize_session=False)
-
-    # Remove questions from any quizzes first
     db.query(QuizQuestion).filter(QuizQuestion.question_id.in_(question_ids)).delete(synchronize_session=False)
     
 
@@ -962,12 +1033,6 @@ def export_quiz_results(quiz_id: int, current_user: User = Depends(get_current_u
             display_score = attempt.final_score if attempt.final_score is not None else attempt.score
             percentage = round((display_score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1)
             data.append([str(idx), student.full_name, student.username, f"{display_score}/{attempt.total_questions}", f"{percentage}%"])
-
-    for idx, attempt in enumerate(sorted(attempts, key=lambda x: x.score, reverse=True), 1):
-        student = db.query(User).filter(User.id == attempt.user_id).first()
-        if student:
-            percentage = round((attempt.score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1)
-            data.append([str(idx), student.full_name, student.username, f"{attempt.score}/{attempt.total_questions}", f"{percentage}%"])
 
     
     table = Table(data, colWidths=[0.5*inch, 2*inch, 1.5*inch, 1*inch, 1*inch])
@@ -1115,13 +1180,6 @@ def get_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user
                 "score": display_score,
                 "total": attempt.total_questions,
                 "percentage": round((display_score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1),
-
-                "student_name": student.full_name,
-                "username": student.username,
-                "score": attempt.score,
-                "total": attempt.total_questions,
-                "percentage": round((attempt.score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1),
-
                 "completed_at": attempt.completed_at.isoformat() if attempt.completed_at else None
             })
     
@@ -1575,6 +1633,10 @@ def download_student_report(quiz_id: int, current_user: User = Depends(get_curre
     if not quiz:
         raise HTTPException(status_code=404, detail="Quiz not found")
     
+    # Check if results are released
+    if not quiz.results_released:
+        raise HTTPException(status_code=403, detail="Results not yet released by teacher. Please wait for teacher to review and release results.")
+    
     # Get detailed answers
     student_answers = db.query(StudentAnswer).filter(
         StudentAnswer.attempt_id == attempt.id
@@ -1744,6 +1806,7 @@ def report_cheating(data: Dict, current_user: User = Depends(get_current_user), 
         quiz_id = data.get('quiz_id')
         warnings = data.get('warnings', 0)
         reason = data.get('reason', 'Unknown')
+        auto_submitted = data.get('auto_submitted', False)
         
         quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
         if not quiz:
@@ -1751,6 +1814,7 @@ def report_cheating(data: Dict, current_user: User = Depends(get_current_user), 
         
         teacher = db.query(User).filter(User.id == quiz.created_by).first()
         if teacher:
+            # Send cheating alert
             notification = Notification(
                 user_id=teacher.id,
                 title=f"⚠️ Cheating Alert: {quiz.title}",
@@ -1758,12 +1822,175 @@ def report_cheating(data: Dict, current_user: User = Depends(get_current_user), 
                 type="cheating_alert"
             )
             db.add(notification)
+            
+            # If auto-submitted, send separate submission notification with reason
+            if auto_submitted:
+                # Get the attempt to show score
+                attempt = db.query(QuizAttempt).filter(
+                    QuizAttempt.quiz_id == quiz_id,
+                    QuizAttempt.user_id == current_user.id
+                ).first()
+                
+                score_text = f"Score: {attempt.score}/{attempt.total_questions}" if attempt else "Score pending"
+                
+                submission_notification = Notification(
+                    user_id=teacher.id,
+                    title=f"📝 Auto-Submitted Quiz: {quiz.title}",
+                    message=f"{current_user.full_name}'s quiz was automatically submitted due to cheating violations ({warnings} strikes). Reason: {reason}. {score_text}. Click to review.",
+                    type="quiz_submission"
+                )
+                db.add(submission_notification)
+            
             db.commit()
         
         return {"message": "Cheating reported to teacher"}
     except Exception as e:
         print(f"Error reporting cheating: {e}")
         return {"message": "Failed to report"}
+
+@app.get("/teacher/quiz-submissions/{quiz_id}")
+def get_quiz_submissions(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get all submissions for a quiz for teacher review"""
+    if current_user.role != "teacher":
+        raise HTTPException(status_code=403, detail="Only teachers can view submissions")
+    
+    quiz = db.query(Quiz).filter(Quiz.id == quiz_id, Quiz.created_by == current_user.id).first()
+    if not quiz:
+        raise HTTPException(status_code=404, detail="Quiz not found")
+    
+    attempts = db.query(QuizAttempt).filter(QuizAttempt.quiz_id == quiz_id).all()
+    
+    submissions = []
+    for attempt in attempts:
+        student = db.query(User).filter(User.id == attempt.user_id).first()
+        if student:
+            display_score = attempt.final_score if attempt.final_score is not None else attempt.score
+            submissions.append({
+                "attempt_id": attempt.id,
+                "student_id": student.id,
+                "student_name": student.full_name,
+                "student_username": student.username,
+                "final_score": display_score,
+                "total_possible": attempt.total_questions,
+                "percentage": round((display_score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1),
+                "needs_review": attempt.needs_review,
+                "teacher_reviewed": attempt.final_score is not None,
+                "submitted_at": attempt.completed_at.isoformat() if attempt.completed_at else None
+            })
+    
+    return {
+        "quiz_id": quiz.id,
+        "quiz_title": quiz.title,
+        "results_released": quiz.results_released,
+        "submissions": sorted(submissions, key=lambda x: x["submitted_at"] or "", reverse=True)
+    }
+
+@app.get("/teacher/review-submission/{attempt_id}")
+def get_submission_details(attempt_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get detailed submission for teacher review"""
+    if current_user.role != "teacher":
+        raise HTTPException(status_code=403, detail="Only teachers can review submissions")
+    
+    attempt = db.query(QuizAttempt).filter(QuizAttempt.id == attempt_id).first()
+    if not attempt:
+        raise HTTPException(status_code=404, detail="Submission not found")
+    
+    quiz = db.query(Quiz).filter(Quiz.id == attempt.quiz_id, Quiz.created_by == current_user.id).first()
+    if not quiz:
+        raise HTTPException(status_code=403, detail="Access denied")
+    
+    student = db.query(User).filter(User.id == attempt.user_id).first()
+    student_answers = db.query(StudentAnswer).filter(StudentAnswer.attempt_id == attempt_id).all()
+    
+    answers_detail = []
+    for sa in student_answers:
+        question = db.query(Question).filter(Question.id == sa.question_id).first()
+        if question:
+            answers_detail.append({
+                "answer_id": sa.id,
+                "question_id": question.id,
+                "question_text": question.question_text,
+                "question_type": question.question_type,
+                "correct_answer": question.correct_answer,
+                "max_points": question.points,
+                "student_answer": sa.student_answer,
+                "is_correct": sa.is_correct,
+                "points_earned": sa.points_earned,
+                "ai_feedback": sa.ai_feedback,
+                "teacher_score": sa.teacher_score,
+                "teacher_feedback": sa.teacher_feedback
+            })
+    
+    return {
+        "attempt_id": attempt.id,
+        "quiz_title": quiz.title,
+        "student_name": student.full_name if student else "Unknown",
+        "student_username": student.username if student else "Unknown",
+        "initial_score": attempt.score,
+        "final_score": attempt.final_score,
+        "total_questions": attempt.total_questions,
+        "completed_at": attempt.completed_at.isoformat() if attempt.completed_at else None,
+        "answers": answers_detail
+    }
+
+@app.post("/teacher/grade-answer/{answer_id}")
+def grade_answer(answer_id: int, data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Teacher grades individual answer"""
+    if current_user.role != "teacher":
+        raise HTTPException(status_code=403, detail="Only teachers can grade answers")
+    
+    student_answer = db.query(StudentAnswer).filter(StudentAnswer.id == answer_id).first()
+    if not student_answer:
+        raise HTTPException(status_code=404, detail="Answer not found")
+    
+    attempt = db.query(QuizAttempt).filter(QuizAttempt.id == student_answer.attempt_id).first()
+    quiz = db.query(Quiz).filter(Quiz.id == attempt.quiz_id, Quiz.created_by == current_user.id).first()
+    if not quiz:
+        raise HTTPException(status_code=403, detail="Access denied")
+    
+    student_answer.teacher_score = data.get('score')
+    student_answer.teacher_feedback = data.get('feedback', '')
+    
+    # Recalculate final score
+    all_answers = db.query(StudentAnswer).filter(StudentAnswer.attempt_id == attempt.id).all()
+    final_score = sum(a.teacher_score if a.teacher_score is not None else a.points_earned for a in all_answers)
+    attempt.final_score = final_score
+    attempt.reviewed_by = current_user.id
+    
+    db.commit()
+    
+    return {"message": "Answer graded successfully", "final_score": final_score}
+
+@app.post("/teacher/release-results/{quiz_id}")
+def release_results(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Teacher releases quiz results to students"""
+    if current_user.role != "teacher":
+        raise HTTPException(status_code=403, detail="Only teachers can release results")
+    
+    quiz = db.query(Quiz).filter(Quiz.id == quiz_id, Quiz.created_by == current_user.id).first()
+    if not quiz:
+        raise HTTPException(status_code=404, detail="Quiz not found")
+    
+    quiz.results_released = True
+    db.commit()
+    
+    # Notify all students
+    attempts = db.query(QuizAttempt).filter(QuizAttempt.quiz_id == quiz_id).all()
+    for attempt in attempts:
+        student = db.query(User).filter(User.id == attempt.user_id).first()
+        if student:
+            display_score = attempt.final_score if attempt.final_score is not None else attempt.score
+            notification = Notification(
+                user_id=student.id,
+                title=f"✅ Results Released: {quiz.title}",
+                message=f"Your quiz results are now available. Score: {display_score}/{attempt.total_questions}. Download your report now!",
+                type="results_released"
+            )
+            db.add(notification)
+    
+    db.commit()
+    
+    return {"message": "Results released successfully", "students_notified": len(attempts)}
 
 @app.on_event("startup")
 def startup_event():
@@ -1815,180 +2042,6 @@ def startup_event():
         db.rollback()
     finally:
 
-        db.close()# Teacher Review Endpoints - Add to main.py
-
-from pydantic import BaseModel
-from typing import List
-
-class GradeAdjustment(BaseModel):
-    answer_id: int
-    score: float
-    feedback: str
-
-class ReviewRequest(BaseModel):
-    grades: List[GradeAdjustment]
-
-# 1. Get pending reviews
-@app.get("/teacher/pending-reviews")
-def get_pending_reviews(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    
-    attempts = db.query(QuizAttempt).join(Quiz).filter(
-        Quiz.created_by == current_user.id,
-        QuizAttempt.needs_review == True,
-        QuizAttempt.reviewed_by == None
-    ).all()
-    
-    result = []
-    for attempt in attempts:
-        quiz = db.query(Quiz).filter(Quiz.id == attempt.quiz_id).first()
-        student = db.query(User).filter(User.id == attempt.user_id).first()
-        result.append({
-            "attempt_id": attempt.id,
-            "quiz_title": quiz.title,
-            "student_name": student.full_name,
-            "score": attempt.score,
-            "submitted_at": attempt.completed_at
-        })
-    
-    return result
-
-# 2. Get attempt details for review
-def get_attempt_for_review(attempt_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    
-    attempt = db.query(QuizAttempt).filter(QuizAttempt.id == attempt_id).first()
-    if not attempt:
-        raise HTTPException(status_code=404)
-    
-    quiz = db.query(Quiz).filter(Quiz.id == attempt.quiz_id).first()
-    student = db.query(User).filter(User.id == attempt.user_id).first()
-    answers = db.query(StudentAnswer).filter(StudentAnswer.attempt_id == attempt_id).all()
-    
-    answer_details = []
-    for ans in answers:
-        question = db.query(Question).filter(Question.id == ans.question_id).first()
-        answer_details.append({
-            "answer_id": ans.id,
-            "question_text": question.question_text,
-            "correct_answer": question.correct_answer,
-            "student_answer": ans.student_answer,
-            "ai_score": ans.points_earned,
-            "ai_feedback": ans.ai_feedback,
-            "max_points": question.points,
-            "teacher_score": ans.teacher_score,
-            "teacher_feedback": ans.teacher_feedback
-        })
-    
-    return {
-        "attempt_id": attempt.id,
-        "quiz_id": quiz.id,
-        "quiz_title": quiz.title,
-        "student_name": student.full_name,
-        "total_score": attempt.score,
-        "answers": answer_details
-    }
-
-# 3. Submit review and adjust grades
-@app.post("/teacher/review/{attempt_id}/grade")
-def submit_review(attempt_id: int, review: ReviewRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    
-    attempt = db.query(QuizAttempt).filter(QuizAttempt.id == attempt_id).first()
-    if not attempt:
-        raise HTTPException(status_code=404)
-    
-    # Update each answer with teacher's grade
-    new_total = 0.0
-    for grade in review.grades:
-        answer = db.query(StudentAnswer).filter(StudentAnswer.id == grade.answer_id).first()
-        if answer:
-            answer.teacher_score = grade.score
-            answer.teacher_feedback = grade.feedback
-            new_total += grade.score
-    
-    # Update attempt
-    attempt.final_score = new_total
-    attempt.reviewed_by = current_user.id
-    attempt.needs_review = False
-    
-    db.commit()
-    
-    return {"message": "Review submitted", "final_score": new_total}
-
-# 4. Release results to students
-def release_results(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    
-    quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
-    if not quiz or quiz.created_by != current_user.id:
-        raise HTTPException(status_code=404)
-    
-    quiz.results_released = True
-    db.commit()
-    
-    return {"message": "Results released to students"}
-
-# 5. Get review status
-@app.get("/teacher/quiz/{quiz_id}/review-status")
-def get_review_status(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403)
-    
-    total = db.query(QuizAttempt).filter(QuizAttempt.quiz_id == quiz_id).count()
-    pending = db.query(QuizAttempt).filter(
-        QuizAttempt.quiz_id == quiz_id,
-        QuizAttempt.needs_review == True,
-        QuizAttempt.reviewed_by == None
-    ).count()
-    
-    quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
-    
-    return {
-        "total_submissions": total,
-        "pending_review": pending,
-        "results_released": quiz.results_released if quiz else False
-    }
-
-# Teacher Review Endpoints
-class GradeAdjustment(BaseModel):
-    answer_id: int
-    score: float
-    feedback: str
-
-class ReviewRequest(BaseModel):
-    grades: List[GradeAdjustment]
-
-def report_cheating(data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    """Report student cheating attempt to teacher"""
-    try:
-        quiz_id = data.get('quiz_id')
-        warnings = data.get('warnings', 0)
-        reason = data.get('reason', 'Unknown')
-        
-        quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
-        if not quiz:
-            return {"message": "Quiz not found"}
-        
-        teacher = db.query(User).filter(User.id == quiz.created_by).first()
-        if teacher:
-            notification = Notification(
-                user_id=teacher.id,
-                title=f"⚠️ Cheating Alert: {quiz.title}",
-                message=f"{current_user.full_name} was caught attempting to cheat ({warnings} violations). Reason: {reason}. Quiz was auto-submitted.",
-                type="cheating_alert"
-            )
-            db.add(notification)
-            db.commit()
-        
-        return {"message": "Cheating reported to teacher"}
-    except Exception as e:
-        print(f"Error reporting cheating: {e}")
-        return {"message": "Failed to report"}
-
         db.close()
+
 
