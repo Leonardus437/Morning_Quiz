@@ -27,6 +27,12 @@
   }
 </script>
 
+<svelte:head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+</svelte:head>
+
 <!-- Offline Status Component re-enabled with clean state -->
 <OfflineStatus />
 

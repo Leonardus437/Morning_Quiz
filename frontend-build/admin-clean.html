@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div id="app"></div>
+    
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        let token = localStorage.getItem('token');
+        let user = null;
+        let activeTab = 'overview';
+        let lessons = [];
+        let teachers = [];
+        let students = [];
+        
+        async function api(endpoint, options = {}) {
+            const res = await fetch(`${API_BASE}${endpoint}`, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    'Authorization': token ? `Bearer ${token}` : ''
+                }
+            });
+            if (!res.ok) throw new Error(await res.text());
+            return res.json();
+        }
+        
+        async function login(username, password) {
+            try {
+                const data = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({username, password})
+                }).then(r => r.json());
+                
+                if (data.user.role !== 'admin') throw new Error('Admin access required');
+                token = data.access_token;
+                user = data.user;
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+                await loadData();
+                render();
+            } catch (err) {
+                alert('Login failed: ' + err.message);
+            }
+        }
+        
+        async function loadData() {
+            try {
+                [lessons, teachers, students] = await Promise.all([
+                    api('/lessons'),
+                    api('/teachers'),
+                    api('/admin/students')
+                ]);
+                render();
+            } catch (err) {
+                console.error('Load error:', err);
+            }
+        }
+        
+        function logout() {
+            token = null;
+            user = null;
+            localStorage.clear();
+            render();
+        }
+        
+        function render() {
+            const app = document.getElementById('app');
+            
+            if (!token || !user) {
+                app.innerHTML = `
+                    <div class="flex items-center justify-center min-h-screen">
+                        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-3xl">✅</span>
+                                </div>
+                                <h1 class="text-2xl font-bold mb-2">Clean Admin</h1>
+                                <p class="text-green-600 text-sm">No Quiz Management</p>
+                            </div>
+                            <form onsubmit="event.preventDefault(); login(this.username.value, this.password.value);" class="space-y-4">
+                                <input name="username" class="w-full px-4 py-3 border rounded-xl" placeholder="Username" required>
+                                <input name="password" type="password" class="w-full px-4 py-3 border rounded-xl" placeholder="Password" required>
+                                <button class="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700">Sign In</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            } else {
+                app.innerHTML = `
+                    <div class="min-h-screen">
+                        <header class="bg-white shadow">
+                            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+                                <div>
+                                    <h1 class="text-xl font-bold text-green-600">✅ Clean Admin Dashboard</h1>
+                                    <p class="text-sm text-gray-600">${user.full_name}</p>
+                                </div>
+                                <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Sign Out</button>
+                            </div>
+                        </header>
+                        
+                        <div class="max-w-7xl mx-auto px-6 py-8">
+                            <div class="bg-white rounded-xl shadow mb-6 p-2 flex gap-2">
+                                <button onclick="activeTab='overview'; render();" class="px-4 py-2 rounded-lg font-medium ${activeTab === 'overview' ? 'bg-green-600 text-white' : 'hover:bg-gray-100'}">📊 Overview</button>
+                                <button onclick="activeTab='lessons'; render();" class="px-4 py-2 rounded-lg font-medium ${activeTab === 'lessons' ? 'bg-green-600 text-white' : 'hover:bg-gray-100'}">📚 Lessons</button>
+                                <button onclick="activeTab='teachers'; render();" class="px-4 py-2 rounded-lg font-medium ${activeTab === 'teachers' ? 'bg-green-600 text-white' : 'hover:bg-gray-100'}">👨🏫 Teachers</button>
+                                <button onclick="activeTab='students'; render();" class="px-4 py-2 rounded-lg font-medium ${activeTab === 'students' ? 'bg-green-600 text-white' : 'hover:bg-gray-100'}">👥 Students</button>
+                            </div>
+                            
+                            <div id="content"></div>
+                        </div>
+                    </div>
+                `;
+                
+                const content = document.getElementById('content');
+                
+                if (activeTab === 'overview') {
+                    content.innerHTML = `
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-blue-500 rounded-xl p-6 text-white">
+                                <p class="text-blue-100 text-sm">Total Lessons</p>
+                                <p class="text-4xl font-bold">${lessons.length}</p>
+                            </div>
+                            <div class="bg-green-500 rounded-xl p-6 text-white">
+                                <p class="text-green-100 text-sm">Teachers</p>
+                                <p class="text-4xl font-bold">${teachers.length}</p>
+                            </div>
+                            <div class="bg-purple-500 rounded-xl p-6 text-white">
+                                <p class="text-purple-100 text-sm">Students</p>
+                                <p class="text-4xl font-bold">${students.length}</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (activeTab === 'lessons') {
+                    content.innerHTML = `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <h3 class="text-lg font-bold mb-4">All Lessons (${lessons.length})</h3>
+                            <div class="space-y-3">
+                                ${lessons.map(l => `
+                                    <div class="border rounded-lg p-4">
+                                        <h4 class="font-semibold">${l.title}</h4>
+                                        <p class="text-sm text-gray-600">${l.code} - ${l.department}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (activeTab === 'teachers') {
+                    content.innerHTML = `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <h3 class="text-lg font-bold mb-4">All Teachers (${teachers.length})</h3>
+                            <div class="space-y-3">
+                                ${teachers.map(t => `
+                                    <div class="border rounded-lg p-4">
+                                        <h4 class="font-semibold">${t.full_name}</h4>
+                                        <p class="text-sm text-gray-600">@${t.username}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (activeTab === 'students') {
+                    content.innerHTML = `
+                        <div class="bg-white rounded-xl shadow p-6">
+                            <h3 class="text-lg font-bold mb-4">All Students (${students.length})</h3>
+                            ${students.length === 0 ? '<p class="text-gray-500 text-center py-8">No students yet</p>' : `
+                                <div class="space-y-3">
+                                    ${students.slice(0, 50).map(s => `
+                                        <div class="border rounded-lg p-4">
+                                            <h4 class="font-semibold">${s.full_name || s.username}</h4>
+                                            <p class="text-sm text-gray-600">${s.department || 'N/A'} - ${s.level || 'N/A'}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `}
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // Auto-login if token exists
+        if (token) {
+            try {
+                user = JSON.parse(localStorage.getItem('user'));
+                if (user?.role === 'admin') loadData();
+            } catch (e) {
+                localStorage.clear();
+            }
+        }
+        
+        render();
+    </script>
+</body>
+</html>

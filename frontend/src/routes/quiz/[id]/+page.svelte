@@ -141,7 +141,9 @@
   });
 
   function enableAntiCheat() {
-    enterFullscreen();
+    // Try to enter fullscreen but don't block if it fails
+    setTimeout(() => enterFullscreen(), 100);
+    
     document.addEventListener('contextmenu', preventRightClick);
     document.addEventListener('copy', preventCopy);
     document.addEventListener('cut', preventCopy);
@@ -176,9 +178,17 @@
                      elem.mozRequestFullScreen ? elem.mozRequestFullScreen() : null;
       
       if (promise) {
-        promise.then(() => { isFullscreen = true; }).catch(() => { isFullscreen = false; });
+        promise.then(() => { 
+          isFullscreen = true; 
+        }).catch((err) => { 
+          console.log('Fullscreen not available:', err);
+          isFullscreen = false; 
+        });
       }
-    } catch (e) {}
+    } catch (e) {
+      console.log('Fullscreen error:', e);
+      isFullscreen = false;
+    }
   }
 
   function exitFullscreen() {
@@ -207,28 +217,60 @@
   }
 
   function preventDevTools(e) {
-    if (e.keyCode === 123 || e.keyCode === 91 || e.keyCode === 92) {
+    if (quizTerminated) return;
+    
+    const restrictedKeys = [
+      27,  // ESC
+      112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, // F1-F12
+      44,  // Print Screen
+      46,  // Delete
+      36,  // Home
+      35,  // End
+      33,  // Page Up
+      34,  // Page Down
+      91,  // Windows Key Left
+      92,  // Windows Key Right
+      93   // Context Menu Key
+    ];
+    
+    // Block all restricted keys
+    if (restrictedKeys.includes(e.keyCode)) {
+      console.log('🚨 RESTRICTED KEY DETECTED:', e.keyCode, e.key);
       e.preventDefault();
+      e.stopPropagation();
+      recordCheatingAttempt(`You pressed a restricted key (${e.key || 'Key ' + e.keyCode})`);
       return false;
     }
+    
+    // Block Ctrl+Shift+I, Ctrl+Shift+J (DevTools)
     if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) {
+      console.log('🚨 DEVTOOLS KEY DETECTED');
       e.preventDefault();
+      e.stopPropagation();
+      recordCheatingAttempt('You tried to open developer tools');
       return false;
     }
+    
+    // Block Ctrl+U (View Source)
     if (e.ctrlKey && e.keyCode === 85) {
+      console.log('🚨 VIEW SOURCE KEY DETECTED');
       e.preventDefault();
+      e.stopPropagation();
+      recordCheatingAttempt('You tried to view page source');
       return false;
     }
   }
 
   function handleVisibilityChange() {
-    if (document.hidden && !quizTerminated) {
+    // Warn IMMEDIATELY when trying to leave (before tab switch)
+    if (document.hidden && !quizTerminated && !submitting && !loading && !showWarningModal) {
       recordCheatingAttempt('You switched to another tab or window');
     }
   }
 
   function handleWindowBlur() {
-    if (!quizTerminated && !document.hidden) {
+    // Warn IMMEDIATELY when window loses focus (before switching)
+    if (!quizTerminated && !submitting && !loading && !showWarningModal) {
       recordCheatingAttempt('You switched to another application');
     }
   }
@@ -237,42 +279,60 @@
     const isCurrentlyFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
     isFullscreen = isCurrentlyFullscreen;
     
+    // Only warn about fullscreen exit, don't force it back immediately
     if (!isCurrentlyFullscreen && !quizTerminated && !submitting && !loading) {
-      recordCheatingAttempt('You exited fullscreen mode');
-      setTimeout(() => {
-        if (!quizTerminated && !submitting) {
-          enterFullscreen();
-        }
-      }, 100);
+      // Give a warning but don't auto-enter fullscreen to avoid blocking
+      console.log('Fullscreen exited - user warned');
     }
   }
 
   async function recordCheatingAttempt(reason) {
+    console.log('⚠️ CHEATING ATTEMPT:', cheatingWarnings + 1, reason);
     cheatingWarnings++;
     
     if (cheatingWarnings === 1) {
       warningMessage = `⚠️ WARNING #1: ${reason}. This is your first warning. Two more violations will result in automatic quiz termination.`;
       showWarningModal = true;
+      console.log('📢 Showing warning modal #1');
     } else if (cheatingWarnings === 2) {
       warningMessage = `⚠️ FINAL WARNING #2: ${reason}. One more violation and your quiz will be automatically submitted and your teacher will be notified.`;
       showWarningModal = true;
+      console.log('📢 Showing warning modal #2');
     } else if (cheatingWarnings >= 3) {
-      warningMessage = `❌ QUIZ TERMINATED: ${reason}. Your quiz has been automatically submitted due to multiple cheating attempts.`;
+      warningMessage = `❌ QUIZ TERMINATED: ${reason}. Your quiz has been automatically submitted due to multiple cheating attempts. You will be redirected shortly.`;
       showWarningModal = true;
       quizTerminated = true;
+      console.log('🛑 QUIZ TERMINATED - Showing termination modal');
       
+      // Auto-submit first
+      console.log('📤 Auto-submitting quiz now...');
+      await submitQuiz();
+      
+      // Then report to teacher with auto_submitted flag
+      try {
+        console.log('📧 Reporting to teacher...');
+        await api.reportCheating({
+          quiz_id: quizId,
+          warnings: cheatingWarnings,
+          reason: reason,
+          auto_submitted: true
+        });
+        console.log('✅ Teacher notified successfully');
+      } catch (err) {
+        console.error('❌ Failed to report cheating:', err);
+      }
+      
+      // Redirect after 3 seconds
       setTimeout(() => {
-        showWarningModal = false;
-        submitQuiz();
+        goto(`/results/${quizId}?status=terminated&quiz_title=${encodeURIComponent(quiz?.title || 'Quiz')}`);
       }, 3000);
     }
   }
 
   function closeWarningModal() {
+    if (quizTerminated) return; // Don't allow closing if terminated
     showWarningModal = false;
-    if (!quizTerminated) {
-      enterFullscreen();
-    }
+    enterFullscreen();
   }
 
   function shuffleArray(array) {
@@ -395,6 +455,10 @@
     if (questionTimer) clearInterval(questionTimer);
 
     try {
+      // Calculate total questions answered
+      const answeredCount = Object.keys(answers).length;
+      const totalQuestions = questions.length;
+      
       const submission = {
         quiz_id: quizId,
         answers: Object.entries(answers)
@@ -405,10 +469,22 @@
           }))
       };
 
+      console.log(`📊 Submitting ${answeredCount}/${totalQuestions} answers`);
       const result = await api.submitQuiz(submission);
+      console.log('✅ Quiz submitted successfully:', result);
       clearQuizState();
-      goto(`/results/${quizId}?status=under_review&quiz_title=${encodeURIComponent(result.quiz_title || quiz?.title || 'Quiz')}`);
+      
+      // Show success modal if quiz was terminated
+      if (quizTerminated) {
+        showWarningModal = false;
+        setTimeout(() => {
+          goto(`/results/${quizId}?status=terminated&quiz_title=${encodeURIComponent(quiz?.title || 'Quiz')}`);
+        }, 500);
+      } else {
+        goto(`/results/${quizId}?status=completed&quiz_title=${encodeURIComponent(quiz?.title || 'Quiz')}`);
+      }
     } catch (err) {
+      console.error('❌ Submit failed:', err);
       error = err.message || 'Failed to submit quiz. Please try again.';
       submitting = false;
     }
@@ -508,8 +584,9 @@
             {currentQuestion.question_text}
           </h2>
 
-          {#if currentQuestion.question_type === 'mcq'}
+          {#if currentQuestion.question_type === 'mcq' || currentQuestion.question_type === 'multiple_choice'}
             <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">📋 Select the correct answer:</div>
               {#each (Array.isArray(currentQuestion.options) ? currentQuestion.options : JSON.parse(currentQuestion.options || '[]')) as option}
                 <label class="flex items-center p-5 border-2 hover:bg-blue-50 cursor-pointer transition-all {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 pointer-events-none' : ''} {answers[currentQuestion.id] === option ? 'border-blue-600 bg-blue-50 shadow-md' : 'border-gray-200'}">
                   <input
@@ -542,16 +619,18 @@
                 </label>
               {/each}
             </div>
-          {:else if currentQuestion.question_type === 'short_answer'}
+          {:else if currentQuestion.question_type === 'short_answer' || currentQuestion.question_type === 'essay'}
             <div class="max-w-3xl mx-auto">
+              <div class="mb-3 text-sm font-semibold text-gray-700">📝 Write your answer below:</div>
               <textarea
                 class="w-full h-48 p-6 border-3 border-gray-400 rounded-xl resize-none shadow-lg font-serif text-base leading-8 focus:border-blue-600 focus:ring-4 focus:ring-blue-300 transition-all {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
                 style="background: linear-gradient(to bottom, #fefefe 0%, #f9fafb 100%), repeating-linear-gradient(transparent, transparent 31px, #cbd5e1 31px, #cbd5e1 32px); line-height: 32px; padding-top: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), inset 0 2px 4px rgba(0, 0, 0, 0.05);"
-                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : '✍️ Write your answer here...'}
+                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : '✍️ Write your answer here... (Type your response in complete sentences)'}
                 value={answers[currentQuestion.id] || ''}
                 on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
                 disabled={completedQuestions.has(currentQuestionIndex)}
               ></textarea>
+              <div class="mt-2 text-xs text-gray-500">💡 Tip: Write clearly and completely. Your answer will be reviewed by your teacher.</div>
             </div>
           {:else if currentQuestion.question_type === 'fill_blanks'}
             <div class="space-y-4">

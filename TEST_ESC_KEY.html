@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESC Key Test</title>
+    <style>
+        body { font-family: Arial; padding: 50px; background: #f0f0f0; }
+        .box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .warning { background: #fee; border: 2px solid #f00; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .count { font-size: 48px; font-weight: bold; color: #e00; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🔑 ESC Key Detection Test</h1>
+        <p><strong>Instructions:</strong> Press the ESC key to test detection</p>
+        
+        <div class="warning">
+            <div>ESC Key Pressed: <span class="count" id="count">0</span> times</div>
+            <div id="log" style="margin-top: 20px; font-family: monospace;"></div>
+        </div>
+        
+        <p><strong>Expected behavior:</strong></p>
+        <ul>
+            <li>Counter should increment each time you press ESC</li>
+            <li>Log should show timestamp and keyCode</li>
+            <li>If this works, ESC detection is functional</li>
+        </ul>
+    </div>
+
+    <script>
+        let count = 0;
+        const countEl = document.getElementById('count');
+        const logEl = document.getElementById('log');
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 27) {
+                e.preventDefault();
+                count++;
+                countEl.textContent = count;
+                
+                const time = new Date().toLocaleTimeString();
+                const entry = document.createElement('div');
+                entry.textContent = `[${time}] ESC pressed (keyCode: ${e.keyCode})`;
+                entry.style.color = '#e00';
+                logEl.insertBefore(entry, logEl.firstChild);
+                
+                console.log('ESC KEY DETECTED!', e.keyCode);
+                return false;
+            }
+        });
+        
+        console.log('ESC Key Test Ready - Press ESC to test');
+    </script>
+</body>
+</html>

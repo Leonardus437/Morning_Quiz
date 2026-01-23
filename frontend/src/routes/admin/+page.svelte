@@ -665,7 +665,7 @@
   <title>DOS Dashboard - TVET Quiz System</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 relative">
+<div class="min-h-screen relative overflow-hidden">
   <AnimatedBackground variant="blue" />
   {#if !isLoggedIn}
     <div class="flex items-center justify-center min-h-screen p-4 relative z-10">
@@ -862,38 +862,7 @@
             </div>
           </div>
 
-          <!-- H5P Interactive Content Card -->
-          <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-xl font-bold text-gray-900"> H5P Interactive Content</h3>
-              <span class="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">Available</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
-                <div class="text-2xl mb-2"></div>
-                <h4 class="font-semibold text-purple-900">Interactive Quizzes</h4>
-                <p class="text-sm text-purple-700">Create engaging H5P quiz content</p>
-              </div>
-              <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-                <div class="text-2xl mb-2"></div>
-                <h4 class="font-semibold text-blue-900">Presentations</h4>
-                <p class="text-sm text-blue-700">Interactive slide presentations</p>
-              </div>
-              <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
-                <div class="text-2xl mb-2"></div>
-                <h4 class="font-semibold text-green-900">Activities</h4>
-                <p class="text-sm text-green-700">Drag & drop, fill-in-the-blanks</p>
-              </div>
-            </div>
-            <div class="mt-4 flex space-x-3">
-              <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-all text-sm">
-                 Create H5P Content
-              </button>
-              <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all text-sm">
-                 Browse Library
-              </button>
-            </div>
-          </div>
+
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="bg-white rounded-2xl shadow-lg p-6">
@@ -1493,5 +1462,24 @@
 <style>
   :global(body) {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  
+  :global(.animate-blob) {
+    animation: blob 7s infinite;
+  }
+  
+  :global(.animation-delay-2000) {
+    animation-delay: 2s;
+  }
+  
+  :global(.animation-delay-4000) {
+    animation-delay: 4s;
   }
 </style>

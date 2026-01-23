@@ -1,0 +1,1 @@
+{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHVkZW50MDAxIiwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjkxMTc5NjJ9.lk-bdsxnnQBY1leWQ1ZUOepTpEPleY5r4LfEfEOAZvY","token_type":"bearer","user":{"id":50,"username":"student001","role":"student","full_name":"Student One","department":"Software Development","level":"Level 5","departments":[],"is_class_teacher":false}}

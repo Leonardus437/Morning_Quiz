@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - TVET Quiz System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .features h3 {
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+        
+        .features ul {
+            list-style: none;
+        }
+        
+        .features li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-weight: bold;
+        }
+        
+        .retry-btn {
+            background: #4ade80;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .retry-btn:hover {
+            background: #22c55e;
+            transform: translateY(-2px);
+        }
+        
+        .home-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .status {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .status.online {
+            background: rgba(74, 222, 128, 0.2);
+            border: 1px solid #4ade80;
+        }
+        
+        .status.offline {
+            background: rgba(248, 113, 113, 0.2);
+            border: 1px solid #f87171;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📡</div>
+        <h1>You're Offline</h1>
+        <p>Don't worry! The TVET Quiz System works offline too. You can still access many features while disconnected.</p>
+        
+        <div class="features">
+            <h3>Available Offline:</h3>
+            <ul>
+                <li>View cached quiz questions</li>
+                <li>Continue taking quizzes (answers saved locally)</li>
+                <li>Browse previous results</li>
+                <li>Access teacher and admin panels</li>
+                <li>View notifications and announcements</li>
+            </ul>
+        </div>
+        
+        <div id="connection-status" class="status offline">
+            🔴 Currently Offline
+        </div>
+        
+        <div style="margin-top: 2rem;">
+            <button class="retry-btn" onclick="checkConnection()">
+                Check Connection
+            </button>
+            <button class="retry-btn home-btn" onclick="goHome()">
+                Go to Home
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function updateConnectionStatus() {
+            const statusEl = document.getElementById('connection-status');
+            if (navigator.onLine) {
+                statusEl.textContent = '🟢 Back Online!';
+                statusEl.className = 'status online';
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                statusEl.textContent = '🔴 Currently Offline';
+                statusEl.className = 'status offline';
+            }
+        }
+        
+        function checkConnection() {
+            updateConnectionStatus();
+            if (navigator.onLine) {
+                // Try to fetch a small resource to verify connection
+                fetch('/manifest.json', { cache: 'no-cache' })
+                    .then(() => {
+                        window.location.href = '/';
+                    })
+                    .catch(() => {
+                        alert('Connection test failed. Please check your internet connection.');
+                    });
+            } else {
+                alert('Still offline. Please check your internet connection.');
+            }
+        }
+        
+        function goHome() {
+            window.location.href = '/';
+        }
+        
+        // Listen for online/offline events
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // Initial status check
+        updateConnectionStatus();
+        
+        // Auto-redirect when back online
+        setInterval(() => {
+            if (navigator.onLine) {
+                fetch('/manifest.json', { cache: 'no-cache' })
+                    .then(() => {
+                        window.location.href = '/';
+                    })
+                    .catch(() => {
+                        // Still offline, do nothing
+                    });
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

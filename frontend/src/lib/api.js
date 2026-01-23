@@ -1419,6 +1419,14 @@ class ApiClient {
   async getReviewStatus(quizId) {
     return this.request(`/teacher/quiz/${quizId}/review-status`);
   }
+
+  // Report cheating
+  async reportCheating(data) {
+    return this.request('/report-cheating', {
+      method: 'POST',
+      body: data
+    });
+  }
 }
 
 export const api = new ApiClient();

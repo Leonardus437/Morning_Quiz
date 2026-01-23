@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="/favicon.png" />
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="theme-color" content="#3b82f6" />
+	
+		<link rel="modulepreload" href="/_app/immutable/entry/start.a24db7fd.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/scheduler.27fe8299.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/singletons.a77ce967.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/index.e20c554c.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/paths.56aa7a3d.js">
+		<link rel="modulepreload" href="/_app/immutable/entry/app.54c18923.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/index.e0a53316.js">
+</head>
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">
+			<script>
+				{
+					__sveltekit_3f1bw4 = {
+						base: "",
+						env: {"PUBLIC_API_URL":"http://localhost:8000"}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/_app/immutable/entry/start.a24db7fd.js"),
+						import("/_app/immutable/entry/app.54c18923.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+	<script>
+		// Service Worker DISABLED - Always fetch latest version
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.getRegistrations().then(registrations => {
+				for (let registration of registrations) {
+					registration.unregister();
+				}
+			});
+		}
+	</script>
+</body>
+</html>

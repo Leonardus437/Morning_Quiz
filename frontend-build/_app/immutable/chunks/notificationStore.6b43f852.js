@@ -1,0 +1,1 @@
+import{w as c}from"./index.e20c554c.js";function s(){const{subscribe:r,update:t}=c([]);return{subscribe:r,add:i=>{const e=Date.now()+Math.random(),o={id:e,...i,time:new Date().toLocaleTimeString()};t(n=>[o,...n]),setTimeout(()=>{t(n=>n.filter(a=>a.id!==e))},5e3)},remove:i=>{t(e=>e.filter(o=>o.id!==i))},clear:()=>{t(()=>[])}}}const f=s();export{f as n};
