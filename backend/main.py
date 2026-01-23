@@ -127,6 +127,8 @@ class Quiz(Base):
     created_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    results_released = Column(Boolean, default=False)
+
 class QuizQuestion(Base):
     __tablename__ = "quiz_questions"
     id = Column(Integer, primary_key=True, index=True)
@@ -1999,7 +2001,22 @@ def release_results(quiz_id: int, current_user: User = Depends(get_current_user)
 def startup_event():
     Base.metadata.create_all(bind=engine)
     
+    # Add missing columns via raw SQL
     db = SessionLocal()
+    try:
+        from sqlalchemy import text
+        db.execute(text("ALTER TABLE quizzes ADD COLUMN IF NOT EXISTS results_released BOOLEAN DEFAULT FALSE"))
+        db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS needs_review BOOLEAN DEFAULT FALSE"))
+        db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS reviewed_by INTEGER"))
+        db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS final_score FLOAT"))
+        db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_score FLOAT"))
+        db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_feedback TEXT"))
+        db.commit()
+        print("✅ Database migration complete")
+    except Exception as e:
+        print(f"Migration error (may be normal if columns exist): {e}")
+        db.rollback()
+    
     try:
         admin = db.query(User).filter(User.username == "admin").first()
         if not admin:
