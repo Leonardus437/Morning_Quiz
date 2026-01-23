@@ -455,7 +455,6 @@
     if (questionTimer) clearInterval(questionTimer);
 
     try {
-      // Calculate total questions answered
       const answeredCount = Object.keys(answers).length;
       const totalQuestions = questions.length;
       
@@ -472,9 +471,14 @@
       console.log(`📊 Submitting ${answeredCount}/${totalQuestions} answers`);
       const result = await api.submitQuiz(submission);
       console.log('✅ Quiz submitted successfully:', result);
+      
+      // Clear quiz state immediately after successful submission
       clearQuizState();
       
-      // Show success modal if quiz was terminated
+      // Disable anti-cheat
+      disableAntiCheat();
+      
+      // Redirect based on submission type
       if (quizTerminated) {
         showWarningModal = false;
         setTimeout(() => {
@@ -485,6 +489,14 @@
       }
     } catch (err) {
       console.error('❌ Submit failed:', err);
+      
+      // If submission failed due to already attempted, clear state and redirect
+      if (err.message && err.message.includes('already')) {
+        clearQuizState();
+        goto('/');
+        return;
+      }
+      
       error = err.message || 'Failed to submit quiz. Please try again.';
       submitting = false;
     }
