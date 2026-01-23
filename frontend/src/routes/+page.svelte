@@ -4,7 +4,10 @@
   import { user } from '$lib/stores.js';
   import { api } from '$lib/api.js';
   import { notificationStore } from '$lib/notificationStore.js';
+  import { startNotificationPolling, stopNotificationPolling, requestNotificationPermission } from '$lib/notificationService.js';
   import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
+  import SimpleChatButton from '$lib/SimpleChatButton.svelte';
+  import TestChatButton from '$lib/TestChatButton.svelte';
 
   let username = '';
   let password = '';
@@ -17,8 +20,6 @@
 
   let isLoggedIn = false;
   let quizRefreshInterval;
-  let notificationInterval;
-  let seenNotificationIds = new Set();
   
   // Carousel state
   let currentSlide = 0;
@@ -47,7 +48,8 @@
           user.login(userData);
           await loadQuizzes();
           startQuizRefresh();
-          startNotificationPolling();
+          startNotificationPolling(userData.role);
+          requestNotificationPermission();
         }
       } catch (err) {
         console.error('Session restore failed:', err);
@@ -55,19 +57,20 @@
     } else if (isLoggedIn) {
       await loadQuizzes();
       startQuizRefresh();
-      startNotificationPolling();
+      const userData = JSON.parse(localStorage.getItem('user'));
+      if (userData) {
+        startNotificationPolling(userData.role);
+        requestNotificationPermission();
+      }
     }
     
-    // Start carousel auto-rotation
     startCarousel();
     
     return () => {
       if (quizRefreshInterval) {
         clearInterval(quizRefreshInterval);
       }
-      if (notificationInterval) {
-        clearInterval(notificationInterval);
-      }
+      stopNotificationPolling();
       if (carouselInterval) {
         clearInterval(carouselInterval);
       }
@@ -122,7 +125,8 @@
       } else {
         showLoginModal = false;
         await loadQuizzes();
-        startNotificationPolling();
+        startNotificationPolling(result.user.role);
+        requestNotificationPermission();
       }
     } catch (err) {
       console.error(' Login error:', err);
@@ -169,63 +173,24 @@
       clearInterval(quizRefreshInterval);
     }
     
-    console.log(' Starting quiz auto-refresh every 2 seconds');
+    console.log('🔄 Starting quiz auto-refresh every 2 seconds');
     
     quizRefreshInterval = setInterval(async () => {
       if (isLoggedIn) {
         try {
           await loadQuizzes();
         } catch (err) {
-          console.error(' Auto-refresh error:', err);
+          console.error('⚠️ Auto-refresh error:', err);
         }
       }
     }, 2000);
-  }
-
-  function startNotificationPolling() {
-    if (notificationInterval) {
-      clearInterval(notificationInterval);
-    }
-    
-    // Initialize with existing notification IDs to avoid showing old ones on first load
-    api.getNotifications().then(notifications => {
-      notifications.forEach(n => seenNotificationIds.add(n.id));
-    }).catch(() => {});
-    
-    notificationInterval = setInterval(async () => {
-      if (isLoggedIn) {
-        try {
-          const notifications = await api.getNotifications();
-          
-          // Show only NEW unread notifications (ones we haven't seen before)
-          const newNotifications = notifications.filter(n => 
-            !n.is_read && !seenNotificationIds.has(n.id)
-          );
-          
-          if (newNotifications.length > 0) {
-            newNotifications.forEach(notification => {
-              seenNotificationIds.add(notification.id);
-              notificationStore.add({
-                type: notification.type,
-                title: notification.title,
-                message: notification.message
-              });
-            });
-          }
-        } catch (err) {
-          console.error('Notification polling error:', err);
-        }
-      }
-    }, 5000);
   }
 
   function handleLogout() {
     if (quizRefreshInterval) {
       clearInterval(quizRefreshInterval);
     }
-    if (notificationInterval) {
-      clearInterval(notificationInterval);
-    }
+    stopNotificationPolling();
     api.logout();
     user.logout();
     localStorage.removeItem('user');
@@ -648,3 +613,6 @@
     </div>
   </div>
 {/if}
+
+<SimpleChatButton />
+<TestChatButton />

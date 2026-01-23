@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat System Test - tsskwizi.pages.dev</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+        .test-box { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .success { border-left: 4px solid #10b981; }
+        .error { border-left: 4px solid #ef4444; }
+        .info { border-left: 4px solid #3b82f6; }
+        button { background: #3b82f6; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #2563eb; }
+        .status { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Chat System Test - Production</h1>
+    <p>Testing chat system at <strong>tsskwizi.pages.dev</strong></p>
+
+    <div class="test-box info">
+        <h3>📋 Test Checklist</h3>
+        <div id="checklist">
+            <div>⏳ Loading tests...</div>
+        </div>
+    </div>
+
+    <div class="test-box">
+        <h3>🔍 Quick Tests</h3>
+        <button onclick="testChatButton()">Test Chat Button Visibility</button>
+        <button onclick="testUserLogin()">Test User Login State</button>
+        <button onclick="testBackendAPI()">Test Backend Connection</button>
+        <button onclick="testChatAPI()">Test Chat API</button>
+    </div>
+
+    <div class="test-box" id="results">
+        <h3>📊 Test Results</h3>
+        <div id="test-output">Click buttons above to run tests...</div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const output = document.getElementById('test-output');
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            output.innerHTML += `<div class="test-box ${className}">${message}</div>`;
+        }
+
+        function testChatButton() {
+            log('🔍 Testing chat button visibility...');
+            
+            // Check for SimpleChatButton
+            const chatBtn = document.querySelector('button[title*="Chat"]') || 
+                           document.querySelector('button:contains("💬")') ||
+                           document.querySelector('.fixed.bottom-6.right-6');
+            
+            if (chatBtn) {
+                log('✅ Chat button found!', 'success');
+            } else {
+                log('❌ Chat button not found. Make sure you\'re logged in.', 'error');
+            }
+        }
+
+        function testUserLogin() {
+            log('👤 Testing user login state...');
+            
+            const user = localStorage.getItem('user');
+            const token = localStorage.getItem('token');
+            
+            if (user && token) {
+                const userData = JSON.parse(user);
+                log(`✅ User logged in: ${userData.username} (${userData.role})`, 'success');
+            } else {
+                log('❌ User not logged in. Please login first.', 'error');
+            }
+        }
+
+        async function testBackendAPI() {
+            log('🔧 Testing backend API connection...');
+            
+            try {
+                const response = await fetch('https://tvet-quiz-backend.onrender.com/health');
+                const data = await response.json();
+                
+                if (data.status === 'healthy') {
+                    log(`✅ Backend connected: ${data.service} v${data.version}`, 'success');
+                } else {
+                    log('❌ Backend unhealthy', 'error');
+                }
+            } catch (error) {
+                log(`❌ Backend connection failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testChatAPI() {
+            log('💬 Testing chat API...');
+            
+            const token = localStorage.getItem('token');
+            if (!token) {
+                log('❌ No auth token. Please login first.', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('https://tvet-quiz-backend.onrender.com/chat/rooms', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const rooms = await response.json();
+                    log(`✅ Chat API working: ${rooms.length} rooms available`, 'success');
+                } else {
+                    log(`❌ Chat API error: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ Chat API failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-run basic checks
+        window.onload = function() {
+            const checklist = document.getElementById('checklist');
+            checklist.innerHTML = `
+                <div>✅ Page loaded successfully</div>
+                <div>✅ JavaScript working</div>
+                <div>✅ LocalStorage accessible</div>
+                <div>⏳ Ready for manual tests</div>
+            `;
+            
+            // Auto-test after 1 second
+            setTimeout(() => {
+                testUserLogin();
+                testChatButton();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>

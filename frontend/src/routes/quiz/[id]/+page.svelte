@@ -105,15 +105,31 @@
       quiz = quizzes.find(q => q.id === quizId);
       
       if (quiz) {
+        console.log('🔍 DEBUG Quiz Data:', {
+          title: quiz.title,
+          duration_minutes: quiz.duration_minutes,
+          question_time_seconds: quiz.question_time_seconds,
+          calculated_seconds: quiz.duration_minutes * 60
+        });
+        
         if (quiz.countdown_started_at) {
           const startTime = new Date(quiz.countdown_started_at);
           const now = new Date();
           const elapsedSeconds = Math.floor((now - startTime) / 1000);
           const totalQuizTime = quiz.duration_minutes * 60;
           
+          console.log('⏱️ Timer Calculation:', {
+            startTime: startTime.toISOString(),
+            now: now.toISOString(),
+            elapsedSeconds,
+            totalQuizTime,
+            timeLeft: Math.max(0, totalQuizTime - elapsedSeconds)
+          });
+          
           timeLeft = Math.max(0, totalQuizTime - elapsedSeconds);
         } else {
           timeLeft = quiz.duration_minutes * 60;
+          console.log('⏱️ No countdown started, using full duration:', timeLeft, 'seconds');
         }
         
         quizStartTime = Date.now();

@@ -4,6 +4,8 @@
   import { user } from '$lib/stores.js';
   import { api } from '$lib/api.js';
   import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
+  import SimpleChatButton from '$lib/SimpleChatButton.svelte';
+  import TestChatButton from '$lib/TestChatButton.svelte';
 
   let username = '';
   let password = '';
@@ -681,6 +683,23 @@
         throw new Error('At least one question must be selected');
       }
       
+      // CRITICAL: Validate timing values
+      const durationMins = parseInt(newQuiz.duration_minutes);
+      const questionSecs = parseInt(newQuiz.question_time_seconds);
+      
+      if (isNaN(durationMins) || durationMins < 1 || durationMins > 180) {
+        throw new Error('Total Duration must be between 1 and 180 minutes');
+      }
+      if (isNaN(questionSecs) || questionSecs < 30 || questionSecs > 300) {
+        throw new Error('Time per Question must be between 30 and 300 seconds');
+      }
+      
+      console.log('📊 Creating quiz with timing:', {
+        duration_minutes: durationMins,
+        question_time_seconds: questionSecs,
+        total_seconds: durationMins * 60
+      });
+      
       // Check authentication
       const token = localStorage.getItem('token');
       if (!token) {
@@ -691,8 +710,8 @@
         title: newQuiz.title.trim(),
         description: newQuiz.description.trim(),
         scheduled_time: new Date(newQuiz.scheduled_time).toISOString(),
-        duration_minutes: parseInt(newQuiz.duration_minutes) || 30,
-        question_time_seconds: parseInt(newQuiz.question_time_seconds) || 60,
+        duration_minutes: durationMins,
+        question_time_seconds: questionSecs,
         department: newQuiz.department,
         level: newQuiz.level,
         question_ids: newQuiz.question_ids
@@ -2193,26 +2212,28 @@
                   />
                 </div>
                 <div>
-                  <label class="block text-sm font-semibold text-gray-700 mb-2">Total Duration (minutes)</label>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">⏱️ Total Quiz Duration (MINUTES)</label>
                   <input
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     type="number"
                     bind:value={newQuiz.duration_minutes}
                     min="1"
                     max="180"
+                    placeholder="e.g., 50 for 50-minute quiz"
                   />
+                  <p class="text-xs text-blue-600 mt-1 font-medium">💡 Enter MINUTES only (e.g., 2 = 2 minutes, 50 = 50 minutes)</p>
                 </div>
                 <div>
-                  <label class="block text-sm font-semibold text-gray-700 mb-2">Time per Question (seconds)</label>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">⏰ Time per Question (SECONDS)</label>
                   <input
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     type="number"
                     bind:value={newQuiz.question_time_seconds}
                     min="30"
                     max="300"
-                    placeholder="60"
+                    placeholder="e.g., 120 for 2 minutes per question"
                   />
-                  <p class="text-xs text-gray-500 mt-1"> Auto-submit when time expires</p>
+                  <p class="text-xs text-blue-600 mt-1 font-medium">💡 Enter SECONDS only (e.g., 30 = 30 seconds, 120 = 2 minutes)</p>
                 </div>
               </div>
 
@@ -2820,6 +2841,9 @@
                         }
                       } catch (err) {
                         error = 'Failed to download PDF: ' + err.message;
+                        if (!err.message.includes('Failed to fetch') && !err.message.includes('aborted')) {
+                          alert('❌ ' + error);
+                        }
                         alert('❌ ' + error);
                       } finally {
                         loading = false;
@@ -3233,6 +3257,9 @@
     </div>
   {/if}
 </div>
+
+<SimpleChatButton />
+<TestChatButton />
 
 <style>
   :global(body) {

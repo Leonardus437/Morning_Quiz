@@ -196,6 +196,36 @@ class TeacherLesson(Base):
     lesson_id = Column(Integer, ForeignKey("lessons.id"))
     assigned_at = Column(DateTime, default=datetime.utcnow)
 
+class ChatRoom(Base):
+    __tablename__ = "chat_rooms"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100))
+    room_type = Column(String(50))  # student-student, student-teacher, teacher-teacher, teacher-dos
+    department = Column(String(100))
+    level = Column(String(50))
+    is_active = Column(Boolean, default=True)
+    created_by = Column(Integer, ForeignKey("users.id"))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+    id = Column(Integer, primary_key=True, index=True)
+    room_id = Column(Integer, ForeignKey("chat_rooms.id"))
+    sender_id = Column(Integer, ForeignKey("users.id"))
+    message = Column(Text)
+    message_type = Column(String(20), default="text")  # text, link, file
+    is_deleted = Column(Boolean, default=False)
+    is_flagged = Column(Boolean, default=False)  # DOS moderation
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class ChatParticipant(Base):
+    __tablename__ = "chat_participants"
+    id = Column(Integer, primary_key=True, index=True)
+    room_id = Column(Integer, ForeignKey("chat_rooms.id"))
+    user_id = Column(Integer, ForeignKey("users.id"))
+    is_blocked = Column(Boolean, default=False)  # DOS can block users
+    joined_at = Column(DateTime, default=datetime.utcnow)
+
 # Pydantic models
 class UserLogin(BaseModel):
     username: str
@@ -2108,3 +2138,293 @@ def startup_event():
         db.close()
 
 
+
+
+# ==================== CHAT SYSTEM API ====================
+
+@app.get("/chat/rooms")
+def get_chat_rooms(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get all chat rooms accessible to current user"""
+    rooms = []
+    
+    if current_user.role == "admin":
+        # DOS sees all rooms
+        all_rooms = db.query(ChatRoom).filter(ChatRoom.is_active == True).all()
+        for room in all_rooms:
+            rooms.append({
+                "id": room.id,
+                "name": room.name,
+                "room_type": room.room_type,
+                "department": room.department,
+                "level": room.level,
+                "unread_count": 0
+            })
+    elif current_user.role == "teacher":
+        # Teachers see teacher-teacher, teacher-dos, and student-teacher rooms
+        participant_rooms = db.query(ChatRoom).join(ChatParticipant).filter(
+            ChatParticipant.user_id == current_user.id,
+            ChatRoom.is_active == True
+        ).all()
+        for room in participant_rooms:
+            rooms.append({
+                "id": room.id,
+                "name": room.name,
+                "room_type": room.room_type,
+                "department": room.department,
+                "level": room.level,
+                "unread_count": 0
+            })
+    else:  # student
+        # Students see student-student and student-teacher rooms for their dept/level
+        participant_rooms = db.query(ChatRoom).join(ChatParticipant).filter(
+            ChatParticipant.user_id == current_user.id,
+            ChatRoom.is_active == True
+        ).all()
+        for room in participant_rooms:
+            rooms.append({
+                "id": room.id,
+                "name": room.name,
+                "room_type": room.room_type,
+                "department": room.department,
+                "level": room.level,
+                "unread_count": 0
+            })
+    
+    return rooms
+
+@app.post("/chat/rooms")
+def create_chat_room(data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Create a new chat room"""
+    room_type = data.get("room_type")
+    name = data.get("name")
+    department = data.get("department")
+    level = data.get("level")
+    
+    # Create room
+    room = ChatRoom(
+        name=name,
+        room_type=room_type,
+        department=department,
+        level=level,
+        created_by=current_user.id
+    )
+    db.add(room)
+    db.flush()
+    
+    # Add creator as participant
+    participant = ChatParticipant(room_id=room.id, user_id=current_user.id)
+    db.add(participant)
+    
+    # Auto-add participants based on room type
+    if room_type == "student-student" and department and level:
+        students = db.query(User).filter(
+            User.role == "student",
+            User.department == department,
+            User.level == level
+        ).all()
+        for student in students:
+            if student.id != current_user.id:
+                p = ChatParticipant(room_id=room.id, user_id=student.id)
+                db.add(p)
+    elif room_type == "student-teacher" and department and level:
+        # Add all students from dept/level
+        students = db.query(User).filter(
+            User.role == "student",
+            User.department == department,
+            User.level == level
+        ).all()
+        for student in students:
+            p = ChatParticipant(room_id=room.id, user_id=student.id)
+            db.add(p)
+        # Add teachers from that department
+        teachers = db.query(User).filter(User.role == "teacher").all()
+        for teacher in teachers:
+            if teacher.departments and department in teacher.departments:
+                p = ChatParticipant(room_id=room.id, user_id=teacher.id)
+                db.add(p)
+    elif room_type == "teacher-teacher":
+        teachers = db.query(User).filter(User.role == "teacher").all()
+        for teacher in teachers:
+            if teacher.id != current_user.id:
+                p = ChatParticipant(room_id=room.id, user_id=teacher.id)
+                db.add(p)
+    elif room_type == "teacher-dos":
+        # Add all teachers
+        teachers = db.query(User).filter(User.role == "teacher").all()
+        for teacher in teachers:
+            p = ChatParticipant(room_id=room.id, user_id=teacher.id)
+            db.add(p)
+        # Add DOS
+        admins = db.query(User).filter(User.role == "admin").all()
+        for admin in admins:
+            p = ChatParticipant(room_id=room.id, user_id=admin.id)
+            db.add(p)
+    
+    db.commit()
+    db.refresh(room)
+    
+    return {"id": room.id, "name": room.name, "room_type": room.room_type}
+
+@app.get("/chat/rooms/{room_id}/messages")
+def get_chat_messages(room_id: int, limit: int = 50, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get messages from a chat room"""
+    # Check if user is participant
+    participant = db.query(ChatParticipant).filter(
+        ChatParticipant.room_id == room_id,
+        ChatParticipant.user_id == current_user.id
+    ).first()
+    
+    if not participant and current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Not a participant of this room")
+    
+    if participant and participant.is_blocked:
+        raise HTTPException(status_code=403, detail="You have been blocked from this room")
+    
+    messages = db.query(ChatMessage).filter(
+        ChatMessage.room_id == room_id,
+        ChatMessage.is_deleted == False
+    ).order_by(ChatMessage.created_at.desc()).limit(limit).all()
+    
+    result = []
+    for msg in reversed(messages):
+        sender = db.query(User).filter(User.id == msg.sender_id).first()
+        result.append({
+            "id": msg.id,
+            "sender_id": msg.sender_id,
+            "sender_name": sender.full_name if sender else "Unknown",
+            "sender_role": sender.role if sender else "unknown",
+            "message": msg.message,
+            "message_type": msg.message_type,
+            "is_flagged": msg.is_flagged,
+            "created_at": msg.created_at.isoformat()
+        })
+    
+    return result
+
+@app.post("/chat/rooms/{room_id}/messages")
+def send_chat_message(room_id: int, data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Send a message to a chat room"""
+    # Check if user is participant
+    participant = db.query(ChatParticipant).filter(
+        ChatParticipant.room_id == room_id,
+        ChatParticipant.user_id == current_user.id
+    ).first()
+    
+    if not participant:
+        raise HTTPException(status_code=403, detail="Not a participant of this room")
+    
+    if participant.is_blocked:
+        raise HTTPException(status_code=403, detail="You have been blocked from this room")
+    
+    message_text = data.get("message", "").strip()
+    message_type = data.get("message_type", "text")
+    
+    if not message_text:
+        raise HTTPException(status_code=400, detail="Message cannot be empty")
+    
+    # Create message
+    message = ChatMessage(
+        room_id=room_id,
+        sender_id=current_user.id,
+        message=message_text,
+        message_type=message_type
+    )
+    db.add(message)
+    db.commit()
+    db.refresh(message)
+    
+    return {
+        "id": message.id,
+        "sender_id": current_user.id,
+        "sender_name": current_user.full_name,
+        "sender_role": current_user.role,
+        "message": message.message,
+        "message_type": message.message_type,
+        "created_at": message.created_at.isoformat()
+    }
+
+@app.delete("/chat/messages/{message_id}")
+def delete_chat_message(message_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Delete a chat message (sender or DOS only)"""
+    message = db.query(ChatMessage).filter(ChatMessage.id == message_id).first()
+    if not message:
+        raise HTTPException(status_code=404, detail="Message not found")
+    
+    # Only sender or DOS can delete
+    if message.sender_id != current_user.id and current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Cannot delete this message")
+    
+    message.is_deleted = True
+    db.commit()
+    
+    return {"message": "Message deleted"}
+
+@app.post("/chat/messages/{message_id}/flag")
+def flag_chat_message(message_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Flag a message for DOS review"""
+    message = db.query(ChatMessage).filter(ChatMessage.id == message_id).first()
+    if not message:
+        raise HTTPException(status_code=404, detail="Message not found")
+    
+    message.is_flagged = True
+    db.commit()
+    
+    # Notify DOS
+    admins = db.query(User).filter(User.role == "admin").all()
+    for admin in admins:
+        notification = Notification(
+            user_id=admin.id,
+            title="🚩 Message Flagged for Review",
+            message=f"A message in chat room has been flagged by {current_user.full_name}",
+            type="chat_flag"
+        )
+        db.add(notification)
+    db.commit()
+    
+    return {"message": "Message flagged for review"}
+
+@app.post("/chat/rooms/{room_id}/block-user/{user_id}")
+def block_user_from_room(room_id: int, user_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Block a user from a chat room (DOS only)"""
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only DOS can block users")
+    
+    participant = db.query(ChatParticipant).filter(
+        ChatParticipant.room_id == room_id,
+        ChatParticipant.user_id == user_id
+    ).first()
+    
+    if not participant:
+        raise HTTPException(status_code=404, detail="User not in this room")
+    
+    participant.is_blocked = True
+    db.commit()
+    
+    return {"message": "User blocked from room"}
+
+@app.get("/chat/flagged-messages")
+def get_flagged_messages(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get all flagged messages (DOS only)"""
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only DOS can view flagged messages")
+    
+    messages = db.query(ChatMessage).filter(
+        ChatMessage.is_flagged == True,
+        ChatMessage.is_deleted == False
+    ).order_by(ChatMessage.created_at.desc()).all()
+    
+    result = []
+    for msg in messages:
+        sender = db.query(User).filter(User.id == msg.sender_id).first()
+        room = db.query(ChatRoom).filter(ChatRoom.id == msg.room_id).first()
+        result.append({
+            "id": msg.id,
+            "room_id": msg.room_id,
+            "room_name": room.name if room else "Unknown",
+            "sender_id": msg.sender_id,
+            "sender_name": sender.full_name if sender else "Unknown",
+            "message": msg.message,
+            "created_at": msg.created_at.isoformat()
+        })
+    
+    return result
