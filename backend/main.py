@@ -2050,6 +2050,8 @@ def startup_event():
         db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS needs_review BOOLEAN DEFAULT FALSE"))
         db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS reviewed_by INTEGER"))
         db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS final_score FLOAT"))
+        db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS points_earned FLOAT DEFAULT 0.0"))
+        db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS ai_feedback VARCHAR"))
         db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_score FLOAT"))
         db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_feedback TEXT"))
         db.commit()
