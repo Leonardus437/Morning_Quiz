@@ -554,10 +554,22 @@ class ApiClient {
   }
 
   async submitQuiz(submission) {
-    return this.request('/quizzes/submit', {
-      method: 'POST',
-      body: submission
+    console.log('📤 API: Submitting quiz with data:', {
+      quiz_id: submission.quiz_id,
+      answers_count: submission.answers?.length || 0
     });
+    
+    try {
+      const result = await this.request('/quizzes/submit', {
+        method: 'POST',
+        body: submission
+      });
+      console.log('✅ API: Quiz submission successful:', result);
+      return result;
+    } catch (error) {
+      console.error('❌ API: Quiz submission failed:', error);
+      throw error;
+    }
   }
 
   async activateQuiz(quizId) {

@@ -488,16 +488,24 @@ async def submit_quiz_options():
 
 @app.post("/quizzes/submit")
 def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    print(f"📥 SUBMIT REQUEST: quiz_id={submission.quiz_id}, user={current_user.username}, answers_count={len(submission.answers)}")
+    
     quiz = db.query(Quiz).filter(Quiz.id == submission.quiz_id).first()
     if not quiz:
+        print(f"❌ Quiz {submission.quiz_id} not found")
         raise HTTPException(status_code=404, detail="Quiz not found")
+    
+    print(f"✅ Quiz found: {quiz.title}")
     
     existing = db.query(QuizAttempt).filter(
         QuizAttempt.quiz_id == submission.quiz_id,
         QuizAttempt.user_id == current_user.id
     ).first()
     if existing:
+        print(f"❌ Quiz already submitted by user {current_user.username}")
         raise HTTPException(status_code=400, detail="Quiz already submitted")
+    
+    print(f"✅ No existing attempt found, proceeding with submission")
     
     score = 0.0
     needs_review = False
@@ -510,6 +518,8 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
     )
     db.add(attempt)
     db.flush()
+    
+    print(f"✅ Attempt created with ID: {attempt.id}")
     
     for answer in submission.answers:
         question = db.query(Question).filter(Question.id == answer.question_id).first()
@@ -543,11 +553,21 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
     
     attempt.score = score
     attempt.needs_review = needs_review
-    db.commit()
+    
+    print(f"✅ Grading complete: score={score}/{len(submission.answers)}, needs_review={needs_review}")
+    
+    try:
+        db.commit()
+        print(f"✅ Submission committed to database")
+    except Exception as e:
+        print(f"❌ Database commit failed: {e}")
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Failed to save submission: {str(e)}")
     
     # Notify teacher about submission (no auto-submit reason here - manual submission)
     teacher = db.query(User).filter(User.id == quiz.created_by).first()
     if teacher:
+        print(f"📧 Notifying teacher {teacher.full_name} (ID: {teacher.id})")
         notification = Notification(
             user_id=teacher.id,
             title=f"📝 New Quiz Submission: {quiz.title}",
@@ -555,8 +575,15 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
             type="quiz_submission"
         )
         db.add(notification)
-        db.commit()
+        try:
+            db.commit()
+            print(f"✅ Teacher notification sent")
+        except Exception as e:
+            print(f"❌ Failed to send teacher notification: {e}")
+    else:
+        print(f"⚠️ Teacher not found for quiz {quiz.id}")
     
+    print(f"✅ SUBMISSION COMPLETE: attempt_id={attempt.id}, score={score}")
     return {"score": score, "total": len(submission.answers), "needs_review": needs_review}
 
 @app.get("/quizzes/{quiz_id}/status")
