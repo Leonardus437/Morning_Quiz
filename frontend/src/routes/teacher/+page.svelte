@@ -1488,12 +1488,7 @@
           >
              My Courses
           </button>
-          <button
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap {activeTab === 'students' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-            on:click={() => activeTab = 'students'}
-          >
-             Students
-          </button>
+
         </div>
 
         <!-- Notifications Tab -->
