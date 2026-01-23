@@ -127,8 +127,6 @@ class Quiz(Base):
     created_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    results_released = Column(Boolean, default=False)
-
 class QuizQuestion(Base):
     __tablename__ = "quiz_questions"
     id = Column(Integer, primary_key=True, index=True)
@@ -346,6 +344,11 @@ def login(user_data: UserLogin, db: Session = Depends(get_db)):
         "token_type": "bearer",
         "user": user_dict
     }
+
+@app.options("/quizzes")
+async def quizzes_options():
+    """Handle CORS preflight for quizzes"""
+    return {"message": "OK"}
 
 @app.get("/quizzes")
 def get_quizzes(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
