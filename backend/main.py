@@ -734,6 +734,43 @@ def create_lesson(lesson: Dict, current_user: User = Depends(get_current_user), 
     db.refresh(new_lesson)
     return {"id": new_lesson.id, "title": new_lesson.title, "code": new_lesson.code, "department": new_lesson.department, "level": new_lesson.level}
 
+@app.put("/lessons/{lesson_id}")
+def update_lesson(lesson_id: int, lesson: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admins can edit lessons")
+    
+    existing_lesson = db.query(Lesson).filter(Lesson.id == lesson_id).first()
+    if not existing_lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    existing_lesson.title = lesson.get('title', existing_lesson.title)
+    existing_lesson.code = lesson.get('code', existing_lesson.code)
+    existing_lesson.description = lesson.get('description', existing_lesson.description)
+    existing_lesson.department = lesson.get('department', existing_lesson.department)
+    existing_lesson.level = lesson.get('level', existing_lesson.level)
+    existing_lesson.classification = lesson.get('classification', existing_lesson.classification)
+    
+    db.commit()
+    db.refresh(existing_lesson)
+    return {"id": existing_lesson.id, "title": existing_lesson.title, "code": existing_lesson.code, "department": existing_lesson.department, "level": existing_lesson.level}
+
+@app.delete("/lessons/{lesson_id}")
+def delete_lesson(lesson_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admins can delete lessons")
+    
+    lesson = db.query(Lesson).filter(Lesson.id == lesson_id).first()
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    # Delete related records
+    db.query(TeacherLesson).filter(TeacherLesson.lesson_id == lesson_id).delete(synchronize_session=False)
+    db.query(Question).filter(Question.lesson_id == lesson_id).update({Question.lesson_id: None}, synchronize_session=False)
+    
+    db.delete(lesson)
+    db.commit()
+    return {"message": "Lesson deleted successfully"}
+
 @app.get("/questions")
 def get_questions(department: Optional[str] = None, level: Optional[str] = None, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     if current_user.role != "teacher":
