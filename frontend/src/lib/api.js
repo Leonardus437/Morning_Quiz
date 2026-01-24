@@ -417,6 +417,17 @@ class ApiClient {
       
       this.setToken(result.access_token);
       
+      // Store user with token in localStorage
+      if (browser) {
+        const userWithToken = {
+          ...result.user,
+          token: result.access_token,
+          access_token: result.access_token
+        };
+        localStorage.setItem('user', JSON.stringify(userWithToken));
+        console.log('🔐 API: User with token stored in localStorage');
+      }
+      
       return result;
     } catch (error) {
       console.error('❌ API: Login failed:', error);

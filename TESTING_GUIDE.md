@@ -1,206 +1,182 @@
-# 🧪 LIVE TESTING GUIDE - Anti-Cheating Features
+# Testing Guide - Class Teacher & Chat System
 
-## ✅ CODE VERIFICATION COMPLETE
+## Prerequisites
+1. Backend running: `cd backend && uvicorn main:app --reload`
+2. Frontend running: `cd frontend && npm run dev`
+3. Login as admin: `admin` / `admin123`
 
-I have verified that ALL code is present in the running container:
-- ✅ ESC key detection (line 221)
-- ✅ Auto-submit after 3 violations (line 296)
-- ✅ Teacher notification (line 283)
-- ✅ Textarea for open-ended questions (line 585)
-- ✅ api.reportCheating function (line 1424 in api.js)
+## Test Scenarios
 
-## 🔍 STEP-BY-STEP TESTING INSTRUCTIONS
+### 1. Assign Class Teacher
+**Steps:**
+1. Login as admin
+2. Go to "Class Teachers" tab
+3. Select a teacher from dropdown
+4. Select department (e.g., "Software Development")
+5. Select level (e.g., "Level 5")
+6. Click "Assign Class Teacher"
 
-### TEST 1: ESC Key Detection
+**Expected:**
+- Success message appears
+- Assignment shows in table below
+- Teacher is now class teacher for that dept+level
 
-1. **Open browser** → Go to `http://localhost:3000`
-2. **Login as student** → Use `student001` / `pass123`
-3. **Start any quiz**
-4. **Open browser console** (F12) → Go to Console tab
-5. **Press ESC key once**
-   - ❓ **What should happen:**
-     - Warning modal should appear
-     - Modal should say "⚠️ WARNING #1: You pressed ESC key"
-     - Console should show: "ESC KEY DETECTED"
-   
-6. **Click "I Understand"** → Modal closes
-7. **Press ESC key again (2nd time)**
-   - ❓ **What should happen:**
-     - Warning modal appears again
-     - Modal should say "⚠️ FINAL WARNING #2"
-   
-8. **Click "I Understand"** → Modal closes
-9. **Press ESC key third time (3rd time)**
-   - ❓ **What should happen:**
-     - Modal shows "❌ QUIZ TERMINATED"
-     - Modal has RED border (not yellow)
-     - No "I Understand" button visible
-     - After 3 seconds → Auto-redirects to results page
-     - Results page shows RED termination message
+### 2. Class Teacher Creates Student-Teacher Room
+**Steps:**
+1. Logout, login as the class teacher you just assigned
+2. Click chat button (bottom right)
+3. Click "Create New Chat"
+4. Select room type: "Student-Teacher (Academic Support)"
+5. Select THEIR assigned department and level
+6. Enter room name
+7. Click "Create Room"
 
----
+**Expected:**
+- Room created successfully
+- All students from that dept/level added
+- ONLY that class teacher added (not other teachers)
+- Notifications sent to all participants
 
-### TEST 2: Teacher Notification
+### 3. Class Teacher Tries to Create Room for Other Class
+**Steps:**
+1. As class teacher, try to create student-teacher room
+2. Select DIFFERENT department or level (not their assigned one)
+3. Try to create
 
-1. **After completing TEST 1** (triggering 3 violations)
-2. **Open new browser tab** → Go to `http://localhost:3000/teacher`
-3. **Login as teacher** → Use `teacher001` / `teacher123`
-4. **Click notifications icon** (bell icon in top right)
-5. **Check for notification**
-   - ❓ **What should see:**
-     - Notification with title: "⚠️ Cheating Alert: [Quiz Name]"
-     - Message includes: student name, violation count, reason
+**Expected:**
+- Error: "Can only create rooms for your assigned class"
+- Room NOT created
 
----
+### 4. Module Teacher Creates Module Room
+**Steps:**
+1. Login as teacher (NOT class teacher)
+2. Admin must first assign them to a module:
+   - Admin → Assignments tab
+   - Select teacher
+   - Assign a lesson/module
+3. Teacher opens chat
+4. Can ONLY select "Module/Lesson Group" room type
+5. Select their assigned module
+6. Create room
 
-### TEST 3: Open-Ended Questions
+**Expected:**
+- Room created
+- Students from module's dept/level added
+- ONLY teachers assigned to that module added
+- Notifications sent
 
-1. **Login as teacher** → `teacher001` / `teacher123`
-2. **Go to Questions** → Click "Add Question"
-3. **Create question:**
-   - Question Text: "Explain the concept of inheritance in OOP"
-   - Question Type: **Select "Short Answer" or "Essay"**
-   - Department: Software Development
-   - Level: Level 5
-   - Points: 10
-   - Click "Add Question"
+### 5. Module Teacher Tries to Create Student-Teacher Room
+**Steps:**
+1. As module teacher (not class teacher)
+2. Try to select "Student-Teacher" room type
+3. Try to create
 
-4. **Create quiz with this question**
-5. **Broadcast quiz**
-6. **Login as student** → Start the quiz
-7. **Check the question display:**
-   - ❓ **What should see:**
-     - Large textarea (not small input box)
-     - Lined paper effect (horizontal lines)
-     - Instruction: "📝 Write your answer below:"
-     - Placeholder: "✍️ Write your answer here..."
-     - Tip below: "💡 Tip: Write clearly and completely..."
+**Expected:**
+- Error: "You can only create module-based rooms"
+- Room NOT created
 
----
+### 6. Admin Creates Any Room
+**Steps:**
+1. Login as admin
+2. Open chat
+3. Can create ANY room type
+4. No restrictions
 
-## 🐛 TROUBLESHOOTING
+**Expected:**
+- All room types available
+- Can create for any dept/level
+- No permission errors
 
-### If ESC key doesn't work:
+### 7. View Notifications
+**Steps:**
+1. As student, check notifications
+2. Should see "Added to Chat Room" notification
+3. Click chat button
+4. Room should appear in sidebar
 
-**Check 1: Browser Console**
-- Press F12 → Console tab
-- Press ESC key
-- Look for errors in red
+**Expected:**
+- Notification received
+- Room visible
+- Can send messages
 
-**Check 2: Verify code is loaded**
-- In Console, type: `document.addEventListener`
-- Press ESC
-- If nothing happens, the event listener isn't attached
+## Quick Test Commands
 
-**Check 3: Check if quiz page loaded correctly**
-- In Console, type: `window.location.href`
-- Should show: `http://localhost:3000/quiz/[number]`
+```bash
+# Start backend
+cd backend
+uvicorn main:app --reload
 
-### If modal doesn't appear:
+# Start frontend (new terminal)
+cd frontend
+npm run dev
 
-**Check 1: Verify showWarningModal variable**
-- In Console, type: `document.querySelector('.fixed.inset-0')`
-- Should return the modal element
-
-**Check 2: Check for JavaScript errors**
-- Look in Console for any red error messages
-- Common issue: `api.reportCheating is not a function`
-
-### If auto-submit doesn't work:
-
-**Check 1: Verify setTimeout is called**
-- In Console, after 3rd violation, you should see:
-  - "Failed to report cheating" OR
-  - Network request to `/report-cheating`
-
-**Check 2: Check submitQuiz function**
-- In Console, type: `submitQuiz`
-- Should show: `async function submitQuiz()`
-
----
-
-## 📊 EXPECTED CONSOLE OUTPUT
-
-When you press ESC 3 times, you should see:
-
-```
-[API] POST request to /report-cheating
-🔐 API: Request URL: http://localhost:8000/report-cheating
-✅ API: Cheating reported to teacher
+# Access
+# Admin: http://localhost:5173/admin
+# Teacher: http://localhost:5173/teacher
+# Student: http://localhost:5173
 ```
 
----
+## Test Accounts
 
-## 🎯 QUICK VERIFICATION CHECKLIST
+**Admin:**
+- Username: `admin`
+- Password: `admin123`
 
-Before testing with students, verify:
+**Teacher:**
+- Username: `teacher001`
+- Password: `teacher123`
 
-- [ ] ESC key shows warning modal (1st press)
-- [ ] ESC key shows final warning (2nd press)
-- [ ] ESC key terminates quiz (3rd press)
-- [ ] Modal shows for 3 seconds before redirect
-- [ ] Results page shows RED termination message
-- [ ] Teacher receives notification
-- [ ] Open-ended questions show large textarea
-- [ ] Textarea has lined paper effect
-- [ ] Instructions and tips are visible
+**Student:**
+- Username: `student001`
+- Password: `pass123`
 
----
+## Verification Checklist
 
-## 🔧 IF NOTHING WORKS
+- [ ] Class teacher can be assigned
+- [ ] Class teacher can create rooms for their class
+- [ ] Class teacher CANNOT create rooms for other classes
+- [ ] Module teacher can ONLY create module rooms
+- [ ] Module teacher CANNOT create student-teacher rooms
+- [ ] Student-teacher rooms add ONLY class teacher
+- [ ] Module rooms add ONLY assigned teachers
+- [ ] Notifications sent to all participants
+- [ ] Chat modal shows module dropdown
+- [ ] Admin can create any room type
+- [ ] Students can see and join rooms
+- [ ] Messages send/receive correctly
 
-If none of the features work, there might be a caching issue:
+## Common Issues
 
-1. **Clear browser cache:**
-   - Press Ctrl+Shift+Delete
-   - Select "Cached images and files"
-   - Click "Clear data"
+**"Token required" error:**
+- Logout and login again
+- Check browser console for token
 
-2. **Hard refresh:**
-   - Press Ctrl+F5 (Windows)
-   - Or Ctrl+Shift+R
+**"Room not created":**
+- Check backend console for error details
+- Verify teacher has proper assignments
 
-3. **Rebuild frontend:**
-   ```cmd
-   cd d:\Morning_Quiz-master
-   docker-compose down
-   docker-compose build --no-cache frontend
-   docker-compose up -d
-   ```
+**"No participants added":**
+- Check if students exist for that dept/level
+- Check if class teacher is assigned
+- Check if teachers are assigned to module
 
-4. **Check if code is actually in container:**
-   ```cmd
-   docker exec tvet_quiz-frontend-1 grep -n "e.keyCode === 27" /app/src/routes/quiz/[id]/+page.svelte
-   ```
-   Should show line number with ESC detection code
+**Chat button not showing:**
+- Check if user is logged in
+- Check localStorage for user object
+- Refresh page
 
----
+## Database Check
 
-## 📞 WHAT TO REPORT BACK
+```python
+# Check class teacher assignments
+SELECT * FROM class_teachers;
 
-Please test and tell me:
+# Check chat rooms
+SELECT * FROM chat_rooms;
 
-1. **ESC Key Test:**
-   - Does modal appear on 1st press? YES/NO
-   - Does modal appear on 2nd press? YES/NO
-   - Does modal appear on 3rd press? YES/NO
-   - Does quiz auto-submit after 3 seconds? YES/NO
-   - Any error messages in console? (copy/paste)
+# Check participants
+SELECT * FROM chat_participants;
 
-2. **Teacher Notification:**
-   - Does notification appear? YES/NO
-   - What does notification say? (copy/paste)
-
-3. **Open-Ended Questions:**
-   - Does textarea appear? YES/NO
-   - Does it have lined paper effect? YES/NO
-   - Can you type in it? YES/NO
-
-4. **Browser Console:**
-   - Any red error messages? (screenshot or copy/paste)
-
----
-
-**Generated:** 2024
-**Container Status:** Frontend restarted and running
-**Code Verified:** All changes present in running container
+# Check notifications
+SELECT * FROM notifications ORDER BY created_at DESC LIMIT 10;
+```

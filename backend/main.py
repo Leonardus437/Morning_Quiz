@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, status, Request, File, Uplo
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy import create_engine, Column, Integer, String, Text, Boolean, DateTime, JSON, ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, relationship
@@ -24,10 +25,10 @@ from performance_reports import get_student_performance
 try:
     from ai_grader import grade_open_ended_question
     AI_GRADER_AVAILABLE = True
-    print("✅ AI Grader loaded successfully")
+    print("[OK] AI Grader loaded successfully")
 except Exception as e:
     AI_GRADER_AVAILABLE = False
-    print(f"⚠️ AI Grader not available: {e}")
+    print(f"[WARNING] AI Grader not available: {e}")
     
     # Fallback simple grader
     def grade_open_ended_question(student_answer: str, correct_answer: str, max_points: int = 1, **kwargs):
@@ -66,6 +67,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # 24 hours
 security = HTTPBearer()
 
 app = FastAPI(title="TVET/TSS Quiz API - Offline First")
+
+# Mount static files for uploads
+import os
+os.makedirs("uploads/chat", exist_ok=True)
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # CRITICAL: Add CORS middleware BEFORE any routes
 app.add_middleware(
@@ -196,6 +202,14 @@ class TeacherLesson(Base):
     lesson_id = Column(Integer, ForeignKey("lessons.id"))
     assigned_at = Column(DateTime, default=datetime.utcnow)
 
+class ClassTeacher(Base):
+    __tablename__ = "class_teachers"
+    id = Column(Integer, primary_key=True, index=True)
+    teacher_id = Column(Integer, ForeignKey("users.id"))
+    department = Column(String(100))
+    level = Column(String(50))
+    assigned_at = Column(DateTime, default=datetime.utcnow)
+
 class ChatRoom(Base):
     __tablename__ = "chat_rooms"
     id = Column(Integer, primary_key=True, index=True)
@@ -203,6 +217,7 @@ class ChatRoom(Base):
     room_type = Column(String(50))  # student-student, student-teacher, teacher-teacher, teacher-dos
     department = Column(String(100))
     level = Column(String(50))
+    module_id = Column(Integer, ForeignKey("lessons.id"))
     is_active = Column(Boolean, default=True)
     created_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -214,8 +229,19 @@ class ChatMessage(Base):
     sender_id = Column(Integer, ForeignKey("users.id"))
     message = Column(Text)
     message_type = Column(String(20), default="text")  # text, link, file
+    file_url = Column(String)
+    file_name = Column(String)
+    reply_to_id = Column(Integer, ForeignKey("chat_messages.id"))
     is_deleted = Column(Boolean, default=False)
-    is_flagged = Column(Boolean, default=False)  # DOS moderation
+    is_flagged = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class MessageReaction(Base):
+    __tablename__ = "message_reactions"
+    id = Column(Integer, primary_key=True, index=True)
+    message_id = Column(Integer, ForeignKey("chat_messages.id"))
+    user_id = Column(Integer, ForeignKey("users.id"))
+    emoji = Column(String(10))
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class ChatParticipant(Base):
@@ -1445,7 +1471,14 @@ def clear_all_students(current_user: User = Depends(get_current_user), db: Sessi
         # Get all student IDs
         student_ids = [s.id for s in db.query(User).filter(User.role == "student").all()]
         
-        # Delete related records first
+        if not student_ids:
+            return {"message": "No students to delete", "count": 0}
+        
+        # Delete chat-related records first (NEW)
+        db.query(ChatParticipant).filter(ChatParticipant.user_id.in_(student_ids)).delete(synchronize_session=False)
+        db.query(ChatMessage).filter(ChatMessage.sender_id.in_(student_ids)).delete(synchronize_session=False)
+        
+        # Delete other related records
         db.query(Notification).filter(Notification.user_id.in_(student_ids)).delete(synchronize_session=False)
         db.query(StudentAnswer).filter(StudentAnswer.attempt_id.in_(
             db.query(QuizAttempt.id).filter(QuizAttempt.user_id.in_(student_ids))
@@ -2068,6 +2101,68 @@ def release_results(quiz_id: int, current_user: User = Depends(get_current_user)
     
     return {"message": "Results released successfully", "students_notified": len(attempts)}
 
+@app.post("/admin/assign-class-teacher")
+def assign_class_teacher(data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admins can assign class teachers")
+    teacher_id = data.get("teacher_id")
+    department = data.get("department")
+    level = data.get("level")
+    existing = db.query(ClassTeacher).filter(ClassTeacher.department == department, ClassTeacher.level == level).first()
+    if existing:
+        existing.teacher_id = teacher_id
+    else:
+        class_teacher = ClassTeacher(teacher_id=teacher_id, department=department, level=level)
+        db.add(class_teacher)
+    
+    # Send notification to teacher
+    notification = Notification(
+        user_id=teacher_id,
+        title="🎓 Class Teacher Assignment",
+        message=f"You have been assigned as class teacher for {department} - {level}. You can now manage this class.",
+        type="class_assignment"
+    )
+    db.add(notification)
+    db.commit()
+    return {"message": "Class teacher assigned successfully"}
+
+@app.get("/admin/class-teachers")
+def get_class_teachers(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admins can view class teachers")
+    assignments = db.query(ClassTeacher).all()
+    result = []
+    for assignment in assignments:
+        teacher = db.query(User).filter(User.id == assignment.teacher_id).first()
+        if teacher:
+            result.append({"id": assignment.id, "teacher_id": teacher.id, "teacher_name": teacher.full_name, "department": assignment.department, "level": assignment.level, "assigned_at": assignment.assigned_at.isoformat()})
+    return result
+
+@app.delete("/admin/class-teacher/{assignment_id}")
+def remove_class_teacher(assignment_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admins can remove class teachers")
+    assignment = db.query(ClassTeacher).filter(ClassTeacher.id == assignment_id).first()
+    if not assignment:
+        raise HTTPException(status_code=404, detail="Assignment not found")
+    db.delete(assignment)
+    db.commit()
+    return {"message": "Class teacher removed successfully"}
+
+@app.get("/teacher/my-assigned-class")
+def get_my_assigned_class(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "teacher":
+        raise HTTPException(status_code=403, detail="Only teachers can access this")
+    assignment = db.query(ClassTeacher).filter(ClassTeacher.teacher_id == current_user.id).first()
+    if not assignment:
+        return {"assigned": False, "message": "You are not assigned as a class teacher"}
+    return {
+        "assigned": True,
+        "department": assignment.department,
+        "level": assignment.level,
+        "assigned_at": assignment.assigned_at.isoformat()
+    }
+
 @app.on_event("startup")
 def startup_event():
     Base.metadata.create_all(bind=engine)
@@ -2084,6 +2179,10 @@ def startup_event():
         db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS ai_feedback VARCHAR"))
         db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_score FLOAT"))
         db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_feedback TEXT"))
+        db.execute(text("ALTER TABLE chat_rooms ADD COLUMN IF NOT EXISTS module_id INTEGER"))
+        db.execute(text("ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS file_url VARCHAR"))
+        db.execute(text("ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS file_name VARCHAR"))
+        db.execute(text("ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS reply_to_id INTEGER"))
         db.commit()
         print("✅ Database migration complete")
     except Exception as e:
@@ -2157,6 +2256,7 @@ def get_chat_rooms(current_user: User = Depends(get_current_user), db: Session =
                 "room_type": room.room_type,
                 "department": room.department,
                 "level": room.level,
+                "created_by": room.created_by,
                 "unread_count": 0
             })
     elif current_user.role == "teacher":
@@ -2172,6 +2272,7 @@ def get_chat_rooms(current_user: User = Depends(get_current_user), db: Session =
                 "room_type": room.room_type,
                 "department": room.department,
                 "level": room.level,
+                "created_by": room.created_by,
                 "unread_count": 0
             })
     else:  # student
@@ -2187,6 +2288,7 @@ def get_chat_rooms(current_user: User = Depends(get_current_user), db: Session =
                 "room_type": room.room_type,
                 "department": room.department,
                 "level": room.level,
+                "created_by": room.created_by,
                 "unread_count": 0
             })
     
@@ -2199,6 +2301,7 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
     name = data.get("name")
     department = data.get("department")
     level = data.get("level")
+    notify_participants = data.get("notify_participants", True)
     
     # Create room
     room = ChatRoom(
@@ -2215,6 +2318,8 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
     participant = ChatParticipant(room_id=room.id, user_id=current_user.id)
     db.add(participant)
     
+    participants_added = 0
+    
     # Auto-add participants based on room type
     if room_type == "student-student" and department and level:
         students = db.query(User).filter(
@@ -2226,6 +2331,44 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
             if student.id != current_user.id:
                 p = ChatParticipant(room_id=room.id, user_id=student.id)
                 db.add(p)
+                participants_added += 1
+                
+                # Send notification
+                if notify_participants:
+                    notif = Notification(
+                        user_id=student.id,
+                        title=f"💬 New Chat Room: {name}",
+                        message=f"You've been added to '{name}' chat room. Start chatting now!",
+                        type="chat_room"
+                    )
+                    db.add(notif)
+                    
+        # Add class teacher if exists
+        class_teacher = db.query(ClassTeacher).filter(
+            ClassTeacher.department == department,
+            ClassTeacher.level == level
+        ).first()
+        if class_teacher:
+            # Check if not already added
+            existing = db.query(ChatParticipant).filter(
+                ChatParticipant.room_id == room.id,
+                ChatParticipant.user_id == class_teacher.teacher_id
+            ).first()
+            if not existing:
+                p = ChatParticipant(room_id=room.id, user_id=class_teacher.teacher_id)
+                db.add(p)
+                participants_added += 1
+                
+                # Send notification
+                if notify_participants:
+                    notif = Notification(
+                        user_id=class_teacher.teacher_id,
+                        title=f"💬 New Chat Room: {name}",
+                        message=f"You've been added to '{name}' as class teacher for {department} - {level}.",
+                        type="chat_room"
+                    )
+                    db.add(notif)
+                    
     elif room_type == "student-teacher" and department and level:
         # Add all students from dept/level
         students = db.query(User).filter(
@@ -2236,34 +2379,114 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
         for student in students:
             p = ChatParticipant(room_id=room.id, user_id=student.id)
             db.add(p)
-        # Add teachers from that department
+            participants_added += 1
+            
+            # Send notification
+            if notify_participants:
+                notif = Notification(
+                    user_id=student.id,
+                    title=f"💬 New Chat Room: {name}",
+                    message=f"You've been added to '{name}' chat room with your teachers. Start chatting now!",
+                    type="chat_room"
+                )
+                db.add(notif)
+                
+        # Add teachers from that department + class teacher
         teachers = db.query(User).filter(User.role == "teacher").all()
         for teacher in teachers:
             if teacher.departments and department in teacher.departments:
                 p = ChatParticipant(room_id=room.id, user_id=teacher.id)
                 db.add(p)
+                participants_added += 1
+                
+                # Send notification
+                if notify_participants:
+                    notif = Notification(
+                        user_id=teacher.id,
+                        title=f"💬 New Chat Room: {name}",
+                        message=f"You've been added to '{name}' chat room for {department} - {level}.",
+                        type="chat_room"
+                    )
+                    db.add(notif)
+                    
+        # Add class teacher if exists
+        class_teacher = db.query(ClassTeacher).filter(
+            ClassTeacher.department == department,
+            ClassTeacher.level == level
+        ).first()
+        if class_teacher:
+            # Check if not already added
+            existing = db.query(ChatParticipant).filter(
+                ChatParticipant.room_id == room.id,
+                ChatParticipant.user_id == class_teacher.teacher_id
+            ).first()
+            if not existing:
+                p = ChatParticipant(room_id=room.id, user_id=class_teacher.teacher_id)
+                db.add(p)
+                participants_added += 1
+                
+                # Send notification
+                if notify_participants:
+                    notif = Notification(
+                        user_id=class_teacher.teacher_id,
+                        title=f"💬 New Chat Room: {name}",
+                        message=f"You've been added to '{name}' as class teacher for {department} - {level}.",
+                        type="chat_room"
+                    )
+                    db.add(notif)
+                    
     elif room_type == "teacher-teacher":
         teachers = db.query(User).filter(User.role == "teacher").all()
         for teacher in teachers:
             if teacher.id != current_user.id:
                 p = ChatParticipant(room_id=room.id, user_id=teacher.id)
                 db.add(p)
+                participants_added += 1
+                
+                # Send notification
+                if notify_participants:
+                    notif = Notification(
+                        user_id=teacher.id,
+                        title=f"💬 New Chat Room: {name}",
+                        message=f"You've been added to '{name}' teacher lounge.",
+                        type="chat_room"
+                    )
+                    db.add(notif)
+                    
     elif room_type == "teacher-dos":
         # Add all teachers
         teachers = db.query(User).filter(User.role == "teacher").all()
         for teacher in teachers:
             p = ChatParticipant(room_id=room.id, user_id=teacher.id)
             db.add(p)
+            participants_added += 1
+            
+            # Send notification
+            if notify_participants:
+                notif = Notification(
+                    user_id=teacher.id,
+                    title=f"💬 New Chat Room: {name}",
+                    message=f"You've been added to '{name}' with DOS.",
+                    type="chat_room"
+                )
+                db.add(notif)
+                
         # Add DOS
         admins = db.query(User).filter(User.role == "admin").all()
         for admin in admins:
             p = ChatParticipant(room_id=room.id, user_id=admin.id)
             db.add(p)
+            participants_added += 1
     
     db.commit()
     db.refresh(room)
     
-    return {"id": room.id, "name": room.name, "room_type": room.room_type}
+    return {
+        "id": room.id,
+        "name": room.name,
+        "room_type": room.room_type,
+        "participants_added": participants_added
+    }
 
 @app.get("/chat/rooms/{room_id}/messages")
 def get_chat_messages(room_id: int, limit: int = 50, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -2288,6 +2511,29 @@ def get_chat_messages(room_id: int, limit: int = 50, current_user: User = Depend
     result = []
     for msg in reversed(messages):
         sender = db.query(User).filter(User.id == msg.sender_id).first()
+        
+        # Get reactions
+        reactions = db.query(MessageReaction).filter(MessageReaction.message_id == msg.id).all()
+        reaction_counts = {}
+        for reaction in reactions:
+            if reaction.emoji not in reaction_counts:
+                reaction_counts[reaction.emoji] = {"count": 0, "users": [], "user_reacted": False}
+            reaction_counts[reaction.emoji]["count"] += 1
+            if reaction.user_id == current_user.id:
+                reaction_counts[reaction.emoji]["user_reacted"] = True
+        
+        # Get reply info
+        reply_to = None
+        if msg.reply_to_id:
+            reply_msg = db.query(ChatMessage).filter(ChatMessage.id == msg.reply_to_id).first()
+            if reply_msg:
+                reply_sender = db.query(User).filter(User.id == reply_msg.sender_id).first()
+                reply_to = {
+                    "id": reply_msg.id,
+                    "sender_name": reply_sender.full_name if reply_sender else "Unknown",
+                    "message": reply_msg.message[:50] + "..." if len(reply_msg.message) > 50 else reply_msg.message
+                }
+        
         result.append({
             "id": msg.id,
             "sender_id": msg.sender_id,
@@ -2295,6 +2541,10 @@ def get_chat_messages(room_id: int, limit: int = 50, current_user: User = Depend
             "sender_role": sender.role if sender else "unknown",
             "message": msg.message,
             "message_type": msg.message_type,
+            "file_url": msg.file_url,
+            "file_name": msg.file_name,
+            "reply_to": reply_to,
+            "reactions": reaction_counts,
             "is_flagged": msg.is_flagged,
             "created_at": msg.created_at.isoformat()
         })
@@ -2327,7 +2577,10 @@ def send_chat_message(room_id: int, data: Dict, current_user: User = Depends(get
         room_id=room_id,
         sender_id=current_user.id,
         message=message_text,
-        message_type=message_type
+        message_type=message_type,
+        reply_to_id=data.get("reply_to_id"),
+        file_url=data.get("file_url"),
+        file_name=data.get("file_name")
     )
     db.add(message)
     db.commit()
@@ -2340,8 +2593,85 @@ def send_chat_message(room_id: int, data: Dict, current_user: User = Depends(get
         "sender_role": current_user.role,
         "message": message.message,
         "message_type": message.message_type,
+        "file_url": message.file_url,
+        "file_name": message.file_name,
+        "reply_to_id": message.reply_to_id,
         "created_at": message.created_at.isoformat()
     }
+
+@app.post("/chat/upload-file")
+async def upload_chat_file(file: UploadFile = File(...), current_user: User = Depends(get_current_user)):
+    """Upload a file for chat"""
+    import os
+    import uuid
+    
+    # Create uploads directory if not exists
+    upload_dir = "uploads/chat"
+    os.makedirs(upload_dir, exist_ok=True)
+    
+    # Generate unique filename
+    file_ext = os.path.splitext(file.filename)[1]
+    unique_filename = f"{uuid.uuid4()}{file_ext}"
+    file_path = os.path.join(upload_dir, unique_filename)
+    
+    # Save file
+    content = await file.read()
+    with open(file_path, "wb") as f:
+        f.write(content)
+    
+    return {
+        "file_url": f"/uploads/chat/{unique_filename}",
+        "file_name": file.filename
+    }
+
+@app.post("/chat/messages/{message_id}/react")
+def react_to_message(message_id: int, data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Add or remove reaction to a message"""
+    emoji = data.get("emoji")
+    if not emoji:
+        raise HTTPException(status_code=400, detail="Emoji required")
+    
+    # Check if reaction already exists
+    existing = db.query(MessageReaction).filter(
+        MessageReaction.message_id == message_id,
+        MessageReaction.user_id == current_user.id,
+        MessageReaction.emoji == emoji
+    ).first()
+    
+    if existing:
+        # Remove reaction
+        db.delete(existing)
+        db.commit()
+        return {"action": "removed", "emoji": emoji}
+    else:
+        # Add reaction
+        reaction = MessageReaction(
+            message_id=message_id,
+            user_id=current_user.id,
+            emoji=emoji
+        )
+        db.add(reaction)
+        db.commit()
+        return {"action": "added", "emoji": emoji}
+
+@app.get("/chat/messages/{message_id}/reactions")
+def get_message_reactions(message_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get all reactions for a message"""
+    reactions = db.query(MessageReaction).filter(MessageReaction.message_id == message_id).all()
+    
+    # Group by emoji
+    reaction_counts = {}
+    for reaction in reactions:
+        if reaction.emoji not in reaction_counts:
+            reaction_counts[reaction.emoji] = {"count": 0, "users": [], "user_reacted": False}
+        reaction_counts[reaction.emoji]["count"] += 1
+        user = db.query(User).filter(User.id == reaction.user_id).first()
+        if user:
+            reaction_counts[reaction.emoji]["users"].append(user.full_name)
+        if reaction.user_id == current_user.id:
+            reaction_counts[reaction.emoji]["user_reacted"] = True
+    
+    return reaction_counts
 
 @app.delete("/chat/messages/{message_id}")
 def delete_chat_message(message_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -2428,3 +2758,70 @@ def get_flagged_messages(current_user: User = Depends(get_current_user), db: Ses
         })
     
     return result
+@app.get("/chat/unread-count")
+def get_unread_count(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Get unread message count for current user"""
+    # Get user's rooms
+    user_rooms = db.query(ChatParticipant.room_id).filter(
+        ChatParticipant.user_id == current_user.id,
+        ChatParticipant.is_blocked == False
+    ).subquery()
+    
+    # Count messages in user's rooms from last 24 hours that aren't from the user
+    from datetime import timedelta
+    yesterday = now() - timedelta(days=1)
+    
+    unread_count = db.query(ChatMessage).filter(
+        ChatMessage.room_id.in_(user_rooms),
+        ChatMessage.sender_id != current_user.id,
+        ChatMessage.created_at > yesterday,
+        ChatMessage.is_deleted == False
+    ).count()
+    
+    return {"count": unread_count}
+
+@app.put("/chat/rooms/{room_id}")
+def update_chat_room(room_id: int, data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Update a chat room (creator only)"""
+    room = db.query(ChatRoom).filter(ChatRoom.id == room_id).first()
+    if not room:
+        raise HTTPException(status_code=404, detail="Chat room not found")
+    
+    if room.created_by != current_user.id:
+        raise HTTPException(status_code=403, detail="Only the room creator can edit this room")
+    
+    room.name = data.get("name", room.name)
+    db.commit()
+    db.refresh(room)
+    
+    return {
+        "id": room.id,
+        "name": room.name,
+        "room_type": room.room_type,
+        "department": room.department,
+        "level": room.level,
+        "created_by": room.created_by
+    }
+
+@app.delete("/chat/rooms/{room_id}")
+def delete_chat_room(room_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Delete a chat room (creator or admin only)"""
+    room = db.query(ChatRoom).filter(ChatRoom.id == room_id).first()
+    if not room:
+        raise HTTPException(status_code=404, detail="Chat room not found")
+    
+    # Only creator or admin can delete
+    if room.created_by != current_user.id and current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only the room creator or admin can delete this room")
+    
+    # Delete all messages in the room
+    db.query(ChatMessage).filter(ChatMessage.room_id == room_id).delete(synchronize_session=False)
+    
+    # Delete all participants
+    db.query(ChatParticipant).filter(ChatParticipant.room_id == room_id).delete(synchronize_session=False)
+    
+    # Delete the room
+    db.delete(room)
+    db.commit()
+    
+    return {"message": "Chat room deleted successfully"}

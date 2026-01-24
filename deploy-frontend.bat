@@ -1,36 +1,10 @@
 @echo off
-cd /d "d:\Morning_Quiz-master"
-echo ========================================
-echo DEPLOYING FRONTEND TO CLOUDFLARE PAGES
-echo ========================================
+echo Deploying Frontend to tsskwizi.pages.dev...
+cd frontend
+call npm install
+call npm run build
+call npx wrangler pages deploy build --project-name=tsskwizi
+cd ..
 echo.
-echo [1/3] Adding all frontend files...
-"C:\Program Files\Git\bin\git.exe" add frontend/
-"C:\Program Files\Git\bin\git.exe" add .gitignore
-echo [2/3] Committing changes...
-"C:\Program Files\Git\bin\git.exe" commit -m "Deploy anti-cheating system to production"
-if errorlevel 1 (
-    echo No changes to commit, trying to push anyway...
-)
-echo [3/3] Pushing to GitHub...
-"C:\Program Files\Git\bin\git.exe" push origin main
-if errorlevel 1 (
-    echo ERROR: Push failed
-    pause
-    exit /b 1
-)
-echo.
-echo ========================================
-echo SUCCESS! Frontend pushed to GitHub
-echo ========================================
-echo.
-echo Cloudflare Pages will auto-deploy in 2-3 minutes
-echo Monitor: https://dash.cloudflare.com/86089f0bb941af81d975a82b892fe038/pages/view/tsskwizi
-echo.
-echo If auto-deploy doesn't start:
-echo 1. Go to Cloudflare dashboard
-echo 2. Click "Create deployment"
-echo 3. Select branch: main
-echo 4. Click "Save and Deploy"
-echo.
+echo Frontend deployed to https://tsskwizi.pages.dev
 pause

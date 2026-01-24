@@ -1,7 +1,8 @@
 <script>
   import { onMount } from 'svelte';
-  import { api } from '$lib/api.js';
   import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
+  import ClassTeacherManager from '$lib/ClassTeacherManager.svelte';
+  import { api } from '$lib/api.js';
   
   let username = '';
   let password = '';
@@ -70,7 +71,7 @@
     return mapping[fullName] || fullName;
   }
   
-  const levels = ['Level 3', 'Level 4', 'Level 5', 'Level 6'];
+  const levels = ['Level 3', 'Level 4', 'Level 5'];
   const classifications = ['Core', 'Specific', 'General'];
   
   onMount(() => {
@@ -805,6 +806,12 @@
             >
                Students
             </button>
+            <button
+              class="px-6 py-3 rounded-xl font-medium transition-all {activeTab === 'class-teachers' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100'}"
+              on:click={() => activeTab = 'class-teachers'}
+            >
+              🎓 Class Teachers
+            </button>
           </div>
         </div>
 
@@ -1139,6 +1146,11 @@
           </div>
         {/if}
 
+        <!-- Class Teachers Tab -->
+        {#if activeTab === 'class-teachers'}
+          <ClassTeacherManager />
+        {/if}
+
         <!-- Students Tab -->
         {#if activeTab === 'students'}
           <div class="space-y-6">
@@ -1459,6 +1471,8 @@
   {/if}
 </div>
 
+
+
 <style>
   :global(body) {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -1483,3 +1497,6 @@
     animation-delay: 4s;
   }
 </style>
+
+
+

@@ -4,7 +4,7 @@ export default {
   plugins: [sveltekit()],
   server: {
     host: '0.0.0.0',
-    port: 3000,
+    port: 3002,
     hmr: false,
     watch: {
       usePolling: false

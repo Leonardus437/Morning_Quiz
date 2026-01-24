@@ -6,8 +6,6 @@
   import { notificationStore } from '$lib/notificationStore.js';
   import { startNotificationPolling, stopNotificationPolling, requestNotificationPermission } from '$lib/notificationService.js';
   import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
-  import SimpleChatButton from '$lib/SimpleChatButton.svelte';
-  import TestChatButton from '$lib/TestChatButton.svelte';
 
   let username = '';
   let password = '';
@@ -614,5 +612,3 @@
   </div>
 {/if}
 
-<SimpleChatButton />
-<TestChatButton />

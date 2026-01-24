@@ -5,6 +5,7 @@
   import { api } from '$lib/api.js';
   import OfflineStatus from '$lib/OfflineStatus.svelte';
   import NotificationToast from '$lib/NotificationToast.svelte';
+  import RealTimeChatButton from '$lib/RealTimeChatButton.svelte';
   import { notificationStore } from '$lib/notificationStore.js';
   
   let isOffline = false;
@@ -78,6 +79,9 @@
 <main class="min-h-screen bg-white {isOffline ? 'pt-12' : ''}">
   <slot />
 </main>
+
+<!-- Real-Time Chat Button (green, bottom-right) -->
+<RealTimeChatButton />
 
 <style>
   /* Ensure smooth transitions */

@@ -1,12 +1,9 @@
 <script>
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
+  import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
   import { user } from '$lib/stores.js';
   import { api } from '$lib/api.js';
-  import AnimatedBackground from '$lib/components/AnimatedBackground.svelte';
-  import SimpleChatButton from '$lib/SimpleChatButton.svelte';
-  import TestChatButton from '$lib/TestChatButton.svelte';
-
+  
   let username = '';
   let password = '';
   let loading = false;
@@ -344,31 +341,31 @@
   }
 
   function startNotificationPolling() {
-    // Disable notification polling to prevent API spam
-    // if (notificationInterval) clearInterval(notificationInterval);
+    // Enable notification polling for real-time updates
+    if (notificationInterval) clearInterval(notificationInterval);
     
-    // notificationInterval = setInterval(async () => {
-    //   if (isLoggedIn) {
-    //     try {
-    //       const newNotifications = await api.getNotifications();
-    //       const newUnreadCount = newNotifications.filter(n => !n.is_read).length;
-    //       
-    //       // Show widget if new notifications arrived
-    //       if (newUnreadCount > unreadCount && newUnreadCount > 0) {
-    //         latestNotifications = newNotifications.filter(n => !n.is_read).slice(0, 3);
-    //         showNotificationWidget = true;
-    //         setTimeout(() => {
-    //           showNotificationWidget = false;
-    //         }, 5000);
-    //       }
-    //       
-    //       notifications = newNotifications;
-    //       unreadCount = newUnreadCount;
-    //     } catch (err) {
-    //       console.error('Notification polling error:', err);
-    //     }
-    //   }
-    // }, 1000); // Increased frequency to 1 second for better real-time feel
+    notificationInterval = setInterval(async () => {
+      if (isLoggedIn) {
+        try {
+          const newNotifications = await api.getNotifications();
+          const newUnreadCount = newNotifications.filter(n => !n.is_read).length;
+          
+          // Show widget if new notifications arrived
+          if (newUnreadCount > unreadCount && newUnreadCount > 0) {
+            latestNotifications = newNotifications.filter(n => !n.is_read).slice(0, 3);
+            showNotificationWidget = true;
+            setTimeout(() => {
+              showNotificationWidget = false;
+            }, 5000);
+          }
+          
+          notifications = newNotifications;
+          unreadCount = newUnreadCount;
+        } catch (err) {
+          console.error('Notification polling error:', err);
+        }
+      }
+    }, 5000); // Poll every 5 seconds for real-time feel
   }
 
   function dismissWidget() {
@@ -1506,6 +1503,12 @@
             on:click={() => { activeTab = 'courses'; loadMyCourses(); }}
           >
              My Courses
+          </button>
+          <button
+            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 hover:from-purple-200 hover:to-pink-200 border-2 border-purple-300"
+            on:click={() => activeTab = 'my-class'}
+          >
+            🎓 My Assigned Class
           </button>
 
         </div>
@@ -2727,6 +2730,101 @@
           </div>
         {/if}
 
+        <!-- My Assigned Class Tab -->
+        {#if activeTab === 'my-class'}
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+              <span class="text-3xl mr-3">🎓</span>
+              My Assigned Class
+            </h2>
+            
+            {#await (async () => {
+              const token = localStorage.getItem('token');
+              const response = await fetch(`${api.baseURL}/teacher/my-assigned-class`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+              });
+              return await response.json();
+            })()}
+              <div class="text-center py-12">
+                <div class="text-4xl mb-2">⏳</div>
+                <p class="text-gray-600">Loading class assignment...</p>
+              </div>
+            {:then data}
+              {#if data.assigned}
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-8 border-2 border-purple-200">
+                  <div class="text-center mb-6">
+                    <div class="text-6xl mb-4">🎓</div>
+                    <h3 class="text-2xl font-bold text-purple-900 mb-2">You are a Class Teacher!</h3>
+                    <p class="text-purple-700">You have been assigned to manage this class</p>
+                  </div>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                      <div class="text-sm text-gray-600 mb-1">Department</div>
+                      <div class="text-xl font-bold text-purple-900">{data.department}</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                      <div class="text-sm text-gray-600 mb-1">Level</div>
+                      <div class="text-xl font-bold text-purple-900">{data.level}</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                      <div class="text-sm text-gray-600 mb-1">Assigned Since</div>
+                      <div class="text-xl font-bold text-purple-900">{new Date(data.assigned_at).toLocaleDateString()}</div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-white rounded-lg p-6">
+                    <h4 class="font-bold text-gray-900 mb-4">📋 Class Teacher Responsibilities</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="flex items-start space-x-3">
+                        <span class="text-2xl">✅</span>
+                        <div>
+                          <div class="font-semibold text-gray-800">Monitor Student Progress</div>
+                          <div class="text-sm text-gray-600">Track quiz performance and attendance</div>
+                        </div>
+                      </div>
+                      <div class="flex items-start space-x-3">
+                        <span class="text-2xl">📊</span>
+                        <div>
+                          <div class="font-semibold text-gray-800">Generate Reports</div>
+                          <div class="text-sm text-gray-600">Create class performance reports</div>
+                        </div>
+                      </div>
+                      <div class="flex items-start space-x-3">
+                        <span class="text-2xl">💬</span>
+                        <div>
+                          <div class="font-semibold text-gray-800">Communicate with Students</div>
+                          <div class="text-sm text-gray-600">Use chat rooms to stay connected</div>
+                        </div>
+                      </div>
+                      <div class="flex items-start space-x-3">
+                        <span class="text-2xl">🎯</span>
+                        <div>
+                          <div class="font-semibold text-gray-800">Coordinate Activities</div>
+                          <div class="text-sm text-gray-600">Organize class events and quizzes</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {:else}
+                <div class="text-center py-12">
+                  <div class="text-6xl mb-4">ℹ️</div>
+                  <h3 class="text-xl font-bold text-gray-900 mb-2">Not Assigned as Class Teacher</h3>
+                  <p class="text-gray-600 mb-4">You are not currently assigned as a class teacher for any class.</p>
+                  <p class="text-sm text-gray-500">Contact the DOS (Director of Studies) if you believe this is an error.</p>
+                </div>
+              {/if}
+            {:catch error}
+              <div class="text-center py-12">
+                <div class="text-6xl mb-4">❌</div>
+                <h3 class="text-xl font-bold text-red-900 mb-2">Failed to Load</h3>
+                <p class="text-red-600">Could not load class assignment information.</p>
+              </div>
+            {/await}
+          </div>
+        {/if}
+
         <!-- My Courses Tab -->
         {#if activeTab === 'courses'}
           <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
@@ -3258,11 +3356,13 @@
   {/if}
 </div>
 
-<SimpleChatButton />
-<TestChatButton />
+
 
 <style>
   :global(body) {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 </style>
+
+
+
