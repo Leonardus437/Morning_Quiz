@@ -630,6 +630,276 @@
                 </label>
               {/each}
             </div>
+          {:else if currentQuestion.question_type === 'multiple_select'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">☑️ Select all correct answers:</div>
+              {#each (Array.isArray(currentQuestion.options) ? currentQuestion.options : JSON.parse(currentQuestion.options || '[]')) as option}
+                <label class="flex items-center p-5 border-2 hover:bg-blue-50 cursor-pointer transition-all {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 pointer-events-none' : ''} {(answers[currentQuestion.id] || '').split(',').includes(option) ? 'border-blue-600 bg-blue-50 shadow-md' : 'border-gray-200'}">
+                  <input
+                    type="checkbox"
+                    value={option}
+                    checked={(answers[currentQuestion.id] || '').split(',').includes(option)}
+                    on:change={(e) => {
+                      let selected = (answers[currentQuestion.id] || '').split(',').filter(s => s.trim());
+                      if (e.target.checked) {
+                        if (!selected.includes(option)) selected.push(option);
+                      } else {
+                        selected = selected.filter(s => s !== option);
+                      }
+                      handleAnswer(currentQuestion.id, selected.join(','));
+                    }}
+                    disabled={completedQuestions.has(currentQuestionIndex)}
+                    class="w-5 h-5 text-blue-600"
+                  />
+                  <span class="ml-4 text-gray-900 font-medium">{option}</span>
+                </label>
+              {/each}
+            </div>
+          {:else if currentQuestion.question_type === 'dropdown_select'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">📋 Select from dropdown:</div>
+              <select 
+                class="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 text-lg {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
+                value={answers[currentQuestion.id] || ''}
+                on:change={(e) => handleAnswer(currentQuestion.id, e.target.value)}
+                disabled={completedQuestions.has(currentQuestionIndex)}
+              >
+                <option value="">-- Select an option --</option>
+                {#each (Array.isArray(currentQuestion.options) ? currentQuestion.options : JSON.parse(currentQuestion.options || '[]')) as option}
+                  <option value={option}>{option}</option>
+                {/each}
+              </select>
+            </div>
+          {:else if currentQuestion.question_type === 'fill_in_blanks' || currentQuestion.question_type === 'fill_blanks'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">📝 Fill in the blanks:</div>
+              <div class="bg-blue-50 p-6 rounded-lg mb-4 border-2 border-blue-200">
+                <p class="text-gray-800 text-lg leading-relaxed font-medium">{currentQuestion.question_text}</p>
+              </div>
+              {#if currentQuestion.question_config?.blanks}
+                <div class="space-y-3">
+                  {#each currentQuestion.question_config.blanks as blank, index}
+                    <div class="flex items-center space-x-3">
+                      <label class="text-sm font-medium text-gray-700 w-20">Blank {index + 1}:</label>
+                      <input
+                        type="text"
+                        class="flex-1 p-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
+                        placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : `Enter answer for blank ${index + 1}`}
+                        value={(answers[currentQuestion.id] || '').split('|||')[index] || ''}
+                        on:input={(e) => {
+                          let blanks = (answers[currentQuestion.id] || '').split('|||');
+                          while (blanks.length <= index) blanks.push('');
+                          blanks[index] = e.target.value;
+                          handleAnswer(currentQuestion.id, blanks.join('|||'));
+                        }}
+                        disabled={completedQuestions.has(currentQuestionIndex)}
+                      />
+                    </div>
+                  {/each}
+                </div>
+              {:else}
+                <textarea
+                  class="w-full h-32 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
+                  placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Enter your answers separated by commas (e.g., answer1, answer2, answer3)'}
+                  value={answers[currentQuestion.id] || ''}
+                  on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
+                  disabled={completedQuestions.has(currentQuestionIndex)}
+                ></textarea>
+              {/if}
+            </div>
+          {:else if currentQuestion.question_type === 'matching_pairs' || currentQuestion.question_type === 'drag_drop_match'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">🔗 Match items by selecting pairs:</div>
+              {#if currentQuestion.question_config?.pairs}
+                <div class="space-y-4">
+                  {#each currentQuestion.question_config.pairs as pair, index}
+                    <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                      <div class="flex-1">
+                        <div class="font-medium text-gray-900 p-3 bg-white rounded border">{pair.left}</div>
+                      </div>
+                      <div class="text-2xl text-gray-400">→</div>
+                      <div class="flex-1">
+                        <select 
+                          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
+                          value={(answers[currentQuestion.id] || '').split('|||')[index] || ''}
+                          on:change={(e) => {
+                            let matches = (answers[currentQuestion.id] || '').split('|||');
+                            while (matches.length <= index) matches.push('');
+                            matches[index] = e.target.value;
+                            handleAnswer(currentQuestion.id, matches.join('|||'));
+                          }}
+                          disabled={completedQuestions.has(currentQuestionIndex)}
+                        >
+                          <option value="">-- Select match --</option>
+                          {#each (currentQuestion.question_config.right_items || currentQuestion.question_config.pairs.map(p => p.right)) as rightItem}
+                            <option value={rightItem}>{rightItem}</option>
+                          {/each}
+                        </select>
+                      </div>
+                    </div>
+                  {/each}
+                </div>
+              {:else}
+                <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                  <p class="text-sm text-gray-600">💡 Example format:</p>
+                  <p class="text-sm font-mono text-gray-800">Python:Programming Language<br/>HTML:Markup Language<br/>MySQL:Database</p>
+                </div>
+                <textarea
+                  class="w-full h-40 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 font-mono {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
+                  placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Enter matches (one per line):\nItem1:Match1\nItem2:Match2\nItem3:Match3'}
+                  value={answers[currentQuestion.id] || ''}
+                  on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
+                  disabled={completedQuestions.has(currentQuestionIndex)}
+                ></textarea>
+              {/if}
+            </div>
+          {:else if currentQuestion.question_type === 'drag_drop_ordering' || currentQuestion.question_type === 'drag_drop_order'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">📋 Arrange items in correct order (click ↑↓ to reorder):</div>
+              {#if currentQuestion.question_config?.items}
+                {@const currentOrder = answers[currentQuestion.id] ? answers[currentQuestion.id].split(',').map(i => parseInt(i)) : currentQuestion.question_config.items.map((_, i) => i)}
+                <div class="space-y-2">
+                  {#each currentOrder as itemIndex, position}
+                    <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
+                      <div class="flex flex-col space-y-1">
+                        <button
+                          type="button"
+                          class="w-8 h-8 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm font-bold"
+                          on:click={() => {
+                            if (position > 0) {
+                              let newOrder = [...currentOrder];
+                              [newOrder[position], newOrder[position - 1]] = [newOrder[position - 1], newOrder[position]];
+                              handleAnswer(currentQuestion.id, newOrder.join(','));
+                            }
+                          }}
+                          disabled={position === 0 || completedQuestions.has(currentQuestionIndex)}
+                        >
+                          ↑
+                        </button>
+                        <button
+                          type="button"
+                          class="w-8 h-8 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm font-bold"
+                          on:click={() => {
+                            if (position < currentOrder.length - 1) {
+                              let newOrder = [...currentOrder];
+                              [newOrder[position], newOrder[position + 1]] = [newOrder[position + 1], newOrder[position]];
+                              handleAnswer(currentQuestion.id, newOrder.join(','));
+                            }
+                          }}
+                          disabled={position === currentOrder.length - 1 || completedQuestions.has(currentQuestionIndex)}
+                        >
+                          ↓
+                        </button>
+                      </div>
+                      <div class="flex-1">
+                        <div class="font-medium text-gray-900 p-3 bg-white rounded border">
+                          <span class="text-blue-600 font-bold mr-2">{position + 1}.</span>
+                          {currentQuestion.question_config.items[itemIndex]}
+                        </div>
+                      </div>
+                    </div>
+                  {/each}
+                </div>
+              {:else}
+                <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                  <p class="text-sm text-gray-600">💡 Example: First Step, Second Step, Third Step</p>
+                </div>
+                <textarea
+                  class="w-full h-32 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
+                  placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Enter items in correct order, separated by commas'}
+                  value={answers[currentQuestion.id] || ''}
+                  on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
+                  disabled={completedQuestions.has(currentQuestionIndex)}
+                ></textarea>
+              {/if}
+            </div>
+          {:else if currentQuestion.question_type === 'linear_scale'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">📊 Rate on a scale of 1-10:</div>
+              <div class="flex items-center justify-center space-x-4 py-6">
+                <span class="text-sm font-medium text-gray-600">1</span>
+                <div class="flex space-x-2">
+                  {#each Array(10) as _, i}
+                    <button
+                      type="button"
+                      class="w-12 h-12 rounded-full border-2 font-bold transition-all {answers[currentQuestion.id] == (i + 1) ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'} {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 pointer-events-none' : ''}"
+                      on:click={() => handleAnswer(currentQuestion.id, (i + 1).toString())}
+                      disabled={completedQuestions.has(currentQuestionIndex)}
+                    >
+                      {i + 1}
+                    </button>
+                  {/each}
+                </div>
+                <span class="text-sm font-medium text-gray-600">10</span>
+              </div>
+            </div>
+          {:else if currentQuestion.question_type === 'code_writing'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">💻 Write your code:</div>
+              <textarea
+                class="w-full h-64 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 font-mono text-sm {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-gray-900 text-green-400'}"
+                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Write your code here...'}
+                value={answers[currentQuestion.id] || ''}
+                on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
+                disabled={completedQuestions.has(currentQuestionIndex)}
+                style="background-color: #1a1a1a; color: #00ff00; font-family: 'Courier New', monospace;"
+              ></textarea>
+            </div>
+          {:else if currentQuestion.question_type === 'sql_query'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">🗄️ Write your SQL query:</div>
+              <textarea
+                class="w-full h-32 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 font-mono text-sm {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-gray-900 text-cyan-400'}"
+                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'SELECT * FROM table_name;'}
+                value={answers[currentQuestion.id] || ''}
+                on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
+                disabled={completedQuestions.has(currentQuestionIndex)}
+                style="background-color: #1a1a1a; color: #00ffff; font-family: 'Courier New', monospace;"
+              ></textarea>
+            </div>
+          {:else if currentQuestion.question_type === 'multi_grid'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">📊 Select one answer for each row:</div>
+              <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300">
+                  <thead>
+                    <tr class="bg-gray-50">
+                      <th class="border border-gray-300 p-3 text-left font-semibold">Item</th>
+                      {#each (currentQuestion.question_config?.columns || []) as column}
+                        <th class="border border-gray-300 p-3 text-center font-semibold">{column}</th>
+                      {/each}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {#each (currentQuestion.question_config?.rows || []) as row, rowIndex}
+                      <tr class="hover:bg-gray-50">
+                        <td class="border border-gray-300 p-3 font-medium">{row}</td>
+                        {#each (currentQuestion.question_config?.columns || []) as column}
+                          <td class="border border-gray-300 p-3 text-center">
+                            <input
+                              type="radio"
+                              name="grid-row-{rowIndex}"
+                              value={`${row}:${column}`}
+                              checked={(answers[currentQuestion.id] || '').includes(`${row}:${column}`)}
+                              on:change={(e) => {
+                                let gridAnswers = (answers[currentQuestion.id] || '').split('\n').filter(a => a.trim());
+                                gridAnswers = gridAnswers.filter(a => !a.startsWith(`${row}:`));
+                                if (e.target.checked) {
+                                  gridAnswers.push(`${row}:${column}`);
+                                }
+                                handleAnswer(currentQuestion.id, gridAnswers.join('\n'));
+                              }}
+                              disabled={completedQuestions.has(currentQuestionIndex)}
+                              class="w-4 h-4 text-blue-600"
+                            />
+                          </td>
+                        {/each}
+                      </tr>
+                    {/each}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           {:else if currentQuestion.question_type === 'true_false'}
             <div class="space-y-3">
               {#each ['True', 'False'] as option}
@@ -647,32 +917,28 @@
                 </label>
               {/each}
             </div>
-          {:else if currentQuestion.question_type === 'short_answer' || currentQuestion.question_type === 'essay'}
-            <div class="max-w-3xl mx-auto">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📝 Write your answer below:</div>
+          {:else if currentQuestion.question_type === 'short_answer'}
+            <div class="space-y-4">
+              <div class="mb-3 text-sm font-semibold text-gray-700">📝 Write your answer:</div>
               <textarea
-                class="w-full h-48 p-6 border-3 border-gray-400 rounded-xl resize-none shadow-lg font-serif text-base leading-8 focus:border-blue-600 focus:ring-4 focus:ring-blue-300 transition-all {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                style="background: linear-gradient(to bottom, #fefefe 0%, #f9fafb 100%), repeating-linear-gradient(transparent, transparent 31px, #cbd5e1 31px, #cbd5e1 32px); line-height: 32px; padding-top: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), inset 0 2px 4px rgba(0, 0, 0, 0.05);"
-                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : '✍️ Write your answer here... (Type your response in complete sentences)'}
+                class="w-full h-32 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
+                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Write your answer here...'}
                 value={answers[currentQuestion.id] || ''}
                 on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
                 disabled={completedQuestions.has(currentQuestionIndex)}
               ></textarea>
-              <div class="mt-2 text-xs text-gray-500">💡 Tip: Write clearly and completely. Your answer will be reviewed by your teacher.</div>
             </div>
-          {:else if currentQuestion.question_type === 'fill_blanks'}
+          {:else if currentQuestion.question_type === 'essay'}
             <div class="space-y-4">
-              <p class="text-sm font-semibold text-gray-700 mb-4">📝 Fill in the blanks with appropriate answers:</p>
-              <div class="max-w-3xl mx-auto">
-                <textarea
-                  class="w-full h-32 p-6 border-3 border-gray-400 rounded-xl resize-none shadow-lg font-serif text-base leading-8 focus:border-blue-600 focus:ring-4 focus:ring-blue-300 transition-all {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                  style="background: linear-gradient(to bottom, #fefefe 0%, #f9fafb 100%), repeating-linear-gradient(transparent, transparent 31px, #cbd5e1 31px, #cbd5e1 32px); line-height: 32px; padding-top: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), inset 0 2px 4px rgba(0, 0, 0, 0.05);"
-                  placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : '✍️ Enter your answers separated by commas (e.g., answer1, answer2)...'}
-                  value={answers[currentQuestion.id] || ''}
-                  on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                  disabled={completedQuestions.has(currentQuestionIndex)}
-                ></textarea>
-              </div>
+              <div class="mb-3 text-sm font-semibold text-gray-700">📝 Write your essay:</div>
+              <textarea
+                class="w-full h-64 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
+                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Write your essay here... (Type your response in complete sentences)'}
+                value={answers[currentQuestion.id] || ''}
+                on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
+                disabled={completedQuestions.has(currentQuestionIndex)}
+              ></textarea>
+              <div class="text-xs text-gray-500">💡 Tip: Write clearly and completely.</div>
             </div>
           {:else if currentQuestion.question_type === 'code_analysis'}
             <div class="space-y-4">

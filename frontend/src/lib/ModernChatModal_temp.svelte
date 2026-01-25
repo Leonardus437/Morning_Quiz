@@ -426,12 +426,12 @@
   });
 </script>
 
-<!-- Minimal Black & White Chat -->
-<div class="fixed inset-0 {theme === 'light' ? 'bg-white/95' : 'bg-black/95'} flex items-center justify-center z-[50] p-4">
-  <div class="{currentTheme.bg} w-full max-w-5xl h-[90vh] flex flex-col border-2 {currentTheme.border}">
+<!-- Minimal Chat Interface -->
+<div class="fixed inset-0 bg-white/95 flex items-center justify-center z-[50] p-4">
+  <div class="{currentTheme.bg} w-full max-w-5xl h-[90vh] flex flex-col border-2 {currentTheme.border} overflow-hidden">
     
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 border-b-2 {currentTheme.border}">
+    <div class="flex items-center justify-between p-4 border-b-2 {currentTheme.border} {currentTheme.bg}">
       <div class="flex items-center space-x-3">
         <div class="text-2xl">💬</div>
         <div>

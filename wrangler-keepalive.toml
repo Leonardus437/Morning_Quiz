@@ -1,0 +1,7 @@
+name = "backend-keep-alive"
+main = "keep-alive-worker.js"
+compatibility_date = "2024-01-01"
+
+# Cron trigger - runs every 2 minutes
+[triggers]
+crons = ["*/2 * * * *"]

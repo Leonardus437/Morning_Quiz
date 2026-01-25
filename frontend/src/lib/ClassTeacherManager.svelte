@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+  import { api } from './api.js';
 
   let teachers = [];
   let classTeachers = [];
@@ -20,13 +20,7 @@
 
   async function loadTeachers() {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${API_URL}/teachers`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (response.ok) {
-        teachers = await response.json();
-      }
+      teachers = await api.getTeachers();
     } catch (error) {
       console.error('Failed to load teachers:', error);
     }
@@ -34,13 +28,7 @@
 
   async function loadClassTeachers() {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${API_URL}/admin/class-teachers`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (response.ok) {
-        classTeachers = await response.json();
-      }
+      classTeachers = await api.getClassTeachers();
     } catch (error) {
       console.error('Failed to load class teachers:', error);
     }
@@ -56,30 +44,12 @@
     message = '';
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${API_URL}/admin/assign-class-teacher`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          teacher_id: parseInt(selectedTeacher),
-          department: selectedDepartment,
-          level: selectedLevel
-        })
-      });
-
-      if (response.ok) {
-        message = 'Class teacher assigned successfully!';
-        selectedTeacher = '';
-        selectedDepartment = '';
-        selectedLevel = '';
-        await loadClassTeachers();
-      } else {
-        const error = await response.json();
-        message = `Error: ${error.detail || 'Failed to assign'}`;
-      }
+      await api.assignClassTeacher(parseInt(selectedTeacher), selectedDepartment, selectedLevel);
+      message = 'Class teacher assigned successfully!';
+      selectedTeacher = '';
+      selectedDepartment = '';
+      selectedLevel = '';
+      await loadClassTeachers();
     } catch (error) {
       message = `Error: ${error.message}`;
     } finally {
@@ -92,7 +62,7 @@
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_URL}/admin/class-teacher/${assignmentId}`, {
+      const response = await fetch(`${api.baseURL}/admin/class-teacher/${assignmentId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

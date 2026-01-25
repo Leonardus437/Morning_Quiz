@@ -46,6 +46,9 @@
     classification: 'Core'
   };
   
+  let editingLesson = null;
+  let showEditModal = false;
+  
   let newTeacher = {
     username: '',
     password: '',
@@ -213,6 +216,89 @@
     } catch (err) {
       console.error(' Create lesson error:', err);
       error = err.message || 'Failed to create lesson';
+    } finally {
+      loading = false;
+    }
+  }
+  
+  function openEditLesson(lesson) {
+    editingLesson = { ...lesson };
+    showEditModal = true;
+  }
+  
+  async function updateLesson() {
+    if (!editingLesson.title || !editingLesson.department || !editingLesson.level) {
+      error = 'Please fill all required fields';
+      return;
+    }
+    
+    try {
+      loading = true;
+      error = '';
+      
+      const response = await fetch(`${api.API_BASE || 'http://localhost:8000'}/lessons/${editingLesson.id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${api.token || localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: editingLesson.title,
+          code: editingLesson.code,
+          description: editingLesson.description,
+          department: editingLesson.department,
+          level: editingLesson.level,
+          classification: editingLesson.classification
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update lesson');
+      }
+      
+      showEditModal = false;
+      editingLesson = null;
+      await loadData();
+      
+      success = 'Lesson updated successfully!';
+      setTimeout(() => success = '', 3000);
+      
+    } catch (err) {
+      console.error('Update lesson error:', err);
+      error = err.message || 'Failed to update lesson';
+    } finally {
+      loading = false;
+    }
+  }
+  
+  async function deleteLesson(lessonId, lessonTitle) {
+    if (!confirm(`Are you sure you want to delete "${lessonTitle}"? This will also remove all related assignments and questions.`)) {
+      return;
+    }
+    
+    try {
+      loading = true;
+      error = '';
+      
+      const response = await fetch(`${api.API_BASE || 'http://localhost:8000'}/lessons/${lessonId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${api.token || localStorage.getItem('token')}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete lesson');
+      }
+      
+      await loadData();
+      
+      success = 'Lesson deleted successfully!';
+      setTimeout(() => success = '', 3000);
+      
+    } catch (err) {
+      console.error('Delete lesson error:', err);
+      error = err.message || 'Failed to delete lesson';
     } finally {
       loading = false;
     }
@@ -976,11 +1062,25 @@
                   {#each lessons as lesson}
                     <div class="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-all">
                       <div class="flex justify-between items-start">
-                        <div>
+                        <div class="flex-1">
                           <h4 class="font-bold text-gray-900">{lesson.title}</h4>
                           <p class="text-sm text-gray-600">{lesson.code} - {lesson.department} - {lesson.level}</p>
                           <p class="text-sm text-gray-500 mt-1">{lesson.description}</p>
                           <span class="inline-block mt-2 px-3 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">{lesson.classification}</span>
+                        </div>
+                        <div class="flex gap-2 ml-4">
+                          <button
+                            class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all text-sm"
+                            on:click={() => openEditLesson(lesson)}
+                          >
+                            ✏️ Edit
+                          </button>
+                          <button
+                            class="px-3 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all text-sm"
+                            on:click={() => deleteLesson(lesson.id, lesson.title)}
+                          >
+                            🗑️ Delete
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -1387,6 +1487,75 @@
                 Cancel
               </button>
             </div>
+        </div>
+      </div>
+    </div>
+  {/if}
+  
+  <!-- Edit Lesson Modal -->
+  {#if showEditModal && editingLesson}
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold text-gray-900">✏️ Edit Lesson</h3>
+          <button 
+            class="text-gray-500 hover:text-gray-700 text-2xl"
+            on:click={() => { showEditModal = false; editingLesson = null; }}
+          >
+            ×
+          </button>
+        </div>
+        
+        <div class="space-y-4">
+          <input
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            bind:value={editingLesson.title}
+            placeholder="Lesson Title"
+          />
+          <input
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            bind:value={editingLesson.code}
+            placeholder="Lesson Code"
+          />
+          <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500" bind:value={editingLesson.department}>
+            <option value="">Select Department</option>
+            {#each departments as dept}
+              <option value={dept}>{dept}</option>
+            {/each}
+          </select>
+          <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500" bind:value={editingLesson.level}>
+            <option value="">Select Level</option>
+            {#each levels as level}
+              <option value={level}>{level}</option>
+            {/each}
+          </select>
+          <select class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500" bind:value={editingLesson.classification}>
+            {#each classifications as classification}
+              <option value={classification}>{classification}</option>
+            {/each}
+          </select>
+          <textarea
+            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            bind:value={editingLesson.description}
+            placeholder="Lesson Description"
+            rows="3"
+          ></textarea>
+          
+          <div class="flex space-x-4">
+            <button 
+              class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-all"
+              on:click={updateLesson}
+              disabled={loading}
+            >
+              {loading ? '💾 Saving...' : '💾 Save Changes'}
+            </button>
+            <button 
+              class="px-6 py-3 border border-gray-300 rounded-xl hover:bg-gray-50 transition-all"
+              on:click={() => { showEditModal = false; editingLesson = null; }}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>

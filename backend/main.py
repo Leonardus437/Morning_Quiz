@@ -46,6 +46,139 @@ except Exception as e:
         else:
             return 0, "Incorrect"
 
+def parse_advanced_question(text):
+    """Parse question text and detect advanced question types"""
+    import re
+    
+    text = text.strip()
+    if len(text) < 10:
+        return None
+    
+    # Initialize result
+    result = {
+        'text': '',
+        'type': 'multiple_choice',
+        'options': [],
+        'answer': ''
+    }
+    
+    # Detect question type patterns
+    if re.search(r'\b(true|false)\b', text, re.IGNORECASE) and re.search(r'\?', text):
+        result['type'] = 'true_false'
+        result['text'] = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)[0].strip()
+        answer_match = re.search(r'answer\s*:\s*(true|false)', text, re.IGNORECASE)
+        result['answer'] = answer_match.group(1).lower() if answer_match else 'true'
+        result['options'] = ['True', 'False']
+        
+    elif re.search(r'select all|choose all|multiple correct', text, re.IGNORECASE):
+        result['type'] = 'multiple_select'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+        # Extract options
+        options = re.findall(r'[A-Z]\)\s*([^A-Z\)]+)', result['text'])
+        result['options'] = [opt.strip() for opt in options]
+        
+    elif re.search(r'fill.{0,10}blank|complete.{0,10}sentence', text, re.IGNORECASE):
+        result['type'] = 'fill_blanks'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+            
+    elif re.search(r'match|pair|connect', text, re.IGNORECASE):
+        result['type'] = 'drag_drop_match'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+            
+    elif re.search(r'order|arrange|sequence|sort', text, re.IGNORECASE):
+        result['type'] = 'drag_drop_order'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+            
+    elif re.search(r'rate|scale|1.{0,5}10|rating', text, re.IGNORECASE):
+        result['type'] = 'linear_scale'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        result['answer'] = '5'  # Default middle rating
+        
+    elif re.search(r'code|program|function|algorithm|python|java|javascript', text, re.IGNORECASE):
+        result['type'] = 'code_writing'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+            
+    elif re.search(r'sql|query|database|select|insert|update|delete', text, re.IGNORECASE):
+        result['type'] = 'sql_query'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+            
+    elif re.search(r'dropdown|select from', text, re.IGNORECASE):
+        result['type'] = 'dropdown_select'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+        # Extract options
+        options = re.findall(r'[A-Z]\)\s*([^A-Z\)]+)', result['text'])
+        result['options'] = [opt.strip() for opt in options]
+        
+    elif re.search(r'short answer|brief|explain briefly', text, re.IGNORECASE):
+        result['type'] = 'short_answer'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+            
+    elif re.search(r'essay|discuss|elaborate|explain in detail', text, re.IGNORECASE):
+        result['type'] = 'essay'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
+            
+    else:
+        # Default to multiple choice
+        result['type'] = 'multiple_choice'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        
+        # Extract options (A) B) C) D) format
+        options = re.findall(r'[A-Z]\)\s*([^A-Z\)]+)', result['text'])
+        if options:
+            result['options'] = [opt.strip() for opt in options]
+            # Extract answer
+            if len(parts) > 1:
+                answer_text = parts[1].strip()
+                # Look for single letter answer
+                answer_match = re.search(r'\b([A-Z])\b', answer_text)
+                result['answer'] = answer_match.group(1) if answer_match else 'A'
+            else:
+                result['answer'] = 'A'
+        else:
+            # No options found, might be short answer
+            result['type'] = 'short_answer'
+            if len(parts) > 1:
+                result['answer'] = parts[1].strip()
+    
+    # Clean up text - remove options from question text for MCQ
+    if result['type'] in ['multiple_choice', 'dropdown_select', 'multiple_select']:
+        # Remove options from question text
+        clean_text = re.sub(r'\s*[A-Z]\)\s*[^A-Z\)]+', '', result['text'])
+        result['text'] = clean_text.strip()
+    
+    return result if result['text'] else None
+
+
+
 # Rwanda timezone (CAT/EAT - UTC+2)
 RWANDA_TZ = timezone(timedelta(hours=2))
 
@@ -76,13 +209,7 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 # CRITICAL: Add CORS middleware BEFORE any routes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://tsskwizi.pages.dev",
-        "https://d4e95bdd.tsskwizi.pages.dev",
-        "http://localhost:3000",
-        "http://localhost:5173",
-        "*"
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -116,6 +243,12 @@ class Question(Base):
     lesson_id = Column(Integer, ForeignKey("lessons.id"))
     created_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Advanced question type fields
+    question_config = Column(JSON)  # Stores type-specific config
+    media_url = Column(String)  # For image/audio/video questions
+    correct_answers = Column(JSON)  # For multiple correct answers
+    partial_credit = Column(Boolean, default=False)
 
 class Quiz(Base):
     __tablename__ = "quizzes"
@@ -149,6 +282,9 @@ class QuizAttempt(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     score = Column(Float, default=0.0)
+    percentage = Column(Float, default=0.0)
+    grade = Column(String(5), default='F')
+    total_possible_points = Column(Float, default=0.0)
 
     total_questions = Column(Integer)
     answers = Column(JSON)
@@ -280,6 +416,10 @@ class QuestionCreate(BaseModel):
     department: str
     level: str
     lesson_id: Optional[int] = None
+    question_config: Optional[Dict] = None
+    media_url: Optional[str] = None
+    correct_answers: Optional[List[str]] = None
+    partial_credit: Optional[bool] = False
 
 class QuizCreate(BaseModel):
     title: str
@@ -586,13 +726,96 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
         points = 0.0
         feedback = ""
         
+        # Grade based on question type
         if question.question_type in ['short_answer', 'essay']:
             points, feedback = grade_open_ended_question(
                 answer.answer, question.correct_answer, question.points
             )
             needs_review = True
+        elif question.question_type == 'multiple_select':
+            # Multiple correct answers
+            student_answers = set(str(answer.answer).split(',')) if answer.answer else set()
+            correct_answers = set(question.correct_answers or [])
+            if student_answers == correct_answers:
+                is_correct = True
+                points = float(question.points)
+            elif question.partial_credit and student_answers & correct_answers:
+                # Partial credit: (correct selections / total correct) * points
+                points = float(question.points) * (len(student_answers & correct_answers) / len(correct_answers))
+            else:
+                points = 0.0
+            feedback = "Correct" if is_correct else f"Partial credit: {points:.1f}/{question.points}"
+        elif question.question_type == 'fill_blanks':
+            # Fill in the blanks
+            config = question.question_config or {}
+            blanks = config.get('blanks', [])
+            student_blanks = str(answer.answer).split('|||') if answer.answer else []
+            correct_count = 0
+            for i, blank in enumerate(blanks):
+                if i < len(student_blanks):
+                    if str(student_blanks[i]).strip().lower() == str(blank.get('answer', '')).strip().lower():
+                        correct_count += 1
+            points = float(question.points) * (correct_count / len(blanks)) if blanks else 0.0
+            is_correct = correct_count == len(blanks)
+            feedback = f"Correct: {correct_count}/{len(blanks)} blanks"
+        elif question.question_type == 'drag_drop_match':
+            # Matching pairs
+            config = question.question_config or {}
+            pairs = config.get('pairs', [])
+            student_pairs = str(answer.answer).split('|||') if answer.answer else []
+            correct_count = sum(1 for i, pair in enumerate(pairs) if i < len(student_pairs) and student_pairs[i] == pair.get('right'))
+            points = float(question.points) * (correct_count / len(pairs)) if pairs else 0.0
+            is_correct = correct_count == len(pairs)
+            feedback = f"Correct: {correct_count}/{len(pairs)} matches"
+        elif question.question_type == 'drag_drop_order':
+            # Ordering
+            config = question.question_config or {}
+            correct_order = config.get('correct_order', [])
+            try:
+                student_order = [int(x) for x in str(answer.answer).split(',')] if answer.answer else []
+            except (ValueError, AttributeError):
+                student_order = []
+            is_correct = student_order == correct_order
+            points = float(question.points) if is_correct else 0.0
+            feedback = "Correct order" if is_correct else "Incorrect order"
+        elif question.question_type == 'code_writing':
+            # Code questions need manual review
+            needs_review = True
+            points = 0
+            feedback = "Pending teacher review"
+        elif question.question_type == 'sql_query':
+            # SQL questions need manual review
+            needs_review = True
+            points = 0
+            feedback = "Pending teacher review"
+        elif question.question_type == 'multi_grid':
+            # Multi-Grid questions - matrix of radio buttons
+            config = question.question_config or {}
+            rows = config.get('rows', [])
+            columns = config.get('columns', [])
+            correct_answers = config.get('correct_answers', {})
+            
+            try:
+                student_answers = json.loads(answer.answer) if answer.answer else {}
+            except (json.JSONDecodeError, TypeError):
+                student_answers = {}
+            
+            correct_count = 0
+            total_rows = len(rows)
+            
+            for row_id in rows:
+                if str(row_id) in student_answers and str(row_id) in correct_answers:
+                    if student_answers[str(row_id)] == correct_answers[str(row_id)]:
+                        correct_count += 1
+            
+            points = float(question.points) * (correct_count / total_rows) if total_rows > 0 else 0.0
+            is_correct = correct_count == total_rows
+            feedback = f"Correct: {correct_count}/{total_rows} rows"
         else:
-            is_correct = str(answer.answer).strip().lower() == str(question.correct_answer).strip().lower()
+            # Standard MCQ, True/False, Dropdown - Case insensitive comparison
+            student_answer_clean = str(answer.answer).strip().lower()
+            correct_answer_clean = str(question.correct_answer).strip().lower()
+            is_correct = student_answer_clean == correct_answer_clean
             points = question.points if is_correct else 0.0
             feedback = "Correct" if is_correct else "Incorrect"
         
@@ -607,8 +830,38 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
         )
         db.add(student_answer)
     
-    attempt.score = score
+    # Calculate total possible points for this quiz
+    all_questions = db.query(Question).join(QuizQuestion).filter(
+        QuizQuestion.quiz_id == submission.quiz_id
+    ).all()
+    total_possible_points = sum(q.points for q in all_questions)
+    
+    # Ensure score doesn't exceed total possible points
+    final_score = min(float(score), float(total_possible_points))
+    
+    # Calculate percentage and grade
+    percentage = (final_score / total_possible_points * 100) if total_possible_points > 0 else 0
+    percentage = min(percentage, 100.0)  # Cap at 100%
+    
+    # Grade mapping based on percentage (Rwanda grading system)
+    if percentage >= 90:
+        grade = 'A+'
+    elif percentage >= 80:
+        grade = 'A'
+    elif percentage >= 70:
+        grade = 'B'
+    elif percentage >= 60:
+        grade = 'C'
+    elif percentage >= 50:
+        grade = 'D'
+    else:
+        grade = 'F'
+    
+    attempt.score = final_score
     attempt.needs_review = needs_review
+    attempt.percentage = round(percentage, 1)
+    attempt.grade = grade
+    attempt.total_possible_points = total_possible_points
     
     print(f"✅ Grading complete: score={score}/{len(submission.answers)}, needs_review={needs_review}")
     
@@ -800,12 +1053,69 @@ def create_question(question: QuestionCreate, current_user: User = Depends(get_c
         department=question.department,
         level=question.level,
         lesson_id=question.lesson_id,
-        created_by=current_user.id
+        created_by=current_user.id,
+        question_config=question.question_config,
+        media_url=question.media_url,
+        correct_answers=question.correct_answers,
+        partial_credit=question.partial_credit
     )
     db.add(new_question)
     db.commit()
     db.refresh(new_question)
     return new_question
+
+@app.options("/upload-questions")
+async def upload_questions_options():
+    """Handle CORS preflight for upload-questions"""
+    print("✅ OPTIONS /upload-questions called")
+    return {"message": "OK"}
+
+@app.get("/upload-test")
+def upload_test(current_user: User = Depends(get_current_user)):
+    """Test endpoint to verify authentication works"""
+    print(f"✅ UPLOAD TEST: User {current_user.username} authenticated successfully")
+    return {
+        "message": "Upload endpoint is reachable",
+        "user": current_user.username,
+        "role": current_user.role
+    }
+
+@app.post("/upload-questions-simple")
+async def upload_questions_simple(
+    request: Request,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Simplified upload endpoint for debugging"""
+    import sys
+    print("🚀 SIMPLE UPLOAD CALLED", file=sys.stderr)
+    sys.stderr.flush()
+    
+    try:
+        form = await request.form()
+        print(f"📦 Form data: {dict(form)}", file=sys.stderr)
+        sys.stderr.flush()
+        
+        file = form.get('file')
+        if not file:
+            return {"error": "No file provided"}
+        
+        content = await file.read()
+        print(f"📄 File: {file.filename}, Size: {len(content)}", file=sys.stderr)
+        sys.stderr.flush()
+        
+        return {
+            "success": True,
+            "filename": file.filename,
+            "size": len(content),
+            "message": "File received successfully"
+        }
+    except Exception as e:
+        import traceback
+        print(f"❌ ERROR: {e}", file=sys.stderr)
+        print(traceback.format_exc(), file=sys.stderr)
+        sys.stderr.flush()
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/upload-questions")
 async def upload_questions(
@@ -816,21 +1126,45 @@ async def upload_questions(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    if current_user.role != "teacher":
-        raise HTTPException(status_code=403, detail="Only teachers can upload questions")
+    import traceback
+    import sys
+    
+    print("="*80, file=sys.stderr)
+    print("🚀 UPLOAD ENDPOINT CALLED!", file=sys.stderr)
+    print(f"User: {current_user.username}, Role: {current_user.role}", file=sys.stderr)
+    print(f"File: {file.filename if file else 'NO FILE'}", file=sys.stderr)
+    print(f"Department: {department}, Level: {level}", file=sys.stderr)
+    print("="*80, file=sys.stderr)
+    sys.stderr.flush()
     
     try:
+        if current_user.role != "teacher":
+            print(f"❌ REJECTED: User is {current_user.role}, not teacher", file=sys.stderr)
+            sys.stderr.flush()
+            raise HTTPException(status_code=403, detail="Only teachers can upload questions")
+        
+        print(f"📁 Upload request: file={file.filename}, dept={department}, level={level}", file=sys.stderr)
+        sys.stderr.flush()
+        
         content = await file.read()
-        filename = file.filename.lower()
+        filename = file.filename.lower() if file.filename else "unknown.txt"
         text = ""
+        
+        print(f"📄 Processing file: {filename}, size: {len(content)} bytes")
         
         # Handle different file formats
         if filename.endswith('.pdf'):
-            import PyPDF2
-            import io
-            pdf = PyPDF2.PdfReader(io.BytesIO(content))
-            for page in pdf.pages:
-                text += page.extract_text() + "\n"
+            try:
+                import PyPDF2
+                import io
+                pdf = PyPDF2.PdfReader(io.BytesIO(content))
+                for page in pdf.pages:
+                    text += page.extract_text() + "\n"
+                print(f"✅ PDF processed, extracted {len(text)} characters")
+            except Exception as e:
+                print(f"❌ PDF processing failed: {e}")
+                raise HTTPException(status_code=400, detail=f"PDF processing failed: {str(e)}")
+                
         elif filename.endswith('.doc') or filename.endswith('.docx'):
             try:
                 import docx
@@ -838,7 +1172,9 @@ async def upload_questions(
                 doc = docx.Document(io.BytesIO(content))
                 for para in doc.paragraphs:
                     text += para.text + "\n"
-            except:
+                print(f"✅ Word document processed, extracted {len(text)} characters")
+            except Exception as e:
+                print(f"⚠️ Word processing failed, trying text fallback: {e}")
                 try:
                     text = content.decode('utf-8', errors='ignore')
                 except:
@@ -847,129 +1183,77 @@ async def upload_questions(
             # Text files - try multiple encodings
             try:
                 text = content.decode('utf-8')
+                print(f"✅ Text file processed with UTF-8")
             except:
                 try:
                     text = content.decode('latin-1')
+                    print(f"✅ Text file processed with Latin-1")
                 except:
                     text = content.decode('cp1252', errors='ignore')
+                    print(f"✅ Text file processed with CP1252")
         
-        # AI-Powered Intelligent Parser - handles ANY format
+        if not text.strip():
+            raise HTTPException(status_code=400, detail="No text content found in file")
+        
+        print(f"📝 Text extracted: {len(text)} characters")
+        
+        # Enhanced AI Parser - handles ALL 12 advanced question types
         questions = []
         lines = [l.strip() for l in text.split('\n') if l.strip()]
         
-        # Combine lines into paragraphs for better context
-        paragraphs = []
-        current_para = []
-        for line in lines:
-            if line:
-                current_para.append(line)
-            elif current_para:
-                paragraphs.append(' '.join(current_para))
-                current_para = []
-        if current_para:
-            paragraphs.append(' '.join(current_para))
+        # Join all lines for better parsing
+        full_text = ' '.join(lines)
         
-        # AI Detection: Identify questions using multiple heuristics
-        for para in paragraphs:
-            # Method 1: Simple Q&A (Question? Answer)
-            if '?' in para:
-                parts = para.split('?')
-                for i in range(len(parts) - 1):
-                    question_text = parts[i].strip()
-                    # Get last sentence as question
-                    if '. ' in question_text:
-                        question_text = question_text.split('. ')[-1]
-                    question_text += '?'
-                    
-                    answer_text = parts[i + 1].strip()
-                    # Take first sentence as answer
-                    if '. ' in answer_text:
-                        answer_text = answer_text.split('.')[0]
-                    
-                    if len(question_text) > 10 and answer_text:
-                        questions.append({
-                            'text': question_text,
-                            'options': [answer_text, 'False', 'Not applicable', 'None of the above'],
-                            'answer': answer_text
-                        })
-            
-            # Method 2: Detect structured questions with options
-            elif any(marker in para for marker in ['A)', 'B)', 'a)', 'b)', 'A.', 'B.']):
-                # Extract question (everything before first option)
-                question_text = para
-                for marker in ['A)', 'a)', 'A.', 'a.', '(A)', '(a)']:
-                    if marker in para:
-                        question_text = para.split(marker)[0].strip()
-                        break
+        # Split by question numbers (1., 2., etc.)
+        import re
+        question_blocks = re.split(r'\b(\d+)\s*[.):]\s*', full_text)
+        
+        print(f"🔍 Found {len(question_blocks)} text blocks")
+        
+        # Process each question block
+        for i in range(1, len(question_blocks), 2):
+            if i + 1 < len(question_blocks):
+                question_num = question_blocks[i]
+                question_content = question_blocks[i + 1].strip()
                 
-                # Extract options
-                options = []
-                answer = ''
+                if len(question_content) < 10:  # Skip very short content
+                    continue
                 
-                # Try different option patterns
-                for pattern in [r'[A-E]\)', r'[a-e]\)', r'[A-E]\.', r'\([A-E]\)']:
-                    import re
-                    matches = re.finditer(pattern, para)
-                    temp_options = []
-                    for match in matches:
-                        start = match.end()
-                        # Find next option or end
-                        next_match = re.search(pattern, para[start:])
-                        if next_match:
-                            end = start + next_match.start()
-                        else:
-                            end = len(para)
-                        option_text = para[start:end].strip()
-                        # Remove answer markers
-                        option_text = re.sub(r'(Answer:|Ans:|Correct:).*', '', option_text).strip()
-                        if option_text:
-                            temp_options.append(option_text)
-                    
-                    if len(temp_options) >= 2:
-                        options = temp_options
-                        break
+                print(f"📋 Processing question {question_num}: {question_content[:50]}...")
                 
-                # Extract answer
-                for prefix in ['Answer:', 'ANSWER:', 'Ans:', 'ANS:', 'Correct:', 'CORRECT:']:
-                    if prefix in para:
-                        answer = para.split(prefix)[1].strip().split()[0]
-                        break
-                
-                if question_text and options:
-                    questions.append({
-                        'text': question_text,
-                        'options': options,
-                        'answer': answer if answer else options[0]
-                    })
-            
-            # Method 3: Detect question keywords without ?
-            else:
-                question_keywords = ['what', 'who', 'where', 'when', 'why', 'how', 'which', 
-                                   'define', 'explain', 'describe', 'list', 'name', 'identify']
-                para_lower = para.lower()
-                
-                if any(para_lower.startswith(kw) for kw in question_keywords) and len(para) > 20:
-                    # Split by common delimiters
-                    if ':' in para:
-                        parts = para.split(':', 1)
-                        question_text = parts[0].strip()
-                        answer_text = parts[1].strip()
-                    elif '  ' in para:  # Double space
-                        parts = para.split('  ', 1)
-                        question_text = parts[0].strip()
-                        answer_text = parts[1].strip()
+                # Parse different question types
+                try:
+                    parsed_question = parse_advanced_question(question_content)
+                    if parsed_question:
+                        questions.append(parsed_question)
+                        print(f"✅ Parsed as {parsed_question['type']}")
                     else:
-                        # Assume first 60% is question, rest is answer
-                        split_point = int(len(para) * 0.6)
-                        question_text = para[:split_point].strip()
-                        answer_text = para[split_point:].strip()
-                    
-                    if len(question_text) > 10 and answer_text:
-                        questions.append({
-                            'text': question_text,
-                            'options': [answer_text, 'False', 'Not applicable', 'None of the above'],
-                            'answer': answer_text
-                        })
+                        print(f"⚠️ Could not parse question {question_num}")
+                except Exception as e:
+                    print(f"❌ Error parsing question {question_num}: {e}")
+        
+        # Fallback: If no numbered questions found, try paragraph-based parsing
+        if not questions:
+            print("🔄 No numbered questions found, trying paragraph parsing")
+            paragraphs = []
+            current_para = []
+            for line in lines:
+                if line:
+                    current_para.append(line)
+                elif current_para:
+                    paragraphs.append(' '.join(current_para))
+                    current_para = []
+            if current_para:
+                paragraphs.append(' '.join(current_para))
+            
+            for para in paragraphs:
+                try:
+                    parsed_question = parse_advanced_question(para)
+                    if parsed_question:
+                        questions.append(parsed_question)
+                        print(f"✅ Parsed paragraph as {parsed_question['type']}")
+                except Exception as e:
+                    print(f"❌ Error parsing paragraph: {e}")
         
         if not questions:
             return {
@@ -980,38 +1264,147 @@ async def upload_questions(
                 "message": "No questions found. Please format as: '1. Question text? A) Option B) Option Answer: A'"
             }
         
+        print(f"📊 Successfully parsed {len(questions)} questions")
+        
         # Use teacher's first department if not provided
         if not department and current_user.departments:
             department = current_user.departments[0]
         if not level:
             level = "General"
         
-        # Save questions to database
+        print(f"💾 Saving to database: dept={department}, level={level}")
+        
+        # Save questions to database with proper advanced types
         created_count = 0
         for q in questions:
-            if q.get('text') and q.get('options'):
-                new_question = Question(
-                    question_text=q['text'],
-                    question_type='multiple_choice' if len(q['options']) > 1 else 'true_false',
-                    options=q['options'],
-                    correct_answer=q.get('answer', q['options'][0] if q['options'] else ''),
-                    points=1,
-                    department=department,
-                    level=level,
-                    lesson_id=lesson_id,
-                    created_by=current_user.id
-                )
-                db.add(new_question)
-                created_count += 1
+            if q.get('text'):
+                try:
+                    question_type = q.get('type', 'multiple_choice')
+                    
+                    # Map question types to database format
+                    type_mapping = {
+                        'multiple_choice': 'multiple_choice',
+                        'true_false': 'true_false', 
+                        'multiple_select': 'multiple_select',
+                        'fill_blanks': 'fill_blanks',
+                        'drag_drop_match': 'drag_drop_match',
+                        'drag_drop_order': 'drag_drop_order',
+                        'linear_scale': 'linear_scale',
+                        'code_writing': 'code_writing',
+                        'sql_query': 'sql_query',
+                        'multi_grid': 'multi_grid',
+                        'dropdown_select': 'dropdown_select',
+                        'short_answer': 'short_answer',
+                        'essay': 'essay'
+                    }
+                    
+                    db_question_type = type_mapping.get(question_type, 'multiple_choice')
+                    
+                    # Set up question config for advanced types
+                    question_config = None
+                    correct_answers = None
+                    partial_credit = False
+                    
+                    if question_type == 'multiple_select':
+                        correct_answers = q.get('answer', 'A,B').split(',')
+                        partial_credit = True
+                    elif question_type == 'fill_blanks':
+                        blanks = q.get('answer', 'answer1|||answer2').split('|||')
+                        question_config = {
+                            'blanks': [{'answer': blank} for blank in blanks]
+                        }
+                    elif question_type == 'drag_drop_match':
+                        pairs = q.get('answer', 'Item1|||Item2|||Item3').split('|||')
+                        question_config = {
+                            'pairs': [{'left': f'Left {i+1}', 'right': pair} for i, pair in enumerate(pairs)]
+                        }
+                    elif question_type == 'drag_drop_order':
+                        try:
+                            order = [int(x) for x in q.get('answer', '1,2,3,4').split(',')]
+                        except ValueError:
+                            order = [1, 2, 3, 4]
+                        question_config = {
+                            'correct_order': order,
+                            'items': [f'Item {i}' for i in order]
+                        }
+                    elif question_type == 'linear_scale':
+                        question_config = {
+                            'min_value': 1,
+                            'max_value': 10,
+                            'min_label': 'Poor',
+                            'max_label': 'Excellent'
+                        }
+                    elif question_type == 'code_writing':
+                        question_config = {
+                            'language': 'python',
+                            'starter_code': '# Write your code here\n'
+                        }
+                    elif question_type == 'sql_query':
+                        question_config = {
+                            'database_schema': 'CREATE TABLE users (id INT, name VARCHAR(50));'
+                        }
+                    elif question_type == 'multi_grid':
+                        try:
+                            import json
+                            answers = json.loads(q.get('answer', '{}'))
+                        except:
+                            answers = {'Row1': 'Column1', 'Row2': 'Column2'}
+                        
+                        question_config = {
+                            'rows': list(answers.keys()),
+                            'columns': ['Column1', 'Column2', 'Column3'],
+                            'correct_answers': answers
+                        }
+                    
+                    new_question = Question(
+                        question_text=q['text'],
+                        question_type=db_question_type,
+                        options=q.get('options', []),
+                        correct_answer=q.get('answer', ''),
+                        points=1,
+                        department=department,
+                        level=level,
+                        lesson_id=lesson_id,
+                        created_by=current_user.id,
+                        question_config=question_config,
+                        media_url=None,
+                        correct_answers=correct_answers,
+                        partial_credit=partial_credit
+                    )
+                    db.add(new_question)
+                    created_count += 1
+                    print(f"✅ Created question {created_count}: {db_question_type}")
+                except Exception as e:
+                    print(f"❌ Error creating question: {e}")
+                    continue
         
         db.commit()
+        print(f"🎉 Successfully saved {created_count} questions to database")
         
-        return {"success": True, "questions": questions, "count": created_count, "created": created_count}
+        return {
+            "success": True, 
+            "questions": [{
+                'text': q.get('text', ''),
+                'type': q.get('type', 'multiple_choice'),
+                'options': q.get('options', []),
+                'answer': q.get('answer', '')
+            } for q in questions], 
+            "count": created_count, 
+            "created": created_count,
+            "types_detected": list(set(q.get('type', 'multiple_choice') for q in questions))
+        }
+    except HTTPException:
+        raise
     except Exception as e:
         db.rollback()
         import traceback
-        traceback.print_exc()
-        raise HTTPException(status_code=400, detail=f"Upload failed: {str(e)}")
+        import sys
+        error_trace = traceback.format_exc()
+        print(f"❌ UPLOAD ERROR: {e}", file=sys.stderr)
+        print(f"📋 Full traceback:", file=sys.stderr)
+        print(error_trace, file=sys.stderr)
+        sys.stderr.flush()
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
 @app.put("/questions/{question_id}")
 def update_question(question_id: int, question_data: QuestionCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
@@ -1112,8 +1505,9 @@ def get_quiz_leaderboard(quiz_id: int, current_user: User = Depends(get_current_
                 "student_name": student.full_name,
                 "username": student.username,
                 "score": attempt.score,
-                "total": attempt.total_questions,
-                "percentage": round((attempt.score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1),
+                "total": attempt.total_possible_points or attempt.total_questions,
+                "percentage": attempt.percentage or round((attempt.score / (attempt.total_possible_points or attempt.total_questions) * 100) if (attempt.total_possible_points or attempt.total_questions) > 0 else 0, 1),
+                "grade": attempt.grade or ('A+' if (attempt.percentage or 0) >= 90 else 'A' if (attempt.percentage or 0) >= 80 else 'B' if (attempt.percentage or 0) >= 70 else 'C' if (attempt.percentage or 0) >= 60 else 'D' if (attempt.percentage or 0) >= 50 else 'F'),
                 "completed_at": attempt.completed_at.isoformat() if attempt.completed_at else None
             })
     
@@ -1299,12 +1693,17 @@ def get_quiz_results(quiz_id: int, current_user: User = Depends(get_current_user
 
             # Use final_score (teacher-reviewed) if available, otherwise use initial score
             display_score = attempt.final_score if attempt.final_score is not None else attempt.score
+            total_possible = attempt.total_possible_points or attempt.total_questions
+            percentage = attempt.percentage or round((display_score / total_possible * 100) if total_possible > 0 else 0, 1)
+            grade = attempt.grade or ('A+' if percentage >= 90 else 'A' if percentage >= 80 else 'B' if percentage >= 70 else 'C' if percentage >= 60 else 'D' if percentage >= 50 else 'F')
+            
             results.append({
                 "student_name": student.full_name,
                 "username": student.username,
                 "score": display_score,
-                "total": attempt.total_questions,
-                "percentage": round((display_score / attempt.total_questions * 100) if attempt.total_questions > 0 else 0, 1),
+                "total": total_possible,
+                "percentage": percentage,
+                "grade": grade,
                 "completed_at": attempt.completed_at.isoformat() if attempt.completed_at else None
             })
     
@@ -1480,6 +1879,9 @@ def broadcast_quiz(quiz_id: int, current_user: User = Depends(get_current_user),
 
 @app.get("/admin/students")
 def get_students(department: Optional[str] = None, level: Optional[str] = None, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admins can view students")
+    
     query = db.query(User).filter(User.role == "student")
     
     if department:
@@ -1492,6 +1894,8 @@ def get_students(department: Optional[str] = None, level: Optional[str] = None, 
 
 @app.get("/teachers")
 def get_teachers(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admins can view teachers")
     teachers = db.query(User).filter(User.role == "teacher").all()
     return [{"id": t.id, "username": t.username, "full_name": t.full_name, "departments": t.departments} for t in teachers]
 
@@ -2204,26 +2608,49 @@ def get_my_assigned_class(current_user: User = Depends(get_current_user), db: Se
 def startup_event():
     Base.metadata.create_all(bind=engine)
     
-    # Add missing columns via raw SQL
+    # Add missing columns via raw SQL with better error handling
     db = SessionLocal()
     try:
         from sqlalchemy import text
-        db.execute(text("ALTER TABLE quizzes ADD COLUMN IF NOT EXISTS results_released BOOLEAN DEFAULT FALSE"))
-        db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS needs_review BOOLEAN DEFAULT FALSE"))
-        db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS reviewed_by INTEGER"))
-        db.execute(text("ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS final_score FLOAT"))
-        db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS points_earned FLOAT DEFAULT 0.0"))
-        db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS ai_feedback VARCHAR"))
-        db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_score FLOAT"))
-        db.execute(text("ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_feedback TEXT"))
-        db.execute(text("ALTER TABLE chat_rooms ADD COLUMN IF NOT EXISTS module_id INTEGER"))
-        db.execute(text("ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS file_url VARCHAR"))
-        db.execute(text("ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS file_name VARCHAR"))
-        db.execute(text("ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS reply_to_id INTEGER"))
+        
+        # Phase 1: Advanced question types columns
+        migration_queries = [
+            "ALTER TABLE questions ADD COLUMN question_config JSON",
+            "ALTER TABLE questions ADD COLUMN media_url VARCHAR",
+            "ALTER TABLE questions ADD COLUMN correct_answers JSON", 
+            "ALTER TABLE questions ADD COLUMN partial_credit BOOLEAN DEFAULT FALSE",
+            # Other existing migrations
+            "ALTER TABLE quizzes ADD COLUMN results_released BOOLEAN DEFAULT FALSE",
+            "ALTER TABLE quiz_attempts ADD COLUMN needs_review BOOLEAN DEFAULT FALSE",
+            "ALTER TABLE quiz_attempts ADD COLUMN reviewed_by INTEGER",
+            "ALTER TABLE quiz_attempts ADD COLUMN final_score FLOAT",
+            "ALTER TABLE quiz_attempts ADD COLUMN percentage FLOAT DEFAULT 0.0",
+            "ALTER TABLE quiz_attempts ADD COLUMN grade VARCHAR(5) DEFAULT 'F'",
+            "ALTER TABLE quiz_attempts ADD COLUMN total_possible_points FLOAT DEFAULT 0.0",
+            "ALTER TABLE student_answers ADD COLUMN points_earned FLOAT DEFAULT 0.0",
+            "ALTER TABLE student_answers ADD COLUMN ai_feedback VARCHAR",
+            "ALTER TABLE student_answers ADD COLUMN teacher_score FLOAT",
+            "ALTER TABLE student_answers ADD COLUMN teacher_feedback TEXT",
+            "ALTER TABLE chat_rooms ADD COLUMN module_id INTEGER",
+            "ALTER TABLE chat_messages ADD COLUMN file_url VARCHAR",
+            "ALTER TABLE chat_messages ADD COLUMN file_name VARCHAR",
+            "ALTER TABLE chat_messages ADD COLUMN reply_to_id INTEGER"
+        ]
+        
+        for query in migration_queries:
+            try:
+                db.execute(text(query))
+                print(f"✅ Migration: {query[:50]}...")
+            except Exception as e:
+                if "already exists" in str(e).lower() or "duplicate column" in str(e).lower():
+                    print(f"⚠️ Column already exists: {query[:50]}...")
+                else:
+                    print(f"❌ Migration failed: {query[:50]}... - {e}")
+        
         db.commit()
         print("✅ Database migration complete")
     except Exception as e:
-        print(f"Migration error (may be normal if columns exist): {e}")
+        print(f"Migration error: {e}")
         db.rollback()
     
     try:
@@ -2270,8 +2697,9 @@ def startup_event():
         print(f"Startup error: {e}")
         db.rollback()
     finally:
-
         db.close()
+
+
 
 
 

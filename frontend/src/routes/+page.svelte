@@ -490,9 +490,9 @@
     </nav>
 
     <div class="relative z-10 max-w-7xl mx-auto px-6 py-12">
-      <div class="mb-12 text-center">
-        <h2 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">AVAILABLE QUIZZES</h2>
-        <p class="text-gray-700 text-xl font-medium">Select a quiz to begin your assessment</p>
+      <div class="mb-12 text-center bg-black rounded-2xl p-8 shadow-2xl">
+        <h2 class="text-5xl md:text-6xl font-black text-white mb-4">AVAILABLE QUIZZES</h2>
+        <p class="text-white text-xl font-medium">Select a quiz to begin your assessment</p>
       </div>
 
       {#if quizzes.length === 0}

@@ -21,28 +21,133 @@
     points: 1,
     department: '',
     level: '',
-    lesson_id: null
+    lesson_id: null,
+    // Advanced question type fields
+    blanks: [],
+    pairs: [],
+    items_to_order: [],
+    scale_min: 1,
+    scale_max: 10,
+    programming_language: 'python',
+    expected_output: '',
+    grid_rows: '',
+    grid_columns: ''
   };
 
-  // Upload options
-  let activeTab = 'questions';
-  let showUploadModal = false;
-  let uploadFile = null;
-  let uploadType = 'text';
-  let uploadDepartment = '';
-  let uploadLevel = '';
-  let uploadLessonId = null;
+  // SPA Layout variables
+  let selectedQuestionType = 'mcq';
+  let showQuestionTypeDetails = true;
+  
+  // Question type descriptions and examples
+  const questionTypeDetails = {
+    mcq: {
+      title: 'Multiple Choice',
+      icon: '🔘',
+      description: 'Students select ONE correct answer from multiple options',
+      example: 'What is the capital of France?\nA) London\nB) Paris ✓\nC) Berlin\nD) Madrid',
+      features: ['Radio button interface', 'Single correct answer', 'Multiple options (2-6)', 'Auto-grading']
+    },
+    true_false: {
+      title: 'True/False',
+      icon: '✅',
+      description: 'Students choose between True or False for a statement',
+      example: 'JavaScript was created in 1995.\n○ True ✓\n○ False',
+      features: ['Simple binary choice', 'Quick to answer', 'Perfect for facts', 'Auto-grading']
+    },
+    short_answer: {
+      title: 'Short Answer',
+      icon: '📝',
+      description: 'Students provide brief text responses',
+      example: 'What is the main purpose of HTML?\nAnswer: To structure web content',
+      features: ['Text input field', 'Flexible answers', 'Manual/AI grading', 'Open-ended']
+    },
+    essay: {
+      title: 'Essay Question',
+      icon: '📄',
+      description: 'Students write detailed, long-form responses',
+      example: 'Explain the importance of responsive web design in modern development.',
+      features: ['Large text area', 'Detailed responses', 'Manual grading', 'Critical thinking']
+    },
+    multiple_select: {
+      title: 'Multiple Select',
+      icon: '☑️',
+      description: 'Students can select MULTIPLE correct answers',
+      example: 'Which are programming languages?\n☑️ Python ✓\n☑️ HTML\n☑️ JavaScript ✓\n☑️ CSS',
+      features: ['Checkbox interface', 'Multiple correct answers', 'Partial credit scoring', 'Complex assessment']
+    },
+    dropdown_select: {
+      title: 'Dropdown Select',
+      icon: '📋',
+      description: 'Students select from a clean dropdown menu',
+      example: 'Select the correct data type:\n[Dropdown: String ✓, Integer, Boolean, Array]',
+      features: ['Clean interface', 'Space-saving', 'Single selection', 'Professional look']
+    },
+    fill_in_blanks: {
+      title: 'Fill in the Blanks',
+      icon: '📝',
+      description: 'Students fill in missing words or phrases',
+      example: 'Python is a _____ language and HTML is a _____ language.\nAnswers: programming, markup',
+      features: ['Individual input fields', 'Multiple blanks per question', 'Exact match grading', 'Interactive interface']
+    },
+    matching_pairs: {
+      title: 'Matching Pairs',
+      icon: '🔗',
+      description: 'Students match items from two columns',
+      example: 'Match programming languages:\nPython → Programming Language ✓\nHTML → Markup Language ✓\nMySQL → Database ✓',
+      features: ['Dropdown selectors', 'Visual pairing', 'Multiple matches', 'Logical connections']
+    },
+    drag_drop_ordering: {
+      title: 'Drag & Drop Ordering',
+      icon: '📋',
+      description: 'Students arrange items in correct sequence',
+      example: 'Order the web development steps:\n1. Plan ↑↓\n2. Design ↑↓\n3. Code ↑↓\n4. Test ↑↓',
+      features: ['Interactive reordering', 'Up/down buttons', 'Sequential logic', 'Process understanding']
+    },
+    linear_scale: {
+      title: 'Linear Scale',
+      icon: '📊',
+      description: 'Students rate on a numerical scale (1-10)',
+      example: 'Rate the importance of code documentation:\n1 ⓵ ⓶ ⓷ ⓸ ⓹ ⓺ ⓻ ⓼ ⓽ ⓾ 10',
+      features: ['Clickable number buttons', '1-10 scale', 'Opinion assessment', 'Quantitative feedback']
+    },
+    code_writing: {
+      title: 'Code Writing',
+      icon: '💻',
+      description: 'Students write actual code in various languages',
+      example: 'Write a Python function to calculate factorial:\ndef factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n-1)',
+      features: ['Dark code editor', 'Syntax highlighting', 'Multiple languages', 'Programming assessment']
+    },
+    sql_query: {
+      title: 'SQL Query',
+      icon: '🗄️',
+      description: 'Students write database queries',
+      example: 'Select all students with grade > 80:\nSELECT * FROM students WHERE grade > 80;',
+      features: ['SQL-specific editor', 'Database knowledge', 'Query validation', 'Practical skills']
+    },
+    multi_grid: {
+      title: 'Multi-Grid (Matrix)',
+      icon: '📊',
+      description: 'Students rate multiple items across different criteria',
+      example: 'Rate each aspect:\n┌─────────┬─────┬─────┬─────┐\n│ Quality │ ○   │ ○   │ ○   │\n│ Service │ ○   │ ○   │ ○   │\n└─────────┴─────┴─────┴─────┘',
+      features: ['Matrix table interface', 'Multiple criteria', 'Comprehensive evaluation', 'Survey-style questions']
+    }
+  };
 
-  // Question types
+  // Question types - All 13 Advanced Types
   const questionTypes = {
     mcq: 'Multiple Choice',
     true_false: 'True/False',
     short_answer: 'Short Answer',
-    fill_blanks: 'Fill in the Blanks',
-    matching: 'Matching Pairs',
-    ordering: 'Ordering/Sequencing',
     essay: 'Essay Question',
-    h5p: 'H5P Interactive'
+    multiple_select: 'Multiple Select',
+    dropdown_select: 'Dropdown Select',
+    fill_in_blanks: 'Fill in the Blanks',
+    matching_pairs: 'Matching Pairs',
+    drag_drop_ordering: 'Drag & Drop Ordering',
+    linear_scale: 'Linear Scale',
+    code_writing: 'Code Writing',
+    sql_query: 'SQL Query',
+    multi_grid: 'Multi-Grid'
   };
 
   const departments = ['Software Development', 'Computer System and Architecture', 'Land Surveying', 'Building Construction'];
@@ -110,7 +215,17 @@
         points: question.points,
         department: question.department,
         level: question.level,
-        lesson_id: question.lesson_id
+        lesson_id: question.lesson_id,
+        // Advanced question type fields
+        blanks: question.blanks || [],
+        pairs: question.pairs || [],
+        items_to_order: question.items_to_order || [],
+        scale_min: question.scale_min || 1,
+        scale_max: question.scale_max || 10,
+        programming_language: question.programming_language || 'python',
+        expected_output: question.expected_output || '',
+        grid_rows: question.grid_rows || '',
+        grid_columns: question.grid_columns || ''
       };
     } else {
       editingQuestion = null;
@@ -122,7 +237,17 @@
         points: 1,
         department: '',
         level: '',
-        lesson_id: null
+        lesson_id: null,
+        // Advanced question type fields
+        blanks: [],
+        pairs: [],
+        items_to_order: [],
+        scale_min: 1,
+        scale_max: 10,
+        programming_language: 'python',
+        expected_output: '',
+        grid_rows: '',
+        grid_columns: ''
       };
     }
     showQuestionForm = true;
@@ -175,7 +300,17 @@
           points: 1,
           department: '',
           level: '',
-          lesson_id: null
+          lesson_id: null,
+          // Advanced question type fields
+          blanks: [],
+          pairs: [],
+          items_to_order: [],
+          scale_min: 1,
+          scale_max: 10,
+          programming_language: 'python',
+          expected_output: '',
+          grid_rows: '',
+          grid_columns: ''
         };
         await loadQuestions();
         activeTab = 'questions';
@@ -650,7 +785,7 @@
                           on:click={() => removeOption(i)} 
                           class="px-3 py-2 bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition-all"
                         >
-                          
+                          🗑️
                         </button>
                       {/if}
                     </div>
@@ -659,15 +794,209 @@
                     on:click={addOption} 
                     class="mt-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition-all"
                   >
-                     Add Option
+                    ➕ Add Option
                   </button>
+                </div>
+              </div>
+            {:else if questionForm.question_type === 'multiple_select'}
+              <div>
+                <label class="block text-sm font-semibold mb-2">Options (Check all correct answers)</label>
+                <div class="space-y-3">
+                  {#each questionForm.options as option, i}
+                    <div class="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg">
+                      <input 
+                        type="checkbox" 
+                        value={option}
+                        checked={questionForm.correct_answer.split(',').includes(option)}
+                        on:change={(e) => {
+                          let correctAnswers = questionForm.correct_answer ? questionForm.correct_answer.split(',').filter(a => a.trim()) : [];
+                          if (e.target.checked) {
+                            if (!correctAnswers.includes(option)) correctAnswers.push(option);
+                          } else {
+                            correctAnswers = correctAnswers.filter(a => a !== option);
+                          }
+                          questionForm.correct_answer = correctAnswers.join(',');
+                        }}
+                        class="w-4 h-4 text-blue-600"
+                      />
+                      <input 
+                        class="flex-1 px-3 py-2 border border-gray-300 rounded-lg" 
+                        bind:value={questionForm.options[i]} 
+                        placeholder="Option {i + 1}"
+                      />
+                      <span class="text-sm text-gray-500">← Check if correct</span>
+                    </div>
+                  {/each}
+                  <button 
+                    on:click={addOption} 
+                    class="mt-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition-all"
+                  >
+                    ➕ Add Option
+                  </button>
+                </div>
+              </div>
+            {:else if questionForm.question_type === 'dropdown_select'}
+              <div>
+                <label class="block text-sm font-semibold mb-2">Dropdown Options</label>
+                <div class="space-y-3">
+                  {#each questionForm.options as option, i}
+                    <div class="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg">
+                      <input 
+                        type="radio" 
+                        name="correct_answer_dropdown" 
+                        value={option} 
+                        bind:group={questionForm.correct_answer}
+                        class="w-4 h-4 text-blue-600"
+                      />
+                      <input 
+                        class="flex-1 px-3 py-2 border border-gray-300 rounded-lg" 
+                        bind:value={questionForm.options[i]} 
+                        placeholder="Option {i + 1}"
+                      />
+                      <span class="text-sm text-gray-500">← Click radio to mark as correct</span>
+                    </div>
+                  {/each}
+                  <button 
+                    on:click={addOption} 
+                    class="mt-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition-all"
+                  >
+                    ➕ Add Option
+                  </button>
+                </div>
+              </div>
+            {:else if questionForm.question_type === 'fill_in_blanks'}
+              <div>
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                  <h4 class="font-semibold text-yellow-800 mb-2">💡 Fill-in-the-Blanks Template</h4>
+                  <p class="text-sm text-yellow-700 mb-3">Use <code class="bg-yellow-200 px-1 rounded">_____</code> (5 underscores) for each blank in your question.</p>
+                  <div class="bg-white border border-yellow-300 rounded p-3">
+                    <p class="text-sm font-mono">Example: "The capital of France is _____ and it is located in _____."</p>
+                  </div>
+                </div>
+                <label class="block text-sm font-semibold mb-2">Correct Answers (comma-separated, in order)</label>
+                <input 
+                  class="w-full px-4 py-3 border rounded-xl" 
+                  bind:value={questionForm.correct_answer} 
+                  placeholder="Paris,Europe (comma-separated, in order)"
+                />
+                <p class="text-xs text-gray-500 mt-1">Enter answers separated by commas, in the same order as blanks appear in your question</p>
+              </div>
+            {:else if questionForm.question_type === 'matching_pairs'}
+              <div>
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <h4 class="font-semibold text-blue-800 mb-2">🔗 Matching Pairs Template</h4>
+                  <p class="text-sm text-blue-700">Create pairs that students will match. Format: Left Item:Right Item</p>
+                </div>
+                <label class="block text-sm font-semibold mb-2">Correct Pairs (Left:Right format)</label>
+                <textarea 
+                  class="w-full px-4 py-3 border rounded-xl resize-none" 
+                  rows="3" 
+                  bind:value={questionForm.correct_answer} 
+                  placeholder="Python:Programming Language,HTML:Markup Language,MySQL:Database"
+                ></textarea>
+                <p class="text-xs text-gray-500 mt-1">Format: Item1:Match1,Item2:Match2,Item3:Match3</p>
+              </div>
+            {:else if questionForm.question_type === 'drag_drop_ordering'}
+              <div>
+                <label class="block text-sm font-semibold mb-2">Items in Correct Order (comma-separated)</label>
+                <textarea 
+                  class="w-full px-4 py-3 border rounded-xl resize-none" 
+                  rows="4" 
+                  bind:value={questionForm.correct_answer} 
+                  placeholder="First Step,Second Step,Third Step,Final Step"
+                ></textarea>
+                <p class="text-xs text-gray-500 mt-1">List items in the correct order, separated by commas</p>
+              </div>
+            {:else if questionForm.question_type === 'linear_scale'}
+              <div>
+                <label class="block text-sm font-semibold mb-2">Expected Rating (1-10)</label>
+                <input 
+                  class="w-full px-4 py-3 border rounded-xl" 
+                  type="number" 
+                  bind:value={questionForm.correct_answer} 
+                  min="1" 
+                  max="10" 
+                  placeholder="Expected rating (1-10)"
+                />
+                <p class="text-xs text-gray-500 mt-1">Enter the expected or ideal rating for this question</p>
+              </div>
+            {:else if questionForm.question_type === 'code_writing'}
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-semibold mb-2">Programming Language</label>
+                  <select class="w-full px-4 py-3 border rounded-xl" bind:value={questionForm.programming_language}>
+                    <option value="python">Python</option>
+                    <option value="c">C</option>
+                    <option value="cpp">C++</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="html">HTML</option>
+                    <option value="java">Java</option>
+                    <option value="other">Other (Specify in question)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold mb-2">Expected Code Solution</label>
+                  <textarea 
+                    class="w-full px-4 py-3 border rounded-xl resize-none font-mono" 
+                    rows="6" 
+                    bind:value={questionForm.correct_answer} 
+                    placeholder={questionForm.programming_language === 'python' ? 'def function_name():\n    return result' : questionForm.programming_language === 'javascript' ? 'function functionName() {\n    return result;\n}' : 'Enter expected code solution'}
+                  ></textarea>
+                </div>
+              </div>
+            {:else if questionForm.question_type === 'sql_query'}
+              <div>
+                <label class="block text-sm font-semibold mb-2">Expected SQL Query</label>
+                <textarea 
+                  class="w-full px-4 py-3 border rounded-xl resize-none font-mono" 
+                  rows="4" 
+                  bind:value={questionForm.correct_answer} 
+                  placeholder="SELECT * FROM table_name WHERE condition;"
+                ></textarea>
+                <p class="text-xs text-gray-500 mt-1">Enter the expected SQL query solution</p>
+              </div>
+            {:else if questionForm.question_type === 'multi_grid'}
+              <div class="space-y-4">
+                <div class="bg-rose-50 border border-rose-200 rounded-lg p-4">
+                  <h4 class="font-semibold text-rose-800 mb-2">📊 Multi-Grid Matrix Table</h4>
+                  <p class="text-sm text-rose-700">Create a table where students select one answer per row from multiple columns.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-semibold mb-2">Row Items (one per line)</label>
+                    <textarea 
+                      class="w-full px-4 py-3 border rounded-xl resize-none" 
+                      rows="4" 
+                      bind:value={questionForm.grid_rows}
+                      placeholder="User Interface\nPerformance\nDocumentation\nSupport"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold mb-2">Column Options (one per line)</label>
+                    <textarea 
+                      class="w-full px-4 py-3 border rounded-xl resize-none" 
+                      rows="4" 
+                      bind:value={questionForm.grid_columns}
+                      placeholder="Excellent\nGood\nFair\nPoor"
+                    ></textarea>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold mb-2">Correct Answers (Row:Column format, one per line)</label>
+                  <textarea 
+                    class="w-full px-4 py-3 border rounded-xl resize-none" 
+                    rows="4" 
+                    bind:value={questionForm.correct_answer} 
+                    placeholder="User Interface:Excellent\nPerformance:Good\nDocumentation:Fair\nSupport:Good"
+                  ></textarea>
+                  <p class="text-xs text-gray-500 mt-1">Specify the correct answer for each row in "Row:Column" format</p>
                 </div>
               </div>
             {/if}
 
             <div>
               <label class="block text-sm font-semibold mb-2">Correct Answer</label>
-              {#if questionForm.question_type === 'mcq'}
+              {#if questionForm.question_type === 'mcq' || questionForm.question_type === 'dropdown_select'}
                 <select bind:value={questionForm.correct_answer} class="w-full px-4 py-3 border rounded-xl">
                   <option value="">Select correct answer</option>
                   {#each questionForm.options.filter(o => o.trim()) as option}
@@ -680,6 +1009,19 @@
                   <option value="True">True</option>
                   <option value="False">False</option>
                 </select>
+              {:else if questionForm.question_type === 'multiple_select'}
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <p class="text-sm text-blue-700">💡 Selected correct answers: {questionForm.correct_answer || 'None selected'}</p>
+                  <p class="text-xs text-blue-600 mt-1">Use the checkboxes above to select multiple correct answers</p>
+                </div>
+              {:else if questionForm.question_type === 'fill_in_blanks' || questionForm.question_type === 'matching_pairs' || questionForm.question_type === 'drag_drop_ordering' || questionForm.question_type === 'code_writing' || questionForm.question_type === 'sql_query' || questionForm.question_type === 'multi_grid'}
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                  <p class="text-sm text-gray-700">✅ Answer configured above in the question-specific section</p>
+                </div>
+              {:else if questionForm.question_type === 'linear_scale'}
+                <div class="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                  <p class="text-sm text-gray-700">✅ Expected rating configured above</p>
+                </div>
               {:else}
                 <input 
                   bind:value={questionForm.correct_answer}
@@ -788,20 +1130,184 @@
                   />
                   {#if questionForm.options.length > 2}
                     <button on:click={() => removeOption(i)} class="px-3 py-2 bg-red-100 text-red-800 rounded-lg">
-                      
+                      🗑️
                     </button>
                   {/if}
                 </div>
               {/each}
               <button on:click={addOption} class="mt-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg">
-                 Add Option
+                ➕ Add Option
               </button>
+            </div>
+          {:else if questionForm.question_type === 'multiple_select'}
+            <div>
+              <label class="block text-sm font-semibold mb-2">Options (Check all correct answers)</label>
+              {#each questionForm.options as option, i}
+                <div class="flex items-center space-x-3 p-2 border border-gray-200 rounded-lg mb-2">
+                  <input 
+                    type="checkbox" 
+                    value={option}
+                    checked={questionForm.correct_answer.split(',').includes(option)}
+                    on:change={(e) => {
+                      let correctAnswers = questionForm.correct_answer ? questionForm.correct_answer.split(',').filter(a => a.trim()) : [];
+                      if (e.target.checked) {
+                        if (!correctAnswers.includes(option)) correctAnswers.push(option);
+                      } else {
+                        correctAnswers = correctAnswers.filter(a => a !== option);
+                      }
+                      questionForm.correct_answer = correctAnswers.join(',');
+                    }}
+                    class="w-4 h-4 text-blue-600"
+                  />
+                  <input 
+                    class="flex-1 px-3 py-2 border border-gray-300 rounded-lg" 
+                    bind:value={questionForm.options[i]} 
+                    placeholder="Option {i + 1}"
+                  />
+                </div>
+              {/each}
+              <button on:click={addOption} class="mt-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg">
+                ➕ Add Option
+              </button>
+            </div>
+          {:else if questionForm.question_type === 'dropdown_select'}
+            <div>
+              <label class="block text-sm font-semibold mb-2">Dropdown Options</label>
+              {#each questionForm.options as option, i}
+                <div class="flex items-center space-x-3 p-2 border border-gray-200 rounded-lg mb-2">
+                  <input 
+                    type="radio" 
+                    name="correct_answer_dropdown_modal" 
+                    value={option} 
+                    bind:group={questionForm.correct_answer}
+                    class="w-4 h-4 text-blue-600"
+                  />
+                  <input 
+                    class="flex-1 px-3 py-2 border border-gray-300 rounded-lg" 
+                    bind:value={questionForm.options[i]} 
+                    placeholder="Option {i + 1}"
+                  />
+                </div>
+              {/each}
+              <button on:click={addOption} class="mt-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg">
+                ➕ Add Option
+              </button>
+            </div>
+          {:else if questionForm.question_type === 'fill_in_blanks'}
+            <div>
+              <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
+                <p class="text-sm text-yellow-700">Use _____ (5 underscores) for each blank in your question.</p>
+              </div>
+              <label class="block text-sm font-semibold mb-2">Correct Answers (comma-separated)</label>
+              <input 
+                class="w-full px-4 py-3 border rounded-xl" 
+                bind:value={questionForm.correct_answer} 
+                placeholder="Paris,Europe (comma-separated, in order)"
+              />
+            </div>
+          {:else if questionForm.question_type === 'matching_pairs'}
+            <div>
+              <label class="block text-sm font-semibold mb-2">Correct Pairs (Left:Right format)</label>
+              <textarea 
+                class="w-full px-4 py-3 border rounded-xl resize-none" 
+                rows="3" 
+                bind:value={questionForm.correct_answer} 
+                placeholder="Python:Programming Language,HTML:Markup Language"
+              ></textarea>
+            </div>
+          {:else if questionForm.question_type === 'drag_drop_ordering'}
+            <div>
+              <label class="block text-sm font-semibold mb-2">Items in Correct Order</label>
+              <textarea 
+                class="w-full px-4 py-3 border rounded-xl resize-none" 
+                rows="3" 
+                bind:value={questionForm.correct_answer} 
+                placeholder="First Step,Second Step,Third Step"
+              ></textarea>
+            </div>
+          {:else if questionForm.question_type === 'linear_scale'}
+            <div>
+              <label class="block text-sm font-semibold mb-2">Expected Rating (1-10)</label>
+              <input 
+                class="w-full px-4 py-3 border rounded-xl" 
+                type="number" 
+                bind:value={questionForm.correct_answer} 
+                min="1" 
+                max="10" 
+                placeholder="Expected rating"
+              />
+            </div>
+          {:else if questionForm.question_type === 'code_writing'}
+            <div class="space-y-3">
+              <div>
+                <label class="block text-sm font-semibold mb-2">Programming Language</label>
+                <select class="w-full px-4 py-3 border rounded-xl" bind:value={questionForm.programming_language}>
+                  <option value="python">Python</option>
+                  <option value="c">C</option>
+                  <option value="cpp">C++</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="html">HTML</option>
+                  <option value="java">Java</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-2">Expected Code Solution</label>
+                <textarea 
+                  class="w-full px-4 py-3 border rounded-xl resize-none font-mono" 
+                  rows="4" 
+                  bind:value={questionForm.correct_answer} 
+                  placeholder="Enter expected code solution"
+                ></textarea>
+              </div>
+            </div>
+          {:else if questionForm.question_type === 'sql_query'}
+            <div>
+              <label class="block text-sm font-semibold mb-2">Expected SQL Query</label>
+              <textarea 
+                class="w-full px-4 py-3 border rounded-xl resize-none font-mono" 
+                rows="3" 
+                bind:value={questionForm.correct_answer} 
+                placeholder="SELECT * FROM table_name;"
+              ></textarea>
+            </div>
+          {:else if questionForm.question_type === 'multi_grid'}
+            <div class="space-y-3">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-sm font-semibold mb-2">Rows (one per line)</label>
+                  <textarea 
+                    class="w-full px-3 py-2 border rounded-xl resize-none" 
+                    rows="3" 
+                    bind:value={questionForm.grid_rows}
+                    placeholder="Row 1\nRow 2\nRow 3"
+                  ></textarea>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold mb-2">Columns (one per line)</label>
+                  <textarea 
+                    class="w-full px-3 py-2 border rounded-xl resize-none" 
+                    rows="3" 
+                    bind:value={questionForm.grid_columns}
+                    placeholder="Option A\nOption B\nOption C"
+                  ></textarea>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-2">Correct Answers (Row:Column format)</label>
+                <textarea 
+                  class="w-full px-3 py-2 border rounded-xl resize-none" 
+                  rows="3" 
+                  bind:value={questionForm.correct_answer} 
+                  placeholder="Row 1:Option A\nRow 2:Option B"
+                ></textarea>
+              </div>
             </div>
           {/if}
 
           <div>
             <label class="block text-sm font-semibold mb-2">Correct Answer</label>
-            {#if questionForm.question_type === 'mcq'}
+            {#if questionForm.question_type === 'mcq' || questionForm.question_type === 'dropdown_select'}
               <select bind:value={questionForm.correct_answer} class="w-full px-4 py-3 border rounded-xl">
                 <option value="">Select correct answer</option>
                 {#each questionForm.options.filter(o => o.trim()) as option}
@@ -813,6 +1319,14 @@
                 <option value="True">True</option>
                 <option value="False">False</option>
               </select>
+            {:else if questionForm.question_type === 'multiple_select'}
+              <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <p class="text-sm text-blue-700">💡 Selected: {questionForm.correct_answer || 'None'}</p>
+              </div>
+            {:else if questionForm.question_type === 'fill_in_blanks' || questionForm.question_type === 'matching_pairs' || questionForm.question_type === 'drag_drop_ordering' || questionForm.question_type === 'code_writing' || questionForm.question_type === 'sql_query' || questionForm.question_type === 'multi_grid' || questionForm.question_type === 'linear_scale'}
+              <div class="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                <p class="text-sm text-gray-700">✅ Answer configured above</p>
+              </div>
             {:else}
               <input 
                 bind:value={questionForm.correct_answer}

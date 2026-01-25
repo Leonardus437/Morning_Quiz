@@ -1,0 +1,251 @@
+================================================================================
+TVET Quiz System - Question Types Reference
+Blockchain and Web3 Development Module
+                    Complete Guide for Students and Teachers                    
+                          Generated: January 25, 2026                           
+================================================================================
+
+OVERVIEW
+----------------------------------------
+This document contains all 12 question types supported by the TVET Quiz System,
+specifically designed for Blockchain and Web3 Development education.
+Each question type includes examples relevant to blockchain technology,
+smart contracts, and decentralized applications.
+
+1. MULTIPLE CHOICE QUESTION (MCQ)
+=================================
+
+Description: Students select one correct answer from multiple options
+
+EXAMPLE:
+--------------------
+Question: What is the primary programming language used for Ethereum smart contracts?
+
+  A) JavaScript
+  B) Python
+  C) Solidity
+  D) Java
+
+Correct Answer: C) Solidity
+
+Explanation: Solidity is specifically designed for writing smart contracts on Ethereum blockchain.
+
+--------------------------------------------------------------------------------
+
+2. TRUE/FALSE QUESTION
+======================
+
+Description: Students evaluate a statement as true or false
+
+EXAMPLE:
+--------------------
+Question: Smart contracts on Ethereum are immutable once deployed.
+
+  True
+  False
+
+Correct Answer: True
+
+Explanation: Once deployed, smart contracts cannot be modified, ensuring trust and transparency.
+
+--------------------------------------------------------------------------------
+
+3. SHORT ANSWER QUESTION
+========================
+
+Description: Students provide a brief written response
+
+EXAMPLE:
+--------------------
+Question: Define what a blockchain is in your own words.
+
+Correct Answer: A blockchain is a distributed ledger technology that maintains a continuously growing list of records (blocks) that are linked and secured using cryptography.
+
+Explanation: Accepts various correct definitions focusing on key concepts: distributed, ledger, blocks, cryptography.
+
+--------------------------------------------------------------------------------
+
+4. ESSAY QUESTION
+=================
+
+Description: Students provide detailed written responses
+
+EXAMPLE:
+--------------------
+Question: Explain the advantages and disadvantages of using blockchain technology in supply chain management. Provide specific examples.
+
+Correct Answer: Key points should include: transparency, traceability, immutability, cost considerations, scalability challenges, and real-world examples like Walmart's food tracking.
+
+Explanation: Graded based on depth of analysis, examples provided, and understanding of blockchain principles.
+
+--------------------------------------------------------------------------------
+
+5. MULTIPLE SELECT QUESTION
+===========================
+
+Description: Students can select multiple correct answers
+
+EXAMPLE:
+--------------------
+Question: Which of the following are consensus mechanisms used in blockchain networks? (Select all that apply)
+
+  ☐ Proof of Work (PoW)
+  ☐ Proof of Stake (PoS)
+  ☐ HTTP Protocol
+  ☐ Delegated Proof of Stake (DPoS)
+  ☐ FTP Transfer
+
+Correct Answer: Proof of Work (PoW), Proof of Stake (PoS), Delegated Proof of Stake (DPoS)
+
+Explanation: Multiple consensus mechanisms exist. HTTP and FTP are network protocols, not consensus mechanisms.
+
+--------------------------------------------------------------------------------
+
+6. DROPDOWN SELECT QUESTION
+===========================
+
+Description: Students select from a dropdown menu
+
+EXAMPLE:
+--------------------
+Question: The gas limit in Ethereum transactions refers to:
+
+  Select an option...
+  The maximum amount of gas units willing to spend
+  The current price of Ethereum
+  The number of confirmations needed
+  The wallet balance
+
+Correct Answer: The maximum amount of gas units willing to spend
+
+Explanation: Gas limit prevents infinite loops and controls transaction costs.
+
+--------------------------------------------------------------------------------
+
+7. FILL IN THE BLANKS
+=====================
+
+Description: Students complete sentences with missing words
+
+EXAMPLE:
+--------------------
+Question: In Solidity, the _____ keyword is used to declare state variables that cannot be changed after contract deployment, while _____ variables can be modified.
+
+Correct Answer: constant, public (or other valid variable types)
+
+Explanation: Uses underscores (____) to indicate blanks. Students fill in appropriate Solidity keywords.
+
+--------------------------------------------------------------------------------
+
+8. MATCHING PAIRS
+=================
+
+Description: Students match items from two columns
+
+EXAMPLE:
+--------------------
+Question: Match the blockchain terms with their definitions:
+
+Left Column:
+  • Smart Contract
+  • DApp
+  • Token
+  • Mining
+
+Right Column:
+  • Self-executing contract with terms directly written into code
+  • Decentralized application running on blockchain
+  • Digital asset representing value or utility
+  • Process of validating transactions and adding blocks
+
+Correct Answer: Smart Contract → Self-executing contract, DApp → Decentralized application, Token → Digital asset, Mining → Process of validating transactions
+
+Explanation: Students drag and drop or draw lines to connect related items.
+
+--------------------------------------------------------------------------------
+
+9. DRAG & DROP ORDERING
+=======================
+
+Description: Students arrange items in correct sequence
+
+EXAMPLE:
+--------------------
+Question: Arrange the steps of deploying a smart contract in the correct order:
+
+Items to arrange:
+  • Write Solidity code
+  • Compile the contract
+  • Deploy to testnet for testing
+  • Deploy to mainnet
+  • Test contract functions
+
+Correct Answer: 1. Write Solidity code → 2. Compile the contract → 3. Deploy to testnet for testing → 4. Test contract functions → 5. Deploy to mainnet
+
+Explanation: Proper development workflow ensures contract security and functionality.
+
+--------------------------------------------------------------------------------
+
+10. LINEAR SCALE RATING
+=======================
+
+Description: Students rate on a scale of 1-10
+
+EXAMPLE:
+--------------------
+Question: On a scale of 1-10, how important is security auditing for smart contracts before mainnet deployment?
+
+Scale: 1 (Not Important) ←→ 10 (Extremely Important)
+
+Correct Answer: 9-10 (Expected range)
+
+Explanation: Security auditing is crucial due to immutability and financial risks in smart contracts.
+
+--------------------------------------------------------------------------------
+
+11. CODE WRITING QUESTION
+=========================
+
+Description: Students write code in Solidity or other languages
+
+EXAMPLE:
+--------------------
+Question: Write a simple Solidity function that stores and retrieves a string value:
+
+Programming Language: Solidity
+
+Correct Answer: pragma solidity ^0.8.0;
+
+contract SimpleStorage {
+    string private storedData;
+    
+    function setData(string memory _data) public {
+        storedData = _data;
+    }
+    
+    function getData() public view returns (string memory) {
+        return storedData;
+    }
+}
+
+Explanation: Students must demonstrate understanding of Solidity syntax, state variables, and function visibility.
+
+--------------------------------------------------------------------------------
+
+12. SQL QUERY QUESTION
+======================
+
+Description: Students write database queries (for blockchain data analysis)
+
+EXAMPLE:
+--------------------
+Question: Write a SQL query to find all transactions with value greater than 1 ETH from a blockchain transactions table:
+
+Correct Answer: SELECT * FROM transactions 
+WHERE value > 1000000000000000000 
+ORDER BY block_number DESC;
+
+Explanation: Query demonstrates understanding of blockchain data structure and Wei to ETH conversion (1 ETH = 10^18 Wei).
+
+--------------------------------------------------------------------------------
+
