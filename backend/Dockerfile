@@ -1,12 +1,26 @@
-FROM python:3.11-slim
+FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
-# Improve reliability: avoid pip self-upgrade and add timeouts/retries
-ENV PIP_DEFAULT_TIMEOUT=300 PIP_RETRIES=10 PIP_DISABLE_PIP_VERSION_CHECK=1
-RUN pip install --no-cache-dir --prefer-binary --timeout 300 --retries 10 -r requirements.txt
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
 COPY . .
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Create uploads directory
+RUN mkdir -p uploads/chat uploads/schedules
+
+# Expose port
+EXPOSE $PORT
+
+# Start command
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT
