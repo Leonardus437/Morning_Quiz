@@ -34,9 +34,14 @@
     grid_columns: ''
   };
 
-  // SPA Layout variables
-  let selectedQuestionType = 'mcq';
-  let showQuestionTypeDetails = true;
+  // Upload options
+  let activeTab = 'questions';
+  let showUploadModal = false;
+  let uploadFile = null;
+  let uploadType = 'text';
+  let uploadDepartment = '';
+  let uploadLevel = '';
+  let uploadLessonId = null;
   
   // Question type descriptions and examples
   const questionTypeDetails = {

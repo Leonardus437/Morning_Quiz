@@ -320,7 +320,7 @@ Left Items              Right Items
    ```
 
 3. **Login as Student**:
-   - Go to: http://localhost:3000
+   - Go to: https://tsskwizi.pages.dev
    - Username: `student001`
    - Password: `pass123`
 

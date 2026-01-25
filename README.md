@@ -34,6 +34,14 @@ Your quiz system now supports **12 question types** (up from 4) - **MORE THAN GO
 | Drag & Drop | ❌ | ✅ | 🏆 US |
 | Fill-in-Blanks | ❌ | ✅ | 🏆 US |
 
+## 🌐 LIVE DEMO
+
+**🚀 Try it now**: https://tsskwizi.pages.dev
+
+- **Student Login**: `student001` / `pass123`
+- **Teacher Panel**: https://tsskwizi.pages.dev/teacher
+- **Teacher Login**: `teacher001` / `teacher123`
+
 ### 🎯 Quick Start (5 Minutes)
 
 ```bash
@@ -48,7 +56,7 @@ python test_advanced_questions.py
 # Creates 10 sample questions
 
 # 3. Test in browser
-# http://localhost:3000/teacher
+# https://tsskwizi.pages.dev/teacher
 # Login: teacher001 / teacher123
 # Create quiz with new question types!
 ```

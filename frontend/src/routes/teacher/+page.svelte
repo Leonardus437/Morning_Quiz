@@ -202,13 +202,9 @@
         
         if (userData.role === 'teacher') {
           // Test token validity
-          const testResponse = await fetch('http://localhost:8000/auth/test', {
-            headers: {
-              'Authorization': `Bearer ${storedToken}`
-            }
-          })
+          const testResponse = await api.testAuth()
           
-          if (testResponse.ok) {
+          if (testResponse) {
             console.log('Token is valid, logging in user')
             api.setToken(storedToken)
             user.login(userData)
@@ -262,23 +258,7 @@
     try {
       console.log('Attempting login for:', username)
       
-      const response = await fetch('http://localhost:8000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password
-        })
-      })
-      
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.detail || 'Login failed')
-      }
-      
-      const result = await response.json()
+      const result = await api.login(username, password)
       console.log('Login successful:', result.user)
       
       if (result.user.role !== 'teacher') {
@@ -320,30 +300,14 @@
         return
       }
       
-      const headers = { 
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-      
+      // Use API client methods instead of direct fetch
       const [questionsData, quizzesData, schedulesData, announcementsData, lessonsData, notificationsData] = await Promise.all([
-        fetch('http://localhost:8000/questions', { headers }).then(r => {
-          if (r.status === 401 || r.status === 403) {
-            console.log('Auth failed for questions')
-            return []
-          }
-          return r.ok ? r.json() : []
-        }).catch(() => []),
-        fetch('http://localhost:8000/quizzes', { headers }).then(r => {
-          if (r.status === 401 || r.status === 403) {
-            console.log('Auth failed for quizzes')
-            return []
-          }
-          return r.ok ? r.json() : []
-        }).catch(() => []),
-        fetch('http://localhost:8000/schedules', { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
-        fetch('http://localhost:8000/announcements', { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
-        fetch('http://localhost:8000/lessons', { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
-        fetch('http://localhost:8000/notifications', { headers }).then(r => r.ok ? r.json() : []).catch(() => [])
+        api.getQuestions().catch(() => []),
+        api.getQuizzes().catch(() => []),
+        api.getSchedules().catch(() => []),
+        api.getAnnouncements().catch(() => []),
+        api.getLessons().catch(() => []),
+        api.getNotifications().catch(() => [])
       ])
       
       questions = [...questionsData]
@@ -433,17 +397,8 @@
 
   async function loadMyClasses() {
     try {
-      const token = localStorage.getItem('token')
-      const response = await fetch('http://localhost:8000/teacher/my-classes', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      })
-      if (response.ok) {
-        myClasses = await response.json()
-        console.log('Loaded classes:', myClasses)
-      } else {
-        console.log('Failed to load classes, status:', response.status)
-        myClasses = []
-      }
+      myClasses = await api.getMyClasses()
+      console.log('Loaded classes:', myClasses)
     } catch (err) {
       console.error('Failed to load classes:', err)
       myClasses = []
@@ -490,7 +445,8 @@
       const formData = new FormData()
       formData.append('file', selectedFile)
       
-      const response = await fetch('http://localhost:8000/upload-questions', {
+      const apiBase = api.baseURL
+      const response = await fetch(`${apiBase}/upload-questions`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -598,7 +554,7 @@
         lesson_id: parseInt(q.lesson_id)
       }))
       
-      const response = await fetch('http://localhost:8000/questions/bulk', {
+      const response = await fetch(`${api.baseURL}/questions/bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -724,7 +680,7 @@
     }
     
     const token = localStorage.getItem('token')
-    const response = await fetch('http://localhost:8000/questions', {
+    const response = await fetch(`${api.baseURL}/questions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -782,7 +738,7 @@
       console.log('Creating quiz with data:', quizData)
       
       // Direct fetch with better error handling
-      const response = await fetch('http://localhost:8000/quizzes', {
+      const response = await fetch(`${api.baseURL}/quizzes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1058,7 +1014,7 @@
         password: 'student123'
       }
       
-      const response = await fetch('http://localhost:8000/teacher/upload-students', {
+      const response = await fetch(`${api.baseURL}/teacher/upload-students`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1105,7 +1061,7 @@
       formData.append('file', selectedStudentFile)
       
       console.log('Sending file to backend...')
-      const response = await fetch('http://localhost:8000/teacher/upload-students-file', {
+      const response = await fetch(`${api.baseURL}/teacher/upload-students-file`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -1144,7 +1100,7 @@
       
       console.log('Uploading', studentsToUpload.length, 'students to database...')
       
-      const uploadResponse = await fetch('http://localhost:8000/teacher/upload-students', {
+      const uploadResponse = await fetch(`${api.baseURL}/teacher/upload-students`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -283,9 +283,9 @@
                       <p class="font-medium">Write a Python function to calculate factorial:</p>
                       <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm">
                         <div>def factorial(n):</div>
-                        <div>&nbsp;&nbsp;&nbsp;&nbsp;if n <= 1:</div>
-                        <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 1</div>
-                        <div>&nbsp;&nbsp;&nbsp;&nbsp;return n * factorial(n-1)</div>
+                        <div>    if n &lt;= 1:</div>
+                        <div>        return 1</div>
+                        <div>    return n * factorial(n-1)</div>
                       </div>
                     </div>
                   {:else if selectedQuestionType === 'multi_grid'}
