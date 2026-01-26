@@ -144,6 +144,13 @@ def parse_advanced_question(text):
         result['text'] = parts[0].strip()
         if len(parts) > 1:
             result['answer'] = parts[1].strip()
+    
+    elif re.search(r'multi.{0,5}grid|matrix|table.{0,10}question', text, re.IGNORECASE):
+        result['type'] = 'multi_grid'
+        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
+        result['text'] = parts[0].strip()
+        if len(parts) > 1:
+            result['answer'] = parts[1].strip()
             
     else:
         # Default to multiple choice
