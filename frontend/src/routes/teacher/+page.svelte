@@ -147,7 +147,7 @@
         
         if (userData.role === 'teacher') {
           // Test token validity
-          const testResponse = await fetch('http://localhost:8000/auth/test', {
+          const testResponse = await fetch(`${api.baseURL}/auth/test`, {
             headers: {
               'Authorization': `Bearer ${storedToken}`
             }
@@ -263,25 +263,28 @@
         'Content-Type': 'application/json'
       };
       
+      // Use api.baseURL to get correct backend URL (Render or localhost)
+      const baseURL = api.baseURL;
+      
       const [questionsData, quizzesData, schedulesData, announcementsData, lessonsData, notificationsData] = await Promise.all([
-        fetch('http://localhost:8000/questions', { headers }).then(r => {
+        fetch(`${baseURL}/questions`, { headers }).then(r => {
           if (r.status === 401 || r.status === 403) {
             console.log('Auth failed for questions');
             return [];
           }
           return r.ok ? r.json() : [];
         }).catch(() => []),
-        fetch('http://localhost:8000/quizzes', { headers }).then(r => {
+        fetch(`${baseURL}/quizzes`, { headers }).then(r => {
           if (r.status === 401 || r.status === 403) {
             console.log('Auth failed for quizzes');
             return [];
           }
           return r.ok ? r.json() : [];
         }).catch(() => []),
-        fetch('http://localhost:8000/schedules', { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
-        fetch('http://localhost:8000/announcements', { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
-        fetch('http://localhost:8000/lessons', { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
-        fetch('http://localhost:8000/notifications', { headers }).then(r => r.ok ? r.json() : []).catch(() => [])
+        fetch(`${baseURL}/schedules`, { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
+        fetch(`${baseURL}/announcements`, { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
+        fetch(`${baseURL}/lessons`, { headers }).then(r => r.ok ? r.json() : []).catch(() => []),
+        fetch(`${baseURL}/notifications`, { headers }).then(r => r.ok ? r.json() : []).catch(() => [])
       ]);
       
       questions = [...questionsData];
@@ -396,7 +399,7 @@
   async function loadMyClasses() {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/teacher/my-classes', {
+      const response = await fetch(`${api.baseURL}/teacher/my-classes`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) {
@@ -443,7 +446,7 @@
       const formData = new FormData();
       formData.append('file', selectedFile);
       
-      const response = await fetch('http://localhost:8000/upload-questions', {
+      const response = await fetch(`${api.baseURL}/upload-questions`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -540,7 +543,7 @@
         lesson_id: parseInt(q.lesson_id)
       }));
       
-      const response = await fetch('http://localhost:8000/questions/bulk', {
+      const response = await fetch(`${api.baseURL}/questions/bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -656,7 +659,7 @@
     };
     
     const token = localStorage.getItem('token');
-    const response = await fetch('http://localhost:8000/questions', {
+    const response = await fetch(`${api.baseURL}/questions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -715,7 +718,7 @@
       console.log('Creating quiz with data:', quizData);
       
       // Direct fetch with better error handling
-      const response = await fetch('http://localhost:8000/quizzes', {
+      const response = await fetch(`${api.baseURL}/quizzes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -993,7 +996,7 @@
         password: 'student123'
       };
       
-      const response = await fetch('http://localhost:8000/teacher/upload-students', {
+      const response = await fetch(`${api.baseURL}/teacher/upload-students`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1041,7 +1044,7 @@
       formData.append('file', selectedStudentFile);
       
       console.log('Sending file to backend...');
-      const response = await fetch('http://localhost:8000/teacher/upload-students-file', {
+      const response = await fetch(`${api.baseURL}/teacher/upload-students-file`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -1080,7 +1083,7 @@
       
       console.log('Uploading', studentsToUpload.length, 'students to database...');
       
-      const uploadResponse = await fetch('http://localhost:8000/teacher/upload-students', {
+      const uploadResponse = await fetch(`${api.baseURL}/teacher/upload-students`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1287,7 +1290,7 @@
                   on:click={async () => {
                     try {
                       loading = true;
-                      const response = await fetch('http://localhost:8000/reset-teacher-password?username=' + encodeURIComponent(username), {
+                      const response = await fetch(`${api.baseURL}/reset-teacher-password?username=` + encodeURIComponent(username), {
                         method: 'POST'
                       });
                       if (response.ok) {
@@ -1558,7 +1561,7 @@
                       </div>
                     </div>
                     <a 
-                      href="http://localhost:8000/schedules/{schedule.id}/download"
+                      href="{api.baseURL}/schedules/{schedule.id}/download"
                       target="_blank"
                       class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
                     >

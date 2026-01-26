@@ -47,140 +47,90 @@ except Exception as e:
             return 0, "Incorrect"
 
 def parse_advanced_question(text):
-    """Parse question text and detect advanced question types"""
+    """Parse ANY question format - bulletproof version"""
     import re
     
     text = text.strip()
-    if len(text) < 10:
+    if len(text) < 5:
         return None
     
-    # Initialize result
-    result = {
-        'text': '',
-        'type': 'multiple_choice',
-        'options': [],
-        'answer': ''
-    }
+    result = {'text': '', 'type': 'multiple_choice', 'options': [], 'answer': ''}
     
-    # Detect question type patterns
-    if re.search(r'\b(true|false)\b', text, re.IGNORECASE) and re.search(r'\?', text):
+    # Split by answer
+    parts = re.split(r'\s*(?:answer|ans|correct|solution)\s*:\s*', text, maxsplit=1, flags=re.IGNORECASE)
+    question_text = parts[0].strip()
+    answer_text = parts[1].strip() if len(parts) > 1 else ''
+    
+    # Extract options first
+    def extract_opts(txt):
+        for pattern in [r'([A-Z])\)\s*([^A-Z\)]+?)(?=[A-Z]\)|$)', r'([a-z])\)\s*([^a-z\)]+?)(?=[a-z]\)|$)']:
+            matches = re.findall(pattern, txt)
+            if matches and len(matches) >= 2:
+                return [m[1].strip() for m in matches]
+        return []
+    
+    options = extract_opts(question_text)
+    
+    # Type detection
+    if re.search(r'\b(true|false)\b', text, re.IGNORECASE) and (re.search(r'\?', question_text) or not options):
         result['type'] = 'true_false'
-        result['text'] = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)[0].strip()
-        answer_match = re.search(r'answer\s*:\s*(true|false)', text, re.IGNORECASE)
-        result['answer'] = answer_match.group(1).lower() if answer_match else 'true'
+        result['text'] = re.sub(r'\s*\b(true|false)\b\s*$', '', question_text, flags=re.IGNORECASE).strip()
         result['options'] = ['True', 'False']
-        
+        result['answer'] = 'True' if 'true' in answer_text.lower() else 'False'
+    elif re.search(r'_{3,}|\[blank\]', question_text):
+        result['type'] = 'fill_blanks'
+        result['text'] = question_text
+        result['answer'] = answer_text or 'answer'
+    elif re.search(r'\b(code|program|function|python|java|javascript)\b', text, re.IGNORECASE):
+        result['type'] = 'code_writing'
+        result['text'] = question_text
+        result['answer'] = answer_text or '// code'
+    elif re.search(r'\b(sql|query|select|database)\b', text, re.IGNORECASE):
+        result['type'] = 'sql_query'
+        result['text'] = question_text
+        result['answer'] = answer_text or 'SELECT *'
     elif re.search(r'select all|choose all|multiple correct', text, re.IGNORECASE):
         result['type'] = 'multiple_select'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-        # Extract options
-        options = re.findall(r'[A-Z]\)\s*([^A-Z\)]+)', result['text'])
-        result['options'] = [opt.strip() for opt in options]
-        
-    elif re.search(r'fill.{0,10}blank|complete.{0,10}sentence', text, re.IGNORECASE):
-        result['type'] = 'fill_blanks'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-            
-    elif re.search(r'match|pair|connect', text, re.IGNORECASE):
+        result['text'] = question_text
+        result['options'] = options
+        result['answer'] = answer_text or 'A,B'
+    elif re.search(r'match|pair', text, re.IGNORECASE):
         result['type'] = 'drag_drop_match'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-            
-    elif re.search(r'order|arrange|sequence|sort', text, re.IGNORECASE):
+        result['text'] = question_text
+        result['answer'] = answer_text or 'A-1'
+    elif re.search(r'order|arrange|sequence', text, re.IGNORECASE):
         result['type'] = 'drag_drop_order'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-            
-    elif re.search(r'rate|scale|1.{0,5}10|rating', text, re.IGNORECASE):
+        result['text'] = question_text
+        result['answer'] = answer_text or '1,2,3'
+    elif re.search(r'rate|scale|1.{0,5}10', text, re.IGNORECASE):
         result['type'] = 'linear_scale'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        result['answer'] = '5'  # Default middle rating
-        
-    elif re.search(r'code|program|function|algorithm|python|java|javascript', text, re.IGNORECASE):
-        result['type'] = 'code_writing'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-            
-    elif re.search(r'sql|query|database|select|insert|update|delete', text, re.IGNORECASE):
-        result['type'] = 'sql_query'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-            
-    elif re.search(r'dropdown|select from', text, re.IGNORECASE):
-        result['type'] = 'dropdown_select'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-        # Extract options
-        options = re.findall(r'[A-Z]\)\s*([^A-Z\)]+)', result['text'])
-        result['options'] = [opt.strip() for opt in options]
-        
-    elif re.search(r'short answer|brief|explain briefly', text, re.IGNORECASE):
-        result['type'] = 'short_answer'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-            
-    elif re.search(r'essay|discuss|elaborate|explain in detail', text, re.IGNORECASE):
+        result['text'] = question_text
+        result['answer'] = answer_text or '5'
+    elif re.search(r'essay|discuss|elaborate', text, re.IGNORECASE):
         result['type'] = 'essay'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-    
-    elif re.search(r'multi.{0,5}grid|matrix|table.{0,10}question', text, re.IGNORECASE):
-        result['type'] = 'multi_grid'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        if len(parts) > 1:
-            result['answer'] = parts[1].strip()
-            
-    else:
-        # Default to multiple choice
+        result['text'] = question_text
+        result['answer'] = answer_text or 'Essay answer'
+    elif re.search(r'short answer|brief', text, re.IGNORECASE):
+        result['type'] = 'short_answer'
+        result['text'] = question_text
+        result['answer'] = answer_text or 'Answer'
+    elif options and len(options) >= 2:
         result['type'] = 'multiple_choice'
-        parts = re.split(r'\s*answer\s*:', text, flags=re.IGNORECASE)
-        result['text'] = parts[0].strip()
-        
-        # Extract options (A) B) C) D) format
-        options = re.findall(r'[A-Z]\)\s*([^A-Z\)]+)', result['text'])
-        if options:
-            result['options'] = [opt.strip() for opt in options]
-            # Extract answer
-            if len(parts) > 1:
-                answer_text = parts[1].strip()
-                # Look for single letter answer
-                answer_match = re.search(r'\b([A-Z])\b', answer_text)
-                result['answer'] = answer_match.group(1) if answer_match else 'A'
+        result['options'] = options
+        result['text'] = re.sub(r'[A-Za-z]\)\s*[^A-Za-z\)]+', '', question_text).strip()
+        if answer_text:
+            letter_match = re.search(r'\b([A-Za-z])\b', answer_text)
+            if letter_match:
+                idx = ord(letter_match.group(1).upper()) - ord('A')
+                result['answer'] = options[idx] if 0 <= idx < len(options) else options[0]
             else:
-                result['answer'] = 'A'
+                result['answer'] = answer_text
         else:
-            # No options found, might be short answer
-            result['type'] = 'short_answer'
-            if len(parts) > 1:
-                result['answer'] = parts[1].strip()
-    
-    # Clean up text - remove options from question text for MCQ
-    if result['type'] in ['multiple_choice', 'dropdown_select', 'multiple_select']:
-        # Remove options from question text
-        clean_text = re.sub(r'\s*[A-Z]\)\s*[^A-Z\)]+', '', result['text'])
-        result['text'] = clean_text.strip()
+            result['answer'] = options[0]
+    else:
+        result['type'] = 'short_answer'
+        result['text'] = question_text
+        result['answer'] = answer_text or 'Answer'
     
     return result if result['text'] else None
 
