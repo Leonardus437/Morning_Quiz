@@ -215,6 +215,15 @@ class ApiClient {
       this.initToken();
     }
 
+    // CRITICAL: Always sync token from localStorage FIRST before any request
+    if (browser) {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken && storedToken !== this._token) {
+        this._token = storedToken;
+        console.log('[API] Token synced from localStorage');
+      }
+    }
+
     const method = options.method || 'GET';
     const cacheKey = `${method}:${endpoint}`;
     
@@ -251,14 +260,6 @@ class ApiClient {
       },
       ...options
     };
-
-    // Always sync token from localStorage before request
-    if (browser && !this._token) {
-      const storedToken = localStorage.getItem('token');
-      if (storedToken) {
-        this._token = storedToken;
-      }
-    }
 
     if (this._token) {
       config.headers.Authorization = `Bearer ${this._token}`;
@@ -298,10 +299,23 @@ class ApiClient {
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
           // For auth errors, clear token to force re-login
-          if (endpoint !== '/auth/test') { // Don't clear for auth test to prevent loops
-            this.clearToken();
+          // BUT: Don't clear on first 401 - token might just need to be refreshed
+          if (endpoint !== '/auth/test' && endpoint !== '/auth/login') {
+            console.warn('[API] 401 Unauthorized - Token may be expired');
+            // Try to get fresh token from localStorage one more time
+            if (browser) {
+              const freshToken = localStorage.getItem('token');
+              if (freshToken && freshToken !== this._token) {
+                console.log('[API] Found different token in localStorage, will retry');
+                this._token = freshToken;
+                // Don't clear yet - let the caller retry
+              } else {
+                // Only clear if we're sure the token is invalid
+                this.clearToken();
+              }
+            }
           }
-          throw new Error('Authentication failed');
+          throw new Error('Invalid token. Please login again.');
         }
         
         // For 400 errors, try to get the error message from response
@@ -425,7 +439,9 @@ class ApiClient {
           access_token: result.access_token
         };
         localStorage.setItem('user', JSON.stringify(userWithToken));
+        localStorage.setItem('token', result.access_token); // Double-ensure token is saved
         console.log('🔐 API: User with token stored in localStorage');
+        console.log('🔐 API: Token verified in storage:', localStorage.getItem('token') === result.access_token);
       }
       
       return result;

@@ -122,9 +122,17 @@
   $: isLoggedIn = $user !== null && $user.role === 'teacher';
 
   let refreshInterval;
+  let lastNotificationCheck = 0; // Track last notification timestamp
   
   onMount(async () => {
     console.log('Teacher page mounted');
+    
+    // Check URL parameters for tab
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    if (tabParam) {
+      activeTab = tabParam;
+    }
     
     // Check if user is already logged in
     const storedUser = localStorage.getItem('user');
@@ -320,15 +328,27 @@
           const newNotifications = await api.getNotifications();
           const newUnreadCount = newNotifications.filter(n => !n.is_read).length;
           
-          // Show widget if new notifications arrived
+          // Only show widget if there are TRULY NEW notifications
+          // (notifications created AFTER our last check)
           if (newUnreadCount > unreadCount && newUnreadCount > 0) {
-            latestNotifications = newNotifications.filter(n => !n.is_read).slice(0, 3);
-            showNotificationWidget = true;
-            setTimeout(() => {
-              showNotificationWidget = false;
-            }, 5000);
+            // Check if any notifications are actually new (created after last check)
+            const trulyNewNotifications = newNotifications.filter(n => {
+              if (n.is_read) return false;
+              const notifTime = new Date(n.created_at).getTime();
+              return notifTime > lastNotificationCheck;
+            });
+            
+            if (trulyNewNotifications.length > 0) {
+              latestNotifications = trulyNewNotifications.slice(0, 3);
+              showNotificationWidget = true;
+              setTimeout(() => {
+                showNotificationWidget = false;
+              }, 5000);
+            }
           }
           
+          // Update last check time
+          lastNotificationCheck = Date.now();
           notifications = newNotifications;
           unreadCount = newUnreadCount;
         } catch (err) {
@@ -1353,10 +1373,10 @@
             🔔 Notifications {#if unreadCount > 0}<span class="ml-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full">{unreadCount}</span>{/if}
           </button>
           <button
-            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'create-question' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
-            on:click={() => activeTab = 'create-question'}
+            class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'questions' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
+            on:click={() => activeTab = 'questions'}
           >
-            ➕ Add Question
+            📝 My Questions
           </button>
           <button
             class="flex-1 px-6 py-3 rounded-lg font-medium transition-all {activeTab === 'create-quiz' ? 'bg-green-600 text-white shadow-md' : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'}"
