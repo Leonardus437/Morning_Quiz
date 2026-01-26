@@ -3308,13 +3308,14 @@ def get_unread_count(current_user: User = Depends(get_current_user), db: Session
 
 @app.put("/chat/rooms/{room_id}")
 def update_chat_room(room_id: int, data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    """Update a chat room (creator only)"""
+    """Update a chat room (creator or admin only)"""
     room = db.query(ChatRoom).filter(ChatRoom.id == room_id).first()
     if not room:
         raise HTTPException(status_code=404, detail="Chat room not found")
     
-    if room.created_by != current_user.id:
-        raise HTTPException(status_code=403, detail="Only the room creator can edit this room")
+    # Allow creator or admin to edit
+    if room.created_by != current_user.id and current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only the room creator or admin can edit this room")
     
     room.name = data.get("name", room.name)
     db.commit()
@@ -3336,9 +3337,20 @@ def delete_chat_room(room_id: int, current_user: User = Depends(get_current_user
     if not room:
         raise HTTPException(status_code=404, detail="Chat room not found")
     
-    # Only creator or admin can delete
+    # Allow creator or admin to delete
     if room.created_by != current_user.id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Only the room creator or admin can delete this room")
+    
+    # Get all message IDs in this room
+    room_message_ids = [m.id for m in db.query(ChatMessage.id).filter(ChatMessage.room_id == room_id).all()]
+    
+    # Delete message reactions first
+    if room_message_ids:
+        db.query(MessageReaction).filter(MessageReaction.message_id.in_(room_message_ids)).delete(synchronize_session=False)
+    
+    # Nullify reply_to_id for messages in this room
+    if room_message_ids:
+        db.query(ChatMessage).filter(ChatMessage.reply_to_id.in_(room_message_ids)).update({ChatMessage.reply_to_id: None}, synchronize_session=False)
     
     # Delete all messages in the room
     db.query(ChatMessage).filter(ChatMessage.room_id == room_id).delete(synchronize_session=False)
