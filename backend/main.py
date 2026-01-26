@@ -1930,6 +1930,11 @@ def clear_all_students(current_user: User = Depends(get_current_user), db: Sessi
         reactions_by_students = db.query(MessageReaction).filter(MessageReaction.user_id.in_(student_ids)).delete(synchronize_session=False)
         print(f"✅ Deleted {reactions_by_students} reactions by students")
         
+        # Nullify reply_to_id for messages that reply to student messages
+        if student_message_ids:
+            replies_updated = db.query(ChatMessage).filter(ChatMessage.reply_to_id.in_(student_message_ids)).update({ChatMessage.reply_to_id: None}, synchronize_session=False)
+            print(f"✅ Nullified {replies_updated} message replies")
+        
         # Delete chat messages
         messages_deleted = db.query(ChatMessage).filter(ChatMessage.sender_id.in_(student_ids)).delete(synchronize_session=False)
         print(f"✅ Deleted {messages_deleted} chat messages")
