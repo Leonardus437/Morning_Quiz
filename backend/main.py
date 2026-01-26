@@ -2806,6 +2806,10 @@ def get_chat_rooms(current_user: User = Depends(get_current_user), db: Session =
 @app.post("/chat/rooms")
 def create_chat_room(data: Dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     """Create a new chat room"""
+    # Allow both admin and teacher to create rooms
+    if current_user.role not in ["admin", "teacher"]:
+        raise HTTPException(status_code=403, detail="Only admins and teachers can create chat rooms")
+    
     room_type = data.get("room_type")
     name = data.get("name")
     department = data.get("department")
@@ -2851,14 +2855,31 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
                         type="chat_room"
                     )
                     db.add(notif)
+        
+        # Add ALL teachers from that department
+        teachers = db.query(User).filter(User.role == "teacher").all()
+        for teacher in teachers:
+            if teacher.departments and department in teacher.departments:
+                if teacher.id != current_user.id:  # Don't add creator twice
+                    p = ChatParticipant(room_id=room.id, user_id=teacher.id)
+                    db.add(p)
+                    participants_added += 1
                     
+                    if notify_participants:
+                        notif = Notification(
+                            user_id=teacher.id,
+                            title=f"💬 New Chat Room: {name}",
+                            message=f"You've been added to '{name}' for {department} - {level}.",
+                            type="chat_room"
+                        )
+                        db.add(notif)
+        
         # Add class teacher if exists
         class_teacher = db.query(ClassTeacher).filter(
             ClassTeacher.department == department,
             ClassTeacher.level == level
         ).first()
-        if class_teacher:
-            # Check if not already added
+        if class_teacher and class_teacher.teacher_id != current_user.id:
             existing = db.query(ChatParticipant).filter(
                 ChatParticipant.room_id == room.id,
                 ChatParticipant.user_id == class_teacher.teacher_id
@@ -2868,7 +2889,6 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
                 db.add(p)
                 participants_added += 1
                 
-                # Send notification
                 if notify_participants:
                     notif = Notification(
                         user_id=class_teacher.teacher_id,
@@ -2890,7 +2910,6 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
             db.add(p)
             participants_added += 1
             
-            # Send notification
             if notify_participants:
                 notif = Notification(
                     user_id=student.id,
@@ -2900,31 +2919,30 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
                 )
                 db.add(notif)
                 
-        # Add teachers from that department + class teacher
+        # Add ALL teachers from that department
         teachers = db.query(User).filter(User.role == "teacher").all()
         for teacher in teachers:
             if teacher.departments and department in teacher.departments:
-                p = ChatParticipant(room_id=room.id, user_id=teacher.id)
-                db.add(p)
-                participants_added += 1
-                
-                # Send notification
-                if notify_participants:
-                    notif = Notification(
-                        user_id=teacher.id,
-                        title=f"💬 New Chat Room: {name}",
-                        message=f"You've been added to '{name}' chat room for {department} - {level}.",
-                        type="chat_room"
-                    )
-                    db.add(notif)
+                if teacher.id != current_user.id:  # Don't add creator twice
+                    p = ChatParticipant(room_id=room.id, user_id=teacher.id)
+                    db.add(p)
+                    participants_added += 1
+                    
+                    if notify_participants:
+                        notif = Notification(
+                            user_id=teacher.id,
+                            title=f"💬 New Chat Room: {name}",
+                            message=f"You've been added to '{name}' chat room for {department} - {level}.",
+                            type="chat_room"
+                        )
+                        db.add(notif)
                     
         # Add class teacher if exists
         class_teacher = db.query(ClassTeacher).filter(
             ClassTeacher.department == department,
             ClassTeacher.level == level
         ).first()
-        if class_teacher:
-            # Check if not already added
+        if class_teacher and class_teacher.teacher_id != current_user.id:
             existing = db.query(ChatParticipant).filter(
                 ChatParticipant.room_id == room.id,
                 ChatParticipant.user_id == class_teacher.teacher_id
@@ -2934,7 +2952,6 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
                 db.add(p)
                 participants_added += 1
                 
-                # Send notification
                 if notify_participants:
                     notif = Notification(
                         user_id=class_teacher.teacher_id,
@@ -2952,7 +2969,6 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
                 db.add(p)
                 participants_added += 1
                 
-                # Send notification
                 if notify_participants:
                     notif = Notification(
                         user_id=teacher.id,
@@ -2966,26 +2982,27 @@ def create_chat_room(data: Dict, current_user: User = Depends(get_current_user),
         # Add all teachers
         teachers = db.query(User).filter(User.role == "teacher").all()
         for teacher in teachers:
-            p = ChatParticipant(room_id=room.id, user_id=teacher.id)
-            db.add(p)
-            participants_added += 1
-            
-            # Send notification
-            if notify_participants:
-                notif = Notification(
-                    user_id=teacher.id,
-                    title=f"💬 New Chat Room: {name}",
-                    message=f"You've been added to '{name}' with DOS.",
-                    type="chat_room"
-                )
-                db.add(notif)
+            if teacher.id != current_user.id:
+                p = ChatParticipant(room_id=room.id, user_id=teacher.id)
+                db.add(p)
+                participants_added += 1
+                
+                if notify_participants:
+                    notif = Notification(
+                        user_id=teacher.id,
+                        title=f"💬 New Chat Room: {name}",
+                        message=f"You've been added to '{name}' with DOS.",
+                        type="chat_room"
+                    )
+                    db.add(notif)
                 
         # Add DOS
         admins = db.query(User).filter(User.role == "admin").all()
         for admin in admins:
-            p = ChatParticipant(room_id=room.id, user_id=admin.id)
-            db.add(p)
-            participants_added += 1
+            if admin.id != current_user.id:
+                p = ChatParticipant(room_id=room.id, user_id=admin.id)
+                db.add(p)
+                participants_added += 1
     
     db.commit()
     db.refresh(room)
