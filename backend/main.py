@@ -2676,49 +2676,45 @@ def get_my_assigned_class(current_user: User = Depends(get_current_user), db: Se
 def startup_event():
     Base.metadata.create_all(bind=engine)
     
-    # Add missing columns via raw SQL with better error handling
+    # Add missing columns via raw SQL with PostgreSQL IF NOT EXISTS
     db = SessionLocal()
     try:
         from sqlalchemy import text
         
-        # Phase 1: Advanced question types columns
+        # Use IF NOT EXISTS for PostgreSQL compatibility
         migration_queries = [
-            "ALTER TABLE questions ADD COLUMN question_config JSON",
-            "ALTER TABLE questions ADD COLUMN media_url VARCHAR",
-            "ALTER TABLE questions ADD COLUMN correct_answers JSON", 
-            "ALTER TABLE questions ADD COLUMN partial_credit BOOLEAN DEFAULT FALSE",
-            # Other existing migrations
-            "ALTER TABLE quizzes ADD COLUMN results_released BOOLEAN DEFAULT FALSE",
-            "ALTER TABLE quiz_attempts ADD COLUMN needs_review BOOLEAN DEFAULT FALSE",
-            "ALTER TABLE quiz_attempts ADD COLUMN reviewed_by INTEGER",
-            "ALTER TABLE quiz_attempts ADD COLUMN final_score FLOAT",
-            "ALTER TABLE quiz_attempts ADD COLUMN percentage FLOAT DEFAULT 0.0",
-            "ALTER TABLE quiz_attempts ADD COLUMN grade VARCHAR(5) DEFAULT 'F'",
-            "ALTER TABLE quiz_attempts ADD COLUMN total_possible_points FLOAT DEFAULT 0.0",
-            "ALTER TABLE student_answers ADD COLUMN points_earned FLOAT DEFAULT 0.0",
-            "ALTER TABLE student_answers ADD COLUMN ai_feedback VARCHAR",
-            "ALTER TABLE student_answers ADD COLUMN teacher_score FLOAT",
-            "ALTER TABLE student_answers ADD COLUMN teacher_feedback TEXT",
-            "ALTER TABLE chat_rooms ADD COLUMN module_id INTEGER",
-            "ALTER TABLE chat_messages ADD COLUMN file_url VARCHAR",
-            "ALTER TABLE chat_messages ADD COLUMN file_name VARCHAR",
-            "ALTER TABLE chat_messages ADD COLUMN reply_to_id INTEGER"
+            "ALTER TABLE questions ADD COLUMN IF NOT EXISTS question_config JSON",
+            "ALTER TABLE questions ADD COLUMN IF NOT EXISTS media_url VARCHAR",
+            "ALTER TABLE questions ADD COLUMN IF NOT EXISTS correct_answers JSON", 
+            "ALTER TABLE questions ADD COLUMN IF NOT EXISTS partial_credit BOOLEAN DEFAULT FALSE",
+            "ALTER TABLE quizzes ADD COLUMN IF NOT EXISTS results_released BOOLEAN DEFAULT FALSE",
+            "ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS needs_review BOOLEAN DEFAULT FALSE",
+            "ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS reviewed_by INTEGER",
+            "ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS final_score FLOAT",
+            "ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS percentage FLOAT DEFAULT 0.0",
+            "ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS grade VARCHAR(5) DEFAULT 'F'",
+            "ALTER TABLE quiz_attempts ADD COLUMN IF NOT EXISTS total_possible_points FLOAT DEFAULT 0.0",
+            "ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS points_earned FLOAT DEFAULT 0.0",
+            "ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS ai_feedback VARCHAR",
+            "ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_score FLOAT",
+            "ALTER TABLE student_answers ADD COLUMN IF NOT EXISTS teacher_feedback TEXT",
+            "ALTER TABLE chat_rooms ADD COLUMN IF NOT EXISTS module_id INTEGER",
+            "ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS file_url VARCHAR",
+            "ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS file_name VARCHAR",
+            "ALTER TABLE chat_messages ADD COLUMN IF NOT EXISTS reply_to_id INTEGER"
         ]
         
         for query in migration_queries:
             try:
                 db.execute(text(query))
-                print(f"✅ Migration: {query[:50]}...")
+                db.commit()
             except Exception as e:
-                if "already exists" in str(e).lower() or "duplicate column" in str(e).lower():
-                    print(f"⚠️ Column already exists: {query[:50]}...")
-                else:
-                    print(f"❌ Migration failed: {query[:50]}... - {e}")
+                db.rollback()
+                print(f"⚠️ Migration: {query[:50]}... - {str(e)[:50]}")
         
-        db.commit()
         print("✅ Database migration complete")
     except Exception as e:
-        print(f"Migration error: {e}")
+        print(f"❌ Migration error: {e}")
         db.rollback()
     
     try:
