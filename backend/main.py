@@ -1074,12 +1074,33 @@ async def upload_questions_options():
 @app.get("/upload-test")
 def upload_test(current_user: User = Depends(get_current_user)):
     """Test endpoint to verify authentication works"""
-    print(f"✅ UPLOAD TEST: User {current_user.username} authenticated successfully")
+    print(f"\u2705 UPLOAD TEST: User {current_user.username} authenticated successfully")
     return {
         "message": "Upload endpoint is reachable",
         "user": current_user.username,
         "role": current_user.role
     }
+
+@app.post("/upload-questions-debug")
+async def upload_questions_debug(
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    """Debug endpoint to see raw request"""
+    print("\n" + "="*80)
+    print("🔍 DEBUG UPLOAD CALLED")
+    print(f"User: {current_user.username}")
+    print(f"Headers: {dict(request.headers)}")
+    print(f"Method: {request.method}")
+    print("="*80 + "\n")
+    
+    try:
+        form = await request.form()
+        print(f"Form data: {dict(form)}")
+        return {"success": True, "form_keys": list(form.keys())}
+    except Exception as e:
+        print(f"Error: {e}")
+        return {"error": str(e)}
 
 @app.post("/upload-questions-simple")
 async def upload_questions_simple(
@@ -1130,22 +1151,27 @@ async def upload_questions(
     import traceback
     import sys
     
-    print("="*80, file=sys.stderr)
-    print("🚀 UPLOAD ENDPOINT CALLED!", file=sys.stderr)
-    print(f"User: {current_user.username}, Role: {current_user.role}", file=sys.stderr)
-    print(f"File: {file.filename if file else 'NO FILE'}", file=sys.stderr)
-    print(f"Department: {department}, Level: {level}", file=sys.stderr)
-    print("="*80, file=sys.stderr)
+    # Force flush all logs immediately
+    print("\n" + "="*80)
+    print("🚀 UPLOAD ENDPOINT CALLED!")
+    print(f"User: {current_user.username}, Role: {current_user.role}")
+    print(f"File: {file.filename if file else 'NO FILE'}")
+    print(f"Department: {department}, Level: {level}")
+    print("="*80 + "\n")
+    sys.stdout.flush()
     sys.stderr.flush()
     
     try:
+        print(f"\u2705 Checking user role: {current_user.role}")
+        sys.stdout.flush()
+        
         if current_user.role != "teacher":
-            print(f"❌ REJECTED: User is {current_user.role}, not teacher", file=sys.stderr)
-            sys.stderr.flush()
+            print(f"\u274c REJECTED: User is {current_user.role}, not teacher")
+            sys.stdout.flush()
             raise HTTPException(status_code=403, detail="Only teachers can upload questions")
         
-        print(f"📁 Upload request: file={file.filename}, dept={department}, level={level}", file=sys.stderr)
-        sys.stderr.flush()
+        print(f"📁 Upload request: file={file.filename}, dept={department}, level={level}")
+        sys.stdout.flush()
         
         content = await file.read()
         filename = file.filename.lower() if file.filename else "unknown.txt"
@@ -1398,13 +1424,11 @@ async def upload_questions(
         raise
     except Exception as e:
         db.rollback()
-        import traceback
-        import sys
         error_trace = traceback.format_exc()
-        print(f"❌ UPLOAD ERROR: {e}", file=sys.stderr)
-        print(f"📋 Full traceback:", file=sys.stderr)
-        print(error_trace, file=sys.stderr)
-        sys.stderr.flush()
+        print(f"\n\u274c UPLOAD ERROR: {e}")
+        print(f"📋 Full traceback:")
+        print(error_trace)
+        sys.stdout.flush()
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
 @app.put("/questions/{question_id}")

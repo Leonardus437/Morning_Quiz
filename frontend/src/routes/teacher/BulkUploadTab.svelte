@@ -1,4 +1,6 @@
 <script>
+  import { getApiUrl } from '$lib/api.js';
+  
   export let lessons = [];
   export let loading = false;
   export let error = '';
@@ -45,7 +47,8 @@
       formData.append('lesson_id', lessonId);
       
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/questions/upload-text-ai', {
+      const apiUrl = getApiUrl();
+      const response = await fetch(`${apiUrl}/upload-questions`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -61,14 +64,9 @@
       const result = await response.json();
       
       if (result.success) {
-        // Enhanced AI Parser returns questions directly in the response
-        alert(` ${result.message}`);
-        
-        // Reset form
+        alert(` ${result.message || `Successfully uploaded ${result.created} questions!`}`);
         uploadFile = null;
         showPreview = false;
-        
-        // Refresh the page to show new questions
         window.location.reload();
       } else {
         throw new Error(result.message || 'Upload failed');
@@ -82,8 +80,6 @@
       uploading = false;
     }
   }
-  
-  // No longer needed - Enhanced AI Parser saves directly
 </script>
 
 <div>
@@ -169,14 +165,7 @@
       <!-- Template Download -->
       <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px;">
         <h4 style="margin: 0 0 10px 0;"> Need a template?</h4>
-        <p style="margin: 0 0 10px 0; font-size: 14px;">Download our Excel template with examples:</p>
-        <a 
-          href="http://localhost:8000/questions/template/excel" 
-          download
-          style="display: inline-block; padding: 8px 15px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 14px;"
-        >
-           Download Template
-        </a>
+        <p style="margin: 0 0 10px 0; font-size: 14px;">Format your questions as: 1. Question text? A) Option B) Option Answer: A</p>
       </div>
     {/if}
   </div>

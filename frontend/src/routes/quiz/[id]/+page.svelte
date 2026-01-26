@@ -835,15 +835,46 @@
             </div>
           {:else if currentQuestion.question_type === 'code_writing'}
             <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">💻 Write your code:</div>
-              <textarea
-                class="w-full h-64 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 font-mono text-sm {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-gray-900 text-green-400'}"
-                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Write your code here...'}
-                value={answers[currentQuestion.id] || ''}
-                on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                disabled={completedQuestions.has(currentQuestionIndex)}
-                style="background-color: #1a1a1a; color: #00ff00; font-family: 'Courier New', monospace;"
-              ></textarea>
+              <div class="mb-3 text-sm font-semibold text-gray-700">💻 Write your code in the editor below:</div>
+              <div class="bg-gray-900 rounded-lg overflow-hidden border-2 border-gray-700 shadow-2xl">
+                <!-- IDE Header -->
+                <div class="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <div class="flex space-x-2">
+                      <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                      <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                      <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <span class="text-xs text-gray-400 font-mono">code_editor.py</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-xs text-gray-500">Line 1, Col 1</span>
+                  </div>
+                </div>
+                <!-- Line Numbers + Code Area -->
+                <div class="flex">
+                  <div class="bg-gray-800 px-3 py-4 text-gray-500 font-mono text-sm select-none border-r border-gray-700">
+                    {#each Array(15) as _, i}
+                      <div class="leading-6">{i + 1}</div>
+                    {/each}
+                  </div>
+                  <textarea
+                    class="flex-1 p-4 bg-gray-900 text-green-400 font-mono text-sm border-0 focus:ring-0 focus:outline-none leading-6 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50' : ''}"
+                    placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : '# Write your code here...\ndef solution():\n    pass'}
+                    value={answers[currentQuestion.id] || ''}
+                    on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
+                    disabled={completedQuestions.has(currentQuestionIndex)}
+                    rows="15"
+                    spellcheck="false"
+                    style="resize: none; tab-size: 4;"
+                  ></textarea>
+                </div>
+                <!-- IDE Footer -->
+                <div class="bg-gray-800 px-4 py-2 border-t border-gray-700 flex items-center justify-between">
+                  <span class="text-xs text-gray-500 font-mono">UTF-8 | {currentQuestion.code_language || 'Python'}</span>
+                  <span class="text-xs text-gray-500">Press Tab to indent</span>
+                </div>
+              </div>
             </div>
           {:else if currentQuestion.question_type === 'sql_query'}
             <div class="space-y-4">
