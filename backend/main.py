@@ -1910,38 +1910,66 @@ def clear_all_students(current_user: User = Depends(get_current_user), db: Sessi
         raise HTTPException(status_code=403, detail="Only admins can clear students")
     
     try:
+        print("🗑️ Starting clear all students operation...")
+        
         # Get all student IDs
         student_ids = [s.id for s in db.query(User).filter(User.role == "student").all()]
+        print(f"📊 Found {len(student_ids)} students to delete")
         
         if not student_ids:
             return {"message": "No students to delete", "count": 0}
         
         # Get all message IDs from students
         student_message_ids = [m.id for m in db.query(ChatMessage.id).filter(ChatMessage.sender_id.in_(student_ids)).all()]
+        print(f"💬 Found {len(student_message_ids)} messages from students")
         
-        # Delete message reactions first
+        # Delete message reactions (both reactions TO student messages and BY students)
         if student_message_ids:
-            db.query(MessageReaction).filter(MessageReaction.message_id.in_(student_message_ids)).delete(synchronize_session=False)
-        db.query(MessageReaction).filter(MessageReaction.user_id.in_(student_ids)).delete(synchronize_session=False)
+            reactions_deleted = db.query(MessageReaction).filter(MessageReaction.message_id.in_(student_message_ids)).delete(synchronize_session=False)
+            print(f"✅ Deleted {reactions_deleted} reactions to student messages")
+        reactions_by_students = db.query(MessageReaction).filter(MessageReaction.user_id.in_(student_ids)).delete(synchronize_session=False)
+        print(f"✅ Deleted {reactions_by_students} reactions by students")
         
         # Delete chat messages
-        db.query(ChatMessage).filter(ChatMessage.sender_id.in_(student_ids)).delete(synchronize_session=False)
+        messages_deleted = db.query(ChatMessage).filter(ChatMessage.sender_id.in_(student_ids)).delete(synchronize_session=False)
+        print(f"✅ Deleted {messages_deleted} chat messages")
         
         # Delete chat participants
-        db.query(ChatParticipant).filter(ChatParticipant.user_id.in_(student_ids)).delete(synchronize_session=False)
+        participants_deleted = db.query(ChatParticipant).filter(ChatParticipant.user_id.in_(student_ids)).delete(synchronize_session=False)
+        print(f"✅ Deleted {participants_deleted} chat participants")
         
-        # Delete other related records
-        db.query(Notification).filter(Notification.user_id.in_(student_ids)).delete(synchronize_session=False)
-        db.query(StudentAnswer).filter(StudentAnswer.attempt_id.in_(
+        # Nullify chat room creators (if any student created a room)
+        rooms_updated = db.query(ChatRoom).filter(ChatRoom.created_by.in_(student_ids)).update({ChatRoom.created_by: None}, synchronize_session=False)
+        print(f"✅ Nullified {rooms_updated} chat room creators")
+        
+        # Delete notifications
+        notifications_deleted = db.query(Notification).filter(Notification.user_id.in_(student_ids)).delete(synchronize_session=False)
+        print(f"✅ Deleted {notifications_deleted} notifications")
+        
+        # Nullify quiz_attempts.reviewed_by (if any student somehow reviewed)
+        attempts_updated = db.query(QuizAttempt).filter(QuizAttempt.reviewed_by.in_(student_ids)).update({QuizAttempt.reviewed_by: None}, synchronize_session=False)
+        print(f"✅ Nullified {attempts_updated} quiz attempt reviewers")
+        
+        # Delete student answers and quiz attempts
+        answers_deleted = db.query(StudentAnswer).filter(StudentAnswer.attempt_id.in_(
             db.query(QuizAttempt.id).filter(QuizAttempt.user_id.in_(student_ids))
         )).delete(synchronize_session=False)
-        db.query(QuizAttempt).filter(QuizAttempt.user_id.in_(student_ids)).delete(synchronize_session=False)
+        print(f"✅ Deleted {answers_deleted} student answers")
         
-        # Delete students
+        attempts_deleted = db.query(QuizAttempt).filter(QuizAttempt.user_id.in_(student_ids)).delete(synchronize_session=False)
+        print(f"✅ Deleted {attempts_deleted} quiz attempts")
+        
+        # Finally, delete students
         deleted = db.query(User).filter(User.role == "student").delete(synchronize_session=False)
+        print(f"✅ Deleted {deleted} students")
+        
         db.commit()
+        print(f"🎉 Successfully cleared all students!")
         return {"message": f"Successfully deleted {deleted} students", "count": deleted}
     except Exception as e:
+        print(f"❌ ERROR clearing students: {str(e)}")
+        import traceback
+        print(f"📋 Traceback: {traceback.format_exc()}")
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Failed to clear students: {str(e)}")
 
