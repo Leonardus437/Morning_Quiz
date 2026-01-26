@@ -942,7 +942,8 @@ def health_check():
         "version": "2.0-ANTI-CHEAT-PROD",
         "cors": "enabled",
         "ai_grader": "enabled" if AI_GRADER_AVAILABLE else "fallback",
-        "fix_deployed": "2026-01-13"
+        "fix_deployed": "2026-01-26",
+        "cors_fix": "active"
 
     }
 
@@ -1915,9 +1916,19 @@ def clear_all_students(current_user: User = Depends(get_current_user), db: Sessi
         if not student_ids:
             return {"message": "No students to delete", "count": 0}
         
-        # Delete chat-related records first (NEW)
-        db.query(ChatParticipant).filter(ChatParticipant.user_id.in_(student_ids)).delete(synchronize_session=False)
+        # Get all message IDs from students
+        student_message_ids = [m.id for m in db.query(ChatMessage.id).filter(ChatMessage.sender_id.in_(student_ids)).all()]
+        
+        # Delete message reactions first
+        if student_message_ids:
+            db.query(MessageReaction).filter(MessageReaction.message_id.in_(student_message_ids)).delete(synchronize_session=False)
+        db.query(MessageReaction).filter(MessageReaction.user_id.in_(student_ids)).delete(synchronize_session=False)
+        
+        # Delete chat messages
         db.query(ChatMessage).filter(ChatMessage.sender_id.in_(student_ids)).delete(synchronize_session=False)
+        
+        # Delete chat participants
+        db.query(ChatParticipant).filter(ChatParticipant.user_id.in_(student_ids)).delete(synchronize_session=False)
         
         # Delete other related records
         db.query(Notification).filter(Notification.user_id.in_(student_ids)).delete(synchronize_session=False)
