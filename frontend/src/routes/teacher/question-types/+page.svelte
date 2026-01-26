@@ -157,16 +157,21 @@
     try {
       const formData = new FormData();
       formData.append('file', selectedFile);
+      formData.append('department', form.department || '');
+      formData.append('level', form.level || '');
       
       const response = await fetch(`${api.baseURL}/upload-questions`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+        headers: { 'Authorization': `Bearer ${api.token}` },
         body: formData
       });
       
-      if (!response.ok) throw new Error('Upload failed');
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Upload failed');
+      }
       const result = await response.json();
-      alert(`✅ Extracted ${result.questions?.length || 0} questions!`);
+      alert(`✅ Extracted ${result.count || 0} questions!`);
       selectedFile = null;
       showQuickUpload = false;
     } catch (err) {
