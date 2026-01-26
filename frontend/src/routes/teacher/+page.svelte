@@ -2263,12 +2263,45 @@
                 <span class="text-3xl mr-3">📝</span>
                 My Questions
               </h2>
-              <button 
-                class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
-                on:click={() => activeTab = 'create-question'}
-              >
-                ➕ Add Question
-              </button>
+              <div class="flex gap-2">
+                {#if questions.length > 0}
+                  <button 
+                    class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2"
+                    on:click={async () => {
+                      if (!confirm(`⚠️ Delete ALL ${questions.length} questions?\n\nThis will permanently delete all your questions. This action cannot be undone.\n\nAre you absolutely sure?`)) {
+                        return;
+                      }
+                      try {
+                        loading = true;
+                        const response = await fetch(`${api.baseURL}/teacher/questions/clear`, {
+                          method: 'DELETE',
+                          headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                          }
+                        });
+                        if (!response.ok) throw new Error('Failed to delete questions');
+                        const result = await response.json();
+                        alert(`✅ ${result.message}`);
+                        await loadData();
+                      } catch (err) {
+                        error = err.message;
+                        alert('❌ Failed to delete questions: ' + err.message);
+                      } finally {
+                        loading = false;
+                      }
+                    }}
+                    disabled={loading}
+                  >
+                    🗑️ Delete All
+                  </button>
+                {/if}
+                <button 
+                  class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                  on:click={() => activeTab = 'create-question'}
+                >
+                  ➕ Add Question
+                </button>
+              </div>
             </div>
             
             <!-- Recently Added Questions -->

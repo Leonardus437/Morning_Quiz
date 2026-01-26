@@ -47,92 +47,55 @@ except Exception as e:
             return 0, "Incorrect"
 
 def parse_advanced_question(text):
-    """Parse ANY question format - bulletproof version"""
+    """SUPER AGGRESSIVE PARSER - Extracts ANY question format"""
     import re
-    
     text = text.strip()
     if len(text) < 5:
         return None
     
-    result = {'text': '', 'type': 'multiple_choice', 'options': [], 'answer': ''}
+    result = {'text': '', 'type': 'short_answer', 'options': [], 'answer': ''}
+    
+    # Remove question number
+    text = re.sub(r'^(?:Q(?:uestion)?[\s\.]*)?(\d+)[\s\.\)\:]+', '', text, flags=re.IGNORECASE)
     
     # Split by answer
-    parts = re.split(r'\s*(?:answer|ans|correct|solution)\s*:\s*', text, maxsplit=1, flags=re.IGNORECASE)
-    question_text = parts[0].strip()
-    answer_text = parts[1].strip() if len(parts) > 1 else ''
+    parts = re.split(r'\s*(?:answer|ans|correct|solution|key)\s*[:\-]\s*', text, maxsplit=1, flags=re.IGNORECASE)
+    q_text = parts[0].strip()
+    a_text = parts[1].strip() if len(parts) > 1 else ''
     
-    # Extract options first
-    def extract_opts(txt):
-        for pattern in [r'([A-Z])\)\s*([^A-Z\)]+?)(?=[A-Z]\)|$)', r'([a-z])\)\s*([^a-z\)]+?)(?=[a-z]\)|$)']:
-            matches = re.findall(pattern, txt)
-            if matches and len(matches) >= 2:
-                return [m[1].strip() for m in matches]
-        return []
-    
-    options = extract_opts(question_text)
+    # Extract options - AGGRESSIVE
+    opts = []
+    for pat in [r'([A-D])[\)\.]\s*([^\n]+?)(?=[A-D][\)\.]|$)', r'([a-d])[\)\.]\s*([^\n]+?)(?=[a-d][\)\.]|$)']:
+        m = re.findall(pat, q_text, re.IGNORECASE)
+        if m and len(m) >= 2:
+            opts = [x[1].strip() for x in m]
+            break
     
     # Type detection
-    if re.search(r'\b(true|false)\b', text, re.IGNORECASE) and (re.search(r'\?', question_text) or not options):
-        result['type'] = 'true_false'
-        result['text'] = re.sub(r'\s*\b(true|false)\b\s*$', '', question_text, flags=re.IGNORECASE).strip()
-        result['options'] = ['True', 'False']
-        result['answer'] = 'True' if 'true' in answer_text.lower() else 'False'
-    elif re.search(r'_{3,}|\[blank\]', question_text):
-        result['type'] = 'fill_blanks'
-        result['text'] = question_text
-        result['answer'] = answer_text or 'answer'
-    elif re.search(r'\b(code|program|function|python|java|javascript)\b', text, re.IGNORECASE):
-        result['type'] = 'code_writing'
-        result['text'] = question_text
-        result['answer'] = answer_text or '// code'
-    elif re.search(r'\b(sql|query|select|database)\b', text, re.IGNORECASE):
-        result['type'] = 'sql_query'
-        result['text'] = question_text
-        result['answer'] = answer_text or 'SELECT *'
-    elif re.search(r'select all|choose all|multiple correct', text, re.IGNORECASE):
-        result['type'] = 'multiple_select'
-        result['text'] = question_text
-        result['options'] = options
-        result['answer'] = answer_text or 'A,B'
-    elif re.search(r'match|pair', text, re.IGNORECASE):
-        result['type'] = 'drag_drop_match'
-        result['text'] = question_text
-        result['answer'] = answer_text or 'A-1'
-    elif re.search(r'order|arrange|sequence', text, re.IGNORECASE):
-        result['type'] = 'drag_drop_order'
-        result['text'] = question_text
-        result['answer'] = answer_text or '1,2,3'
-    elif re.search(r'rate|scale|1.{0,5}10', text, re.IGNORECASE):
-        result['type'] = 'linear_scale'
-        result['text'] = question_text
-        result['answer'] = answer_text or '5'
-    elif re.search(r'essay|discuss|elaborate', text, re.IGNORECASE):
-        result['type'] = 'essay'
-        result['text'] = question_text
-        result['answer'] = answer_text or 'Essay answer'
-    elif re.search(r'short answer|brief', text, re.IGNORECASE):
-        result['type'] = 'short_answer'
-        result['text'] = question_text
-        result['answer'] = answer_text or 'Answer'
-    elif options and len(options) >= 2:
+    if opts and len(opts) >= 2:
         result['type'] = 'multiple_choice'
-        result['options'] = options
-        result['text'] = re.sub(r'[A-Za-z]\)\s*[^A-Za-z\)]+', '', question_text).strip()
-        if answer_text:
-            letter_match = re.search(r'\b([A-Za-z])\b', answer_text)
-            if letter_match:
-                idx = ord(letter_match.group(1).upper()) - ord('A')
-                result['answer'] = options[idx] if 0 <= idx < len(options) else options[0]
+        result['options'] = opts
+        result['text'] = re.sub(r'[A-Da-d][\)\.]\s*[^\n]+', '', q_text).strip()
+        if a_text:
+            ltr = re.search(r'\b([A-D])\b', a_text, re.IGNORECASE)
+            if ltr:
+                idx = ord(ltr.group(1).upper()) - ord('A')
+                result['answer'] = opts[idx] if 0 <= idx < len(opts) else opts[0]
             else:
-                result['answer'] = answer_text
+                result['answer'] = a_text
         else:
-            result['answer'] = options[0]
+            result['answer'] = opts[0]
+    elif re.search(r'\b(true|false)\b', text, re.IGNORECASE):
+        result['type'] = 'true_false'
+        result['text'] = re.sub(r'\s*\b(true|false)\b\s*', '', q_text, flags=re.IGNORECASE).strip()
+        result['options'] = ['True', 'False']
+        result['answer'] = 'True' if 'true' in a_text.lower() else 'False'
     else:
         result['type'] = 'short_answer'
-        result['text'] = question_text
-        result['answer'] = answer_text or 'Answer'
+        result['text'] = q_text
+        result['answer'] = a_text or 'Answer'
     
-    return result if result['text'] else None
+    return result if result['text'] and len(result['text']) > 3 else None
 
 
 
@@ -1181,74 +1144,92 @@ async def upload_questions(
         
         print(f"📝 Text extracted: {len(text)} characters")
         
-        # Enhanced AI Parser - handles ALL 12 advanced question types
+        # SUPER AGGRESSIVE PARSER - Extract ALL questions
         questions = []
-        lines = [l.strip() for l in text.split('\n') if l.strip()]
         
-        # Join all lines for better parsing
-        full_text = ' '.join(lines)
+        # Strategy 1: Split by numbered questions (1. 2. 3. etc.)
+        # Matches: "1.", "1)", "Q1", "Question 1", etc.
+        pattern = r'(?:^|\n)\s*(?:Q(?:uestion)?[\s\.]*)?(\d+)[\s\.\)\:]+'
+        blocks = re.split(pattern, text, flags=re.MULTILINE)
         
-        # Split by question numbers (1., 2., etc.)
-        import re
-        question_blocks = re.split(r'\b(\d+)\s*[.):]\s*', full_text)
+        print(f"🔍 Split into {len(blocks)} blocks")
         
-        print(f"🔍 Found {len(question_blocks)} text blocks")
-        
-        # Process each question block
-        for i in range(1, len(question_blocks), 2):
-            if i + 1 < len(question_blocks):
-                question_num = question_blocks[i]
-                question_content = question_blocks[i + 1].strip()
+        # Process numbered questions
+        for i in range(1, len(blocks), 2):
+            if i + 1 < len(blocks):
+                q_num = blocks[i]
+                q_content = blocks[i + 1].strip()
                 
-                if len(question_content) < 10:  # Skip very short content
+                # Skip very short content
+                if len(q_content) < 10:
                     continue
                 
-                print(f"📋 Processing question {question_num}: {question_content[:50]}...")
+                print(f"📋 Q{q_num}: {q_content[:60]}...")
                 
-                # Parse different question types
                 try:
-                    parsed_question = parse_advanced_question(question_content)
-                    if parsed_question:
-                        questions.append(parsed_question)
-                        print(f"✅ Parsed as {parsed_question['type']}")
-                    else:
-                        print(f"⚠️ Could not parse question {question_num}")
+                    parsed = parse_advanced_question(q_content)
+                    if parsed:
+                        questions.append(parsed)
+                        print(f"✅ Parsed Q{q_num} as {parsed['type']}")
                 except Exception as e:
-                    print(f"❌ Error parsing question {question_num}: {e}")
+                    print(f"⚠️ Error parsing Q{q_num}: {e}")
         
-        # Fallback: If no numbered questions found, try paragraph-based parsing
+        # Strategy 2: If no questions found, try paragraph splitting
         if not questions:
-            print("🔄 No numbered questions found, trying paragraph parsing")
-            paragraphs = []
-            current_para = []
-            for line in lines:
-                if line:
-                    current_para.append(line)
-                elif current_para:
-                    paragraphs.append(' '.join(current_para))
-                    current_para = []
-            if current_para:
-                paragraphs.append(' '.join(current_para))
+            print("🔄 No numbered questions, trying paragraphs...")
+            paras = [p.strip() for p in text.split('\n\n') if p.strip() and len(p.strip()) > 15]
+            for idx, para in enumerate(paras, 1):
+                try:
+                    parsed = parse_advanced_question(para)
+                    if parsed:
+                        questions.append(parsed)
+                        print(f"✅ Parsed paragraph {idx} as {parsed['type']}")
+                except Exception as e:
+                    print(f"⚠️ Error: {e}")
+        
+        # Strategy 3: Line-by-line with question mark detection
+        if not questions:
+            print("🔄 Trying line-by-line parsing...")
+            lines = [l.strip() for l in text.split('\n') if l.strip()]
+            current = []
             
-            for para in paragraphs:
+            for line in lines:
+                # New question starts
+                if re.match(r'^(?:Q(?:uestion)?[\s\.]*)?(\d+)[\s\.\)\:]', line):
+                    if current:
+                        q_text = ' '.join(current)
+                        try:
+                            parsed = parse_advanced_question(q_text)
+                            if parsed:
+                                questions.append(parsed)
+                        except:
+                            pass
+                    current = [line]
+                else:
+                    current.append(line)
+            
+            # Last question
+            if current:
+                q_text = ' '.join(current)
                 try:
-                    parsed_question = parse_advanced_question(para)
-                    if parsed_question:
-                        questions.append(parsed_question)
-                        print(f"✅ Parsed paragraph as {parsed_question['type']}")
-                except Exception as e:
-                    print(f"❌ Error parsing paragraph: {e}")
+                    parsed = parse_advanced_question(q_text)
+                    if parsed:
+                        questions.append(parsed)
+                except:
+                    pass
         
+        print(f"📊 Total questions extracted: {len(questions)}")
+        
+        # SAFETY CHECK: If still no questions, return helpful debug info
         if not questions:
+            print("❌ NO QUESTIONS EXTRACTED - Returning debug info")
             return {
-                "success": False, 
-                "questions": [], 
+                "success": False,
+                "questions": [],
                 "count": 0,
-                "debug_text": text[:500],
-                "message": "No questions found. Please format as: '1. Question text? A) Option B) Option Answer: A'"
+                "debug_text": text[:1000],
+                "message": f"Could not extract questions from {len(text)} characters. Please check format: '1. Question? A) Option B) Option Answer: A'"
             }
-        
-        print(f"📊 Successfully parsed {len(questions)} questions")
         
         # Use teacher's first department if not provided
         if not department and current_user.departments:
