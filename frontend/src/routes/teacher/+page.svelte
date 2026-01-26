@@ -130,6 +130,8 @@
     // Check URL parameters for tab
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
+    const reloadParam = urlParams.get('reload');
+    
     if (tabParam) {
       activeTab = tabParam;
     }
@@ -156,6 +158,15 @@
             api.setToken(storedToken);
             user.login(userData);
             await loadData();
+            
+            // If reload parameter is present, force reload questions
+            if (reloadParam === '1') {
+              console.log('Reload parameter detected, refreshing questions...');
+              await loadData();
+              // Clean URL by removing reload parameter
+              window.history.replaceState({}, '', '/teacher?tab=' + (tabParam || 'dashboard'));
+            }
+            
             startAutoRefresh();
           } else {
             console.log('Token expired, clearing storage');
@@ -322,6 +333,9 @@
   function startNotificationPolling() {
     if (notificationInterval) clearInterval(notificationInterval);
     
+    // Initialize last check time to current time to prevent showing old notifications
+    lastNotificationCheck = Date.now();
+    
     notificationInterval = setInterval(async () => {
       if (isLoggedIn) {
         try {
@@ -330,7 +344,7 @@
           
           // Only show widget if there are TRULY NEW notifications
           // (notifications created AFTER our last check)
-          if (newUnreadCount > unreadCount && newUnreadCount > 0) {
+          if (newUnreadCount > 0) {
             // Check if any notifications are actually new (created after last check)
             const trulyNewNotifications = newNotifications.filter(n => {
               if (n.is_read) return false;
@@ -341,21 +355,30 @@
             if (trulyNewNotifications.length > 0) {
               latestNotifications = trulyNewNotifications.slice(0, 3);
               showNotificationWidget = true;
+              
+              // Update last check time BEFORE showing popup
+              lastNotificationCheck = Date.now();
+              
               setTimeout(() => {
                 showNotificationWidget = false;
               }, 5000);
             }
           }
           
-          // Update last check time
-          lastNotificationCheck = Date.now();
           notifications = newNotifications;
           unreadCount = newUnreadCount;
         } catch (err) {
-          console.error('Notification polling error:', err);
+          // Stop polling on authentication errors
+          if (err.message && err.message.includes('Authentication')) {
+            console.error('Authentication failed, stopping notification polling');
+            if (notificationInterval) {
+              clearInterval(notificationInterval);
+              notificationInterval = null;
+            }
+          }
         }
       }
-    }, 1000); // Increased frequency to 1 second for better real-time feel
+    }, 5000); // Changed to 5 seconds to reduce spam
   }
 
   function dismissWidget() {
@@ -1481,7 +1504,7 @@
               <div class="flex items-center">
                 <div class="text-3xl mr-4">📝</div>
                 <div>
-                  <div class="text-2xl font-bold text-green-600">{questions.filter(q => q.created_by === $user?.id).length}</div>
+                  <div class="text-2xl font-bold text-green-600">{questions.length}</div>
                   <div class="text-gray-600 text-sm">My Questions</div>
                 </div>
               </div>
@@ -1490,7 +1513,7 @@
               <div class="flex items-center">
                 <div class="text-3xl mr-4">🎯</div>
                 <div>
-                  <div class="text-2xl font-bold text-blue-600">{quizzes.filter(q => q.created_by === $user?.id).length}</div>
+                  <div class="text-2xl font-bold text-blue-600">{quizzes.length}</div>
                   <div class="text-gray-600 text-sm">My Quizzes</div>
                 </div>
               </div>
@@ -1499,7 +1522,7 @@
               <div class="flex items-center">
                 <div class="text-3xl mr-4">✅</div>
                 <div>
-                  <div class="text-2xl font-bold text-purple-600">{quizzes.filter(q => q.is_active && q.created_by === $user?.id).length}</div>
+                  <div class="text-2xl font-bold text-purple-600">{quizzes.filter(q => q.is_active).length}</div>
                   <div class="text-gray-600 text-sm">Active Quizzes</div>
                 </div>
               </div>
@@ -1554,7 +1577,7 @@
                 <span class="text-2xl mr-2">🎯</span>
                 Recent Quizzes
               </h2>
-              {#if quizzes.filter(q => q.created_by === $user?.id).length === 0}
+              {#if quizzes.length === 0}
                 <div class="text-center py-8">
                   <div class="text-4xl mb-2">🎯</div>
                   <p class="text-gray-600 mb-4">No quizzes created yet</p>
@@ -1567,7 +1590,7 @@
                 </div>
               {:else}
                 <div class="space-y-4">
-                  {#each quizzes.filter(q => q.created_by === $user?.id).slice(0, 3) as quiz}
+                  {#each quizzes.slice(0, 3) as quiz}
                     <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                       <div class="flex items-center">
                         <div class="text-2xl mr-4">{quiz.is_active ? '🟢' : '⚪'}</div>
@@ -2246,14 +2269,14 @@
             </div>
             
             <!-- Recently Added Questions -->
-            {#if questions.filter(q => q.created_by === $user?.id).length > 0}
+            {#if questions.length > 0}
               <div class="mb-8">
                 <h3 class="text-lg font-semibold mb-4 flex items-center">
                   <span class="text-2xl mr-2">🆕</span>
                   Recently Added (Last 5)
                 </h3>
                 <div class="grid grid-cols-1 gap-3">
-                  {#each questions.filter(q => q.created_by === $user?.id).slice(0, 5) as question}
+                  {#each questions.slice(0, 5) as question}
                     <div class="border border-green-200 rounded-lg p-4 bg-green-50 hover:shadow-md transition-shadow">
                       <div class="flex justify-between items-start mb-2">
                         <h4 class="font-medium text-gray-900 flex-1 mr-4 text-sm">{question.question_text}</h4>
@@ -2297,14 +2320,14 @@
               >
                 <div class="flex items-center">
                   <span class="text-2xl mr-3">📝</span>
-                  <span class="text-lg font-semibold">All My Questions ({questions.filter(q => q.created_by === $user?.id).length})</span>
+                  <span class="text-lg font-semibold">All My Questions ({questions.length})</span>
                 </div>
                 <span class="text-xl">{showAllQuestions ? '▼' : '▶'}</span>
               </div>
               
               {#if showAllQuestions}
                 <div class="mt-4">
-                  {#if questions.filter(q => q.created_by === $user?.id).length === 0}
+                  {#if questions.length === 0}
                     <div class="text-center py-8">
                       <div class="text-4xl mb-2">📝</div>
                       <p class="text-gray-600 mb-4">No questions created yet</p>
@@ -2317,7 +2340,7 @@
                     </div>
                   {:else}
                     <div class="space-y-4">
-                      {#each questions.filter(q => q.created_by === $user?.id) as question}
+                      {#each questions as question}
                         <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                           <div class="flex justify-between items-start mb-3">
                             <h3 class="font-semibold text-gray-900 flex-1 mr-4">{question.question_text}</h3>
@@ -2390,7 +2413,7 @@
               </button>
             </div>
             
-            {#if quizzes.filter(q => q.created_by === $user?.id).length === 0}
+            {#if quizzes.length === 0}
               <div class="text-center py-12">
                 <div class="text-6xl mb-4">🎯</div>
                 <p class="text-gray-600 mb-4">No quizzes created yet</p>
@@ -2403,7 +2426,7 @@
               </div>
             {:else}
               <div class="space-y-4">
-                {#each quizzes.filter(q => q.created_by === $user?.id) as quiz}
+                {#each quizzes as quiz}
                   <div class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start mb-4">
                       <div class="flex-1">

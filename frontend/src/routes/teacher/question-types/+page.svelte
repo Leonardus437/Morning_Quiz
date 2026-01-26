@@ -140,8 +140,8 @@
       alert('✅ Question created successfully!');
       resetForm();
       
-      // Redirect to My Questions page
-      goto('/teacher?tab=questions');
+      // Redirect to My Questions page with reload flag
+      window.location.href = '/teacher?tab=questions&reload=1';
     } catch (err) {
       error = err.message;
     } finally {
@@ -158,14 +158,6 @@
     uploadingFile = true;
     error = '';
     try {
-      // Force token refresh from localStorage
-      const token = localStorage.getItem('token');
-      if (!token) {
-        error = 'Please logout and login again';
-        uploadingFile = false;
-        return;
-      }
-      
       const formData = new FormData();
       formData.append('file', selectedFile);
       formData.append('department', form.department || '');
@@ -173,28 +165,24 @@
       
       const response = await fetch(`${api.baseURL}/upload-questions`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         body: formData
       });
       
       if (!response.ok) {
         const errorText = await response.text();
-        if (response.status === 401) {
-          error = 'Session expired. Please logout and login again.';
-        } else {
-          error = errorText || 'Upload failed';
-        }
-        throw new Error(error);
+        throw new Error(errorText || 'Upload failed');
       }
       const result = await response.json();
       alert(`✅ Extracted ${result.count || 0} questions!`);
       selectedFile = null;
       showQuickUpload = false;
       
-      // Redirect to My Questions page
-      goto('/teacher?tab=questions');
+      // Redirect to My Questions page with reload flag
+      window.location.href = '/teacher?tab=questions&reload=1';
     } catch (err) {
       error = err.message;
+      alert('❌ Upload failed: ' + err.message);
     } finally {
       uploadingFile = false;
     }
