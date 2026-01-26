@@ -285,9 +285,9 @@ class ApiClient {
     try {
       // Make request with a reasonable timeout to prevent hanging
       const controller = new AbortController();
-      // Use 60s timeout for production (Render cold start), 3s for local
+      // Use 120s timeout for production (Render cold start + file processing), 10s for local
       const isProduction = browser && (window.location.hostname.includes('pages.dev') || window.location.hostname.includes('tsskwizi'));
-      const timeout = isProduction ? 60000 : 3000;
+      const timeout = isProduction ? 120000 : 10000;
       const timeoutId = setTimeout(() => controller.abort(), timeout);
       
       config.signal = controller.signal;
