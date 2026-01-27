@@ -182,10 +182,18 @@
     if (textFormat.color !== 'default') styles.push(`color:${textFormat.color}`);
     
     if (styles.length > 0) {
-      formatted = `<span style="${styles.join(';')}">${text}</span>`;
+      // Escape HTML in the text content to prevent XSS
+      const escapedText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      formatted = `<span style="${styles.join(';')}">${escapedText}</span>`;
     }
     
     return formatted;
+  }
+
+  function unescapeHtml(text) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    return textarea.value;
   }
 
   function resetFormatting() {
@@ -664,7 +672,7 @@
                         </a>
                       </div>
                     {:else}
-                      <div class="text-sm break-words">{@html message.message}</div>
+                      <div class="text-sm break-words">{@html unescapeHtml(message.message)}</div>
                     {/if}
                     
                     <div class="flex items-center justify-between mt-1 space-x-2">
