@@ -392,6 +392,21 @@
     return room.created_by === currentUser?.id;
   }
 
+  async function deleteMessage(messageId) {
+    if (!confirm('⚠️ Delete this message? This cannot be undone!')) return;
+    
+    try {
+      await apiCall(`/chat/messages/${messageId}`, {
+        method: 'DELETE'
+      });
+      
+      messages = messages.filter(m => m.id !== messageId);
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      alert('❌ Failed to delete message.');
+    }
+  }
+
   async function deleteRoom(roomId) {
     if (!confirm('⚠️ Delete this chat room? All messages will be lost forever!')) {
       return;
@@ -616,7 +631,7 @@
                         {new Date(message.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                       </div>
                       
-                      <!-- Quick Reactions -->
+                      <!-- Quick Reactions & Admin Controls -->
                       <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         {#each quickEmojis.slice(0, 4) as emoji}
                           <button
@@ -634,6 +649,15 @@
                         >
                           ↩️
                         </button>
+                        {#if currentUser?.role === 'admin'}
+                          <button
+                            on:click={() => deleteMessage(message.id)}
+                            class="text-xs px-2 py-0.5 bg-red-500/20 hover:bg-red-500/40 rounded-full transition-all text-red-400"
+                            title="Delete (Admin)"
+                          >
+                            🗑️
+                          </button>
+                        {/if}
                       </div>
                     </div>
 
