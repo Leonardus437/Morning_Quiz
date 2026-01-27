@@ -161,6 +161,8 @@
       newMessage = '';
       replyingTo = null;
       resetFormatting();
+      showFormatting = false;
+      showEmojiPicker = false;
       scrollToBottom();
     } catch (error) {
       console.error('Error sending message:', error);
@@ -481,8 +483,8 @@
 </script>
 
 <!-- Minimal Black & White Chat -->
-<div class="fixed inset-0 {theme === 'light' ? 'bg-white/95' : 'bg-black/95'} flex items-center justify-center z-[50] p-4">
-  <div class="{currentTheme.bg} w-full max-w-5xl h-[90vh] flex flex-col border-2 {currentTheme.border}">
+<div class="fixed inset-0 {theme === 'light' ? 'bg-white/95' : 'bg-black/95'} flex items-center justify-center z-[50] p-2 sm:p-4">
+  <div class="{currentTheme.bg} w-full max-w-7xl h-[95vh] flex flex-col border-2 {currentTheme.border} shadow-2xl">
     
     <!-- Header -->
     <div class="flex items-center justify-between p-4 border-b-2 {currentTheme.border}">
@@ -512,7 +514,7 @@
 
     <div class="flex flex-1 overflow-hidden">
       <!-- Sidebar - Room List -->
-      <div class="w-full sm:w-80 border-r-2 {currentTheme.border} {currentTheme.bg} flex flex-col">
+      <div class="w-full sm:w-96 border-r-2 {currentTheme.border} {currentTheme.bg} flex flex-col">
         {#if currentUser?.role === 'admin' || currentUser?.role === 'teacher'}
           <div class="p-3 border-b-2 {currentTheme.border}">
             <button
@@ -589,7 +591,7 @@
           </div>
 
           <!-- Messages -->
-          <div bind:this={messageContainer} class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar transition-all duration-500">
+          <div bind:this={messageContainer} class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 custom-scrollbar transition-all duration-500">
             {#each messages as message}
               <div class="flex {message.sender_id === currentUser?.id ? 'justify-end' : 'justify-start'} animate-slideUp">
                 <div class="max-w-[75%] sm:max-w-md group">
@@ -784,9 +786,9 @@
                   on:keypress={handleKeyPress}
                   on:input={handleTyping}
                   placeholder="Type your vibe... 💭"
-                  class="w-full {theme === 'light' ? 'bg-white text-gray-900 border-gray-300' : 'bg-gray-800 text-white border-gray-700'} border-2 focus:border-purple-500 rounded-2xl px-4 py-3 resize-none focus:outline-none transition-all {theme === 'light' ? 'placeholder-gray-400' : 'placeholder-gray-500'}"
-                  rows="1"
-                  style="max-height: 120px;"
+                  class="w-full {theme === 'light' ? 'bg-white text-gray-900 border-gray-300' : 'bg-gray-800 text-white border-gray-700'} border-2 focus:border-purple-500 rounded-2xl px-4 py-3 text-base resize-none focus:outline-none transition-all {theme === 'light' ? 'placeholder-gray-400' : 'placeholder-gray-500'}"
+                  rows="2"
+                  style="max-height: 150px;"
                 ></textarea>
               </div>
 
@@ -802,27 +804,32 @@
 
             <!-- Formatting Toolbar -->
             {#if showFormatting}
-              <div class="mt-2 p-3 {theme === 'light' ? 'bg-white border-gray-300' : 'bg-gray-800 border-purple-500/30'} rounded-2xl border-2 transition-all duration-300">
+              <div class="mt-2 p-4 {theme === 'light' ? 'bg-white border-gray-300' : 'bg-gray-800 border-purple-500/30'} rounded-2xl border-2 transition-all duration-300 shadow-lg">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-bold {currentTheme.text}">✨ Format Your Message</span>
+                  <button on:click={() => showFormatting = false} class="text-gray-400 hover:text-white text-xl">&times;</button>
+                </div>
                 <div class="space-y-3">
                   <!-- Text Style -->
                   <div class="flex items-center space-x-2">
+                    <span class="text-xs {currentTheme.text} font-semibold w-16">Style:</span>
                     <button
                       on:click={() => textFormat.bold = !textFormat.bold}
-                      class="px-3 py-2 rounded-lg font-bold transition-all {textFormat.bold ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
+                      class="px-4 py-2 rounded-lg font-bold text-base transition-all {textFormat.bold ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
                       title="Bold"
                     >
                       B
                     </button>
                     <button
                       on:click={() => textFormat.italic = !textFormat.italic}
-                      class="px-3 py-2 rounded-lg italic transition-all {textFormat.italic ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
+                      class="px-4 py-2 rounded-lg italic text-base transition-all {textFormat.italic ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
                       title="Italic"
                     >
                       I
                     </button>
                     <button
                       on:click={() => textFormat.underline = !textFormat.underline}
-                      class="px-3 py-2 rounded-lg underline transition-all {textFormat.underline ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
+                      class="px-4 py-2 rounded-lg underline text-base transition-all {textFormat.underline ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
                       title="Underline"
                     >
                       U
@@ -831,24 +838,24 @@
                   
                   <!-- Font Size -->
                   <div class="flex items-center space-x-2">
-                    <span class="text-xs {currentTheme.text} font-semibold">Size:</span>
-                    <button on:click={() => textFormat.size = 'small'} class="px-2 py-1 text-xs rounded-lg transition-all {textFormat.size === 'small' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Small</button>
-                    <button on:click={() => textFormat.size = 'normal'} class="px-2 py-1 text-sm rounded-lg transition-all {textFormat.size === 'normal' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Normal</button>
-                    <button on:click={() => textFormat.size = 'large'} class="px-2 py-1 text-base rounded-lg transition-all {textFormat.size === 'large' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Large</button>
-                    <button on:click={() => textFormat.size = 'xlarge'} class="px-2 py-1 text-lg rounded-lg transition-all {textFormat.size === 'xlarge' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">XL</button>
+                    <span class="text-xs {currentTheme.text} font-semibold w-16">Size:</span>
+                    <button on:click={() => textFormat.size = 'small'} class="px-3 py-2 text-xs rounded-lg transition-all {textFormat.size === 'small' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Small</button>
+                    <button on:click={() => textFormat.size = 'normal'} class="px-3 py-2 text-sm rounded-lg transition-all {textFormat.size === 'normal' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Normal</button>
+                    <button on:click={() => textFormat.size = 'large'} class="px-3 py-2 text-base rounded-lg transition-all {textFormat.size === 'large' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Large</button>
+                    <button on:click={() => textFormat.size = 'xlarge'} class="px-3 py-2 text-lg rounded-lg transition-all {textFormat.size === 'xlarge' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">XL</button>
                   </div>
                   
                   <!-- Colors -->
                   <div class="flex items-center space-x-2">
-                    <span class="text-xs {currentTheme.text} font-semibold">Color:</span>
-                    <button on:click={() => textFormat.color = 'default'} class="w-8 h-8 rounded-full border-2 transition-all {textFormat.color === 'default' ? 'ring-2 ring-purple-500' : ''} {theme === 'light' ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-300'}"></button>
-                    <button on:click={() => textFormat.color = '#ef4444'} class="w-8 h-8 rounded-full bg-red-500 border-2 border-red-600 transition-all {textFormat.color === '#ef4444' ? 'ring-2 ring-purple-500' : ''}"></button>
-                    <button on:click={() => textFormat.color = '#f97316'} class="w-8 h-8 rounded-full bg-orange-500 border-2 border-orange-600 transition-all {textFormat.color === '#f97316' ? 'ring-2 ring-purple-500' : ''}"></button>
-                    <button on:click={() => textFormat.color = '#eab308'} class="w-8 h-8 rounded-full bg-yellow-500 border-2 border-yellow-600 transition-all {textFormat.color === '#eab308' ? 'ring-2 ring-purple-500' : ''}"></button>
-                    <button on:click={() => textFormat.color = '#22c55e'} class="w-8 h-8 rounded-full bg-green-500 border-2 border-green-600 transition-all {textFormat.color === '#22c55e' ? 'ring-2 ring-purple-500' : ''}"></button>
-                    <button on:click={() => textFormat.color = '#3b82f6'} class="w-8 h-8 rounded-full bg-blue-500 border-2 border-blue-600 transition-all {textFormat.color === '#3b82f6' ? 'ring-2 ring-purple-500' : ''}"></button>
-                    <button on:click={() => textFormat.color = '#a855f7'} class="w-8 h-8 rounded-full bg-purple-500 border-2 border-purple-600 transition-all {textFormat.color === '#a855f7' ? 'ring-2 ring-purple-500' : ''}"></button>
-                    <button on:click={() => textFormat.color = '#ec4899'} class="w-8 h-8 rounded-full bg-pink-500 border-2 border-pink-600 transition-all {textFormat.color === '#ec4899' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <span class="text-xs {currentTheme.text} font-semibold w-16">Color:</span>
+                    <button on:click={() => textFormat.color = 'default'} class="w-10 h-10 rounded-full border-2 transition-all hover:scale-110 {textFormat.color === 'default' ? 'ring-2 ring-purple-500' : ''} {theme === 'light' ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-300'}"></button>
+                    <button on:click={() => textFormat.color = '#ef4444'} class="w-10 h-10 rounded-full bg-red-500 border-2 border-red-600 transition-all hover:scale-110 {textFormat.color === '#ef4444' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#f97316'} class="w-10 h-10 rounded-full bg-orange-500 border-2 border-orange-600 transition-all hover:scale-110 {textFormat.color === '#f97316' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#eab308'} class="w-10 h-10 rounded-full bg-yellow-500 border-2 border-yellow-600 transition-all hover:scale-110 {textFormat.color === '#eab308' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#22c55e'} class="w-10 h-10 rounded-full bg-green-500 border-2 border-green-600 transition-all hover:scale-110 {textFormat.color === '#22c55e' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#3b82f6'} class="w-10 h-10 rounded-full bg-blue-500 border-2 border-blue-600 transition-all hover:scale-110 {textFormat.color === '#3b82f6' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#a855f7'} class="w-10 h-10 rounded-full bg-purple-500 border-2 border-purple-600 transition-all hover:scale-110 {textFormat.color === '#a855f7' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#ec4899'} class="w-10 h-10 rounded-full bg-pink-500 border-2 border-pink-600 transition-all hover:scale-110 {textFormat.color === '#ec4899' ? 'ring-2 ring-purple-500' : ''}"></button>
                   </div>
                   
                   <!-- Reset Button -->
