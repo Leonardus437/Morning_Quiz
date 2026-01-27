@@ -533,6 +533,11 @@ def get_quizzes(current_user: User = Depends(get_current_user), db: Session = De
     
     return result
 
+@app.options("/quizzes/{quiz_id}/questions")
+async def quiz_questions_options(quiz_id: int):
+    """Handle CORS preflight for quiz questions"""
+    return {"message": "OK"}
+
 @app.get("/quizzes/{quiz_id}/questions")
 def get_quiz_questions(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
@@ -750,16 +755,16 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
         )
         db.add(student_answer)
     
-    # Calculate total possible points for this quiz
+    # Calculate total possible points for this quiz (sum of all question points)
     all_questions = db.query(Question).join(QuizQuestion).filter(
         QuizQuestion.quiz_id == submission.quiz_id
     ).all()
-    total_possible_points = sum(q.points for q in all_questions)
+    total_possible_points = float(sum(q.points for q in all_questions))
     
     # Ensure score doesn't exceed total possible points
-    final_score = min(float(score), float(total_possible_points))
+    final_score = min(float(score), total_possible_points)
     
-    # Calculate percentage and grade
+    # Calculate percentage and grade based on points (not question count)
     percentage = (final_score / total_possible_points * 100) if total_possible_points > 0 else 0
     percentage = min(percentage, 100.0)  # Cap at 100%
     
@@ -782,6 +787,7 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
     attempt.percentage = round(percentage, 1)
     attempt.grade = grade
     attempt.total_possible_points = total_possible_points
+    attempt.total_questions = len(all_questions)  # Store question count separately
     
     print(f"✅ Grading complete: score={score}/{len(submission.answers)}, needs_review={needs_review}")
     
@@ -793,27 +799,46 @@ def submit_quiz(submission: QuizSubmission, current_user: User = Depends(get_cur
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Failed to save submission: {str(e)}")
     
-    # Notify teacher about submission (no auto-submit reason here - manual submission)
+    # Notify teacher about submission ONLY ONCE (check if notification already exists)
     teacher = db.query(User).filter(User.id == quiz.created_by).first()
     if teacher:
-        print(f"📧 Notifying teacher {teacher.full_name} (ID: {teacher.id})")
-        notification = Notification(
-            user_id=teacher.id,
-            title=f"📝 New Quiz Submission: {quiz.title}",
-            message=f"{current_user.full_name} has submitted the quiz. Score: {score}/{len(submission.answers)}. Click to review.",
-            type="quiz_submission"
-        )
-        db.add(notification)
-        try:
-            db.commit()
-            print(f"✅ Teacher notification sent")
-        except Exception as e:
-            print(f"❌ Failed to send teacher notification: {e}")
+        # Check if notification already sent for this attempt
+        existing_notification = db.query(Notification).filter(
+            Notification.user_id == teacher.id,
+            Notification.type == "quiz_submission",
+            Notification.message.contains(current_user.full_name),
+            Notification.message.contains(quiz.title)
+        ).first()
+        
+        if not existing_notification:
+            print(f"📧 Notifying teacher {teacher.full_name} (ID: {teacher.id})")
+            notification = Notification(
+                user_id=teacher.id,
+                title=f"📝 New Quiz Submission: {quiz.title}",
+                message=f"{current_user.full_name} has submitted the quiz. Score: {final_score:.1f}/{total_possible_points} points ({percentage:.1f}%). Click to review.",
+                type="quiz_submission"
+            )
+            db.add(notification)
+            try:
+                db.commit()
+                print(f"✅ Teacher notification sent")
+            except Exception as e:
+                print(f"❌ Failed to send teacher notification: {e}")
+        else:
+            print(f"ℹ️ Notification already exists for this submission")
     else:
         print(f"⚠️ Teacher not found for quiz {quiz.id}")
     
-    print(f"✅ SUBMISSION COMPLETE: attempt_id={attempt.id}, score={score}")
-    return {"score": score, "total": len(submission.answers), "needs_review": needs_review}
+    print(f"✅ SUBMISSION COMPLETE: attempt_id={attempt.id}, score={final_score}/{total_possible_points} points, percentage={percentage}%, grade={grade}")
+    return {
+        "score": final_score, 
+        "total_points": total_possible_points,
+        "total_questions": len(all_questions),
+        "percentage": percentage, 
+        "grade": grade, 
+        "needs_review": needs_review,
+        "message": f"Quiz submitted successfully! Score: {final_score}/{total_possible_points} points ({percentage}%) - Grade: {grade}"
+    }
 
 @app.get("/quizzes/{quiz_id}/status")
 def get_quiz_status(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
