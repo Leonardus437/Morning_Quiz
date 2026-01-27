@@ -99,9 +99,8 @@
       
       <h1 class="text-3xl font-bold text-green-600 mb-4">Quiz Submitted!</h1>
       
-      {:else}
-        <!-- Don't show marks immediately - show under review message -->
-        <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 mb-6">
+      <!-- Don't show marks immediately - show under review message -->
+      <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 mb-6">
           <div class="text-6xl mb-4">📋</div>
           <p class="text-gray-800 font-semibold mb-3 text-lg">
             Your quiz "{quizTitle}" has been successfully submitted!
@@ -112,11 +111,10 @@
               Your teacher is reviewing your answers. Results will be available once released.
             </p>
           </div>
-          <p class="text-gray-600 text-sm">
-            💡 You will be notified when results are ready.
-          </p>
-        </div>
-      {/if}
+        <p class="text-gray-600 text-sm">
+          💡 You will be notified when results are ready.
+        </p>
+      </div>
       
       <div class="space-y-3">
         <button 

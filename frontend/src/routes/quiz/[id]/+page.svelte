@@ -4,6 +4,7 @@
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores.js';
   import { api } from '$lib/api.js';
+  import QuestionTypes from '$lib/components/QuestionTypes.svelte';
 
   let questions = [];
   let currentQuestionIndex = 0;
@@ -105,31 +106,14 @@
       quiz = quizzes.find(q => q.id === quizId);
       
       if (quiz) {
-        console.log('🔍 DEBUG Quiz Data:', {
-          title: quiz.title,
-          duration_minutes: quiz.duration_minutes,
-          question_time_seconds: quiz.question_time_seconds,
-          calculated_seconds: quiz.duration_minutes * 60
-        });
-        
         if (quiz.countdown_started_at) {
           const startTime = new Date(quiz.countdown_started_at);
           const now = new Date();
           const elapsedSeconds = Math.floor((now - startTime) / 1000);
           const totalQuizTime = quiz.duration_minutes * 60;
-          
-          console.log('⏱️ Timer Calculation:', {
-            startTime: startTime.toISOString(),
-            now: now.toISOString(),
-            elapsedSeconds,
-            totalQuizTime,
-            timeLeft: Math.max(0, totalQuizTime - elapsedSeconds)
-          });
-          
           timeLeft = Math.max(0, totalQuizTime - elapsedSeconds);
         } else {
           timeLeft = quiz.duration_minutes * 60;
-          console.log('⏱️ No countdown started, using full duration:', timeLeft, 'seconds');
         }
         
         quizStartTime = Date.now();
@@ -157,9 +141,7 @@
   });
 
   function enableAntiCheat() {
-    // Try to enter fullscreen but don't block if it fails
     setTimeout(() => enterFullscreen(), 100);
-    
     document.addEventListener('contextmenu', preventRightClick);
     document.addEventListener('copy', preventCopy);
     document.addEventListener('cut', preventCopy);
@@ -249,27 +231,21 @@
       93   // Context Menu Key
     ];
     
-    // Block all restricted keys
     if (restrictedKeys.includes(e.keyCode)) {
-      console.log('🚨 RESTRICTED KEY DETECTED:', e.keyCode, e.key);
       e.preventDefault();
       e.stopPropagation();
       recordCheatingAttempt(`You pressed a restricted key (${e.key || 'Key ' + e.keyCode})`);
       return false;
     }
     
-    // Block Ctrl+Shift+I, Ctrl+Shift+J (DevTools)
     if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) {
-      console.log('🚨 DEVTOOLS KEY DETECTED');
       e.preventDefault();
       e.stopPropagation();
       recordCheatingAttempt('You tried to open developer tools');
       return false;
     }
     
-    // Block Ctrl+U (View Source)
     if (e.ctrlKey && e.keyCode === 85) {
-      console.log('🚨 VIEW SOURCE KEY DETECTED');
       e.preventDefault();
       e.stopPropagation();
       recordCheatingAttempt('You tried to view page source');
@@ -278,14 +254,12 @@
   }
 
   function handleVisibilityChange() {
-    // Warn IMMEDIATELY when trying to leave (before tab switch)
     if (document.hidden && !quizTerminated && !submitting && !loading && !showWarningModal) {
       recordCheatingAttempt('You switched to another tab or window');
     }
   }
 
   function handleWindowBlur() {
-    // Warn IMMEDIATELY when window loses focus (before switching)
     if (!quizTerminated && !submitting && !loading && !showWarningModal) {
       recordCheatingAttempt('You switched to another application');
     }
@@ -294,51 +268,35 @@
   function handleFullscreenChange() {
     const isCurrentlyFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
     isFullscreen = isCurrentlyFullscreen;
-    
-    // Only warn about fullscreen exit, don't force it back immediately
-    if (!isCurrentlyFullscreen && !quizTerminated && !submitting && !loading) {
-      // Give a warning but don't auto-enter fullscreen to avoid blocking
-      console.log('Fullscreen exited - user warned');
-    }
   }
 
   async function recordCheatingAttempt(reason) {
-    console.log('⚠️ CHEATING ATTEMPT:', cheatingWarnings + 1, reason);
     cheatingWarnings++;
     
     if (cheatingWarnings === 1) {
       warningMessage = `⚠️ WARNING #1: ${reason}. This is your first warning. Two more violations will result in automatic quiz termination.`;
       showWarningModal = true;
-      console.log('📢 Showing warning modal #1');
     } else if (cheatingWarnings === 2) {
       warningMessage = `⚠️ FINAL WARNING #2: ${reason}. One more violation and your quiz will be automatically submitted and your teacher will be notified.`;
       showWarningModal = true;
-      console.log('📢 Showing warning modal #2');
     } else if (cheatingWarnings >= 3) {
       warningMessage = `❌ QUIZ TERMINATED: ${reason}. Your quiz has been automatically submitted due to multiple cheating attempts. You will be redirected shortly.`;
       showWarningModal = true;
       quizTerminated = true;
-      console.log('🛑 QUIZ TERMINATED - Showing termination modal');
       
-      // Auto-submit first
-      console.log('📤 Auto-submitting quiz now...');
       await submitQuiz();
       
-      // Then report to teacher with auto_submitted flag
       try {
-        console.log('📧 Reporting to teacher...');
         await api.reportCheating({
           quiz_id: quizId,
           warnings: cheatingWarnings,
           reason: reason,
           auto_submitted: true
         });
-        console.log('✅ Teacher notified successfully');
       } catch (err) {
-        console.error('❌ Failed to report cheating:', err);
+        console.error('Failed to report cheating:', err);
       }
       
-      // Redirect after 3 seconds
       setTimeout(() => {
         goto(`/results/${quizId}?status=terminated&quiz_title=${encodeURIComponent(quiz?.title || 'Quiz')}`);
       }, 3000);
@@ -346,7 +304,7 @@
   }
 
   function closeWarningModal() {
-    if (quizTerminated) return; // Don't allow closing if terminated
+    if (quizTerminated) return;
     showWarningModal = false;
     enterFullscreen();
   }
@@ -488,13 +446,9 @@
       const result = await api.submitQuiz(submission);
       console.log('✅ Quiz submitted successfully:', result);
       
-      // Clear quiz state immediately after successful submission
       clearQuizState();
-      
-      // Disable anti-cheat
       disableAntiCheat();
       
-      // Redirect based on submission type
       if (quizTerminated) {
         showWarningModal = false;
         setTimeout(() => {
@@ -506,7 +460,6 @@
     } catch (err) {
       console.error('❌ Submit failed:', err);
       
-      // If submission failed due to already attempted, clear state and redirect
       if (err.message && err.message.includes('already')) {
         clearQuizState();
         goto('/');
@@ -612,390 +565,11 @@
             {currentQuestion.question_text}
           </h2>
 
-          {#if currentQuestion.question_type === 'mcq' || currentQuestion.question_type === 'multiple_choice'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📋 Select the correct answer:</div>
-              {#each (Array.isArray(currentQuestion.options) ? currentQuestion.options : JSON.parse(currentQuestion.options || '[]')) as option}
-                <label class="flex items-center p-5 border-2 hover:bg-blue-50 cursor-pointer transition-all {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 pointer-events-none' : ''} {answers[currentQuestion.id] === option ? 'border-blue-600 bg-blue-50 shadow-md' : 'border-gray-200'}">
-                  <input
-                    type="radio"
-                    name="question-{currentQuestion.id}"
-                    value={option}
-                    on:change={() => handleAnswer(currentQuestion.id, option)}
-                    checked={answers[currentQuestion.id] === option}
-                    disabled={completedQuestions.has(currentQuestionIndex)}
-                    class="w-5 h-5 text-blue-600"
-                  />
-                  <span class="ml-4 text-gray-900 font-medium">{option}</span>
-                </label>
-              {/each}
-            </div>
-          {:else if currentQuestion.question_type === 'multiple_select'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">☑️ Select all correct answers:</div>
-              {#each (Array.isArray(currentQuestion.options) ? currentQuestion.options : JSON.parse(currentQuestion.options || '[]')) as option}
-                <label class="flex items-center p-5 border-2 hover:bg-blue-50 cursor-pointer transition-all {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 pointer-events-none' : ''} {(answers[currentQuestion.id] || '').split(',').includes(option) ? 'border-blue-600 bg-blue-50 shadow-md' : 'border-gray-200'}">
-                  <input
-                    type="checkbox"
-                    value={option}
-                    checked={(answers[currentQuestion.id] || '').split(',').includes(option)}
-                    on:change={(e) => {
-                      let selected = (answers[currentQuestion.id] || '').split(',').filter(s => s.trim());
-                      if (e.target.checked) {
-                        if (!selected.includes(option)) selected.push(option);
-                      } else {
-                        selected = selected.filter(s => s !== option);
-                      }
-                      handleAnswer(currentQuestion.id, selected.join(','));
-                    }}
-                    disabled={completedQuestions.has(currentQuestionIndex)}
-                    class="w-5 h-5 text-blue-600"
-                  />
-                  <span class="ml-4 text-gray-900 font-medium">{option}</span>
-                </label>
-              {/each}
-            </div>
-          {:else if currentQuestion.question_type === 'dropdown_select'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📋 Select from dropdown:</div>
-              <select 
-                class="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 text-lg {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                value={answers[currentQuestion.id] || ''}
-                on:change={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                disabled={completedQuestions.has(currentQuestionIndex)}
-              >
-                <option value="">-- Select an option --</option>
-                {#each (Array.isArray(currentQuestion.options) ? currentQuestion.options : JSON.parse(currentQuestion.options || '[]')) as option}
-                  <option value={option}>{option}</option>
-                {/each}
-              </select>
-            </div>
-          {:else if currentQuestion.question_type === 'fill_in_blanks' || currentQuestion.question_type === 'fill_blanks'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📝 Fill in the blanks:</div>
-              <div class="bg-blue-50 p-6 rounded-lg mb-4 border-2 border-blue-200">
-                <p class="text-gray-800 text-lg leading-relaxed font-medium">{currentQuestion.question_text}</p>
-              </div>
-              {#if currentQuestion.question_config?.blanks}
-                <div class="space-y-3">
-                  {#each currentQuestion.question_config.blanks as blank, index}
-                    <div class="flex items-center space-x-3">
-                      <label class="text-sm font-medium text-gray-700 w-20">Blank {index + 1}:</label>
-                      <input
-                        type="text"
-                        class="flex-1 p-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                        placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : `Enter answer for blank ${index + 1}`}
-                        value={(answers[currentQuestion.id] || '').split('|||')[index] || ''}
-                        on:input={(e) => {
-                          let blanks = (answers[currentQuestion.id] || '').split('|||');
-                          while (blanks.length <= index) blanks.push('');
-                          blanks[index] = e.target.value;
-                          handleAnswer(currentQuestion.id, blanks.join('|||'));
-                        }}
-                        disabled={completedQuestions.has(currentQuestionIndex)}
-                      />
-                    </div>
-                  {/each}
-                </div>
-              {:else}
-                <textarea
-                  class="w-full h-32 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                  placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Enter your answers separated by commas (e.g., answer1, answer2, answer3)'}
-                  value={answers[currentQuestion.id] || ''}
-                  on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                  disabled={completedQuestions.has(currentQuestionIndex)}
-                ></textarea>
-              {/if}
-            </div>
-          {:else if currentQuestion.question_type === 'matching_pairs' || currentQuestion.question_type === 'drag_drop_match'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">🔗 Match items by selecting pairs:</div>
-              {#if currentQuestion.question_config?.pairs}
-                <div class="space-y-4">
-                  {#each currentQuestion.question_config.pairs as pair, index}
-                    <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                      <div class="flex-1">
-                        <div class="font-medium text-gray-900 p-3 bg-white rounded border">{pair.left}</div>
-                      </div>
-                      <div class="text-2xl text-gray-400">→</div>
-                      <div class="flex-1">
-                        <select 
-                          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                          value={(answers[currentQuestion.id] || '').split('|||')[index] || ''}
-                          on:change={(e) => {
-                            let matches = (answers[currentQuestion.id] || '').split('|||');
-                            while (matches.length <= index) matches.push('');
-                            matches[index] = e.target.value;
-                            handleAnswer(currentQuestion.id, matches.join('|||'));
-                          }}
-                          disabled={completedQuestions.has(currentQuestionIndex)}
-                        >
-                          <option value="">-- Select match --</option>
-                          {#each (currentQuestion.question_config.right_items || currentQuestion.question_config.pairs.map(p => p.right)) as rightItem}
-                            <option value={rightItem}>{rightItem}</option>
-                          {/each}
-                        </select>
-                      </div>
-                    </div>
-                  {/each}
-                </div>
-              {:else}
-                <div class="bg-blue-50 p-4 rounded-lg mb-4">
-                  <p class="text-sm text-gray-600">💡 Example format:</p>
-                  <p class="text-sm font-mono text-gray-800">Python:Programming Language<br/>HTML:Markup Language<br/>MySQL:Database</p>
-                </div>
-                <textarea
-                  class="w-full h-40 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 font-mono {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                  placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Enter matches (one per line):\nItem1:Match1\nItem2:Match2\nItem3:Match3'}
-                  value={answers[currentQuestion.id] || ''}
-                  on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                  disabled={completedQuestions.has(currentQuestionIndex)}
-                ></textarea>
-              {/if}
-            </div>
-          {:else if currentQuestion.question_type === 'drag_drop_ordering' || currentQuestion.question_type === 'drag_drop_order'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📋 Arrange items in correct order (click ↑↓ to reorder):</div>
-              {#if currentQuestion.question_config?.items}
-                {@const currentOrder = answers[currentQuestion.id] ? answers[currentQuestion.id].split(',').map(i => parseInt(i)) : currentQuestion.question_config.items.map((_, i) => i)}
-                <div class="space-y-2">
-                  {#each currentOrder as itemIndex, position}
-                    <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg border-2 border-gray-200">
-                      <div class="flex flex-col space-y-1">
-                        <button
-                          type="button"
-                          class="w-8 h-8 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm font-bold"
-                          on:click={() => {
-                            if (position > 0) {
-                              let newOrder = [...currentOrder];
-                              [newOrder[position], newOrder[position - 1]] = [newOrder[position - 1], newOrder[position]];
-                              handleAnswer(currentQuestion.id, newOrder.join(','));
-                            }
-                          }}
-                          disabled={position === 0 || completedQuestions.has(currentQuestionIndex)}
-                        >
-                          ↑
-                        </button>
-                        <button
-                          type="button"
-                          class="w-8 h-8 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm font-bold"
-                          on:click={() => {
-                            if (position < currentOrder.length - 1) {
-                              let newOrder = [...currentOrder];
-                              [newOrder[position], newOrder[position + 1]] = [newOrder[position + 1], newOrder[position]];
-                              handleAnswer(currentQuestion.id, newOrder.join(','));
-                            }
-                          }}
-                          disabled={position === currentOrder.length - 1 || completedQuestions.has(currentQuestionIndex)}
-                        >
-                          ↓
-                        </button>
-                      </div>
-                      <div class="flex-1">
-                        <div class="font-medium text-gray-900 p-3 bg-white rounded border">
-                          <span class="text-blue-600 font-bold mr-2">{position + 1}.</span>
-                          {currentQuestion.question_config.items[itemIndex]}
-                        </div>
-                      </div>
-                    </div>
-                  {/each}
-                </div>
-              {:else}
-                <div class="bg-blue-50 p-4 rounded-lg mb-4">
-                  <p class="text-sm text-gray-600">💡 Example: First Step, Second Step, Third Step</p>
-                </div>
-                <textarea
-                  class="w-full h-32 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                  placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Enter items in correct order, separated by commas'}
-                  value={answers[currentQuestion.id] || ''}
-                  on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                  disabled={completedQuestions.has(currentQuestionIndex)}
-                ></textarea>
-              {/if}
-            </div>
-          {:else if currentQuestion.question_type === 'linear_scale'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📊 Rate on a scale of 1-10:</div>
-              <div class="flex items-center justify-center space-x-4 py-6">
-                <span class="text-sm font-medium text-gray-600">1</span>
-                <div class="flex space-x-2">
-                  {#each Array(10) as _, i}
-                    <button
-                      type="button"
-                      class="w-12 h-12 rounded-full border-2 font-bold transition-all {answers[currentQuestion.id] == (i + 1) ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'} {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 pointer-events-none' : ''}"
-                      on:click={() => handleAnswer(currentQuestion.id, (i + 1).toString())}
-                      disabled={completedQuestions.has(currentQuestionIndex)}
-                    >
-                      {i + 1}
-                    </button>
-                  {/each}
-                </div>
-                <span class="text-sm font-medium text-gray-600">10</span>
-              </div>
-            </div>
-          {:else if currentQuestion.question_type === 'code_writing'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">💻 Write your code in the editor below:</div>
-              <div class="bg-gray-900 rounded-lg overflow-hidden border-2 border-gray-700 shadow-2xl">
-                <!-- IDE Header -->
-                <div class="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
-                  <div class="flex items-center space-x-3">
-                    <div class="flex space-x-2">
-                      <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                      <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                      <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    </div>
-                    <span class="text-xs text-gray-400 font-mono">code_editor.py</span>
-                  </div>
-                  <div class="flex items-center space-x-2">
-                    <span class="text-xs text-gray-500">Line 1, Col 1</span>
-                  </div>
-                </div>
-                <!-- Line Numbers + Code Area -->
-                <div class="flex">
-                  <div class="bg-gray-800 px-3 py-4 text-gray-500 font-mono text-sm select-none border-r border-gray-700">
-                    {#each Array(15) as _, i}
-                      <div class="leading-6">{i + 1}</div>
-                    {/each}
-                  </div>
-                  <textarea
-                    class="flex-1 p-4 bg-gray-900 text-green-400 font-mono text-sm border-0 focus:ring-0 focus:outline-none leading-6 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50' : ''}"
-                    placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : '# Write your code here...\ndef solution():\n    pass'}
-                    value={answers[currentQuestion.id] || ''}
-                    on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                    disabled={completedQuestions.has(currentQuestionIndex)}
-                    rows="15"
-                    spellcheck="false"
-                    style="resize: none; tab-size: 4;"
-                  ></textarea>
-                </div>
-                <!-- IDE Footer -->
-                <div class="bg-gray-800 px-4 py-2 border-t border-gray-700 flex items-center justify-between">
-                  <span class="text-xs text-gray-500 font-mono">UTF-8 | {currentQuestion.code_language || 'Python'}</span>
-                  <span class="text-xs text-gray-500">Press Tab to indent</span>
-                </div>
-              </div>
-            </div>
-          {:else if currentQuestion.question_type === 'sql_query'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">🗄️ Write your SQL query:</div>
-              <textarea
-                class="w-full h-32 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 font-mono text-sm {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-gray-900 text-cyan-400'}"
-                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'SELECT * FROM table_name;'}
-                value={answers[currentQuestion.id] || ''}
-                on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                disabled={completedQuestions.has(currentQuestionIndex)}
-                style="background-color: #1a1a1a; color: #00ffff; font-family: 'Courier New', monospace;"
-              ></textarea>
-            </div>
-          {:else if currentQuestion.question_type === 'multi_grid'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📊 Select one answer for each row:</div>
-              <div class="overflow-x-auto">
-                <table class="w-full border-collapse border border-gray-300">
-                  <thead>
-                    <tr class="bg-gray-50">
-                      <th class="border border-gray-300 p-3 text-left font-semibold">Item</th>
-                      {#each (currentQuestion.question_config?.columns || []) as column}
-                        <th class="border border-gray-300 p-3 text-center font-semibold">{column}</th>
-                      {/each}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {#each (currentQuestion.question_config?.rows || []) as row, rowIndex}
-                      <tr class="hover:bg-gray-50">
-                        <td class="border border-gray-300 p-3 font-medium">{row}</td>
-                        {#each (currentQuestion.question_config?.columns || []) as column}
-                          <td class="border border-gray-300 p-3 text-center">
-                            <input
-                              type="radio"
-                              name="grid-row-{rowIndex}"
-                              value={`${row}:${column}`}
-                              checked={(answers[currentQuestion.id] || '').includes(`${row}:${column}`)}
-                              on:change={(e) => {
-                                let gridAnswers = (answers[currentQuestion.id] || '').split('\n').filter(a => a.trim());
-                                gridAnswers = gridAnswers.filter(a => !a.startsWith(`${row}:`));
-                                if (e.target.checked) {
-                                  gridAnswers.push(`${row}:${column}`);
-                                }
-                                handleAnswer(currentQuestion.id, gridAnswers.join('\n'));
-                              }}
-                              disabled={completedQuestions.has(currentQuestionIndex)}
-                              class="w-4 h-4 text-blue-600"
-                            />
-                          </td>
-                        {/each}
-                      </tr>
-                    {/each}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          {:else if currentQuestion.question_type === 'true_false'}
-            <div class="space-y-3">
-              {#each ['True', 'False'] as option}
-                <label class="flex items-center p-4 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 pointer-events-none' : ''} {answers[currentQuestion.id] === option ? 'border-blue-600 bg-blue-50' : ''}">
-                  <input
-                    type="radio"
-                    name="question-{currentQuestion.id}"
-                    value={option}
-                    on:change={() => handleAnswer(currentQuestion.id, option)}
-                    checked={answers[currentQuestion.id] === option}
-                    disabled={completedQuestions.has(currentQuestionIndex)}
-                    class="w-4 h-4 text-blue-600"
-                  />
-                  <span class="ml-3 text-gray-900">{option}</span>
-                </label>
-              {/each}
-            </div>
-          {:else if currentQuestion.question_type === 'short_answer'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📝 Write your answer:</div>
-              <textarea
-                class="w-full h-32 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Write your answer here...'}
-                value={answers[currentQuestion.id] || ''}
-                on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                disabled={completedQuestions.has(currentQuestionIndex)}
-              ></textarea>
-            </div>
-          {:else if currentQuestion.question_type === 'essay'}
-            <div class="space-y-4">
-              <div class="mb-3 text-sm font-semibold text-gray-700">📝 Write your essay:</div>
-              <textarea
-                class="w-full h-64 p-4 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-300 {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 bg-gray-100' : 'bg-white'}"
-                placeholder={completedQuestions.has(currentQuestionIndex) ? '⏰ Time expired' : 'Write your essay here... (Type your response in complete sentences)'}
-                value={answers[currentQuestion.id] || ''}
-                on:input={(e) => handleAnswer(currentQuestion.id, e.target.value)}
-                disabled={completedQuestions.has(currentQuestionIndex)}
-              ></textarea>
-              <div class="text-xs text-gray-500">💡 Tip: Write clearly and completely.</div>
-            </div>
-          {:else if currentQuestion.question_type === 'code_analysis'}
-            <div class="space-y-4">
-              {#if currentQuestion.code_block}
-                <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto">
-                  <pre>{currentQuestion.code_block}</pre>
-                </div>
-              {/if}
-              <div class="space-y-4">
-                {#each (Array.isArray(currentQuestion.options) ? currentQuestion.options : JSON.parse(currentQuestion.options || '[]')) as option}
-                  <label class="flex items-center p-5 border-2 hover:bg-blue-50 cursor-pointer transition-all {completedQuestions.has(currentQuestionIndex) ? 'opacity-50 pointer-events-none' : ''} {answers[currentQuestion.id] === option ? 'border-blue-600 bg-blue-50 shadow-md' : 'border-gray-200'}">
-                    <input
-                      type="radio"
-                      name="question-{currentQuestion.id}"
-                      value={option}
-                      on:change={() => handleAnswer(currentQuestion.id, option)}
-                      checked={answers[currentQuestion.id] === option}
-                      disabled={completedQuestions.has(currentQuestionIndex)}
-                      class="w-5 h-5 text-blue-600"
-                    />
-                    <span class="ml-4 text-gray-900 font-medium">{option}</span>
-                  </label>
-                {/each}
-              </div>
-            </div>
-          {/if}
+          <QuestionTypes 
+            question={currentQuestion}
+            bind:answer={answers[currentQuestion.id]}
+            disabled={completedQuestions.has(currentQuestionIndex)}
+          />
         </div>
       {/if}
 
