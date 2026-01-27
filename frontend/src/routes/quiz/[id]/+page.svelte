@@ -4,7 +4,6 @@
   import { goto } from '$app/navigation';
   import { user } from '$lib/stores.js';
   import { api } from '$lib/api.js';
-  import QuestionTypes from '$lib/components/QuestionTypes.svelte';
 
   let questions = [];
   let currentQuestionIndex = 0;
@@ -489,19 +488,6 @@
       const result = await api.submitQuiz(submission);
       console.log('✅ Quiz submitted successfully:', result);
       
-      // Store marks in localStorage for results page
-      if (result.score !== undefined) {
-        const marksKey = `quiz_marks_${quizId}`;
-        localStorage.setItem(marksKey, JSON.stringify({
-          score: result.score,
-          total_points: result.total_points,
-          total_questions: result.total_questions,
-          percentage: result.percentage,
-          grade: result.grade,
-          message: result.message
-        }));
-      }
-      
       // Clear quiz state immediately after successful submission
       clearQuizState();
       
@@ -626,13 +612,6 @@
             {currentQuestion.question_text}
           </h2>
 
-          <QuestionTypes 
-            question={currentQuestion}
-            bind:answer={answers[currentQuestion.id]}
-            disabled={completedQuestions.has(currentQuestionIndex)}
-          />
-
-          <!-- OLD HARDCODED RENDERING REMOVED
           {#if currentQuestion.question_type === 'mcq' || currentQuestion.question_type === 'multiple_choice'}
             <div class="space-y-4">
               <div class="mb-3 text-sm font-semibold text-gray-700">📋 Select the correct answer:</div>
@@ -1017,7 +996,6 @@
               </div>
             </div>
           {/if}
-          END OF OLD HARDCODED RENDERING -->
         </div>
       {/if}
 
