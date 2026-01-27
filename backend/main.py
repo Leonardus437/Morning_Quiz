@@ -2429,6 +2429,10 @@ def report_cheating(data: Dict, current_user: User = Depends(get_current_user), 
         db.rollback()
         return {"message": f"Failed to report: {str(e)}", "success": False}
 
+@app.options("/teacher/quiz-submissions/{quiz_id}")
+async def quiz_submissions_options(quiz_id: int):
+    return {"message": "OK"}
+
 @app.get("/teacher/quiz-submissions/{quiz_id}")
 def get_quiz_submissions(quiz_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     """Get all submissions for a quiz for teacher review"""

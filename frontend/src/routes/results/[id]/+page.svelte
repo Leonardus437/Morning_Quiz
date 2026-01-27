@@ -6,11 +6,37 @@
   let status = '';
   let quizTitle = '';
   let loading = true;
+  let score = null;
+  let totalPoints = null;
+  let totalQuestions = null;
+  let percentage = null;
+  let grade = null;
+  let message = '';
   
   onMount(() => {
     const params = new URLSearchParams(window.location.search);
     status = params.get('status') || 'completed';
     quizTitle = params.get('quiz_title') || 'Quiz';
+    
+    // Get marks from localStorage (set during submission)
+    const marksKey = `quiz_marks_${$page.params.id}`;
+    const marksData = localStorage.getItem(marksKey);
+    if (marksData) {
+      try {
+        const marks = JSON.parse(marksData);
+        score = marks.score;
+        totalPoints = marks.total_points;
+        totalQuestions = marks.total_questions;
+        percentage = marks.percentage;
+        grade = marks.grade;
+        message = marks.message;
+        // Clear after reading
+        localStorage.removeItem(marksKey);
+      } catch (e) {
+        console.error('Failed to parse marks:', e);
+      }
+    }
+    
     loading = false;
   });
   
@@ -73,17 +99,24 @@
       
       <h1 class="text-3xl font-bold text-green-600 mb-4">Quiz Submitted!</h1>
       
-      <div class="bg-green-50 border-2 border-green-200 rounded-xl p-6 mb-6">
-        <p class="text-gray-800 font-semibold mb-3">
-          Your quiz "{quizTitle}" has been successfully submitted.
-        </p>
-        <p class="text-gray-700 text-sm mb-2">
-          📊 Your answers are being reviewed.
-        </p>
-        <p class="text-gray-600 text-sm">
-          Results will be available once your teacher releases them.
-        </p>
-      </div>
+      {:else}
+        <!-- Don't show marks immediately - show under review message -->
+        <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 mb-6">
+          <div class="text-6xl mb-4">📋</div>
+          <p class="text-gray-800 font-semibold mb-3 text-lg">
+            Your quiz "{quizTitle}" has been successfully submitted!
+          </p>
+          <div class="bg-white border-l-4 border-blue-500 p-4 mb-3">
+            <p class="text-blue-700 font-bold mb-2">⏳ Under Review</p>
+            <p class="text-gray-700 text-sm">
+              Your teacher is reviewing your answers. Results will be available once released.
+            </p>
+          </div>
+          <p class="text-gray-600 text-sm">
+            💡 You will be notified when results are ready.
+          </p>
+        </div>
+      {/if}
       
       <div class="space-y-3">
         <button 
