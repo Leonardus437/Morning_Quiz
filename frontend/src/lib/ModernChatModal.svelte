@@ -23,6 +23,14 @@
   let typingTimeout = null;
   let previewFile = null;
   let showPreview = false;
+  let showFormatting = false;
+  let textFormat = {
+    bold: false,
+    italic: false,
+    underline: false,
+    size: 'normal',
+    color: 'default'
+  };
   
   let newRoomData = {
     name: '',
@@ -139,10 +147,11 @@
     if (!newMessage.trim() || !selectedRoom) return;
     
     try {
+      const formattedMessage = applyFormatting(newMessage.trim());
       const message = await apiCall(`/chat/rooms/${selectedRoom.id}/messages`, {
         method: 'POST',
         body: JSON.stringify({
-          message: newMessage.trim(),
+          message: formattedMessage,
           message_type: 'text',
           reply_to_id: replyingTo?.id
         })
@@ -151,10 +160,40 @@
       messages = [...messages, message];
       newMessage = '';
       replyingTo = null;
+      resetFormatting();
       scrollToBottom();
     } catch (error) {
       console.error('Error sending message:', error);
     }
+  }
+
+  function applyFormatting(text) {
+    let formatted = text;
+    const styles = [];
+    
+    if (textFormat.bold) styles.push('font-weight:bold');
+    if (textFormat.italic) styles.push('font-style:italic');
+    if (textFormat.underline) styles.push('text-decoration:underline');
+    if (textFormat.size === 'small') styles.push('font-size:0.75rem');
+    if (textFormat.size === 'large') styles.push('font-size:1.25rem');
+    if (textFormat.size === 'xlarge') styles.push('font-size:1.5rem');
+    if (textFormat.color !== 'default') styles.push(`color:${textFormat.color}`);
+    
+    if (styles.length > 0) {
+      formatted = `<span style="${styles.join(';')}">${text}</span>`;
+    }
+    
+    return formatted;
+  }
+
+  function resetFormatting() {
+    textFormat = {
+      bold: false,
+      italic: false,
+      underline: false,
+      size: 'normal',
+      color: 'default'
+    };
   }
 
   function cycleTheme() {
@@ -623,7 +662,7 @@
                         </a>
                       </div>
                     {:else}
-                      <div class="text-sm break-words">{message.message}</div>
+                      <div class="text-sm break-words">{@html message.message}</div>
                     {/if}
                     
                     <div class="flex items-center justify-between mt-1 space-x-2">
@@ -720,9 +759,18 @@
                 {/if}
               </button>
 
+              <!-- Formatting Button -->
+              <button
+                on:click={() => showFormatting = !showFormatting}
+                class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-xl flex items-center justify-center transition-all transform hover:scale-110 shadow-lg"
+                title="Format text"
+              >
+                <span class="text-xl font-bold">A</span>
+              </button>
+
               <!-- Emoji Picker Button -->
               <button
-                on:click={() => showEmojiPicker = !showEmojiPicker}
+                on:click={() => { showEmojiPicker = !showEmojiPicker; showFormatting = false; }}
                 class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 rounded-xl flex items-center justify-center transition-all transform hover:scale-110 shadow-lg"
                 title="Add emoji"
               >
@@ -751,6 +799,68 @@
                 <Send size={20} class="text-white" />
               </button>
             </div>
+
+            <!-- Formatting Toolbar -->
+            {#if showFormatting}
+              <div class="mt-2 p-3 {theme === 'light' ? 'bg-white border-gray-300' : 'bg-gray-800 border-purple-500/30'} rounded-2xl border-2 transition-all duration-300">
+                <div class="space-y-3">
+                  <!-- Text Style -->
+                  <div class="flex items-center space-x-2">
+                    <button
+                      on:click={() => textFormat.bold = !textFormat.bold}
+                      class="px-3 py-2 rounded-lg font-bold transition-all {textFormat.bold ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
+                      title="Bold"
+                    >
+                      B
+                    </button>
+                    <button
+                      on:click={() => textFormat.italic = !textFormat.italic}
+                      class="px-3 py-2 rounded-lg italic transition-all {textFormat.italic ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
+                      title="Italic"
+                    >
+                      I
+                    </button>
+                    <button
+                      on:click={() => textFormat.underline = !textFormat.underline}
+                      class="px-3 py-2 rounded-lg underline transition-all {textFormat.underline ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}"
+                      title="Underline"
+                    >
+                      U
+                    </button>
+                  </div>
+                  
+                  <!-- Font Size -->
+                  <div class="flex items-center space-x-2">
+                    <span class="text-xs {currentTheme.text} font-semibold">Size:</span>
+                    <button on:click={() => textFormat.size = 'small'} class="px-2 py-1 text-xs rounded-lg transition-all {textFormat.size === 'small' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Small</button>
+                    <button on:click={() => textFormat.size = 'normal'} class="px-2 py-1 text-sm rounded-lg transition-all {textFormat.size === 'normal' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Normal</button>
+                    <button on:click={() => textFormat.size = 'large'} class="px-2 py-1 text-base rounded-lg transition-all {textFormat.size === 'large' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">Large</button>
+                    <button on:click={() => textFormat.size = 'xlarge'} class="px-2 py-1 text-lg rounded-lg transition-all {textFormat.size === 'xlarge' ? 'bg-purple-500 text-white' : theme === 'light' ? 'bg-gray-200 text-gray-900' : 'bg-gray-700 text-white'}">XL</button>
+                  </div>
+                  
+                  <!-- Colors -->
+                  <div class="flex items-center space-x-2">
+                    <span class="text-xs {currentTheme.text} font-semibold">Color:</span>
+                    <button on:click={() => textFormat.color = 'default'} class="w-8 h-8 rounded-full border-2 transition-all {textFormat.color === 'default' ? 'ring-2 ring-purple-500' : ''} {theme === 'light' ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-300'}"></button>
+                    <button on:click={() => textFormat.color = '#ef4444'} class="w-8 h-8 rounded-full bg-red-500 border-2 border-red-600 transition-all {textFormat.color === '#ef4444' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#f97316'} class="w-8 h-8 rounded-full bg-orange-500 border-2 border-orange-600 transition-all {textFormat.color === '#f97316' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#eab308'} class="w-8 h-8 rounded-full bg-yellow-500 border-2 border-yellow-600 transition-all {textFormat.color === '#eab308' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#22c55e'} class="w-8 h-8 rounded-full bg-green-500 border-2 border-green-600 transition-all {textFormat.color === '#22c55e' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#3b82f6'} class="w-8 h-8 rounded-full bg-blue-500 border-2 border-blue-600 transition-all {textFormat.color === '#3b82f6' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#a855f7'} class="w-8 h-8 rounded-full bg-purple-500 border-2 border-purple-600 transition-all {textFormat.color === '#a855f7' ? 'ring-2 ring-purple-500' : ''}"></button>
+                    <button on:click={() => textFormat.color = '#ec4899'} class="w-8 h-8 rounded-full bg-pink-500 border-2 border-pink-600 transition-all {textFormat.color === '#ec4899' ? 'ring-2 ring-purple-500' : ''}"></button>
+                  </div>
+                  
+                  <!-- Reset Button -->
+                  <button
+                    on:click={resetFormatting}
+                    class="w-full px-3 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm transition-all"
+                  >
+                    🔄 Reset Formatting
+                  </button>
+                </div>
+              </div>
+            {/if}
 
             <!-- Emoji Picker -->
             {#if showEmojiPicker}
