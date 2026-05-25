@@ -383,6 +383,20 @@ async def submit_assignment_options():
         }
     )
 
+# Define AssignmentSubmission at module level
+class AssignmentSubmission(Base):
+    __tablename__ = "assignment_submissions"
+    id = Column(Integer, primary_key=True, index=True)
+    assignment_id = Column(Integer, ForeignKey("assignments.id"))
+    student_id = Column(Integer, ForeignKey("users.id"))
+    file_path = Column(String(500), nullable=True)
+    text_content = Column(Text, nullable=True)
+    link_url = Column(String(500), nullable=True)
+    submitted_at = Column(DateTime, default=datetime.utcnow)
+    score = Column(Float, nullable=True)
+    feedback = Column(Text, nullable=True)
+    status = Column(String(20), default="submitted")
+
 @router.post("/submit")
 async def submit_assignment(
     assignment_id: int = Form(...),
@@ -395,124 +409,144 @@ async def submit_assignment(
     """Submit assignment (file, text, or link)"""
     from fastapi.responses import JSONResponse
     import os
-    
-    print(f"[SUBMIT] Received submission request")
-    print(f"  - Assignment ID: {assignment_id}")
-    print(f"  - User: {current_user.username} (ID: {current_user.id})")
-    print(f"  - File: {file.filename if file else 'None'}")
-    print(f"  - Text content: {'Yes' if text_content else 'No'}")
-    print(f"  - Link URL: {'Yes' if link_url else 'No'}")
-    
-    if current_user.role != "student":
-        print(f"[SUBMIT ERROR] User is not a student: {current_user.role}")
-        raise HTTPException(status_code=403, detail="Only students can submit assignments")
-    
-    assignment = db.query(Assignment).filter(
-        Assignment.id == assignment_id,
-        Assignment.is_published == True
-    ).first()
-    
-    if not assignment:
-        print(f"[SUBMIT ERROR] Assignment {assignment_id} not found or not published")
-        raise HTTPException(status_code=404, detail="Assignment not found or not published")
-    
-    print(f"[SUBMIT] Assignment found: {assignment.title}")
-    
-    # Create AssignmentSubmission table if not exists
-    class AssignmentSubmission(Base):
-        __tablename__ = "assignment_submissions"
-        id = Column(Integer, primary_key=True, index=True)
-        assignment_id = Column(Integer, ForeignKey("assignments.id"))
-        student_id = Column(Integer, ForeignKey("users.id"))
-        file_path = Column(String(500), nullable=True)
-        text_content = Column(Text, nullable=True)
-        link_url = Column(String(500), nullable=True)
-        submitted_at = Column(DateTime, default=datetime.utcnow)
-        score = Column(Float, nullable=True)
-        feedback = Column(Text, nullable=True)
+    import traceback
     
     try:
-        Base.metadata.create_all(bind=db.get_bind())
-        print(f"[SUBMIT] AssignmentSubmission table ensured")
-    except Exception as e:
-        print(f"[SUBMIT ERROR] Failed to create table: {e}")
-    
-    # Check if already submitted
-    existing = db.query(AssignmentSubmission).filter(
-        AssignmentSubmission.assignment_id == assignment_id,
-        AssignmentSubmission.student_id == current_user.id
-    ).first()
-    
-    if existing:
-        print(f"[SUBMIT ERROR] Already submitted")
-        raise HTTPException(status_code=400, detail="You have already submitted this assignment")
-    
-    # Handle file upload
-    file_path = None
-    if file:
-        try:
-            upload_dir = "uploads/submissions"
-            os.makedirs(upload_dir, exist_ok=True)
-            timestamp = datetime.utcnow().timestamp()
-            file_path = f"{upload_dir}/{current_user.id}_{assignment_id}_{timestamp}_{file.filename}"
-            
-            with open(file_path, "wb") as f:
-                content = await file.read()
-                f.write(content)
-            print(f"[SUBMIT] File saved: {file_path}")
-        except Exception as e:
-            print(f"[SUBMIT ERROR] File upload failed: {e}")
-            raise HTTPException(status_code=500, detail=f"File upload failed: {str(e)}")
-    
-    # Create submission
-    try:
-        submission = AssignmentSubmission(
-            assignment_id=assignment_id,
-            student_id=current_user.id,
-            file_path=file_path,
-            text_content=text_content,
-            link_url=link_url
-        )
+        print(f"[SUBMIT] Received submission request")
+        print(f"  - Assignment ID: {assignment_id}")
+        print(f"  - User: {current_user.username} (ID: {current_user.id})")
+        print(f"  - File: {file.filename if file else 'None'}")
+        print(f"  - Text content: {'Yes' if text_content else 'No'}")
+        print(f"  - Link URL: {'Yes' if link_url else 'No'}")
         
-        db.add(submission)
-        db.commit()
-        db.refresh(submission)
-        print(f"[SUBMIT] Submission created: ID={submission.id}")
-    except Exception as e:
-        print(f"[SUBMIT ERROR] Database error: {e}")
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Failed to save submission: {str(e)}")
-    
-    # Notify teacher
-    try:
-        from main import Notification
-        teacher = db.query(User).filter(User.id == assignment.teacher_id).first()
-        if teacher:
-            notification = Notification(
-                user_id=teacher.id,
-                title=f"New Assignment Submission",
-                message=f"{current_user.full_name or current_user.username} submitted '{assignment.title}'",
-                type="assignment_submission"
+        if current_user.role != "student":
+            print(f"[SUBMIT ERROR] User is not a student: {current_user.role}")
+            return JSONResponse(
+                status_code=403,
+                content={"success": False, "detail": "Only students can submit assignments"},
+                headers={"Access-Control-Allow-Origin": "*"}
             )
-            db.add(notification)
+        
+        assignment = db.query(Assignment).filter(
+            Assignment.id == assignment_id,
+            Assignment.is_published == True
+        ).first()
+        
+        if not assignment:
+            print(f"[SUBMIT ERROR] Assignment {assignment_id} not found or not published")
+            return JSONResponse(
+                status_code=404,
+                content={"success": False, "detail": "Assignment not found or not published"},
+                headers={"Access-Control-Allow-Origin": "*"}
+            )
+        
+        print(f"[SUBMIT] Assignment found: {assignment.title}")
+        
+        # Ensure table exists
+        try:
+            Base.metadata.create_all(bind=db.get_bind())
+            print(f"[SUBMIT] AssignmentSubmission table ensured")
+        except Exception as e:
+            print(f"[SUBMIT ERROR] Failed to create table: {e}")
+        
+        # Check if already submitted
+        existing = db.query(AssignmentSubmission).filter(
+            AssignmentSubmission.assignment_id == assignment_id,
+            AssignmentSubmission.student_id == current_user.id
+        ).first()
+        
+        if existing:
+            print(f"[SUBMIT ERROR] Already submitted")
+            return JSONResponse(
+                status_code=400,
+                content={"success": False, "detail": "You have already submitted this assignment"},
+                headers={"Access-Control-Allow-Origin": "*"}
+            )
+        
+        # Handle file upload
+        file_path = None
+        if file:
+            try:
+                upload_dir = "uploads/submissions"
+                os.makedirs(upload_dir, exist_ok=True)
+                timestamp = datetime.utcnow().timestamp()
+                file_path = f"{upload_dir}/{current_user.id}_{assignment_id}_{timestamp}_{file.filename}"
+                
+                with open(file_path, "wb") as f:
+                    content = await file.read()
+                    f.write(content)
+                print(f"[SUBMIT] File saved: {file_path}")
+            except Exception as e:
+                print(f"[SUBMIT ERROR] File upload failed: {e}")
+                return JSONResponse(
+                    status_code=500,
+                    content={"success": False, "detail": f"File upload failed: {str(e)}"},
+                    headers={"Access-Control-Allow-Origin": "*"}
+                )
+        
+        # Create submission
+        try:
+            submission = AssignmentSubmission(
+                assignment_id=assignment_id,
+                student_id=current_user.id,
+                file_path=file_path,
+                text_content=text_content,
+                link_url=link_url
+            )
+            
+            db.add(submission)
             db.commit()
-            print(f"[SUBMIT] Teacher notified")
-    except Exception as e:
-        print(f"[SUBMIT WARNING] Notification failed: {e}")
+            db.refresh(submission)
+            print(f"[SUBMIT] Submission created: ID={submission.id}")
+        except Exception as e:
+            print(f"[SUBMIT ERROR] Database error: {e}")
+            print(f"[SUBMIT ERROR] Traceback: {traceback.format_exc()}")
+            db.rollback()
+            return JSONResponse(
+                status_code=500,
+                content={"success": False, "detail": f"Failed to save submission: {str(e)}"},
+                headers={"Access-Control-Allow-Origin": "*"}
+            )
+        
+        # Notify teacher
+        try:
+            from main import Notification
+            teacher = db.query(User).filter(User.id == assignment.teacher_id).first()
+            if teacher:
+                notification = Notification(
+                    user_id=teacher.id,
+                    title=f"New Assignment Submission",
+                    message=f"{current_user.full_name or current_user.username} submitted '{assignment.title}'",
+                    type="assignment_submission"
+                )
+                db.add(notification)
+                db.commit()
+                print(f"[SUBMIT] Teacher notified")
+        except Exception as e:
+            print(f"[SUBMIT WARNING] Notification failed: {e}")
+        
+        print(f"[SUBMIT] Success!")
+        return JSONResponse(
+            content={
+                "success": True,
+                "message": "Assignment submitted successfully",
+                "submission_id": submission.id
+            },
+            headers={
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "POST, OPTIONS",
+                "Access-Control-Allow-Headers": "*"
+            }
+        )
     
-    print(f"[SUBMIT] Success!")
-    return JSONResponse(
-        content={
-            "success": True,
-            "message": "Assignment submitted successfully",
-            "submission_id": submission.id
-        },
-        headers={
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, OPTIONS",
-            "Access-Control-Allow-Headers": "*"
-        }
-    )
+    except Exception as e:
+        print(f"[SUBMIT FATAL ERROR] {str(e)}")
+        print(f"[SUBMIT FATAL ERROR] Traceback: {traceback.format_exc()}")
+        return JSONResponse(
+            status_code=500,
+            content={"success": False, "detail": f"Submission failed: {str(e)}"},
+            headers={"Access-Control-Allow-Origin": "*"}
+        )
 
 
 # Teacher: View Submissions
