@@ -1,0 +1,12 @@
+# Auto-Deploy Test File
+
+This file is used to test if Railway auto-deploy is working.
+
+## How to Test:
+1. Reconnect GitHub repository in Railway dashboard
+2. Edit this file (add a line below)
+3. Commit and push
+4. Check Railway dashboard for new deployment
+
+## Test Log:
+- Test 1: Initial creation

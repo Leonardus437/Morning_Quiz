@@ -1,0 +1,5041 @@
+{
+  "provinces": {
+    "Eastern Province": [
+      "Bugesera",
+      "Gatsibo",
+      "Kayonza",
+      "Kirehe",
+      "Ngoma",
+      "Nyagatare",
+      "Rwamagana"
+    ],
+    "Kigali City": [
+      "Gasabo",
+      "Kicukiro",
+      "Nyarugenge"
+    ],
+    "Northern Province": [
+      "Burera",
+      "Gakenke",
+      "Gicumbi",
+      "Musanze",
+      "Rulindo"
+    ],
+    "Southern Province": [
+      "Gisagara",
+      "Huye",
+      "Kamonyi",
+      "Muhanga",
+      "Nyamagabe",
+      "Nyanza",
+      "Nyaruguru",
+      "Ruhango"
+    ],
+    "Western Province": [
+      "Karongi",
+      "Ngororero",
+      "Nyabihu",
+      "Nyamasheke",
+      "Rubavu",
+      "Rusizi",
+      "Rutsiro"
+    ]
+  },
+  "schools": {
+    "GASORE SERGE FOUNDATION VTC": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "NELSON MANDELA TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "LYCEE DE LA SAINTE TRINITE- APED TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "RUHUHA VTC": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUTONDE/TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "NDAMA TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Animal health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "EPR NYAMIRAMA VTC": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS GIHINGA/TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KAMABARE/TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "NYAMATA TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet technologies L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Renewable energy L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land surveying L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and telecommunication L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Interior design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "NIBAKURE COMMUNITY VILLAGE VTC": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES JURU TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KAGASA MWOGO/TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RILIMA CATHOLIQUE/TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GITAGATA REHABILITATION CENTER VTC": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Nono None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MAREBA/TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MUSENYI/TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-L5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "BATIMA TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS DIHIRO/TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "URUMURI COMMUNITY CENTER VTC": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "APEBU NYAMATA TSS": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Mixed (Day and boarding)",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operation L3-",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism L3-L5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-L5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MIRACLE CORNERS VTC": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "XTRA MILE VTC": {
+      "district": "BUGESERA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES GAHUNGA TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Automobile technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and telecommunication L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "CEPEM TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS Bungwe TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "2 Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MURWA TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Woog technology L3 -5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Runaba VTC": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Kabona TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "COLLEGE GEORGE FOX DE BUTARO": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer system and architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS Gaseke TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS Rushara TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None /^KOoTivs^",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS Mucaca TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MU SASA TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Public",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS Gitare II TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Cyanika TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Public",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Kinyababa TSS": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MARIA RAFAEL NKUMBA VTC": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Private",
+          "level": "L3-5"
+        },
+        {
+          "name": "Private",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ECOLE TECHNIQUE DE KARUGANDA": {
+      "district": "BURERA",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GAKENKE": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "TSS",
+          "level": "L3-5"
+        },
+        {
+          "name": "Gov aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "PUBLIC",
+          "level": "L3-5"
+        },
+        {
+          "name": "GO AIDED",
+          "level": "L3-5"
+        },
+        {
+          "name": "GO AIDED",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "JANJA TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic Electricity LI",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic Electricity LI",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES BUHUGA TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Wood technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "EAV RUSHASHI TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "1 .Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "1 .Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal health L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RWAHI TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MUNYANA TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "RUSHASHI TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5.",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5.",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "CYABINGO TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5.",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "NEMBA TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic electricity L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3--5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS APAPEM MUHONDO TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "LYCEE CATHOLIC SAINT ALAIN DE MATABA": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Animal health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "C.F.P MUSEKE VTC": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Leather works L1.",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "JOC MUHONDO VTC": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAINTE LUCIE VTC": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUKURA TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Public works L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building and Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MURAMBO TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MUYONGWE TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS BITABA TSS": {
+      "district": "GAKENKE",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "\\ $",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS GIKOMERO TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Gov. Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "DON BOSCO MUHAZI VTC": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "PRIVATE",
+          "level": "L3-5"
+        },
+        {
+          "name": "Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RWANYANZA TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Gov. Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "FOREVER TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Gov. Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Boarding and Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS NDUBA TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Gov. Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUBINGO TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "PUBLIC",
+          "level": "L3-5"
+        },
+        {
+          "name": "Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SOS TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "1 Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and Telecommunication",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture L3-",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electricity L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KETHA/KIGALI EXCELLENT TOURISM AND HOSPITALITY ACADEMY": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L4-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism L4-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L3",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism L3",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "WORLD MISSION TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Multimedia Production L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUGANDO TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "APAER RUSORORO": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and Telecommunication L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KABERA VTC": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "None",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing LI",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "INTERNATIONAL TECHNICAL SCHOOL OF KIGALI (ITS)": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUTUNGA": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Public Works L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "BUMBOGO TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Food Processing L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GLORY ACADEMY": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "CLUB HOTEK": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KIMIRONKO II TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Centre des Metiers Assomption de Kabuye/CMAK": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GACURIRO TSS": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ESTHER'S AID VTC": {
+      "district": "GASABO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "College APPEC REMERA RUKOMA": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Government",
+          "level": "L3-5"
+        },
+        {
+          "name": "Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Boarding",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAINT BERNARD VTC": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Leather works L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KIGESE TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "RUNDA TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land surveying L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Centre de Formation Saint Leonard VTC": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KAYENZI TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic electricity L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES MUSAMBIRA TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Food and Beverage Operation L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAINT ANNE MUGINA TSS&VTC": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAINT IGNACE _MUGINA TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer system and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "CPJSP VTC": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "None",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS Kayumbu TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction 13-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS Ruyanza TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUYUMBA TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Fr. Ramon KABUGA TSS": {
+      "district": "KAMONYI",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer system and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "College Baptiste de Ngarama (COBANGA)": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "BENEBIKIRA TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food & Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food & Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "EFA NYAGAHANGA TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Food Processing L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food Processing L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GAKONI TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design and L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Leather Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design and L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Leather Technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GATSIBO COMMUNITY MODEL SCHOOL TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": ". Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Food & Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": ". Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Food & Beverage Operations L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GATSIBO TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land surveying L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public works L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GITUZA TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair Dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS BUGARURA TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GSGIHETA TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KARUBUNGO TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KIZIGURO TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Systems and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS NYAGASIGA TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RWIMITERERI TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "LYCEE ST ALEXANDRE SAULI DE MUHURATSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Computer Systems and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet",
+          "level": "L3-5"
+        },
+        {
+          "name": "Technology L3-5 r \\",
+          "level": "L3-5"
+        },
+        {
+          "name": "-None\u2019 \u2019",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "NGARAMA TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-4",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction Tech L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ESIM TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAINT JOSEPHINE TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design and L3-5 &",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food & Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "UMBRELLA VTC": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None. However",
+          "level": "L3-5"
+        },
+        {
+          "name": "the school is given 1 year to relocate since the school environment is not conducive.",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "UMUTARA POLYTECHNIC": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Wood Technology and Carpentry L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GSMUNINI TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KARAMA NYAGIHANGA TSS": {
+      "district": "GATSIBO",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KIBALI VTC": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Culinary arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GICUMBI TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "RUSHAKI VTC": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic Electricity L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MULINDI TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Computer Systems and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and Telecommunication L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MANYAGIRO TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GSR UBA YA TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MUKARANGE TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic Electricity L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS NYABISHAMBI TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Centre des Jeunes CHAINA KEITETSI VTC": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair Dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KINISHYA TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Plumbing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None 17^ \u00ae",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Collegio Santo Antonio Maria Zaccaria TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Systems and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS REBERO TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "BUKURETSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Good Shepherd VTC": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MUNYINYA TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Automobile Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "IZERE VTC": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "EAR KAGEYO VTC": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "APAPEGI CYURU TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "APEGIRUBUKI TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public works L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Non^^?^",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "CYUMBATSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Public",
+          "level": "L3-5"
+        },
+        {
+          "name": "Boarding",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAINT Laurent GASEKE TSS": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Gov. Aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Boarding",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Rwesero VTC": {
+      "district": "GICUMBI",
+      "province": "Northern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Private",
+          "level": "L3-5"
+        },
+        {
+          "name": "Mixed (Day and boarding) (Day& Boarding)",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GISAGARA": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "PUBLIC",
+          "level": "L3-5"
+        },
+        {
+          "name": "PUBLIC",
+          "level": "L3-5"
+        },
+        {
+          "name": "Government- aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Government- aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KIGEMBE TSS": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry LI",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KINTEKO": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "COLLEGE ST JOSEPH KANSI": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MUGOMBWA TSS": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring LI",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES MAMBA": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Food And Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ST KIZITO SAVE TSS": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Systems and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronic and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Telecommunication L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public Works L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land Surveying L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5 / '",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        },
+        {
+          "name": "\\ 1 <1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES MAGI TSS": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES MUGANZA TSS": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "EUGENIE SMET TSS": {
+      "district": "GISAGARA",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "IPRC KARONGI TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "L\u2019ESPERANCE TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ESAPAN TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS CYINAMA TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS MANJI TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS GISOVU TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Forestry L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS BISESERO TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ESA BIRAMBO": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES RUGANDA": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "IPK KIRINDA": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MUNANIRA TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": ".Leather Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Leather Works L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "RUBENGERA TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Nohe \\",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "RUBEGERA TSS II": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food And Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES RUBENGERA": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Saint Joseph Birambo": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Water and Irrigation Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology L3-L5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MUHORORO TSS": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES NGOMA": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "IPESAR": {
+      "district": "KARONGI",
+      "province": "Western Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KAYONZA TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Culinary arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Mukarange VTC": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SOS HERMANN GMEINER KAYONZA SCHOOL": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SACO A COMPLEX": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Art L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "AMIZERO INSTITUTE OF TECHNOLOGY & HOSPITALITY.": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": ". Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": ". Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Food & Beverage operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUKARA TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS BUHABWA TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS JURUTSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "INSTITUT DON BOSCO KABARONDO TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land Surveying L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KABARONDO VTC": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES RURAMIRA TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Manufacturing Technology L3-5 ^:",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology L3-5 ?",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "COLLEGE APPEKA KABARONDO TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS Migera TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Water and Irrigation L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Nyamirama TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5.",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "E.S NDEGO I TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "St Christopher TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Systems and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS ADELAIDE TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Food Processing L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "AGAKIRIRO VTC": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "None",
+          "level": "L3-5"
+        },
+        {
+          "name": "f / / it A '\u00bb Y",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Leather Works",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ES CYARUBARE TSS": {
+      "district": "KAYONZA",
+      "province": "Eastern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "DON BOSCO RANGO TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage operations L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "G S des Parents TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": ".Computer System & Archtecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Telecommunication L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS NYUMBA TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": ".Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUGOGWE TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "IPRC HUYE": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "None",
+          "level": "L3-5"
+        },
+        {
+          "name": "1: : / \\. I\\",
+          "level": "L3-5"
+        },
+        {
+          "name": "1 .Public Works L3-",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MARABA TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fasion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MSGR.Mubiligi Catholic TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Rwabuye TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Fashion Design L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food & Beverage Operation L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KABUTARE TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Agriculture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health L4-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food Processing L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Forestry L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GSGISHIHETSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": ". Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Computer System and Architecture L3-5 .",
+          "level": "L3-5"
+        },
+        {
+          "name": "-None",
+          "level": "L3-5"
+        },
+        {
+          "name": "\\ ?A",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KARAMA TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": ". Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Wood Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "HUYE PRISON VTC": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "1 .Carpentry L 1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "Centre Culturel et Manuel Maria Rafaela TVET School": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MUBUMBANO VTC": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Leather Works",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KINAZI TSS": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Food and Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food Processing L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS KABUYE": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS SIMBI": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Plumbing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ECOLE TECHNIQUE POLYVALENTE": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS RUKIRA": {
+      "district": "HUYE",
+      "province": "Southern Province",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Land Surveying L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5 Oft",
+          "level": "L3-5"
+        },
+        {
+          "name": "-None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GS AYABARAYA TSS": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Automobile Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ST. EMMANUEL COMPLEX SCHOOL MASAKA TSS": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Computer System and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and Telecommunication L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ERM HOPE VTC": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry L1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ESSA NYARUGUNGA": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "CERFORMIVTV": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": ". Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": ". Hairdressing LI",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": ". Domestic Electricity LI",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Welding LI .",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Masonry LI",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Domestic PlumbingLI . \\ t\\",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "UMUSHUMBAMWIZA VTC": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SKIM VTC": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAMUDUHA INTEGRATED COLLEGE": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Computer systems and architectureL3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technologies L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAINT PHILLIPPE TSS": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": ".Food and beverage operations L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": ". Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism-L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "UMUHOZA VTC": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "GARUKA VTC": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary Arts L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "INTANGO TSS": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Application L2",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "IHUMURETSS": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": ".Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": ". Hair dressing LI",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Welding-L1 v",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Carpentry-L1 '~f ^ N ^\\",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "COLLEGE GEORGE FOX DE KAGARAMA": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and internet technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "MWANANSHUTI VTC": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Hair dressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Culinary arts L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "IPRC KIGALI TSS": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Building construction L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public works L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronic and telecommunication",
+          "level": "L3-5"
+        },
+        {
+          "name": "L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "KICUKIRO WOMEN VOCATIONAL TRAINING CENTER": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "SAINT CHARLES DE JESUS TSS": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Automobile technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic electricity L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "CENTRE PRESBYTERIEN D'AMOUR DE JEUNES": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "VTC",
+      "trades": [
+        {
+          "name": "Tailoring L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing L1",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    "ECOLE SECONDAIRE SAINT PATRICK": {
+      "district": "KICUKIRO",
+      "province": "Kigali City",
+      "type": "TSS",
+      "trades": [
+        {
+          "name": "Software Development L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism L3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and beverage operations L'3-5",
+          "level": "L3-5"
+        },
+        {
+          "name": "None",
+          "level": "L3-5"
+        }
+      ]
+    }
+  }
+}

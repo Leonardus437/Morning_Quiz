@@ -1,0 +1,36 @@
+RAILWAY API DEPLOYMENT SETUP
+============================
+
+STEP 1: Get Railway API Token
+------------------------------
+1. Go to: https://railway.app/account/tokens
+
+2. Click "Create Token"
+
+3. Name it: "Backend Deploy Token"
+
+4. Copy the token (starts with "railway_...")
+
+5. Save it securely - you'll only see it once!
+
+
+STEP 2: Get Project & Service IDs (Already Have These)
+-------------------------------------------------------
+Project ID: 477122d8-1d79-437f-8513-5bb901527f41
+Service ID: ce549504-cde6-4d20-a142-01dc10f54b5f
+Environment ID: 54db496c-804a-4184-af1e-0ce7970917fc
+
+
+STEP 3: Create Deploy Script
+-----------------------------
+After you get the token, paste it below and I'll create the deployment script.
+
+Tell me: "I got the token: railway_xxxxx"
+
+Then I'll create a one-click deploy script for you.
+
+
+WHY THIS WORKS
+--------------
+Railway API bypasses the broken webhook and triggers deployments directly.
+You'll run a simple .bat file whenever you want to deploy.

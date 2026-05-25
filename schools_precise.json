@@ -1,0 +1,4686 @@
+{
+  "schools": [
+    {
+      "sn": "1",
+      "district": "BUGESERA",
+      "school_name": "GASORE SERGE FOUNDATION VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "BUGESERA",
+      "school_name": "NELSON\nMANDELA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "BUGESERA",
+      "school_name": "LYCEE DE LA SAINTE TRINITE-\nAPED TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "BUGESERA",
+      "school_name": "RUHUHA VTC",
+      "school_type": "VTC",
+      "status": "Public",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "BUGESERA",
+      "school_name": "GS RUTONDE/TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "BUGESERA",
+      "school_name": "NDAMA TSS",
+      "school_type": "TSS",
+      "status": "Government- aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Animal health",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "BUGESERA",
+      "school_name": "EPR NYAMIRAMA VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "BUGESERA",
+      "school_name": "GS GIHINGA/TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "BUGESERA",
+      "school_name": "GS\nKAMABARE/TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "BUGESERA",
+      "school_name": "NYAMATA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet technologies",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Renewable energy",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land surveying",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and telecommunication",
+          "level": "L3-5"
+        },
+        {
+          "name": "Interior design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "BUGESERA",
+      "school_name": "NIBAKURE\nCOMMUNITY\nVILLAGE VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "BUGESERA",
+      "school_name": "ES JURU TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "BUGESERA",
+      "school_name": "GS KAGASA MWOGO/TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "BUGESERA",
+      "school_name": "GS RILIMA\nCATHOLIQUE/TSS",
+      "school_type": "TSS",
+      "status": "Day",
+      "boarding": "Government- aided",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "BUGESERA",
+      "school_name": "GITAGATA REHABILITATION CENTER VTC",
+      "school_type": "VTC",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        },
+        {
+          "name": "Nono None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "BUGESERA",
+      "school_name": "GS MAREBA/TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "BUGESERA",
+      "school_name": "GS MUSENYI/TSS",
+      "school_type": "TSS",
+      "status": "Government- Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Agriculture L3-",
+          "level": "L3-"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "BUGESERA",
+      "school_name": "BATIMA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "BUGESERA",
+      "school_name": "GS DIHIRO/TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "20",
+      "district": "BUGESERA",
+      "school_name": "URUMURI COMMUNITY CENTER VTC",
+      "school_type": "VTC",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "21",
+      "district": "BUGESERA",
+      "school_name": "APEBU NYAMATA TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operation",
+          "level": "L3-"
+        },
+        {
+          "name": "Tourism L3-",
+          "level": "L3-"
+        },
+        {
+          "name": "Software Development L3-",
+          "level": "L3-"
+        }
+      ]
+    },
+    {
+      "sn": "22",
+      "district": "BUGESERA",
+      "school_name": "MIRACLE\nCORNERS VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "23",
+      "district": "BUGESERA",
+      "school_name": "XTRA MILE VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Welding",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "1",
+      "district": "BURERA",
+      "school_name": "ES GAHUNGA TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Automobile technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and telecommunication",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "BURERA",
+      "school_name": "CEPEM TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "BURERA",
+      "school_name": "GS Bungwe TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "2 Agriculture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "BURERA",
+      "school_name": "MURWA TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Woog technology L3 -5",
+          "level": "L3"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "BURERA",
+      "school_name": "Runaba VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "BURERA",
+      "school_name": "Kabona TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "BURERA",
+      "school_name": "COLLEGE GEORGE FOX DE BUTARO",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer system and architecture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "BURERA",
+      "school_name": "GS Gaseke TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal health",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "BURERA",
+      "school_name": "GS Rushara TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "None /^KOoTivs^",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "BURERA",
+      "school_name": "GS Mucaca TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "BURERA",
+      "school_name": "GS Gitare II TSS",
+      "school_type": "TSS",
+      "status": "TSS",
+      "boarding": "TSS",
+      "trades": [
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "BURERA",
+      "school_name": "Kinyababa TSS",
+      "school_type": "TSS",
+      "status": "TSS",
+      "boarding": "TSS",
+      "trades": [
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "BURERA",
+      "school_name": "ECOLE\nTECHNIQUE DE KARUGANDA",
+      "school_type": "TSS",
+      "status": "TSS",
+      "boarding": "TSS",
+      "trades": [
+        {
+          "name": "Gov Aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "1",
+      "district": "GAKENKE",
+      "school_name": "GAKENKE",
+      "school_type": "TSS",
+      "status": "ES NYACYINA",
+      "boarding": "TSS",
+      "trades": [
+        {
+          "name": "Gov aided",
+          "level": "L3-5"
+        },
+        {
+          "name": "Gov aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "GAKENKE",
+      "school_name": "JANJA TSS",
+      "school_type": "TSS",
+      "status": "Gov aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Domestic Electricity LI",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "GAKENKE",
+      "school_name": "ES BUHUGA TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Wood technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "GAKENKE",
+      "school_name": "EAV RUSHASHI TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "1 .Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal health",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "GAKENKE",
+      "school_name": "GS RWAHI TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "GAKENKE",
+      "school_name": "GS MUNYANA TSS",
+      "school_type": "TSS",
+      "status": "GO AIDED",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Fashion design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "GAKENKE",
+      "school_name": "RUSHASHI TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design L3-5.",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "GAKENKE",
+      "school_name": "CYABINGO TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "f 1 '",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "GAKENKE",
+      "school_name": "NEMBA TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Domestic electricity",
+          "level": "L1"
+        },
+        {
+          "name": "Electrical technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction",
+          "level": "L3--5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "GAKENKE",
+      "school_name": "GS APAPEM MUHONDO TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Day and Boarding",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "GAKENKE",
+      "school_name": "LYCEE CATHOLIC SAINT ALAIN DE MATABA",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Animal health",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "GAKENKE",
+      "school_name": "C.F.P MUSEKE\nVTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Leather works L1.",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "GAKENKE",
+      "school_name": "JOC MUHONDO\nVTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hair dressing",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "GAKENKE",
+      "school_name": "SAINTE LUCIE VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "GAKENKE",
+      "school_name": "GS RUKURA TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Public works",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building and Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "GAKENKE",
+      "school_name": "GS MURAMBO TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "GAKENKE",
+      "school_name": "GS MUYONGWE TSS",
+      "school_type": "TSS",
+      "status": "GO AIDED",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "20",
+      "district": "GAKENKE",
+      "school_name": "GS BITABA TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "\\ $",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "21",
+      "district": "GAKENKE",
+      "school_name": "GAKENKE",
+      "school_type": "TSS",
+      "status": "TSS",
+      "boarding": "TSS",
+      "trades": [
+        {
+          "name": "GO AIDED",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "GASABO",
+      "school_name": "FOREVER TSS",
+      "school_type": "TSS",
+      "status": "TSS",
+      "boarding": "Gov. Aided",
+      "trades": [
+        {
+          "name": "Boarding and Day",
+          "level": "L3-5"
+        },
+        {
+          "name": "Boarding and Day",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "GASABO",
+      "school_name": "SOS TSS",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Boarding and Day",
+      "trades": [
+        {
+          "name": "1 Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and Telecommunication",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture",
+          "level": "L3-"
+        },
+        {
+          "name": "Plumbing",
+          "level": "L1"
+        },
+        {
+          "name": "Domestic",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electricity",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "GASABO",
+      "school_name": "KETHA/KIGALI EXCELLENT TOURISM AND HOSPITALITY ACADEMY",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L4-5"
+        },
+        {
+          "name": "Tourism",
+          "level": "L4-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3"
+        },
+        {
+          "name": "Tourism",
+          "level": "L3"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "GASABO",
+      "school_name": "WORLD MISSION TSS",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Multimedia Production",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "GASABO",
+      "school_name": "GS RUGANDO TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "GASABO",
+      "school_name": "APAER RUSORORO",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Boarding and Day",
+      "trades": [
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and Telecommunication",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "GASABO",
+      "school_name": "KABERA VTC",
+      "school_type": "VTC",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing LI",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "GASABO",
+      "school_name": "INTERNATIONAL TECHNICAL SCHOOL OF KIGALI (ITS)",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Boarding and Day",
+      "trades": [
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "GASABO",
+      "school_name": "GS RUTUNGA",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Public Works",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "GASABO",
+      "school_name": "BUMBOGO TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Food Processing",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "GASABO",
+      "school_name": "GLORY ACADEMY",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "GASABO",
+      "school_name": "CLUB HOTEK",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hair dressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "GASABO",
+      "school_name": "GS KIMIRONKO II TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "20",
+      "district": "GASABO",
+      "school_name": "Centre des Metiers Assomption de Kabuye/CMAK",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hair dressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "21",
+      "district": "GASABO",
+      "school_name": "GACURIRO TSS",
+      "school_type": "TSS",
+      "status": "TSS",
+      "boarding": "Gov. Aided",
+      "trades": [
+        {
+          "name": ". Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": ". Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": ".Automobile Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Food and Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Food Processing",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Computer Sytem and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Culnary Art",
+          "level": "L1"
+        },
+        {
+          "name": ".Welding",
+          "level": "L1"
+        },
+        {
+          "name": ".Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Agriculuture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "KAMONYI",
+      "school_name": "SAINT BERNARD\nVTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hair dressing",
+          "level": "L1"
+        },
+        {
+          "name": "Leather works",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "KAMONYI",
+      "school_name": "KIGESE TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "KAMONYI",
+      "school_name": "RUNDA TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land surveying",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "KAMONYI",
+      "school_name": "Centre de Formation Saint Leonard VTC",
+      "school_type": "VTC",
+      "status": "Pirvate",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "KAMONYI",
+      "school_name": "KAYENZI TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic electricity",
+          "level": "L1"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "KAMONYI",
+      "school_name": "ES MUSAMBIRA TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day\nPage 12 of 80",
+      "trades": [
+        {
+          "name": "Food and Beverage Operation",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "KAMONYI",
+      "school_name": "SAINT ANNE\nMUGINA TSS&VTC",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "KAMONYI",
+      "school_name": "SAINT IGNACE _MUGINA TSS",
+      "school_type": "TSS",
+      "status": "Government\nAided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer system and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "KAMONYI",
+      "school_name": "CPJSP VTC",
+      "school_type": "VTC",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Hairdressing",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "KAMONYI",
+      "school_name": "GS Kayumbu TSS",
+      "school_type": "TSS",
+      "status": "Government Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction 13-5",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "KAMONYI",
+      "school_name": "GS Ruyanza TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "KAMONYI",
+      "school_name": "GS RUYUMBA TSS",
+      "school_type": "TSS",
+      "status": "Government\nAided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "KAMONYI",
+      "school_name": "Fr. Ramon KABUGA TSS",
+      "school_type": "TSS",
+      "status": "Government Aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer system and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "1",
+      "district": "GATSIBO",
+      "school_name": "College Baptiste de Ngarama (COBANGA)",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "GATSIBO",
+      "school_name": "BENEBIKIRA TSS",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food & Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "GATSIBO",
+      "school_name": "EFA NYAGAHANGA TSS",
+      "school_type": "TSS",
+      "status": "G-aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Food Processing",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "GATSIBO",
+      "school_name": "EFA NYAGAHANGA TSS",
+      "school_type": "TSS",
+      "status": "G-aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Food Processing",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "GATSIBO",
+      "school_name": "GAKONI TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion Design and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Leather Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "GATSIBO",
+      "school_name": "GATSIBO COMMUNITY MODEL SCHOOL TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": ". Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Food & Beverage Operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "GATSIBO",
+      "school_name": "GITUZA TSS",
+      "school_type": "TSS",
+      "status": "G-aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Hair Dressing",
+          "level": "L1"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "GATSIBO",
+      "school_name": "GS BUGARURA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "GATSIBO",
+      "school_name": "GSGIHETA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "GATSIBO",
+      "school_name": "GS KARUBUNGO TSS",
+      "school_type": "TSS",
+      "status": "G-aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "GATSIBO",
+      "school_name": "GS KIZIGURO TSS",
+      "school_type": "TSS",
+      "status": "G-aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Systems and Architecture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "GATSIBO",
+      "school_name": "GS NYAGASIGA TSS",
+      "school_type": "TSS",
+      "status": "G-aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "GATSIBO",
+      "school_name": "GS RWIMITERERI TSS",
+      "school_type": "TSS",
+      "status": "G-aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "GATSIBO",
+      "school_name": "LYCEE ST\nALEXANDRE SAULI DE\nMUHURATSS",
+      "school_type": "TSS",
+      "status": "G-aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Computer Systems and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet",
+          "level": "L3-5"
+        },
+        {
+          "name": "Technology L3-5 r \\",
+          "level": "L3-5"
+        },
+        {
+          "name": "-None\u2019 \u2019",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "GATSIBO",
+      "school_name": "NGARAMA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-4"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction Tech",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "GATSIBO",
+      "school_name": "ESIM TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Mixed (Day and Boarding)",
+      "trades": [
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "GATSIBO",
+      "school_name": "SAINT JOSEPHINE TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Day & Boarding",
+      "trades": [
+        {
+          "name": "Fashion Design and L3-5 &",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L5"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Food & Beverage Operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "GATSIBO",
+      "school_name": "UMBRELLA VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "None. However, the school is given 1 year to relocate since the school environment is not conducive.",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "GATSIBO",
+      "school_name": "UMUTARA POLYTECHNIC",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Wood Technology and Carpentry",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "20",
+      "district": "GATSIBO",
+      "school_name": "GSMUNINI TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "21",
+      "district": "GATSIBO",
+      "school_name": "GS KARAMA\nNYAGIHANGA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "1",
+      "district": "GICUMBI",
+      "school_name": "KIBALI VTC",
+      "school_type": "VTC",
+      "status": "Gov. Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Culinary arts",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "GICUMBI",
+      "school_name": "GICUMBI TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "GICUMBI",
+      "school_name": "RUSHAKI VTC",
+      "school_type": "VTC",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Domestic Electricity",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "GICUMBI",
+      "school_name": "MULINDI TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Computer Systems and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and Telecommunication",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "GICUMBI",
+      "school_name": "GS MANYAGIRO TSS",
+      "school_type": "TSS",
+      "status": "Gov. Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "GICUMBI",
+      "school_name": "GSR UBA YA TSS",
+      "school_type": "TSS",
+      "status": "Gov. Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "GICUMBI",
+      "school_name": "MUKARANGE TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Mixed (Day and boarding) (Day& Boarding)",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic Electricity",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "GICUMBI",
+      "school_name": "GS NYABISHAMBI TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "GICUMBI",
+      "school_name": "Centre des Jeunes\nCHAINA KEITETSI VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hair Dressing",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "GICUMBI",
+      "school_name": "GS KINISHYA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Plumbing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "None 17^ \u00ae",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "GICUMBI",
+      "school_name": "Collegio Santo Antonio Maria Zaccaria TSS",
+      "school_type": "TSS",
+      "status": "Gov. Aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Systems and Architecture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "GICUMBI",
+      "school_name": "GS REBERO TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "GICUMBI",
+      "school_name": "BUKURETSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "GICUMBI",
+      "school_name": "Good Shepherd VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "GICUMBI",
+      "school_name": "GS MUNYINYA TSS",
+      "school_type": "TSS",
+      "status": "Gov. Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Automobile Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "GICUMBI",
+      "school_name": "IZERE VTC",
+      "school_type": "VTC",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Welding",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "GICUMBI",
+      "school_name": "EAR KAGEYO VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding) (Day& Boarding)",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "GICUMBI",
+      "school_name": "APAPEGI CYURU TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding) (Day& Boarding)",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "GICUMBI",
+      "school_name": "APEGIRUBUKI TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding) (Day& Boarding)",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public works",
+          "level": "L3-5"
+        },
+        {
+          "name": "Non^^?^",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "22",
+      "district": "GICUMBI",
+      "school_name": "Rwesero VTC",
+      "school_type": "VTC",
+      "status": "VTC",
+      "boarding": "Private",
+      "trades": [
+        {
+          "name": "Mixed (Day and boarding) (Day& Boarding)",
+          "level": "L3-5"
+        },
+        {
+          "name": "Mixed (Day and boarding) (Day& Boarding)",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "1",
+      "district": "GISAGARA",
+      "school_name": "GISAGARA",
+      "school_type": "TSS",
+      "status": "TSS",
+      "boarding": "TSS",
+      "trades": [
+        {
+          "name": "Mixed (Day and boarding) (Day and Boarding)",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "GISAGARA",
+      "school_name": "GISAGARA",
+      "school_type": "TSS",
+      "status": "TSS",
+      "boarding": "TSS",
+      "trades": [
+        {
+          "name": "Government- aided",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "GISAGARA",
+      "school_name": "KIGEMBE TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry LI",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "GISAGARA",
+      "school_name": "GS KINTEKO",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "GISAGARA",
+      "school_name": "COLLEGE ST\nJOSEPH KANSI",
+      "school_type": "TSS",
+      "status": "Government- aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "GISAGARA",
+      "school_name": "MUGOMBWA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring LI",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "GISAGARA",
+      "school_name": "ES MAMBA",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Food And Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "GISAGARA",
+      "school_name": "ST KIZITO SAVE TSS",
+      "school_type": "TSS",
+      "status": "Government- aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Systems and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronic and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Telecommunication",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public Works",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land Surveying",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology L3-5 / '",
+          "level": "L3-5"
+        },
+        {
+          "name": "\\ 1 <1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "GI SAGARA",
+      "school_name": "GS NYAGAHURU 2\nTSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": ".Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": ". Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "GL SAGARA",
+      "school_name": "NOTRE DAME DE BONNE ESPERANCE GISAGARA VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "GISAGARA",
+      "school_name": "ES MAGI TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "GISAGARA",
+      "school_name": "ES MUGANZA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "GISAGARA",
+      "school_name": "EUGENIE SMET TSS",
+      "school_type": "TSS",
+      "status": "Government- aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "KARONGI",
+      "school_name": "IPRC KARONGI TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "KARONGI",
+      "school_name": "L\u2019ESPERANCE\nTSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "KARONGI",
+      "school_name": "ESAPAN TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "KARONGI",
+      "school_name": "GS CYINAMA TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "KARONGI",
+      "school_name": "GS MANJI TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "KARONGI",
+      "school_name": "GS GISOVU TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Forestry",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "KARONGI",
+      "school_name": "GS BISESERO TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "KARONGI",
+      "school_name": "ESA BIRAMBO",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "KARONGI",
+      "school_name": "ES RUGANDA",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "KARONGI",
+      "school_name": "IPK KIRINDA",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "KARONGI",
+      "school_name": "MUNANIRA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": ".Leather Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Leather Works",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "KARONGI",
+      "school_name": "RUBENGERA\nTSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Nohe \\",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "KARONGI",
+      "school_name": "RUBEGERA\nTSS II",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food And Beverage Operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "KARONGI",
+      "school_name": "ES\nRUBENGERA",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Mixed (Boarding and Day)",
+      "trades": [
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "KARONGI",
+      "school_name": "Saint Joseph Birambo",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Water and Irrigation Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology L3-",
+          "level": "L3-"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "KARONGI",
+      "school_name": "MUHORORO TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "KARONGI",
+      "school_name": "ES NGOMA",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "20",
+      "district": "KARONGI",
+      "school_name": "IPESAR",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "1",
+      "district": "KAYONZA",
+      "school_name": "KAYONZA TSS",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Culinary arts",
+          "level": "L1"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "KAYONZA",
+      "school_name": "Mukarange VTC",
+      "school_type": "VTC",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "KAYONZA",
+      "school_name": "SOS HERMANN GMEINER KAYONZA SCHOOL",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "KAYONZA",
+      "school_name": "SACO A COMPLEX",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Art",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "KAYONZA",
+      "school_name": "AMIZERO INSTITUTE OF TECHNOLOGY & HOSPITALITY.",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Mixed (Boarding and Day)",
+      "trades": [
+        {
+          "name": ". Culinary Arts",
+          "level": "L1"
+        },
+        {
+          "name": ". Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": ".Food & Beverage operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "KAYONZA",
+      "school_name": "GS RUKARA TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "KAYONZA",
+      "school_name": "GS BUHABWA TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "KAYONZA",
+      "school_name": "GS JURUTSS",
+      "school_type": "TSS",
+      "status": "Government Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "KAYONZA",
+      "school_name": "INSTITUT DON BOSCO KABARONDO TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Land Surveying",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "KAYONZA",
+      "school_name": "KABARONDO\nVTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "KAYONZA",
+      "school_name": "ES RURAMIRA TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Manufacturing Technology L3-5 ^:",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology L3-5 ?",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "KAYONZA",
+      "school_name": "COLLEGE APPEKA KABARONDO TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding and Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "KAYONZA",
+      "school_name": "GS Migera TSS",
+      "school_type": "TSS",
+      "status": "Government Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Water and Irrigation",
+          "level": "L3-5"
+        },
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "KAYONZA",
+      "school_name": "Nyamirama TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fashion Design L3-5.",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Plumbing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "KAYONZA",
+      "school_name": "E.S NDEGO I TSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "KAYONZA",
+      "school_name": "St Christopher TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Systems and Architecture L3-5, 5. Tailoring",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "KAYONZA",
+      "school_name": "GS ADELAIDE TSS",
+      "school_type": "TSS",
+      "status": "Gov Aided)",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Food Processing",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "KAYONZA",
+      "school_name": "AGAKIRIRO VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "f / / it A '\u00bb Y",
+          "level": "L3-5"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Leather Works",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "KAYONZA",
+      "school_name": "ES\nCYARUBARE\nTSS",
+      "school_type": "TSS",
+      "status": "Public",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "1",
+      "district": "HUYE",
+      "school_name": "DON BOSCO RANGO TSS",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "(Day (Day and Boarding)",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage operations",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "HUYE",
+      "school_name": "G S des Parents TSS",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": ".Computer System & Archtecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and",
+          "level": "L3-5"
+        },
+        {
+          "name": "Telecommunication",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "HUYE",
+      "school_name": "GS NYUMBA TSS",
+      "school_type": "TSS",
+      "status": "Government Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": ".Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "HUYE",
+      "school_name": "GS RUGOGWE TSS",
+      "school_type": "TSS",
+      "status": "Government\nAided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "HUYE",
+      "school_name": "IPRC HUYE",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "1: : / \\. I\\",
+          "level": "L3-5"
+        },
+        {
+          "name": "1 .Public Works",
+          "level": "L3-"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "HUYE",
+      "school_name": "MARABA TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Fasion Design",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "HUYE",
+      "school_name": "MSGR.Mubiligi\nCatholic TSS",
+      "school_type": "TSS",
+      "status": "PRIVATE",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Multimedia Production",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "HUYE",
+      "school_name": "Rwabuye TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Fashion Design",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Wood Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food & Beverage Operation",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Hair dressing",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "HUYE",
+      "school_name": "KABUTARE TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Agriculture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Animal Health",
+          "level": "L4-5"
+        },
+        {
+          "name": "Food Processing",
+          "level": "L3-5"
+        },
+        {
+          "name": "Forestry",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "HUYE",
+      "school_name": "GSGISHIHETSS",
+      "school_type": "TSS",
+      "status": "Government\nAided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": ". Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Computer System and Architecture L3-5 .",
+          "level": "L3-5"
+        },
+        {
+          "name": "-None",
+          "level": "L3-5"
+        },
+        {
+          "name": "\\ ?A",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "HUYE",
+      "school_name": "GS KARAMA TSS",
+      "school_type": "TSS",
+      "status": "Government Aided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": ". Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Wood Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "HUYE",
+      "school_name": "HUYE PRISON\nVTC",
+      "school_type": "VTC",
+      "status": "PUBLIC",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "1 .Carpentry L 1",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "HUYE",
+      "school_name": "Centre Culturel et\nManuel Maria\nRafaela TVET\nSchool",
+      "school_type": "VTC",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "HUYE",
+      "school_name": "MUBUMBANO\nVTC",
+      "school_type": "VTC",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Leather Works",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "HUYE",
+      "school_name": "GS KINAZI TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food Processing",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "HUYE",
+      "school_name": "GS KABUYE",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "HUYE",
+      "school_name": "GS SIMBI",
+      "school_type": "TSS",
+      "status": "Government\nAided",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Plumbing Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "HUYE",
+      "school_name": "ECOLE TECHNIQUE POLYVALENTE",
+      "school_type": "VTC",
+      "status": "PRIVATE",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "HUYE",
+      "school_name": "GS RUKIRA",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Land Surveying",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction L3-5 Oft",
+          "level": "L3-5"
+        },
+        {
+          "name": "-None",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "1",
+      "district": "KICUKIRO",
+      "school_name": "GS AYABARAYA TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "DAY",
+      "trades": [
+        {
+          "name": "Automobile Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing Technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "2",
+      "district": "KICUKIRO",
+      "school_name": "ST. EMMANUEL COMPLEX SCHOOL MASAKA TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Computer System and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronics and Telecommunication",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "3",
+      "district": "KICUKIRO",
+      "school_name": "ERM HOPE VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L3-5"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Masonry",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "4",
+      "district": "KICUKIRO",
+      "school_name": "ESSA NYARUGUNGA",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and Beverage Operations",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building Construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer System and Architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "5",
+      "district": "KICUKIRO",
+      "school_name": "CERFORMIVTV",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": ". Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": ". Hairdressing LI",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Culinary Arts",
+          "level": "L1"
+        },
+        {
+          "name": ". Domestic Electricity LI",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Welding LI .",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": ".Masonry LI",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Domestic PlumbingLI . \\ t\\",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "6",
+      "district": "KICUKIRO",
+      "school_name": "UMUSHUMBAMWIZA\nVTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "7",
+      "district": "KICUKIRO",
+      "school_name": "SKIM VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hair dressing",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "8",
+      "district": "KICUKIRO",
+      "school_name": "SAMUDUHA INTEGRATED COLLEGE",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Boarding",
+      "trades": [
+        {
+          "name": "Computer systems and architecture",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet Technologies",
+          "level": "L3-5"
+        },
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical Technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "9",
+      "district": "KICUKIRO",
+      "school_name": "SAINT PHILLIPPE TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": ".Food and beverage operations",
+          "level": "L3-5"
+        },
+        {
+          "name": ". Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism-",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "10",
+      "district": "KICUKIRO",
+      "school_name": "UMUHOZA VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "11",
+      "district": "KICUKIRO",
+      "school_name": "GARUKA VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary Arts",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "12",
+      "district": "KICUKIRO",
+      "school_name": "INTANGO TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Computer Application",
+          "level": "L2"
+        }
+      ]
+    },
+    {
+      "sn": "13",
+      "district": "KICUKIRO",
+      "school_name": "IHUMURETSS",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": ".Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": ". Hair dressing LI",
+          "level": "L3-5"
+        },
+        {
+          "name": ".Welding-L1 v",
+          "level": "L1"
+        },
+        {
+          "name": ".Carpentry-L1 '~f ^ N ^\\",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "14",
+      "district": "KICUKIRO",
+      "school_name": "COLLEGE GEORGE FOX DE KAGARAMA",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        },
+        {
+          "name": "Software development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and internet technology",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "15",
+      "district": "KICUKIRO",
+      "school_name": "MWANANSHUTI VTC",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Hair dressing",
+          "level": "L1"
+        },
+        {
+          "name": "Culinary arts",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "16",
+      "district": "KICUKIRO",
+      "school_name": "IPRC KIGALI TSS",
+      "school_type": "TSS",
+      "status": "PUBLIC",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Building construction",
+          "level": "L3-5"
+        },
+        {
+          "name": "Public works",
+          "level": "L3-5"
+        },
+        {
+          "name": "Networking and Internet technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electrical technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Automobile technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Electronic and telecommunication",
+          "level": "L3-5"
+        }
+      ]
+    },
+    {
+      "sn": "17",
+      "district": "KICUKIRO",
+      "school_name": "KICUKIRO WOMEN VOCATIONAL TRAINING CENTER",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "18",
+      "district": "KICUKIRO",
+      "school_name": "SAINT CHARLES DE JESUS TSS",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Mixed (Day and boarding)",
+      "trades": [
+        {
+          "name": "Automobile technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Manufacturing technology",
+          "level": "L3-5"
+        },
+        {
+          "name": "Domestic electricity",
+          "level": "L1"
+        },
+        {
+          "name": "Carpentry",
+          "level": "L1"
+        },
+        {
+          "name": "Welding",
+          "level": "L1"
+        },
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "19",
+      "district": "KICUKIRO",
+      "school_name": "CENTRE\nPRESBYTERIEN\nD'AMOUR DE JEUNES",
+      "school_type": "VTC",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Tailoring",
+          "level": "L1"
+        },
+        {
+          "name": "Hairdressing",
+          "level": "L1"
+        }
+      ]
+    },
+    {
+      "sn": "20",
+      "district": "KICUKIRO",
+      "school_name": "ECOLE SECONDAIRE\nSAINT PATRICK",
+      "school_type": "TSS",
+      "status": "Private",
+      "boarding": "Day",
+      "trades": [
+        {
+          "name": "Software Development",
+          "level": "L3-5"
+        },
+        {
+          "name": "Tourism",
+          "level": "L3-5"
+        },
+        {
+          "name": "Food and beverage operations L'3-5",
+          "level": "L3-5"
+        }
+      ]
+    }
+  ],
+  "districts": [
+    "BUGESERA",
+    "BURERA",
+    "GAKENKE",
+    "GASABO",
+    "GATSIBO",
+    "GI SAGARA",
+    "GICUMBI",
+    "GISAGARA",
+    "GL SAGARA",
+    "HUYE",
+    "KAMONYI",
+    "KARONGI",
+    "KAYONZA",
+    "KICUKIRO"
+  ]
+}

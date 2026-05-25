@@ -1,0 +1,130 @@
+SN,District,School_Name,Type,Status,Boarding,Trade_Count,Accredited_Trades,Not_Accredited_Trades,Reasons
+1,BUGESERA,GASORE SERGE FOUNDATION VTC,VTC,Private,Day,1,Tailoring L1,None,None
+2,BUGESERA,NELSON,MANDELA TSS,TSS,Public,5,Boarding | Building construction L3-5 | Manufacturing technology L3-5 | Electrical Technology L3-5 | Fashion Design L3-5,None,None
+3,BUGESERA,LYCEE DE LA SAINTE TRINITE-,APED TSS,TSS,Private,3,Mixed (Day and boarding) | Building construction L3-5 | Electrical technology L3-5,None,None
+4,BUGESERA,RUHUHA VTC,VTC,Public,Mixed (Day and boarding),2,Tailoring L1 | Hairdressing L1,None,None
+5,BUGESERA,GS RUTONDE/TSS,TSS,Public,Day,2,Building Construction L3-5 | Electrical Technology L3-5,None,None
+6,BUGESERA,NDAMA TSS,TSS,Government- aided,Day,2,Animal health L3-5 | Fashion design L3-5,None,None
+7,BUGESERA,EPR NYAMIRAMA VTC,VTC,Private,Day,3,Tailoring L1 | Masonry L1 | Welding L1,None,None
+8,BUGESERA,GS GIHINGA/TSS,TSS,Public,Day,2,Building Construction L3-5 | Plumbing Technology L3-5,Page 1 of80 | A «AnoiuiMM*«no# | District | School Name | Type (TSS/VTC) | Status | Boarding status | (Re)_Accredited trades | (Re)_Accredited trades,Reasons for not reaccreditation
+9,BUGESERA,GS,KAMABARE/TSS,TSS,Public,2,Building Construction L3-5 | Electrical Technology L3-5,None,None
+10,BUGESERA,NYAMATA TSS,TSS,Public,Boarding,10,Building construction L3-5 | Networking and Internet technologies L3-5 | Fashion design L3-5 | Wood technology L3-5 | Electrical technology L3-5 | Renewable energy L3-5 | Manufacturing technology L3-5 | Land surveying L3-5 | Electronics and telecommunication L3-5 | Interior design L3-5,None,None
+11,BUGESERA,NIBAKURE,COMMUNITY,VILLAGE VTC,VTC,2,Private | Tailoring L1,None,None
+12,BUGESERA,ES JURU TSS,TSS,Public,Day,2,Building Construction L3-5 | Electrical Technology L3-5,None,None
+13,BUGESERA,GS KAGASA MWOGO/TSS,TSS,Public,Day,2,Building construction L3-5 | Manufacturing technology L3-5,None,None
+14,BUGESERA,GS RILIMA,CATHOLIQUE/TSS,TSS,Day,3,Government- aided | Agriculture L3-5 | Animal Health L3-5,None,None
+15,BUGESERA,GITAGATA REHABILITATION CENTER VTC,VTC,Public,Boarding,4,Tailoring L1 | Hairdressing L1 | Culinary Arts L1 | Nono None,Page 2 of 80 | (1 NES/ | MA1KJMAL CXA*OMMT1OM . AM* FCHOOl IMSMVCnOM k AVTHomrv | District | School Name | Type (TSS/VTC) | Status | Boarding status | (Re)_Accredited trades | Not (Re)_Accredited trades,Reasons for not reaccreditation
+16,BUGESERA,GS MAREBA/TSS,TSS,Public,Day,2,Building Construction L3-5 | Plumbing Technology L3-5,None,None
+17,BUGESERA,GS MUSENYI/TSS,TSS,Government- Aided,Day,2,Agriculture L3-L5 | Manufacturing technology L3-5,None,None
+18,BUGESERA,BATIMA TSS,TSS,Public,Day,2,Building construction L3-5 | Manufacturing technology L3-5,None,None
+19,BUGESERA,GS DIHIRO/TSS,TSS,Public,Day,3,Animal Health L3-5 | Agriculture L3-5 | Manufacturing technology L3-5,None,None
+20,BUGESERA,URUMURI COMMUNITY CENTER VTC,VTC,Public,Day,1,Tailoring L1,None,None
+21,BUGESERA,APEBU NYAMATA TSS,TSS,Private,Mixed (Day and boarding),3,Building construction L3-5 | Electrical Technology L3-5 | Food and Beverage Operation L3-,None,None
+5,BUGESERA,MIRACLE,CORNERS VTC,VTC,Private,1,Tailoring L1,None,None
+23,BUGESERA,XTRA MILE VTC,VTC,Private,Day,1,Welding L1,None,Page 3 of 80
+1,KAMONYI,College APPEC REMERA RUKOMA,TSS,Government,Aided,4,Boarding | Software Development L3-5 | Computer System and Architecture L3-5 | Building Construction L3-5,None,\
+2,KAMONYI,SAINT BERNARD,VTC,VTC,Private,4,Mixed (Day and boarding) | Tailoring L1 | Hair dressing L1 | Leather works L1,None,None
+3,KAMONYI,KIGESE TSS,TSS,PUBLIC,Day,5,Tailoring L1 | Masonry L1 | Carpentry L1 | Building Construction L3-5 | Fashion Design L3-5,None,None
+4,KAMONYI,RUNDA TSS,TSS,PUBLIC,Boarding,4,Building construction L3-5 | Land surveying L3-5 | Computer System and Architecture L3-5 | Software Development L3-5,None,None
+5,KAMONYI,Centre de Formation Saint Leonard VTC,VTC,Pirvate,Day,1,Tailoring L1,None,None
+6,KAMONYI,KAYENZI TSS,TSS,PUBLIC,Boarding,11,Tailoring L1 | Fashion Design L3-5 | Masonry L1 | Carpentry L1 | Welding L1 | Manufacturing Technology L3-5 | Domestic electricity L1 | Electrical Technology L3-5 | Hairdressing L1 | Building construction L3-5 | Wood Technology L3-5,None,None
+7,KAMONYI,ES MUSAMBIRA TSS,TSS,PUBLIC,Day,3,Page 12 of 80 | Food and Beverage Operation L3-5 | Building Construction L3-5,None,None
+8,KAMONYI,SAINT ANNE,MUGINA TSS&VTC,TSS,PRIVATE,2,Tailoring L1 | Fashion Design L3-5,None,None
+9,KAMONYI,SAINT IGNACE _MUGINA TSS,TSS,Government,Aided,6,Boarding | Networking and Internet Technology L3-5 | Building Construction L3-5 | Computer system and Architecture L3-5 | Masonry L1 | Carpentry L1,None,None
+10,KAMONYI,CPJSP VTC,VTC,PRIVATE,Day,0,None,Hairdressing | Tailoring L1 | The school decided to offer only short courses.,None
+11,KAMONYI,GS Kayumbu TSS,TSS,Government Aided,Day,2,Fashion design L3-5 | Building construction 13-5,None,None
+12,KAMONYI,GS Ruyanza TSS,TSS,PUBLIC,Day,2,Fashion design L3-5 | Building Construction L3-5,None,None
+13,KAMONYI,GS RUYUMBA TSS,TSS,Government,Aided,2,Fashion design L3-5 | Building Construction L3-5,None,None
+14,KAMONYI,Fr. Ramon KABUGA TSS,TSS,Government Aided,Boarding,4,Building Construction L3-5 | Computer system and Architecture L3-5 | Wood Technology L3-5 | Multimedia Production L3-5,None,AWW
+1,GATSIBO,College Baptiste de Ngarama (COBANGA),TSS,PRIVATE,Boarding,2,Tourism L3-5 | Software Development L3-5,None,None
+2,GATSIBO,BENEBIKIRA TSS,TSS,PRIVATE,Boarding,4,Building Construction L3-5 | Food & Beverage Operations L3-5 | Wood Technology L3-5 | Fashion Design L3-5,None,None
+3,GATSIBO,EFA NYAGAHANGA TSS,TSS,G-aided,Boarding,3,Food Processing L3-5 | Animal Health L3-5 | Agriculture L3-5,Mone,None
+4,GATSIBO,GAKONI TSS,TSS,Public,Day,3,Fashion Design and L3-5 | Manufacturing Technology L3-5 | Leather Technology L3-5,None,None
+5,GATSIBO,GATSIBO COMMUNITY MODEL SCHOOL TSS,TSS,Public,Day,2,1 . Building Construction L3-5 | 2 .Food & Beverage Operations L3-5,None,None
+6,GATSIBO,GATSIBO TSS,TSS,Public,Boarding,4,Building Construction L3-5 | Electrical Technology L3-5 | Land surveying L3-5 | Public works L3-5,slone | Page 14 of 80 | (II) | MAUOMAL AXAMMAnOW | E	*»» schocc •**»*« i mm | ■ B M	AjVTMOItmr | District | School Name | Type (TSS/VTC) | Status | Boarding status | (Re)_Accredited trades | (Re)_Accredited trades,Reasons for not reaccreditation
+7,GATSIBO,GITUZA TSS,TSS,G-aided,Boarding,9,Building Construction L3-5 | Hair Dressing L1 | Wood Technology L3-5 | Automobile Technology L3-5 | Fashion Design L3-5 | Manufacturing Technology L3-5 | Welding L1 | Masonry L1 | Tailoring L1,None,None
+8,GATSIBO,GS BUGARURA TSS,TSS,Public,Day,2,Electrical Technology L3-5 | Building Construction L3-5,None,None
+9,GATSIBO,GSGIHETA TSS,TSS,Public,Day,2,Building Construction L3-5 | Fashion design L3-5,None,None
+10,GATSIBO,GS KARUBUNGO TSS,TSS,G-aided,Day,2,Agriculture L3-5 | Animal Health L3-5,None,None
+11,GATSIBO,GS KIZIGURO TSS,TSS,G-aided,Day,2,Software Development L3-5 | Computer Systems and Architecture L3-5,None,None
+12,GATSIBO,GS NYAGASIGA TSS,TSS,G-aided,Day,2,Building Construction L3-5 | Electrical Technology L3-5,None,None
+13,GATSIBO,GS RWIMITERERI TSS,TSS,G-aided,Day,2,Building Construction L3-5 | Agriculture L3-5,None,None
+14,GATSIBO,LYCEE ST,ALEXANDRE SAULI DE,MUHURATSS,TSS,9,G-aided | Boarding | Computer Systems and | Architecture L3-5 | Fashion Design L3-5 | Software Development L3-5 | Networking and Internet | Technology L3-5	r \ | -None’ ’,"W	7/ | Page 15 of 80 | (II) * M*TKMUmM*MMM«OH NESA sksst""”^"" | District | School Name | Type (TSS/VTC) | Status | Boarding status | (Re)_Accredited trades | (Re)_Accredited trades",Reasons for not reaccreditation
+15,GATSIBO,NGARAMA TSS,TSS,Public,Boarding,5,Fashion Design L3-4 | Manufacturing Technology L3-5 | Wood technology L3-5 | Building construction Tech L3-5 | Electrical Technology L3-5,None,None
+13,GATSIBO,ESIM TSS,TSS,Private,Mixed (Day and Boarding),1,Tourism L3-5,None,None
+17,GATSIBO,SAINT JOSEPHINE TSS,TSS,Private,Day & Boarding,4,Fashion Design and L3-5 & | Tailoring L5 | Welding L1 | Food & Beverage Operations L3-5,None,None
+18,GATSIBO,UMBRELLA VTC,VTC,Private,Day,4,"Hairdressing L1 | Culinary Arts L1 | Tailoring L1 | None. However, the school is given 1 year to relocate since the school environment is not conducive.",None,None
+19,GATSIBO,UMUTARA POLYTECHNIC,TSS,Private,Day,4,Wood Technology and Carpentry L3-5 | Agriculture L3-5 | Animal Health L3-5 | Building Construction L3-5,None,None
+20,GATSIBO,GSMUNINI TSS,TSS,Public,Day,2,Building Construction L3-5 | Fashion Design L3-5,None,None
+21,GATSIBO,GS KARAMA,NYAGIHANGA TSS,TSS,Public,2,Building Construction L3-5 | Fashion Design L3-5,/None,None
+1,GICUMBI,KIBALI VTC,VTC,Gov. Aided,Day,3,Culinary arts L1 | Welding L1 | Tailoring L1,None,None
+2,GICUMBI,GICUMBI TSS,TSS,Public,Boarding,1,Electrical Technology L3-5,None,None
+3,GICUMBI,RUSHAKI VTC,VTC,Public,Day,2,Tailoring L1 | Domestic Electricity L1,None,None
+4,GICUMBI,MULINDI TSS,TSS,Public,Boarding,3,Computer Systems and Architecture L3-5 | Networking and Internet Technology L3-5 | Electronics and Telecommunication L3-5,None,None
+5,GICUMBI,GS MANYAGIRO TSS,TSS,Gov. Aided,Day,2,Fashion Design L3-5 | Manufacturing Technology L3-5,None,None
+6,GICUMBI,GSR UBA YA TSS,TSS,Gov. Aided,Day,2,Wood Technology L3-5 | Manufacturing Technology L3-5,None,None
+7,GICUMBI,MUKARANGE TSS,TSS,Public,Mixed (Day and boarding) (Day& Boarding),4,Building Construction L3-5 | Masonry L1 | Electrical Technology L3-5 | Domestic Electricity L1,None,None
+8,GICUMBI,GS NYABISHAMBI TSS,TSS,Public,Day,2,Building Construction L3-5 | Wood Technology L3-5,None,None
+9,GICUMBI,Centre des Jeunes,CHAINA KEITETSI VTC,VTC,Private,2,Tailoring L1 | Hair Dressing L1,None,None
+10,GICUMBI,GS KINISHYA TSS,TSS,Public,Day,14,"Plumbing Technology L3-5 | Building Construction L3-5 | None 17^ ® | None A | Page 17 of 80 | ! "" * ”	di) | HAnOMAl. tXAMMAnOM amo «<*xx msxcnoN | ■	AVtHQWITV | District | School Name | Type (TSS/VTC) | Status | Boarding status | (Re)_Accredited trades",Not (Re)_Accredited trades,Reasons for not reaccreditation
+11,GICUMBI,Collegio Santo Antonio Maria Zaccaria TSS,TSS,Gov. Aided,Boarding,5,Building Construction L3-5 | Plumbing Technology L3-5 | Wood Technology L3-5 | Software Development L3-5 | Computer Systems and Architecture L3-5,None,None
+12,GICUMBI,GS REBERO TSS,TSS,Public,Day,2,Fashion Design L3-5 | Building Construction L3-5,None,None
+13,GICUMBI,BUKURETSS,TSS,Public,Boarding,2,Agriculture L3-5 | Animal Health L3-5,None,None
+14,GICUMBI,Good Shepherd VTC,VTC,Private,Day,3,Tailoring L1 | Hairdressing L1 | Culinary Arts L1,None,None
+15,GICUMBI,GS MUNYINYA TSS,TSS,Gov. Aided,Day,2,Automobile Technology L3-5 | Electrical Technology L3-5,None,None
+16,GICUMBI,IZERE VTC,VTC,Public,Day,1,Welding L1,None,None
+17,GICUMBI,EAR KAGEYO VTC,VTC,Private,Mixed (Day and boarding) (Day& Boarding),4,Tailoring L1 | Carpentry L1 | Welding L1 | Masonry L1,None,None
+18,GICUMBI,APAPEGI CYURU TSS,TSS,Private,Mixed (Day and boarding) (Day& Boarding),1,Building Construction L3-5,None,None
+19,GICUMBI,APEGIRUBUKI TSS,TSS,Private,Mixed (Day and boarding) (Day& Boarding),3,Building Construction L3-5 | Public works L3-5 | Non^^?^,None,None
+20,GICUMBI,CYUMBATSS,TSS,Public,Boarding,3,Wood technology L3-5 | Automobile technology L3-5 | Carpentry L1,None,None
+21,GICUMBI,SAINT Laurent GASEKE TSS,TSS,Gov. Aided,Boarding,4,Electrical technology L3-5 | Software development L3-5. | Electrical and telecommunication | L3-5,None,None
+22,GICUMBI,Rwesero VTC,VTC,Private,Mixed (Day and boarding) (Day& Boarding),3,Masonry L1 | Culinary art L1 | Tailoring L1,None,None
+1,GISAGARA,GIKONKO TSS,TSS,PUBLIC,Mixed (Day and boarding) (Day and Boarding),7,Tailoring L1 | Hairdressing L1 | Masonry L1 | Carpentry L1 | Building Construction L3-5 | Electrical Technology L3-5 | Software Development L3-5,None,None
+2,GISAGARA,MUSHA ADVENTIST TSS,TSS,Government- aided,Boarding,12,Building Construction L3-5 | Electrical Technology L3-5 | None fe\ | Page 19 of 80	Wg | K	*	MAWOMAL « I a MM4AHQR | MESA | District | School Name | Type (TSS/VTC) | Status | Boarding status | (Re)_Accredited trades,Not (Re)_Accredited trades,Reasons for not reaccreditation
+3,GISAGARA,KIGEMBE TSS,TSS,Public,Day,6,Tailoring L1 | Fashion Design L3-5 | Building Construction L3-5 | Wood Technology L3-5 | Masonry LI | Carpentry L1,None,None
+4,GISAGARA,GS KINTEKO,TSS,Public,Day,2,Building Construction L3-5 | Agriculture L3-5,None,None
+5,GISAGARA,COLLEGE ST,JOSEPH KANSI,TSS,Government- aided,5,Boarding | Building Construction L3-5 | Plumbing Technology L3-5 | Electrical Technology L3-5 | Software Development L3-5,None,None
+6,GISAGARA,MUGOMBWA TSS,TSS,Public,Day,5,Building Construction L3-5 | Masonry L1 | Electrical Technology L3-5 | Fashion Design L3-5 | Tailoring LI,None,None
+7,GISAGARA,ES MAMBA,TSS,Public,Day,2,Food And Beverage Operations L3-5 | Agriculture L3-5,None,None
+8,GISAGARA,ST KIZITO SAVE TSS,TSS,Government- aided,Boarding,11,Wood Technology L3-5 | Multimedia Production L3-5 | Computer Systems and | Architecture L3-5 | Software Development L3-5 | Electronic and | Telecommunication L3-5 | Public Works L3-5 | Land Surveying L3-5 | Building Construction L3-5 | Electrical Technology L3-5	/ ',\	1 <1,Page 20 of 80	\	\
+11,GISAGARA,ES MAGI TSS,TSS,Public,Day,2,Manufacturing Technology L3-5 | Building Construction L3-5,None,None
+12,GISAGARA,ES MUGANZA TSS,TSS,Public,Day,2,Manufacturing Technology L3-5 | Building Construction L3-5,None,1. Tailoring L1
+13,GISAGARA,EUGENIE SMET TSS,TSS,Government- aided,Day,13,Masonry L1 | Wood Technology L3-5 | Carpentry L1 | (II) | B	B MATTOMAL rUMMKATIOM | AMO KNOCK. MMCHCm | ■ B	AVTXOWW | District | School Name | Type (TSS/VTC) | Status | Boarding status | (Re)_Accredited trades,Not (Re)_Accredited trades,Reasons for not reaccreditation
+1,KAYONZA,KAYONZA TSS,TSS,PRIVATE,Mixed (Day and boarding),2,Culinary arts L1 | Food and Beverage Operations L3-5,None,None
+2,KAYONZA,Mukarange VTC,VTC,Public,Day,2,Tailoring L1 | Welding L1,None,None
+3,KAYONZA,SOS HERMANN GMEINER KAYONZA SCHOOL,VTC,Private,Mixed (Day and boarding),2,Tailoring L1 | Carpentry L1,None,Page 23 of 80	. X
+4,KAYONZA,SACO A COMPLEX,VTC,Private,Day,4,Tailoring L1 | Hairdressing L1 | Culinary Art L1 | Masonry L1,None,None
+5,KAYONZA,AMIZERO INSTITUTE OF TECHNOLOGY & HOSPITALITY.,TSS,Private,Mixed (Boarding and Day),3,. Culinary Arts L1 | 2 . Hairdressing L1 | 3 .Food & Beverage operations L3-5,None,None
+6,KAYONZA,GS RUKARA TSS,TSS,Gov Aided,Day,2,Electrical Technology L3-5 | Building Construction L3-5,None,None
+7,KAYONZA,GS BUHABWA TSS,TSS,Public,Day,2,Agriculture L3-5 | Animal Health L3-5,None,None
+8,KAYONZA,GS JURUTSS,TSS,Government Aided,Day,2,Manufacturing Technology L3-5 | Building construction L3-5,None,None
+9,KAYONZA,INSTITUT DON BOSCO KABARONDO TSS,TSS,Gov Aided,Boarding,7,Building Construction L3-5 | Food and Beverage Operations L3-5 | Electrical Technology L3-5 | Land Surveying L3-5 | Software Development L3-5 | Wood Technology L3-5 | Manufacturing Technology L3-5,None,None
+10,KAYONZA,KABARONDO,VTC,VTC,Private,4,Boarding | Tailoring L1 | Hairdressing L1 | Welding L1,None,None
+11,KAYONZA,ES RURAMIRA TSS,TSS,Gov Aided,Day,2,Manufacturing Technology L3-5	^: | Automobile Technology L3-5	?,None,Page 24 of 80	x^O^
+12,KAYONZA,COLLEGE APPEKA KABARONDO TSS,TSS,Private,Boarding and Day,2,Building Construction L3-5 | Networking and Internet Technology L3-5,None,None
+13,KAYONZA,GS Migera TSS,TSS,Government Aided,Day,2,Water and Irrigation L3-5 | Agriculture L3-5,None,None
+14,KAYONZA,Nyamirama TSS,TSS,Public,Boarding,6,Electrical Technology L3-5 | Fashion Design L3-5. | Wood Technology L3-5 | Manufacturing Technology L3-5 | Plumbing Technology L3-5 | Building Technology L3-5,None,None
+15,KAYONZA,E.S NDEGO I TSS,TSS,Public,Day,2,Building Construction L3-5 | Electrical Technology L3-5,None,None
+16,KAYONZA,St Christopher TSS,TSS,Private,Boarding,4,"Fashion Design L3-5 | Automobile Technology L3-5 | Multimedia Production L3-5 | Computer Systems and Architecture L3-5, 5. Tailoring L1",None,None
+17,KAYONZA,GS ADELAIDE TSS,TSS,Gov Aided),Day,2,Food Processing L3-5 | Food and Beverage Operations L3-5,None,None
+18,KAYONZA,AGAKIRIRO VTC,VTC,Private,Day,0,None,f / / it A '» Y | Carpentry L1 | Welding L1 | Leather Works,None
+1,KICUKIRO,GS AYABARAYA TSS,TSS,PUBLIC,DAY,2,Automobile Technology L3-5 | Manufacturing Technology L3-5,None,None
+2,KICUKIRO,ST. EMMANUEL COMPLEX SCHOOL MASAKA TSS,TSS,Private,Day,4,Computer System and Architecture L3-5 | Software Development L3-5 | Building Construction L3-5 | Electronics and Telecommunication L3-5,None,1. Tailoring L1
+3,KICUKIRO,ERM HOPE VTC,VTC,Private,Mixed (Day and boarding),4,Hairdressing L1 | Culinary Arts | Welding L1 | Masonry L1,None,None
+4,KICUKIRO,ESSA NYARUGUNGA,TSS,Private,Boarding,5,Software Development L3-5 | Food and Beverage Operations L3-5 | Building Construction L3-5 | Computer System and Architecture L3-5 | Tourism L3-5,None,None
+5,KICUKIRO,CERFORMIVTV,VTC,Private,Mixed (Day and boarding),8,1 . Tailoring L1 | 2 . Hairdressing LI | 3 .Culinary Arts L1 | 4 . Domestic Electricity LI | 5 .Welding LI . | 6 .Carpentry L1 | 7 .Masonry LI | 8 .Domestic PlumbingLI .	\ t\,None,Page 29 of 80	'	‘
+6,KICUKIRO,UMUSHUMBAMWIZA,VTC,VTC,Private,4,Mixed (Day and boarding) | Tailoring L1 | Hairdressing L1 | Culinary Arts L1,None,None
+7,KICUKIRO,SKIM VTC,VTC,Private,Day,2,Tailoring L1 | Hair dressing L1,None,None
+8,KICUKIRO,SAMUDUHA INTEGRATED COLLEGE,TSS,Private,Boarding,6,Computer systems and architectureL3-5 | Tourism L3-5 | Networking and Internet Technologies L3-5 | Building construction L3-5 | Electrical Technology L3-5 | Automobile technology L3-5,None,None
+9,KICUKIRO,SAINT PHILLIPPE TSS,TSS,Private,Day,3,1 .Food and beverage operations L3-5 | 2 . Software Development L3-5 | Tourism-L3-5,None,None
+10,KICUKIRO,UMUHOZA VTC,VTC,Private,Day,1,Tailoring L1,None,None
+11,KICUKIRO,GARUKA VTC,VTC,Private,Day,2,Tailoring L1 | Culinary Arts L1,None,None
+12,KICUKIRO,INTANGO TSS,TSS,Private,Day,2,Software Development L3-5 | Computer Application L2,None,None
+13,KICUKIRO,IHUMURETSS,VTC,Private,Day,4,1 .Tailoring L1 | 2 . Hair dressing LI | 3 .Welding-L1	v | 4 .Carpentry-L1 '~f ^ N ^\,None,Page 30 of80	\
+14,KICUKIRO,COLLEGE GEORGE FOX DE KAGARAMA,TSS,Private,Day,3,Tourism L3-5 | Software development L3-5 | Networking and internet technology L3-5,None,None
+15,KICUKIRO,MWANANSHUTI VTC,VTC,Private,Day,2,Hair dressing L1 | Culinary arts L3-5,None,None
+16,KICUKIRO,IPRC KIGALI TSS,TSS,PUBLIC,Day,8,Building construction L3-5 | Public works L3-5 | Networking and Internet technology L3-5 | Electrical technology L3-5 | Automobile technology L3-5 | Manufacturing technology L3-5 | Electronic and telecommunication | L3-5,None,None
+17,KICUKIRO,KICUKIRO WOMEN VOCATIONAL TRAINING CENTER,VTC,Private,Day,2,Tailoring L1 | Hairdressing L1,None,None
+18,KICUKIRO,SAINT CHARLES DE JESUS TSS,TSS,Private,Mixed (Day and boarding),6,Automobile technology L3-5 | Manufacturing technology L3-5 | Domestic electricity L1 | Carpentry L1 | Welding L1 | Tailoring L1,None,None
+19,KICUKIRO,CENTRE,PRESBYTERIEN,D'AMOUR DE JEUNES,VTC,3,Private | Tailoring L1 | Hairdressing L1,None,None
+20,KICUKIRO,ECOLE SECONDAIRE,SAINT PATRICK,TSS,Private,3,Software Development L3-5 | Tourism L3-5 | Food and beverage operations L'3-5,None,Page 31 of 80

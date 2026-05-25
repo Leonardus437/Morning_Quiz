@@ -1,0 +1,100 @@
+RAILWAY WEBHOOK IS PERMANENTLY BROKEN - NUCLEAR SOLUTION
+========================================================
+
+Your Railway service is "online" but the GitHub webhook is DEAD.
+Since you can't:
+- Use Railway CLI (free tier restriction)
+- Manually trigger deploys (they do nothing)
+- Edit settings (locked by railway.json)
+
+You have 2 OPTIONS:
+
+========================================================
+OPTION 1: RECREATE RAILWAY SERVICE (10 minutes)
+========================================================
+
+This will fix the webhook permanently:
+
+1. **BACKUP YOUR DATABASE URL**
+   Current: postgresql://postgres:etFcYsqQeDTEJBvBGdZOVNlVdLLPDvLG@shinkansen.proxy.rlwy.net:42954/railway
+   
+   SAVE THIS! You'll reconnect to same database.
+
+2. **DELETE THE BROKEN SERVICE** (NOT the database!)
+   - Go to: https://railway.com/project/477122d8-1d79-437f-8513-5bb901527f41
+   - Click your backend service (web-production-2c325)
+   - Settings → Scroll to bottom → "Delete Service"
+   - CONFIRM: Only delete the SERVICE, NOT the database!
+
+3. **CREATE NEW SERVICE**
+   - Click "+ New Service"
+   - Select "GitHub Repo"
+   - Choose: Leonardus437/Morning_Quiz
+   - Branch: master
+   - Root: / (leave empty)
+
+4. **RECONNECT DATABASE**
+   - In new service, click "Variables"
+   - Add variable: DATABASE_URL
+   - Paste: postgresql://postgres:etFcYsqQeDTEJBvBGdZOVNlVdLLPDvLG@shinkansen.proxy.rlwy.net:42954/railway
+
+5. **DONE!**
+   - Railway will auto-deploy
+   - Webhook will work
+   - New URL will be generated (update frontend)
+
+
+========================================================
+OPTION 2: USE RENDER.COM INSTEAD (15 minutes - RECOMMENDED)
+========================================================
+
+Railway webhooks are unreliable. Switch to Render:
+
+1. **Sign up**: https://render.com (free tier)
+
+2. **Create Web Service**
+   - Connect GitHub: Leonardus437/Morning_Quiz
+   - Name: morning-quiz-backend
+   - Environment: Python 3
+   - Build Command: pip install -r requirements.txt
+   - Start Command: uvicorn main:app --host 0.0.0.0 --port $PORT
+
+3. **Add Environment Variable**
+   - DATABASE_URL = postgresql://postgres:etFcYsqQeDTEJBvBGdZOVNlVdLLPDvLG@shinkansen.proxy.rlwy.net:42954/railway
+
+4. **Deploy**
+   - Render auto-deploys on every push
+   - Webhooks ALWAYS work
+   - More reliable than Railway
+
+5. **Update Frontend**
+   - Change API URL to new Render URL
+   - Push to GitLab
+   - Done!
+
+
+========================================================
+OPTION 3: KEEP RAILWAY BUT DEPLOY MANUALLY FOREVER
+========================================================
+
+If you don't want to recreate:
+
+Every time you make code changes:
+1. Push to GitHub
+2. Go to Railway dashboard
+3. Click "New Deployment" → "Deploy Latest Commit"
+4. Wait 3 minutes
+
+This is tedious but works.
+
+
+========================================================
+MY RECOMMENDATION: OPTION 2 (RENDER.COM)
+========================================================
+
+Render is more reliable for free tier projects.
+Railway webhooks break often on free tier.
+Render webhooks work 100% of the time.
+
+Choose one option and tell me which you want to do.
+I'll guide you through it step by step.

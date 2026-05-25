@@ -1,0 +1,58 @@
+RAILWAY WEBHOOK PERMANENTLY BROKEN - USE CLI INSTEAD
+====================================================
+
+The GitHub webhook is dead and won't recover. Use Railway CLI for deployments:
+
+OPTION 1: Install Railway CLI (One-time setup)
+-----------------------------------------------
+1. Open PowerShell as Administrator
+
+2. Install Railway CLI:
+   npm install -g @railway/cli
+
+   OR download from: https://docs.railway.app/guides/cli
+
+3. Login to Railway:
+   railway login
+
+4. Link to your project:
+   cd c:\Users\Hp\Documents\Morning_Quiz-master\backend
+   railway link 477122d8-1d79-437f-8513-5bb901527f41
+
+5. Deploy manually whenever you make changes:
+   railway up
+
+
+OPTION 2: Use Railway API (Automated)
+--------------------------------------
+Get Railway API token and trigger deploys via API.
+
+1. Go to: https://railway.app/account/tokens
+2. Create new token
+3. Use this script to deploy
+
+
+OPTION 3: Switch to Different Platform
+---------------------------------------
+Railway webhooks are unreliable. Consider:
+- Render.com (free tier, reliable webhooks)
+- Fly.io (free tier, good for FastAPI)
+- Vercel (for backend APIs)
+
+
+TEMPORARY WORKAROUND: Manual Deploy
+------------------------------------
+Until you set up CLI, manually deploy:
+
+1. Make code changes locally
+2. Push to GitHub: git push origin master
+3. Go to Railway: https://railway.com/project/477122d8-1d79-437f-8513-5bb901527f41/service/ce549504-cde6-4d20-a142-01dc10f54b5f/deployments
+4. Click "New Deployment" → "Deploy Latest Commit"
+
+
+CURRENT STATUS
+--------------
+Your latest code (with CORS fix) is on GitHub commit: ad3e685
+But Railway is still running old code because webhook won't trigger.
+
+You MUST manually click "New Deployment" in Railway dashboard to deploy the CORS fix.

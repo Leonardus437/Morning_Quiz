@@ -1,0 +1,16 @@
+# DEPLOYMENT TRIGGER - DO NOT DELETE
+# This file forces Railway to detect changes
+
+Deployment timestamp: 2026-05-21 16:20:00
+Commit: Force Railway auto-deployment
+Reason: CORS fix for assignment submission
+
+Changes included:
+- Enhanced CORS headers in assignment_api_simple.py
+- Added test-cors endpoint
+- Fixed OPTIONS preflight handler
+
+Expected result:
+- /api/assignments/test-cors should return 200 OK
+- /api/assignments/submit should accept POST with CORS headers
+- Student assignment submission should work from https://tsskwizi.pages.dev

@@ -1,0 +1,3927 @@
+{
+  "provinces": {
+    "columns": [
+      "id",
+      "name"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "name": "Kigali City"
+      },
+      {
+        "id": 2,
+        "name": "Eastern Province"
+      },
+      {
+        "id": 3,
+        "name": "Northern Province"
+      },
+      {
+        "id": 4,
+        "name": "Southern Province"
+      },
+      {
+        "id": 5,
+        "name": "Western Province"
+      }
+    ]
+  },
+  "districts": {
+    "columns": [
+      "id",
+      "name",
+      "province_id"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "name": "Gasabo",
+        "province_id": 1
+      },
+      {
+        "id": 2,
+        "name": "Kicukiro",
+        "province_id": 1
+      },
+      {
+        "id": 3,
+        "name": "Nyarugenge",
+        "province_id": 1
+      },
+      {
+        "id": 4,
+        "name": "Bugesera",
+        "province_id": 2
+      },
+      {
+        "id": 5,
+        "name": "Gatsibo",
+        "province_id": 2
+      },
+      {
+        "id": 6,
+        "name": "Kayonza",
+        "province_id": 2
+      },
+      {
+        "id": 7,
+        "name": "Kirehe",
+        "province_id": 2
+      },
+      {
+        "id": 8,
+        "name": "Ngoma",
+        "province_id": 2
+      },
+      {
+        "id": 9,
+        "name": "Nyagatare",
+        "province_id": 2
+      },
+      {
+        "id": 10,
+        "name": "Rwamagana",
+        "province_id": 2
+      },
+      {
+        "id": 11,
+        "name": "Burera",
+        "province_id": 3
+      },
+      {
+        "id": 12,
+        "name": "Gakenke",
+        "province_id": 3
+      },
+      {
+        "id": 13,
+        "name": "Gicumbi",
+        "province_id": 3
+      },
+      {
+        "id": 14,
+        "name": "Musanze",
+        "province_id": 3
+      },
+      {
+        "id": 15,
+        "name": "Rulindo",
+        "province_id": 3
+      },
+      {
+        "id": 16,
+        "name": "Gisagara",
+        "province_id": 4
+      },
+      {
+        "id": 17,
+        "name": "Huye",
+        "province_id": 4
+      },
+      {
+        "id": 18,
+        "name": "Kamonyi",
+        "province_id": 4
+      },
+      {
+        "id": 19,
+        "name": "Muhanga",
+        "province_id": 4
+      },
+      {
+        "id": 20,
+        "name": "Nyamagabe",
+        "province_id": 4
+      },
+      {
+        "id": 21,
+        "name": "Nyanza",
+        "province_id": 4
+      },
+      {
+        "id": 22,
+        "name": "Nyaruguru",
+        "province_id": 4
+      },
+      {
+        "id": 23,
+        "name": "Ruhango",
+        "province_id": 4
+      },
+      {
+        "id": 24,
+        "name": "Karongi",
+        "province_id": 5
+      },
+      {
+        "id": 25,
+        "name": "Ngororero",
+        "province_id": 5
+      },
+      {
+        "id": 26,
+        "name": "Nyabihu",
+        "province_id": 5
+      },
+      {
+        "id": 27,
+        "name": "Nyamasheke",
+        "province_id": 5
+      },
+      {
+        "id": 28,
+        "name": "Rubavu",
+        "province_id": 5
+      },
+      {
+        "id": 29,
+        "name": "Rusizi",
+        "province_id": 5
+      },
+      {
+        "id": 30,
+        "name": "Rutsiro",
+        "province_id": 5
+      }
+    ]
+  },
+  "schools": {
+    "columns": [
+      "id",
+      "name",
+      "district_id",
+      "type"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "name": "IPRC Kigali",
+        "district_id": 1,
+        "type": "Public"
+      },
+      {
+        "id": 2,
+        "name": "IPRC Kicukiro",
+        "district_id": 2,
+        "type": "Public"
+      },
+      {
+        "id": 3,
+        "name": "IPRC Tumba",
+        "district_id": 24,
+        "type": "Public"
+      },
+      {
+        "id": 4,
+        "name": "IPRC Musanze",
+        "district_id": 14,
+        "type": "Public"
+      },
+      {
+        "id": 5,
+        "name": "IPRC Huye",
+        "district_id": 17,
+        "type": "Public"
+      },
+      {
+        "id": 6,
+        "name": "IPRC Ngoma",
+        "district_id": 8,
+        "type": "Public"
+      },
+      {
+        "id": 7,
+        "name": "ETO Kigali",
+        "district_id": 3,
+        "type": "Public"
+      },
+      {
+        "id": 8,
+        "name": "ETO Muhanga",
+        "district_id": 19,
+        "type": "Public"
+      },
+      {
+        "id": 9,
+        "name": "ETO Nyanza",
+        "district_id": 21,
+        "type": "Public"
+      },
+      {
+        "id": 10,
+        "name": "ETO Rwamagana",
+        "district_id": 10,
+        "type": "Public"
+      },
+      {
+        "id": 11,
+        "name": "ETO Rubavu",
+        "district_id": 28,
+        "type": "Public"
+      },
+      {
+        "id": 12,
+        "name": "ETO Musanze",
+        "district_id": 14,
+        "type": "Public"
+      },
+      {
+        "id": 13,
+        "name": "ETO Byumba",
+        "district_id": 13,
+        "type": "Public"
+      },
+      {
+        "id": 14,
+        "name": "Nyamata TVET School",
+        "district_id": 4,
+        "type": "Public"
+      },
+      {
+        "id": 15,
+        "name": "Nelson Mandela TVET School",
+        "district_id": 4,
+        "type": "Public"
+      },
+      {
+        "id": 16,
+        "name": "Gahini TVET School",
+        "district_id": 6,
+        "type": "Public"
+      },
+      {
+        "id": 17,
+        "name": "Nyagatare TVET School",
+        "district_id": 9,
+        "type": "Public"
+      },
+      {
+        "id": 18,
+        "name": "Gatsibo TVET School",
+        "district_id": 5,
+        "type": "Public"
+      },
+      {
+        "id": 19,
+        "name": "Kirehe TVET School",
+        "district_id": 7,
+        "type": "Public"
+      },
+      {
+        "id": 20,
+        "name": "Burera TVET School",
+        "district_id": 11,
+        "type": "Public"
+      },
+      {
+        "id": 21,
+        "name": "Gahunga TVET School",
+        "district_id": 11,
+        "type": "Public"
+      },
+      {
+        "id": 22,
+        "name": "Kabona TVET School",
+        "district_id": 11,
+        "type": "Public"
+      },
+      {
+        "id": 23,
+        "name": "Gicumbi TVET School",
+        "district_id": 13,
+        "type": "Public"
+      },
+      {
+        "id": 24,
+        "name": "Rushashi TVET School",
+        "district_id": 12,
+        "type": "Public"
+      },
+      {
+        "id": 25,
+        "name": "Janja TVET School",
+        "district_id": 12,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 26,
+        "name": "Busengo TVET School",
+        "district_id": 12,
+        "type": "Private"
+      },
+      {
+        "id": 27,
+        "name": "Rulindo TVET School",
+        "district_id": 15,
+        "type": "Public"
+      },
+      {
+        "id": 28,
+        "name": "Gisagara TVET School",
+        "district_id": 16,
+        "type": "Public"
+      },
+      {
+        "id": 29,
+        "name": "Kamonyi TVET School",
+        "district_id": 18,
+        "type": "Public"
+      },
+      {
+        "id": 30,
+        "name": "Nyamagabe TVET School",
+        "district_id": 20,
+        "type": "Public"
+      },
+      {
+        "id": 31,
+        "name": "Nyaruguru TVET School",
+        "district_id": 22,
+        "type": "Public"
+      },
+      {
+        "id": 32,
+        "name": "Ruhango TVET School",
+        "district_id": 23,
+        "type": "Public"
+      },
+      {
+        "id": 33,
+        "name": "Ngororero TVET School",
+        "district_id": 25,
+        "type": "Public"
+      },
+      {
+        "id": 34,
+        "name": "Nyabihu TVET School",
+        "district_id": 26,
+        "type": "Public"
+      },
+      {
+        "id": 35,
+        "name": "Nyamasheke TVET School",
+        "district_id": 27,
+        "type": "Public"
+      },
+      {
+        "id": 36,
+        "name": "Rusizi TVET School",
+        "district_id": 29,
+        "type": "Public"
+      },
+      {
+        "id": 37,
+        "name": "Rutsiro TVET School",
+        "district_id": 30,
+        "type": "Public"
+      },
+      {
+        "id": 38,
+        "name": "Don Bosco Muhazi",
+        "district_id": 10,
+        "type": "Private"
+      },
+      {
+        "id": 39,
+        "name": "Don Bosco Gatenga",
+        "district_id": 2,
+        "type": "Private"
+      },
+      {
+        "id": 40,
+        "name": "GS Saint Joseph Kabgayi",
+        "district_id": 19,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 41,
+        "name": "GS Karubanda",
+        "district_id": 17,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 42,
+        "name": "GS Nyundo",
+        "district_id": 28,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 43,
+        "name": "GS Zaza",
+        "district_id": 8,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 44,
+        "name": "GS Rambura",
+        "district_id": 26,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 45,
+        "name": "GS Mukarange",
+        "district_id": 6,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 46,
+        "name": "GS Shyogwe",
+        "district_id": 19,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 47,
+        "name": "ETAG Gitwe",
+        "district_id": 23,
+        "type": "Private"
+      },
+      {
+        "id": 48,
+        "name": "Lycee Catholic St Martin Mataba",
+        "district_id": 12,
+        "type": "Private"
+      },
+      {
+        "id": 49,
+        "name": "Lycee de Kigali",
+        "district_id": 1,
+        "type": "Government-Aided"
+      },
+      {
+        "id": 50,
+        "name": "Akilah Institute",
+        "district_id": 2,
+        "type": "Private"
+      },
+      {
+        "id": 51,
+        "name": "Rwanda Polytechnic",
+        "district_id": 2,
+        "type": "Public"
+      },
+      {
+        "id": 52,
+        "name": "Tumba College of Technology",
+        "district_id": 24,
+        "type": "Public"
+      },
+      {
+        "id": 53,
+        "name": "BUGESERA School",
+        "district_id": 4,
+        "type": "TSS"
+      },
+      {
+        "id": 54,
+        "name": "BURERA  ES GAHUNGA TSS",
+        "district_id": 11,
+        "type": "TSS"
+      },
+      {
+        "id": 58,
+        "name": "GAKENKE  JANJA TSS",
+        "district_id": 12,
+        "type": "TSS"
+      },
+      {
+        "id": 61,
+        "name": "GASABO  SOS TSS",
+        "district_id": 1,
+        "type": "TSS"
+      },
+      {
+        "id": 62,
+        "name": "years ago The school",
+        "district_id": 1,
+        "type": "TSS"
+      },
+      {
+        "id": 63,
+        "name": "GASABO School",
+        "district_id": 1,
+        "type": "TSS"
+      },
+      {
+        "id": 64,
+        "name": "SN  School",
+        "district_id": 1,
+        "type": "TSS"
+      },
+      {
+        "id": 65,
+        "name": "KAMONYI College",
+        "district_id": 1,
+        "type": "TSS"
+      },
+      {
+        "id": 66,
+        "name": "The school",
+        "district_id": 1,
+        "type": "TSS"
+      },
+      {
+        "id": 68,
+        "name": "KAMONYI  SAINT ANNE MUGINA TSS",
+        "district_id": 18,
+        "type": "TSS"
+      },
+      {
+        "id": 69,
+        "name": "GS RUYUMBA TSS",
+        "district_id": 18,
+        "type": "TSS"
+      },
+      {
+        "id": 70,
+        "name": "KAMONYI Fr. Ramon KABUGA TSS",
+        "district_id": 18,
+        "type": "TSS"
+      },
+      {
+        "id": 71,
+        "name": "GATSIBO GATSIBO  College",
+        "district_id": 5,
+        "type": "TSS"
+      },
+      {
+        "id": 81,
+        "name": "GISAGARA School",
+        "district_id": 16,
+        "type": "TSS"
+      },
+      {
+        "id": 82,
+        "name": "KARONGI   KARONGI KARONGI  MURUNDI TSS",
+        "district_id": 16,
+        "type": "TSS"
+      },
+      {
+        "id": 83,
+        "name": "KARONGI KARONGI KARONGI KARONGI KARONGI KARONGI  IPRC KARONGI TSS",
+        "district_id": 24,
+        "type": "TSS"
+      },
+      {
+        "id": 84,
+        "name": "KARONGI  RUBEGERA TSS",
+        "district_id": 24,
+        "type": "TSS"
+      },
+      {
+        "id": 85,
+        "name": "KAYONZA KAYONZA KAYONZA TSS Mukarange VTC SOS HERMANN GMEINER KAYONZA SCHOOL",
+        "district_id": 24,
+        "type": "TSS"
+      },
+      {
+        "id": 87,
+        "name": "KAYONZA School",
+        "district_id": 6,
+        "type": "TSS"
+      },
+      {
+        "id": 88,
+        "name": "Reasons for not reaccreditation None None None None None None School",
+        "district_id": 6,
+        "type": "TSS"
+      },
+      {
+        "id": 89,
+        "name": "KAYONZA  ES CYARUBARE TSS",
+        "district_id": 17,
+        "type": "TSS"
+      },
+      {
+        "id": 90,
+        "name": "HUYE  SN   - I. HUYE - DON BOSCO - RANGO TSS",
+        "district_id": 17,
+        "type": "TSS"
+      },
+      {
+        "id": 92,
+        "name": "Lack of sufficient tools and equipment None None None TSS",
+        "district_id": 17,
+        "type": "TSS"
+      },
+      {
+        "id": 100,
+        "name": "KICUKIRO  ADEF TSS GIRITEKA VTC",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 103,
+        "name": "KIREHE  GS NYANKURAZO MUSAZA TSS",
+        "district_id": 7,
+        "type": "TSS"
+      },
+      {
+        "id": 106,
+        "name": "KIREHE APENA TSS",
+        "district_id": 7,
+        "type": "TSS"
+      },
+      {
+        "id": 107,
+        "name": "KIREHE GS MIGONGO TSS",
+        "district_id": 7,
+        "type": "TSS"
+      },
+      {
+        "id": 108,
+        "name": "KIREHE RWANTONDE TSS",
+        "district_id": 7,
+        "type": "TSS"
+      },
+      {
+        "id": 109,
+        "name": "MUHANGA MUSHUBATI VTC",
+        "district_id": 7,
+        "type": "VTC"
+      },
+      {
+        "id": 110,
+        "name": "MUHANGA KIYUMBA TSS",
+        "district_id": 7,
+        "type": "TSS"
+      },
+      {
+        "id": 111,
+        "name": "MUHANGA  NYABIKENKE TSS",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 112,
+        "name": "G.S NYABINONI TSS",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 113,
+        "name": "MUHANGA SAINT SYLVAN TSS",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 114,
+        "name": "MUHANGA BULINGA TSS",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 115,
+        "name": "MUHANGA MUHANGA VTC",
+        "district_id": 19,
+        "type": "VTC"
+      },
+      {
+        "id": 116,
+        "name": "MUHANGA BUREAU SOCIAL DE DEVELOPEMENT VTC",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 117,
+        "name": "SN  School",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 118,
+        "name": "MUHANGA URUKUNDO LEARNING CENTER VTC",
+        "district_id": 19,
+        "type": "VTC"
+      },
+      {
+        "id": 119,
+        "name": "MUHANGA ITER RUTOBWE TSS",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 121,
+        "name": "MUHANGA PROTESTANT TSS MUHANGA TECHNICAL CENTER",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 123,
+        "name": "MUHANGA  FRED NKUNDA TSS",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 125,
+        "name": "MUSANZE GS KITABURA TSS",
+        "district_id": 19,
+        "type": "TSS"
+      },
+      {
+        "id": 128,
+        "name": "MUSANZE School",
+        "district_id": 14,
+        "type": "TSS"
+      },
+      {
+        "id": 129,
+        "name": "MUSANZE MUTOBO TSS",
+        "district_id": 14,
+        "type": "TSS"
+      },
+      {
+        "id": 130,
+        "name": "MUSANZE - Lycee de Ruhengeri -APICUR TSS",
+        "district_id": 14,
+        "type": "TSS"
+      },
+      {
+        "id": 131,
+        "name": "MUSANZE ETEFOP TSS",
+        "district_id": 14,
+        "type": "TSS"
+      },
+      {
+        "id": 132,
+        "name": "MUSANZE ALKALAM TSS",
+        "district_id": 14,
+        "type": "TSS"
+      },
+      {
+        "id": 133,
+        "name": "MUSANZE  ESTB Busogo TSS",
+        "district_id": 14,
+        "type": "TSS"
+      },
+      {
+        "id": 135,
+        "name": "ES RUKIRA TSS NGOMA Garden TSS",
+        "district_id": 14,
+        "type": "TSS"
+      },
+      {
+        "id": 136,
+        "name": "Gahima TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 137,
+        "name": "NGOMA GS Gahurire TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 138,
+        "name": "NGOMA GS GASETSA TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 139,
+        "name": "NOMA GS Kabirizi B TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 140,
+        "name": "NOMA GS Kansana TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 141,
+        "name": "NGOMA GS Musamvu TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 142,
+        "name": "NGOMA GS Rubona TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 143,
+        "name": "NGOMA GS Rwintashya TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 144,
+        "name": "NGOMA IPRC",
+        "district_id": 8,
+        "type": "IPRC"
+      },
+      {
+        "id": 146,
+        "name": "NGOMA SAKE VTC",
+        "district_id": 8,
+        "type": "VTC"
+      },
+      {
+        "id": 147,
+        "name": "NYABIHU GS Gatovu TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 148,
+        "name": "NYABIHU GS Rurembo TSS",
+        "district_id": 8,
+        "type": "TSS"
+      },
+      {
+        "id": 150,
+        "name": "NYABIHU CBK Kabaya TSS",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 151,
+        "name": "NYABIHU ES Kadahenda TSS",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 152,
+        "name": "TSS VTC TSS TSS SN  NGORORERO School",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 154,
+        "name": "NGORORERO HINDIRO TSS",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 155,
+        "name": "NYAGATARE CYONDO TSS",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 156,
+        "name": "NYAGATARE GS NDEGO TSS",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 157,
+        "name": "NYAGATARE SHONGA TSS",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 158,
+        "name": "NYAGATARE ETP Nyarurema TSS",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 159,
+        "name": "NYAGATARE GS RUKOMO TSS",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 160,
+        "name": "NYAGATARE GS NYAKIGANDO NYAGATARE UMUTARA DEAF VTC",
+        "district_id": 25,
+        "type": "TSS"
+      },
+      {
+        "id": 161,
+        "name": "SN   NYAMAGABE GS Mbazi TSS",
+        "district_id": 20,
+        "type": "TSS"
+      },
+      {
+        "id": 162,
+        "name": "NYAMAGABE Cyanika TSS",
+        "district_id": 20,
+        "type": "TSS"
+      },
+      {
+        "id": 163,
+        "name": "KIGEME VTC",
+        "district_id": 20,
+        "type": "VTC"
+      },
+      {
+        "id": 164,
+        "name": "NYAMAGABE GS Nkumbure TSS GS Kitabi TSS",
+        "district_id": 20,
+        "type": "TSS"
+      },
+      {
+        "id": 165,
+        "name": "NYAMAGABE Mwogo TSS",
+        "district_id": 20,
+        "type": "TSS"
+      },
+      {
+        "id": 169,
+        "name": "NYAMASHEKE  G.S SAINT JEAN BOSCO DE YOVE Mwezi TSS",
+        "district_id": 27,
+        "type": "TSS"
+      },
+      {
+        "id": 171,
+        "name": "NYARUGENGE  SN  School",
+        "district_id": 27,
+        "type": "TSS"
+      },
+      {
+        "id": 172,
+        "name": "NYARUGENGE Saint Francis Good Shepherds TSS",
+        "district_id": 3,
+        "type": "TSS"
+      },
+      {
+        "id": 174,
+        "name": "NYARUGENGE Kigali Leading TSS",
+        "district_id": 3,
+        "type": "TSS"
+      },
+      {
+        "id": 175,
+        "name": "NYARUGENGE GS Akumunigo TSS",
+        "district_id": 3,
+        "type": "TSS"
+      },
+      {
+        "id": 177,
+        "name": "NYARUGENGE BUTAMWA VTC",
+        "district_id": 3,
+        "type": "VTC"
+      },
+      {
+        "id": 178,
+        "name": "NYARUGENGE GS BUYE TSS",
+        "district_id": 3,
+        "type": "TSS"
+      },
+      {
+        "id": 180,
+        "name": "NYARUGENGE GS CAMP KIGALI TSS",
+        "district_id": 3,
+        "type": "TSS"
+      },
+      {
+        "id": 182,
+        "name": "NYARUGENGE Kanyinya TSS",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 183,
+        "name": "NYARUGENGE GS Cyahafi TSS",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 184,
+        "name": "NYANZA APIDERBU BUSORO VTC",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 190,
+        "name": "NYANZA School",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 192,
+        "name": "NYANZA . LYCEE DE NYANZA NYANZA TSS",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 193,
+        "name": "NYANZA BUSASAMA TSS",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 194,
+        "name": "NYARUGURU KIBEHO TSS",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 195,
+        "name": "NYARUGURU NDAGO VTC",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 199,
+        "name": "SN  School",
+        "district_id": 28,
+        "type": "TSS"
+      },
+      {
+        "id": 200,
+        "name": "equipment and.the school",
+        "district_id": 28,
+        "type": "TSS"
+      },
+      {
+        "id": 201,
+        "name": "G.S BUSASAMANA II TSS",
+        "district_id": 28,
+        "type": "TSS"
+      },
+      {
+        "id": 202,
+        "name": "RUHANGO  SN  School",
+        "district_id": 28,
+        "type": "TSS"
+      },
+      {
+        "id": 203,
+        "name": "RUHANGO KINAZI TSS",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 204,
+        "name": "RUHANGO NTONGWE TSS",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 205,
+        "name": "RUHANGO College de Bethel RUHANGO RUHANGO TSS",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 206,
+        "name": "RUHANGO Lyce de RUHANGO Ikirezi TSS",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 207,
+        "name": "RUHANGO APECAS MUYUNZWE TSS",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 209,
+        "name": "RUHANGO GS INDANGABUREZI TSS",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 210,
+        "name": "RUHANGO PANDA TSS",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 211,
+        "name": "RUSIZI  SNI  School",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 212,
+        "name": "Accredited trades Reasons for not reaccreditation None None None None None None lype TSS",
+        "district_id": 23,
+        "type": "TSS"
+      },
+      {
+        "id": 213,
+        "name": "SIZI RUSIZI RUSIZI RUSIZIR  NYARUSHISHI TSS",
+        "district_id": 29,
+        "type": "TSS"
+      },
+      {
+        "id": 214,
+        "name": "RUSIZI  MIZERO TSS",
+        "district_id": 29,
+        "type": "TSS"
+      },
+      {
+        "id": 216,
+        "name": "RULINDO   School",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 219,
+        "name": "RULINDO RULINDO RULINDO School",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 220,
+        "name": "RUTSIRO   RUTSIRO  GS SYIKI TSS",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 221,
+        "name": "RUTSIRO College",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 222,
+        "name": "Reasons for not reaccreditation The school",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 223,
+        "name": "GS BUMBA TSS",
+        "district_id": 30,
+        "type": "TSS"
+      },
+      {
+        "id": 225,
+        "name": "RWAMAGANA LYCEE ISLAMIC RWAMAGANA RWAMAGANA CENTER FOR CHAMPIONS TSS",
+        "district_id": 30,
+        "type": "TSS"
+      },
+      {
+        "id": 226,
+        "name": "SN   RWAMAGANA KWIGIRA VTC",
+        "district_id": 10,
+        "type": "VTC"
+      },
+      {
+        "id": 227,
+        "name": "RWAMAGANA RWAMAGANA VTC",
+        "district_id": 10,
+        "type": "VTC"
+      },
+      {
+        "id": 228,
+        "name": "RWAMAGANA KARENGE ADVENTIST SECONDARY SCHOOL TSS",
+        "district_id": 10,
+        "type": "TSS"
+      },
+      {
+        "id": 229,
+        "name": "RWAMAGANA MAURI KARENGE VTC",
+        "district_id": 10,
+        "type": "VTC"
+      },
+      {
+        "id": 230,
+        "name": "RWAMAGANA MUYUMBU VTC",
+        "district_id": 10,
+        "type": "VTC"
+      },
+      {
+        "id": 231,
+        "name": "RWAMAGANA DELLE NOCCHE VTC",
+        "district_id": 10,
+        "type": "TSS"
+      },
+      {
+        "id": 232,
+        "name": "SN  School",
+        "district_id": 10,
+        "type": "TSS"
+      },
+      {
+        "id": 233,
+        "name": "GS JANJAGIRO TSS",
+        "district_id": 10,
+        "type": "TSS"
+      },
+      {
+        "id": 235,
+        "name": "TSS GS Bungwe",
+        "district_id": 11,
+        "type": "TSS"
+      },
+      {
+        "id": 236,
+        "name": "MURWA TSS. Runaba VTC Kabona TSS COLLEGE GEORGE FOX DE BUTARO GS Gaseke TSS GS Mucaca",
+        "district_id": 11,
+        "type": "TSS"
+      },
+      {
+        "id": 237,
+        "name": "TSS GS Gitare",
+        "district_id": 11,
+        "type": "TSS"
+      },
+      {
+        "id": 238,
+        "name": "Accredited trades None None None None None None Reasons for not reaccreditation None None None None None None",
+        "district_id": 11,
+        "type": "TSS"
+      },
+      {
+        "id": 239,
+        "name": "GATONDE TSS",
+        "district_id": 11,
+        "type": "TSS"
+      },
+      {
+        "id": 240,
+        "name": "TSS LYCEE CATHOLIC SAINT ALAIN DE MATABA- - - - C.F.",
+        "district_id": 12,
+        "type": "TSS"
+      },
+      {
+        "id": 241,
+        "name": "TSS COLLEGE",
+        "district_id": 12,
+        "type": "TSS"
+      },
+      {
+        "id": 242,
+        "name": "TSS KAMONYI Centre de Formation Saint Leonard VTC",
+        "district_id": 18,
+        "type": "TSS"
+      },
+      {
+        "id": 243,
+        "name": "GATSIBO TSS",
+        "district_id": 5,
+        "type": "TSS"
+      },
+      {
+        "id": 244,
+        "name": "GITUZA TSS.",
+        "district_id": 5,
+        "type": "TSS"
+      },
+      {
+        "id": 245,
+        "name": "RWIMITERERI",
+        "district_id": 5,
+        "type": "TSS"
+      },
+      {
+        "id": 246,
+        "name": "JOSEPHINE TSS",
+        "district_id": 5,
+        "type": "TSS"
+      },
+      {
+        "id": 247,
+        "name": "POLYTECHNIC",
+        "district_id": 5,
+        "type": "TSS"
+      },
+      {
+        "id": 248,
+        "name": "NYAGIHANGA TSS",
+        "district_id": 5,
+        "type": "TSS"
+      },
+      {
+        "id": 249,
+        "name": "RUSHAKI VTC",
+        "district_id": 13,
+        "type": "TSS"
+      },
+      {
+        "id": 250,
+        "name": "GICUMBI  Collegio Sanito Antonio Maria Zaccaria",
+        "district_id": 13,
+        "type": "TSS"
+      },
+      {
+        "id": 251,
+        "name": "TSS Good Shepherd VTC.",
+        "district_id": 13,
+        "type": "TSS"
+      },
+      {
+        "id": 252,
+        "name": "APEGIRUBUKI TSS",
+        "district_id": 13,
+        "type": "TSS"
+      },
+      {
+        "id": 253,
+        "name": "TSS SAINT Laurent",
+        "district_id": 13,
+        "type": "TSS"
+      },
+      {
+        "id": 254,
+        "name": "TSS Rwesero VTC",
+        "district_id": 13,
+        "type": "TSS"
+      },
+      {
+        "id": 255,
+        "name": "ADVENTIST TSS",
+        "district_id": 13,
+        "type": "TSS"
+      },
+      {
+        "id": 256,
+        "name": "SACCA COMPLEX AMIZERO INSTITUTE OF TECHNOLOGY HOSPITALITY.",
+        "district_id": 6,
+        "type": "TSS"
+      },
+      {
+        "id": 257,
+        "name": "HUYE G S des Parents",
+        "district_id": 17,
+        "type": "TSS"
+      },
+      {
+        "id": 258,
+        "name": "TSS MSGR. Mubiligi Catholic TSS Rwabuye",
+        "district_id": 17,
+        "type": "TSS"
+      },
+      {
+        "id": 259,
+        "name": "GISHIHE TSS",
+        "district_id": 17,
+        "type": "TSS"
+      },
+      {
+        "id": 260,
+        "name": "VTC Centre Culturel et Manuel Maria Rafaela TVET School",
+        "district_id": 17,
+        "type": "TSS"
+      },
+      {
+        "id": 261,
+        "name": "TSS - - VTC.",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 262,
+        "name": "UMUSHUMBAMWIZA",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 263,
+        "name": "UMUHOZA VTC.",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 264,
+        "name": "IHUMURE TSS",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 265,
+        "name": "MWANANSHUTI",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 266,
+        "name": "GATENGA TSS",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 267,
+        "name": "NYAKARAMBI TSS",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 268,
+        "name": "INTERNATIONAL",
+        "district_id": 2,
+        "type": "TSS"
+      },
+      {
+        "id": 269,
+        "name": "MUTENDERI TSS",
+        "district_id": 14,
+        "type": "TSS"
+      },
+      {
+        "id": 270,
+        "name": "NYABIHU  Nyabihu TSS Bigogwe",
+        "district_id": 26,
+        "type": "TSS"
+      },
+      {
+        "id": 271,
+        "name": "TSS GS Akimitoni",
+        "district_id": 26,
+        "type": "TSS"
+      },
+      {
+        "id": 272,
+        "name": "TSS Kibisabo TSS Kibihekane TSS GS Mulinga TSS",
+        "district_id": 26,
+        "type": "TSS"
+      },
+      {
+        "id": 273,
+        "name": "MUYANGE TSS",
+        "district_id": 27,
+        "type": "TSS"
+      },
+      {
+        "id": 274,
+        "name": "NYAMASHEKE Tyazo",
+        "district_id": 27,
+        "type": "TSS"
+      },
+      {
+        "id": 275,
+        "name": "KARENGERA TSS. EAV NTENDEZI ES Rangiro",
+        "district_id": 27,
+        "type": "TSS"
+      },
+      {
+        "id": 276,
+        "name": "GS Gisakura",
+        "district_id": 27,
+        "type": "TSS"
+      },
+      {
+        "id": 277,
+        "name": "TSS GS Rugano TSS",
+        "district_id": 27,
+        "type": "TSS"
+      },
+      {
+        "id": 278,
+        "name": "NYARUGENGE Solidarity Academy",
+        "district_id": 3,
+        "type": "TSS"
+      },
+      {
+        "id": 279,
+        "name": "TSS Private Public TSS",
+        "district_id": 3,
+        "type": "TSS"
+      },
+      {
+        "id": 280,
+        "name": "TSS TSS. TSS",
+        "district_id": 21,
+        "type": "TSS"
+      },
+      {
+        "id": 281,
+        "name": "TSS GS KIMINA. G.",
+        "district_id": 22,
+        "type": "TSS"
+      },
+      {
+        "id": 282,
+        "name": "MUSEBEYAR TSS",
+        "district_id": 22,
+        "type": "TSS"
+      },
+      {
+        "id": 283,
+        "name": "TSS MIBILIZI SAINT Augustin",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 284,
+        "name": "RULINDO RULINDO.",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 285,
+        "name": "TSS COLLEGE",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 286,
+        "name": "TSS ES Rwahi",
+        "district_id": 15,
+        "type": "TSS"
+      },
+      {
+        "id": 287,
+        "name": "VTC RWAMAGANA GS CYIMBAZI -",
+        "district_id": 30,
+        "type": "TSS"
+      },
+      {
+        "id": 288,
+        "name": "TSS RWAMAGANA HANDS-ON TVET SCHOOL",
+        "district_id": 30,
+        "type": "TSS"
+      },
+      {
+        "id": 289,
+        "name": "GAHENGERI TSS.",
+        "district_id": 10,
+        "type": "TSS"
+      }
+    ]
+  },
+  "school_types": {
+    "columns": [
+      "id",
+      "name",
+      "abbreviation",
+      "description"
+    ],
+    "rows": [
+      {
+        "id": null,
+        "name": "Technical Secondary School",
+        "abbreviation": "TSS",
+        "description": "Technical and vocational secondary schools"
+      },
+      {
+        "id": null,
+        "name": "Vocational Training Center",
+        "abbreviation": "VTC",
+        "description": "Vocational training centers"
+      },
+      {
+        "id": null,
+        "name": "Integrated Polytechnic Regional Center",
+        "abbreviation": "IPRC",
+        "description": "Integrated polytechnic regional centers"
+      }
+    ]
+  },
+  "trades": {
+    "columns": [
+      "id",
+      "name",
+      "category"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "name": "Masonry",
+        "category": "Construction"
+      },
+      {
+        "id": 2,
+        "name": "Carpentry",
+        "category": "Construction"
+      },
+      {
+        "id": 3,
+        "name": "Joinery",
+        "category": "Construction"
+      },
+      {
+        "id": 4,
+        "name": "Plumbing",
+        "category": "Construction"
+      },
+      {
+        "id": 5,
+        "name": "Painting and Decoration",
+        "category": "Construction"
+      },
+      {
+        "id": 6,
+        "name": "Civil Construction",
+        "category": "Construction"
+      },
+      {
+        "id": 7,
+        "name": "Concrete Masonry",
+        "category": "Construction"
+      },
+      {
+        "id": 8,
+        "name": "Building Construction",
+        "category": "Construction"
+      },
+      {
+        "id": 9,
+        "name": "Domestic Electricity",
+        "category": "Electrical"
+      },
+      {
+        "id": 10,
+        "name": "Industrial Electricity",
+        "category": "Electrical"
+      },
+      {
+        "id": 11,
+        "name": "Electrical Installation",
+        "category": "Electrical"
+      },
+      {
+        "id": 12,
+        "name": "Electronic Services",
+        "category": "Electrical"
+      },
+      {
+        "id": 13,
+        "name": "Electronics Technology",
+        "category": "Electrical"
+      },
+      {
+        "id": 14,
+        "name": "Refrigeration and Air Conditioning",
+        "category": "Electrical"
+      },
+      {
+        "id": 15,
+        "name": "Auto Engine Mechanics",
+        "category": "Automotive"
+      },
+      {
+        "id": 16,
+        "name": "Automotive Engine Technology",
+        "category": "Automotive"
+      },
+      {
+        "id": 17,
+        "name": "Auto Electricity and Electronics Systems",
+        "category": "Automotive"
+      },
+      {
+        "id": 18,
+        "name": "Automotive Transmission Systems",
+        "category": "Automotive"
+      },
+      {
+        "id": 19,
+        "name": "Auto Body Repair",
+        "category": "Automotive"
+      },
+      {
+        "id": 20,
+        "name": "Motor Vehicle Mechanics",
+        "category": "Automotive"
+      },
+      {
+        "id": 21,
+        "name": "Computer Applications",
+        "category": "ICT"
+      },
+      {
+        "id": 22,
+        "name": "Computer System Technology",
+        "category": "ICT"
+      },
+      {
+        "id": 23,
+        "name": "Networking",
+        "category": "ICT"
+      },
+      {
+        "id": 24,
+        "name": "Software Development",
+        "category": "ICT"
+      },
+      {
+        "id": 25,
+        "name": "Hardware Maintenance",
+        "category": "ICT"
+      },
+      {
+        "id": 26,
+        "name": "Web Development",
+        "category": "ICT"
+      },
+      {
+        "id": 27,
+        "name": "Database Management",
+        "category": "ICT"
+      },
+      {
+        "id": 28,
+        "name": "Culinary Arts",
+        "category": "Hospitality"
+      },
+      {
+        "id": 29,
+        "name": "Food Production",
+        "category": "Hospitality"
+      },
+      {
+        "id": 30,
+        "name": "Hotel Management",
+        "category": "Hospitality"
+      },
+      {
+        "id": 31,
+        "name": "Restaurant Services",
+        "category": "Hospitality"
+      },
+      {
+        "id": 32,
+        "name": "Tourism",
+        "category": "Hospitality"
+      },
+      {
+        "id": 33,
+        "name": "Catering Services",
+        "category": "Hospitality"
+      },
+      {
+        "id": 34,
+        "name": "Accounting",
+        "category": "Business"
+      },
+      {
+        "id": 35,
+        "name": "Secretarial Studies",
+        "category": "Business"
+      },
+      {
+        "id": 36,
+        "name": "Business Administration",
+        "category": "Business"
+      },
+      {
+        "id": 37,
+        "name": "Office Management",
+        "category": "Business"
+      },
+      {
+        "id": 38,
+        "name": "Tailoring",
+        "category": "Fashion"
+      },
+      {
+        "id": 39,
+        "name": "Fashion Design",
+        "category": "Fashion"
+      },
+      {
+        "id": 40,
+        "name": "Garment Making",
+        "category": "Fashion"
+      },
+      {
+        "id": 41,
+        "name": "Welding",
+        "category": "Metal Work"
+      },
+      {
+        "id": 42,
+        "name": "Metal Fabrication",
+        "category": "Metal Work"
+      },
+      {
+        "id": 43,
+        "name": "Fitting and Welding",
+        "category": "Metal Work"
+      },
+      {
+        "id": 44,
+        "name": "Sheet Metal Work",
+        "category": "Metal Work"
+      },
+      {
+        "id": 45,
+        "name": "Interior Design",
+        "category": "Design"
+      },
+      {
+        "id": 46,
+        "name": "Graphic Design",
+        "category": "Design"
+      },
+      {
+        "id": 47,
+        "name": "Photography",
+        "category": "Design"
+      },
+      {
+        "id": 48,
+        "name": "Agriculture Technology",
+        "category": "Agriculture"
+      },
+      {
+        "id": 49,
+        "name": "Crop Production",
+        "category": "Agriculture"
+      },
+      {
+        "id": 50,
+        "name": "Animal Health",
+        "category": "Agriculture"
+      },
+      {
+        "id": 51,
+        "name": "Food Processing",
+        "category": "Agriculture"
+      },
+      {
+        "id": 52,
+        "name": "Bakery and Confectionery",
+        "category": "Agriculture"
+      },
+      {
+        "id": 53,
+        "name": "Hairdressing",
+        "category": "Other"
+      },
+      {
+        "id": 54,
+        "name": "Land Surveying",
+        "category": "Other"
+      },
+      {
+        "id": 55,
+        "name": "Solar Energy",
+        "category": "Other"
+      },
+      {
+        "id": 56,
+        "name": "Leather Work",
+        "category": "Other"
+      },
+      {
+        "id": 57,
+        "name": "Public works",
+        "category": "General"
+      },
+      {
+        "id": 58,
+        "name": "Leather Works",
+        "category": "General"
+      },
+      {
+        "id": 59,
+        "name": "Electrical Technology",
+        "category": "General"
+      }
+    ]
+  },
+  "school_trades": {
+    "columns": [
+      "id",
+      "school_id",
+      "trade_id",
+      "levels"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "school_id": 1,
+        "trade_id": 24,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 2,
+        "school_id": 1,
+        "trade_id": 22,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 3,
+        "school_id": 1,
+        "trade_id": 23,
+        "levels": "4,5"
+      },
+      {
+        "id": 4,
+        "school_id": 1,
+        "trade_id": 16,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 5,
+        "school_id": 1,
+        "trade_id": 11,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 6,
+        "school_id": 1,
+        "trade_id": 13,
+        "levels": "4,5"
+      },
+      {
+        "id": 7,
+        "school_id": 1,
+        "trade_id": 6,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 8,
+        "school_id": 1,
+        "trade_id": 8,
+        "levels": "4,5"
+      },
+      {
+        "id": 9,
+        "school_id": 1,
+        "trade_id": 28,
+        "levels": "3,4"
+      },
+      {
+        "id": 10,
+        "school_id": 1,
+        "trade_id": 30,
+        "levels": "4,5"
+      },
+      {
+        "id": 11,
+        "school_id": 1,
+        "trade_id": 34,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 12,
+        "school_id": 4,
+        "trade_id": 16,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 13,
+        "school_id": 4,
+        "trade_id": 17,
+        "levels": "4,5"
+      },
+      {
+        "id": 14,
+        "school_id": 4,
+        "trade_id": 11,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 15,
+        "school_id": 4,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 16,
+        "school_id": 4,
+        "trade_id": 23,
+        "levels": "4,5"
+      },
+      {
+        "id": 17,
+        "school_id": 4,
+        "trade_id": 48,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 18,
+        "school_id": 4,
+        "trade_id": 49,
+        "levels": "3,4"
+      },
+      {
+        "id": 19,
+        "school_id": 4,
+        "trade_id": 6,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 20,
+        "school_id": 4,
+        "trade_id": 41,
+        "levels": "3,4"
+      },
+      {
+        "id": 21,
+        "school_id": 5,
+        "trade_id": 24,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 22,
+        "school_id": 5,
+        "trade_id": 22,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 23,
+        "school_id": 5,
+        "trade_id": 23,
+        "levels": "4,5"
+      },
+      {
+        "id": 24,
+        "school_id": 5,
+        "trade_id": 34,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 25,
+        "school_id": 5,
+        "trade_id": 36,
+        "levels": "4,5"
+      },
+      {
+        "id": 26,
+        "school_id": 5,
+        "trade_id": 28,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 27,
+        "school_id": 5,
+        "trade_id": 32,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 28,
+        "school_id": 5,
+        "trade_id": 30,
+        "levels": "4,5"
+      },
+      {
+        "id": 29,
+        "school_id": 3,
+        "trade_id": 6,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 30,
+        "school_id": 3,
+        "trade_id": 8,
+        "levels": "4,5"
+      },
+      {
+        "id": 31,
+        "school_id": 3,
+        "trade_id": 11,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 32,
+        "school_id": 3,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 33,
+        "school_id": 3,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 34,
+        "school_id": 3,
+        "trade_id": 24,
+        "levels": "4,5"
+      },
+      {
+        "id": 35,
+        "school_id": 3,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 36,
+        "school_id": 3,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 37,
+        "school_id": 2,
+        "trade_id": 24,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 38,
+        "school_id": 2,
+        "trade_id": 22,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 39,
+        "school_id": 2,
+        "trade_id": 23,
+        "levels": "4,5"
+      },
+      {
+        "id": 40,
+        "school_id": 2,
+        "trade_id": 13,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 41,
+        "school_id": 2,
+        "trade_id": 34,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 42,
+        "school_id": 2,
+        "trade_id": 35,
+        "levels": "3,4"
+      },
+      {
+        "id": 43,
+        "school_id": 6,
+        "trade_id": 48,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 44,
+        "school_id": 6,
+        "trade_id": 49,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 45,
+        "school_id": 6,
+        "trade_id": 50,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 46,
+        "school_id": 6,
+        "trade_id": 16,
+        "levels": "3,4"
+      },
+      {
+        "id": 47,
+        "school_id": 6,
+        "trade_id": 6,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 48,
+        "school_id": 6,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 49,
+        "school_id": 7,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 50,
+        "school_id": 7,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 51,
+        "school_id": 7,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 52,
+        "school_id": 7,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 53,
+        "school_id": 7,
+        "trade_id": 41,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 54,
+        "school_id": 7,
+        "trade_id": 4,
+        "levels": "3,4"
+      },
+      {
+        "id": 55,
+        "school_id": 7,
+        "trade_id": 15,
+        "levels": "3,4"
+      },
+      {
+        "id": 56,
+        "school_id": 8,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 57,
+        "school_id": 8,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 58,
+        "school_id": 8,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 59,
+        "school_id": 8,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 60,
+        "school_id": 8,
+        "trade_id": 41,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 61,
+        "school_id": 8,
+        "trade_id": 4,
+        "levels": "3,4"
+      },
+      {
+        "id": 62,
+        "school_id": 8,
+        "trade_id": 15,
+        "levels": "3,4"
+      },
+      {
+        "id": 63,
+        "school_id": 9,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 64,
+        "school_id": 9,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 65,
+        "school_id": 9,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 66,
+        "school_id": 9,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 67,
+        "school_id": 9,
+        "trade_id": 41,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 68,
+        "school_id": 9,
+        "trade_id": 4,
+        "levels": "3,4"
+      },
+      {
+        "id": 69,
+        "school_id": 9,
+        "trade_id": 15,
+        "levels": "3,4"
+      },
+      {
+        "id": 70,
+        "school_id": 10,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 71,
+        "school_id": 10,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 72,
+        "school_id": 10,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 73,
+        "school_id": 10,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 74,
+        "school_id": 10,
+        "trade_id": 41,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 75,
+        "school_id": 10,
+        "trade_id": 4,
+        "levels": "3,4"
+      },
+      {
+        "id": 76,
+        "school_id": 10,
+        "trade_id": 15,
+        "levels": "3,4"
+      },
+      {
+        "id": 77,
+        "school_id": 11,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 78,
+        "school_id": 11,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 79,
+        "school_id": 11,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 80,
+        "school_id": 11,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 81,
+        "school_id": 11,
+        "trade_id": 41,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 82,
+        "school_id": 11,
+        "trade_id": 4,
+        "levels": "3,4"
+      },
+      {
+        "id": 83,
+        "school_id": 11,
+        "trade_id": 15,
+        "levels": "3,4"
+      },
+      {
+        "id": 84,
+        "school_id": 12,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 85,
+        "school_id": 12,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 86,
+        "school_id": 12,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 87,
+        "school_id": 12,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 88,
+        "school_id": 12,
+        "trade_id": 41,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 89,
+        "school_id": 12,
+        "trade_id": 4,
+        "levels": "3,4"
+      },
+      {
+        "id": 90,
+        "school_id": 12,
+        "trade_id": 15,
+        "levels": "3,4"
+      },
+      {
+        "id": 91,
+        "school_id": 13,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 92,
+        "school_id": 13,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 93,
+        "school_id": 13,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 94,
+        "school_id": 13,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 95,
+        "school_id": 13,
+        "trade_id": 41,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 96,
+        "school_id": 13,
+        "trade_id": 4,
+        "levels": "3,4"
+      },
+      {
+        "id": 97,
+        "school_id": 13,
+        "trade_id": 15,
+        "levels": "3,4"
+      },
+      {
+        "id": 98,
+        "school_id": 14,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 99,
+        "school_id": 14,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 100,
+        "school_id": 14,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 101,
+        "school_id": 14,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 102,
+        "school_id": 14,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 103,
+        "school_id": 14,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 104,
+        "school_id": 16,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 105,
+        "school_id": 16,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 106,
+        "school_id": 16,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 107,
+        "school_id": 16,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 108,
+        "school_id": 16,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 109,
+        "school_id": 16,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 110,
+        "school_id": 17,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 111,
+        "school_id": 17,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 112,
+        "school_id": 17,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 113,
+        "school_id": 17,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 114,
+        "school_id": 17,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 115,
+        "school_id": 17,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 116,
+        "school_id": 18,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 117,
+        "school_id": 18,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 118,
+        "school_id": 18,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 119,
+        "school_id": 18,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 120,
+        "school_id": 18,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 121,
+        "school_id": 18,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 122,
+        "school_id": 19,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 123,
+        "school_id": 19,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 124,
+        "school_id": 19,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 125,
+        "school_id": 19,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 126,
+        "school_id": 19,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 127,
+        "school_id": 19,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 128,
+        "school_id": 20,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 129,
+        "school_id": 20,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 130,
+        "school_id": 20,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 131,
+        "school_id": 20,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 132,
+        "school_id": 20,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 133,
+        "school_id": 20,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 134,
+        "school_id": 23,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 135,
+        "school_id": 23,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 136,
+        "school_id": 23,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 137,
+        "school_id": 23,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 138,
+        "school_id": 23,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 139,
+        "school_id": 23,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 140,
+        "school_id": 27,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 141,
+        "school_id": 27,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 142,
+        "school_id": 27,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 143,
+        "school_id": 27,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 144,
+        "school_id": 27,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 145,
+        "school_id": 27,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 146,
+        "school_id": 28,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 147,
+        "school_id": 28,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 148,
+        "school_id": 28,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 149,
+        "school_id": 28,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 150,
+        "school_id": 28,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 151,
+        "school_id": 28,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 152,
+        "school_id": 29,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 153,
+        "school_id": 29,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 154,
+        "school_id": 29,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 155,
+        "school_id": 29,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 156,
+        "school_id": 29,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 157,
+        "school_id": 29,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 158,
+        "school_id": 30,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 159,
+        "school_id": 30,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 160,
+        "school_id": 30,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 161,
+        "school_id": 30,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 162,
+        "school_id": 30,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 163,
+        "school_id": 30,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 164,
+        "school_id": 31,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 165,
+        "school_id": 31,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 166,
+        "school_id": 31,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 167,
+        "school_id": 31,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 168,
+        "school_id": 31,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 169,
+        "school_id": 31,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 170,
+        "school_id": 32,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 171,
+        "school_id": 32,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 172,
+        "school_id": 32,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 173,
+        "school_id": 32,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 174,
+        "school_id": 32,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 175,
+        "school_id": 32,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 176,
+        "school_id": 33,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 177,
+        "school_id": 33,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 178,
+        "school_id": 33,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 179,
+        "school_id": 33,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 180,
+        "school_id": 33,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 181,
+        "school_id": 33,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 182,
+        "school_id": 34,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 183,
+        "school_id": 34,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 184,
+        "school_id": 34,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 185,
+        "school_id": 34,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 186,
+        "school_id": 34,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 187,
+        "school_id": 34,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 188,
+        "school_id": 35,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 189,
+        "school_id": 35,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 190,
+        "school_id": 35,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 191,
+        "school_id": 35,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 192,
+        "school_id": 35,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 193,
+        "school_id": 35,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 194,
+        "school_id": 36,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 195,
+        "school_id": 36,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 196,
+        "school_id": 36,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 197,
+        "school_id": 36,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 198,
+        "school_id": 36,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 199,
+        "school_id": 36,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 200,
+        "school_id": 37,
+        "trade_id": 1,
+        "levels": "1,3"
+      },
+      {
+        "id": 201,
+        "school_id": 37,
+        "trade_id": 2,
+        "levels": "1,3"
+      },
+      {
+        "id": 202,
+        "school_id": 37,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 203,
+        "school_id": 37,
+        "trade_id": 38,
+        "levels": "1,3"
+      },
+      {
+        "id": 204,
+        "school_id": 37,
+        "trade_id": 41,
+        "levels": "1,3"
+      },
+      {
+        "id": 205,
+        "school_id": 37,
+        "trade_id": 21,
+        "levels": "3"
+      },
+      {
+        "id": 206,
+        "school_id": 38,
+        "trade_id": 16,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 207,
+        "school_id": 38,
+        "trade_id": 17,
+        "levels": "4,5"
+      },
+      {
+        "id": 208,
+        "school_id": 38,
+        "trade_id": 11,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 209,
+        "school_id": 38,
+        "trade_id": 13,
+        "levels": "4,5"
+      },
+      {
+        "id": 210,
+        "school_id": 38,
+        "trade_id": 22,
+        "levels": "3,4"
+      },
+      {
+        "id": 211,
+        "school_id": 38,
+        "trade_id": 41,
+        "levels": "3,4"
+      },
+      {
+        "id": 212,
+        "school_id": 38,
+        "trade_id": 42,
+        "levels": "3,4"
+      },
+      {
+        "id": 213,
+        "school_id": 39,
+        "trade_id": 16,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 214,
+        "school_id": 39,
+        "trade_id": 17,
+        "levels": "4,5"
+      },
+      {
+        "id": 215,
+        "school_id": 39,
+        "trade_id": 11,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 216,
+        "school_id": 39,
+        "trade_id": 13,
+        "levels": "4,5"
+      },
+      {
+        "id": 217,
+        "school_id": 39,
+        "trade_id": 22,
+        "levels": "3,4"
+      },
+      {
+        "id": 218,
+        "school_id": 39,
+        "trade_id": 41,
+        "levels": "3,4"
+      },
+      {
+        "id": 219,
+        "school_id": 39,
+        "trade_id": 42,
+        "levels": "3,4"
+      },
+      {
+        "id": 220,
+        "school_id": 40,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 221,
+        "school_id": 40,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 222,
+        "school_id": 40,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 223,
+        "school_id": 40,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 224,
+        "school_id": 40,
+        "trade_id": 38,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 225,
+        "school_id": 40,
+        "trade_id": 34,
+        "levels": "3,4"
+      },
+      {
+        "id": 226,
+        "school_id": 40,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 227,
+        "school_id": 41,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 228,
+        "school_id": 41,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 229,
+        "school_id": 41,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 230,
+        "school_id": 41,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 231,
+        "school_id": 41,
+        "trade_id": 38,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 232,
+        "school_id": 41,
+        "trade_id": 34,
+        "levels": "3,4"
+      },
+      {
+        "id": 233,
+        "school_id": 41,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 234,
+        "school_id": 42,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 235,
+        "school_id": 42,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 236,
+        "school_id": 42,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 237,
+        "school_id": 42,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 238,
+        "school_id": 42,
+        "trade_id": 38,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 239,
+        "school_id": 42,
+        "trade_id": 34,
+        "levels": "3,4"
+      },
+      {
+        "id": 240,
+        "school_id": 42,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 241,
+        "school_id": 43,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 242,
+        "school_id": 43,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 243,
+        "school_id": 43,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 244,
+        "school_id": 43,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 245,
+        "school_id": 43,
+        "trade_id": 38,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 246,
+        "school_id": 43,
+        "trade_id": 34,
+        "levels": "3,4"
+      },
+      {
+        "id": 247,
+        "school_id": 43,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 248,
+        "school_id": 44,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 249,
+        "school_id": 44,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 250,
+        "school_id": 44,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 251,
+        "school_id": 44,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 252,
+        "school_id": 44,
+        "trade_id": 38,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 253,
+        "school_id": 44,
+        "trade_id": 34,
+        "levels": "3,4"
+      },
+      {
+        "id": 254,
+        "school_id": 44,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 255,
+        "school_id": 45,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 256,
+        "school_id": 45,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 257,
+        "school_id": 45,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 258,
+        "school_id": 45,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 259,
+        "school_id": 45,
+        "trade_id": 38,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 260,
+        "school_id": 45,
+        "trade_id": 34,
+        "levels": "3,4"
+      },
+      {
+        "id": 261,
+        "school_id": 45,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 262,
+        "school_id": 46,
+        "trade_id": 1,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 263,
+        "school_id": 46,
+        "trade_id": 2,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 264,
+        "school_id": 46,
+        "trade_id": 9,
+        "levels": "3,4"
+      },
+      {
+        "id": 265,
+        "school_id": 46,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 266,
+        "school_id": 46,
+        "trade_id": 38,
+        "levels": "1,3,4"
+      },
+      {
+        "id": 267,
+        "school_id": 46,
+        "trade_id": 34,
+        "levels": "3,4"
+      },
+      {
+        "id": 268,
+        "school_id": 46,
+        "trade_id": 21,
+        "levels": "3,4"
+      },
+      {
+        "id": 269,
+        "school_id": 50,
+        "trade_id": 24,
+        "levels": "4,5"
+      },
+      {
+        "id": 270,
+        "school_id": 50,
+        "trade_id": 22,
+        "levels": "4,5"
+      },
+      {
+        "id": 271,
+        "school_id": 50,
+        "trade_id": 36,
+        "levels": "4,5"
+      },
+      {
+        "id": 272,
+        "school_id": 50,
+        "trade_id": 34,
+        "levels": "4,5"
+      },
+      {
+        "id": 273,
+        "school_id": 51,
+        "trade_id": 24,
+        "levels": "3,4,5,6"
+      },
+      {
+        "id": 274,
+        "school_id": 51,
+        "trade_id": 22,
+        "levels": "3,4,5,6"
+      },
+      {
+        "id": 275,
+        "school_id": 51,
+        "trade_id": 23,
+        "levels": "4,5,6"
+      },
+      {
+        "id": 276,
+        "school_id": 51,
+        "trade_id": 6,
+        "levels": "3,4,5,6"
+      },
+      {
+        "id": 277,
+        "school_id": 51,
+        "trade_id": 11,
+        "levels": "3,4,5,6"
+      },
+      {
+        "id": 278,
+        "school_id": 51,
+        "trade_id": 13,
+        "levels": "4,5,6"
+      },
+      {
+        "id": 279,
+        "school_id": 15,
+        "trade_id": 1,
+        "levels": "3,4,5"
+      },
+      {
+        "id": 280,
+        "school_id": 15,
+        "trade_id": 9,
+        "levels": "3"
+      },
+      {
+        "id": 281,
+        "school_id": 15,
+        "trade_id": 10,
+        "levels": "4,5"
+      },
+      {
+        "id": 282,
+        "school_id": 15,
+        "trade_id": 38,
+        "levels": "3"
+      },
+      {
+        "id": 283,
+        "school_id": 15,
+        "trade_id": 41,
+        "levels": "3,4"
+      },
+      {
+        "id": 285,
+        "school_id": 62,
+        "trade_id": 32,
+        "levels": "[\"L3\"]"
+      },
+      {
+        "id": 286,
+        "school_id": 66,
+        "trade_id": 8,
+        "levels": "[\"L3\", \"L4\", \"L5\"]"
+      },
+      {
+        "id": 287,
+        "school_id": 88,
+        "trade_id": 58,
+        "levels": "[]"
+      },
+      {
+        "id": 288,
+        "school_id": 200,
+        "trade_id": 59,
+        "levels": "[\"L3\", \"L4\", \"L5\"]"
+      }
+    ]
+  },
+  "users": {
+    "columns": [
+      "id",
+      "username",
+      "password_hash",
+      "role",
+      "full_name",
+      "department",
+      "level",
+      "departments",
+      "is_class_teacher",
+      "school_id",
+      "trade_id",
+      "created_at"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "username": "admin",
+        "password_hash": "55285fcbf2688d4c0a3875eb7564b185:419f4fbf2b096f98f0ea49a7c4978af0a87c05b7336ebb5a087cac8aec963f22",
+        "role": "admin",
+        "full_name": "DOS Administrator",
+        "department": null,
+        "level": null,
+        "departments": "[\"Software Development\"]",
+        "is_class_teacher": 0,
+        "school_id": null,
+        "trade_id": null,
+        "created_at": "2026-04-28 04:05:34"
+      },
+      {
+        "id": 2,
+        "username": "conso",
+        "password_hash": "519cada99dba6a07d2f13a980c4f69ba:88f90b54c6d9f1608c748466b49283a3f50ac2e98595a72ce5d010933d04514f",
+        "role": "teacher",
+        "full_name": "UWANYIRIGIRA Console",
+        "department": "Software Development",
+        "level": "L5",
+        "departments": null,
+        "is_class_teacher": 0,
+        "school_id": null,
+        "trade_id": null,
+        "created_at": "2026-04-28 04:05:34"
+      },
+      {
+        "id": 3,
+        "username": "kangabo",
+        "password_hash": "4eb9c9b69f1a3da7792fe6d4fdfaf393:f44a3c5023ab77c83e776f63b3f4d8f3e7491e670d08bea4cf4e36252eb50424",
+        "role": "teacher",
+        "full_name": "Teacher Kangabo",
+        "department": "Software Development",
+        "level": "L5",
+        "departments": null,
+        "is_class_teacher": 0,
+        "school_id": null,
+        "trade_id": null,
+        "created_at": "2026-04-28 04:05:34"
+      },
+      {
+        "id": 4,
+        "username": "mugabo",
+        "password_hash": "3331a9e0754933081fad2de92b70ad2d:3c6876d28350758649f1766b1a99933bc92e36fdf8949e255d05487347435179",
+        "role": "student",
+        "full_name": "Mugabo Student",
+        "department": "Software Development",
+        "level": "L5",
+        "departments": null,
+        "is_class_teacher": 0,
+        "school_id": null,
+        "trade_id": null,
+        "created_at": "2026-04-28 04:05:34"
+      },
+      {
+        "id": 5,
+        "username": "uwase",
+        "password_hash": "5c83a228a8f0f25dccc0b879fdb4e6a6:51eb534ed8322fdc889d2f7c913a32b9a3d6b90ce4e2d65cef5a4394d0b32420",
+        "role": "student",
+        "full_name": "Uwase Student",
+        "department": "Software Development",
+        "level": "L5",
+        "departments": null,
+        "is_class_teacher": 0,
+        "school_id": null,
+        "trade_id": null,
+        "created_at": "2026-04-28 04:05:34"
+      },
+      {
+        "id": 6,
+        "username": "niyonzima",
+        "password_hash": "726f320e55431c9323d37ab30aaab44d:1df07d69a1578f15bd0cdf26a00700263dfd17ad85d14e43816ac74d68557e48",
+        "role": "student",
+        "full_name": "Niyonzima Student",
+        "department": "Software Development",
+        "level": "L5",
+        "departments": null,
+        "is_class_teacher": 0,
+        "school_id": null,
+        "trade_id": null,
+        "created_at": "2026-04-28 04:05:34"
+      }
+    ]
+  },
+  "lessons": {
+    "columns": [
+      "id",
+      "title",
+      "code",
+      "description",
+      "department",
+      "level",
+      "classification",
+      "is_active",
+      "created_by",
+      "created_at"
+    ],
+    "rows": []
+  },
+  "teacher_lessons": {
+    "columns": [
+      "id",
+      "teacher_id",
+      "lesson_id",
+      "assigned_at"
+    ],
+    "rows": []
+  },
+  "questions": {
+    "columns": [
+      "id",
+      "question_text",
+      "question_type",
+      "options",
+      "correct_answer",
+      "points",
+      "department",
+      "level",
+      "lesson_id",
+      "created_by",
+      "created_at"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "question_text": "What is 2 + 2?",
+        "question_type": "multiple_choice",
+        "options": "[\"2\", \"3\", \"4\", \"5\"]",
+        "correct_answer": "4",
+        "points": 1,
+        "department": "Software Development",
+        "level": "L5",
+        "lesson_id": null,
+        "created_by": 2,
+        "created_at": "2026-04-28 00:06:29.084048"
+      },
+      {
+        "id": 2,
+        "question_text": "Python is a programming language",
+        "question_type": "true_false",
+        "options": "[\"True\", \"False\"]",
+        "correct_answer": "True",
+        "points": 1,
+        "department": "Software Development",
+        "level": "L5",
+        "lesson_id": null,
+        "created_by": 2,
+        "created_at": "2026-04-28 00:06:29.091575"
+      },
+      {
+        "id": 3,
+        "question_text": "What is the capital of Rwanda?",
+        "question_type": "multiple_choice",
+        "options": "[\"Kigali\", \"Nairobi\", \"Kampala\", \"Dar es Salaam\"]",
+        "correct_answer": "Kigali",
+        "points": 1,
+        "department": "Software Development",
+        "level": "L5",
+        "lesson_id": null,
+        "created_by": 2,
+        "created_at": "2026-04-28 00:06:29.091665"
+      }
+    ]
+  },
+  "quizzes": {
+    "columns": [
+      "id",
+      "title",
+      "description",
+      "scheduled_time",
+      "duration_minutes",
+      "question_time_seconds",
+      "countdown_started_at",
+      "is_active",
+      "shuffle_questions",
+      "department",
+      "level",
+      "created_by",
+      "created_at",
+      "results_released"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "title": "Test Quiz - Physics",
+        "description": "Sample quiz for testing",
+        "scheduled_time": null,
+        "duration_minutes": 30,
+        "question_time_seconds": 60,
+        "countdown_started_at": null,
+        "is_active": 0,
+        "shuffle_questions": 1,
+        "department": "Software Development",
+        "level": "L5",
+        "created_by": 2,
+        "created_at": "2026-04-28 00:06:29.091691",
+        "results_released": 0
+      }
+    ]
+  },
+  "quiz_questions": {
+    "columns": [
+      "id",
+      "quiz_id",
+      "question_id",
+      "question_order"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "quiz_id": 1,
+        "question_id": 1,
+        "question_order": 1
+      },
+      {
+        "id": 2,
+        "quiz_id": 1,
+        "question_id": 2,
+        "question_order": 2
+      },
+      {
+        "id": 3,
+        "quiz_id": 1,
+        "question_id": 3,
+        "question_order": 3
+      }
+    ]
+  },
+  "quiz_attempts": {
+    "columns": [
+      "id",
+      "quiz_id",
+      "user_id",
+      "score",
+      "total_questions",
+      "answers",
+      "started_at",
+      "completed_at",
+      "needs_review",
+      "reviewed_by",
+      "final_score"
+    ],
+    "rows": []
+  },
+  "student_answers": {
+    "columns": [
+      "id",
+      "attempt_id",
+      "question_id",
+      "user_id",
+      "student_answer",
+      "is_correct",
+      "points_earned",
+      "ai_feedback",
+      "time_spent",
+      "teacher_score",
+      "teacher_feedback"
+    ],
+    "rows": []
+  },
+  "notifications": {
+    "columns": [
+      "id",
+      "user_id",
+      "title",
+      "message",
+      "type",
+      "is_read",
+      "created_at"
+    ],
+    "rows": []
+  }
+}

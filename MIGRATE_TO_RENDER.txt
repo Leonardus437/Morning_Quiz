@@ -1,0 +1,130 @@
+MIGRATE FROM RAILWAY TO RENDER.COM
+===================================
+
+Railway trial maxed out. Switch to Render - better free tier!
+
+STEP 1: SIGN UP FOR RENDER
+---------------------------
+1. Go to: https://render.com
+2. Click "Get Started"
+3. Sign up with GitHub (use: Leonardus437)
+4. Authorize Render to access your repos
+
+
+STEP 2: CREATE WEB SERVICE
+---------------------------
+1. Click "New +" → "Web Service"
+
+2. Connect Repository:
+   - Select: "Leonardus437/Morning_Quiz"
+   - Click "Connect"
+
+3. Configure Service:
+   Name: morning-quiz-backend
+   Region: Oregon (US West) - closest to you
+   Branch: master
+   Root Directory: (leave empty)
+   
+   Environment: Python 3
+   
+   Build Command:
+   pip install -r requirements.txt
+   
+   Start Command:
+   uvicorn main:app --host 0.0.0.0 --port $PORT
+
+
+STEP 3: ADD ENVIRONMENT VARIABLES
+----------------------------------
+Scroll down to "Environment Variables" section:
+
+Click "Add Environment Variable"
+
+Add these:
+
+Key: DATABASE_URL
+Value: postgresql://postgres:etFcYsqQeDTEJBvBGdZOVNlVdLLPDvLG@shinkansen.proxy.rlwy.net:42954/railway
+
+Key: SECRET_KEY
+Value: your-secret-key-change-in-production
+
+
+STEP 4: SELECT FREE PLAN
+-------------------------
+Instance Type: Free
+(750 hours/month - enough for your project)
+
+Click "Create Web Service"
+
+
+STEP 5: WAIT FOR DEPLOYMENT
+----------------------------
+Render will:
+1. Clone your repo
+2. Install dependencies (2-3 minutes)
+3. Start your app
+4. Give you a URL like: https://morning-quiz-backend.onrender.com
+
+Watch the logs - you'll see:
+"Your service is live 🎉"
+
+
+STEP 6: TEST YOUR API
+----------------------
+Once deployed, test:
+https://YOUR-RENDER-URL.onrender.com/health
+
+You should see:
+{
+  "status": "healthy",
+  "service": "Morning Quiz API",
+  ...
+}
+
+
+STEP 7: UPDATE FRONTEND
+------------------------
+Update your frontend API URL:
+
+1. Go to Cloudflare Pages settings
+2. Add environment variable:
+   VITE_API_URL = https://YOUR-RENDER-URL.onrender.com
+
+3. Redeploy frontend
+
+
+STEP 8: DONE!
+-------------
+✅ Auto-deploy works on every push
+✅ Free tier: 750 hours/month
+✅ No trial limits
+✅ Reliable webhooks
+✅ Better than Railway for free projects
+
+
+RENDER VS RAILWAY
+------------------
+Render Free Tier:
+- 750 hours/month (enough for 24/7)
+- Reliable webhooks
+- No trial expiration
+- Sleeps after 15 min inactivity (wakes in 30 sec)
+
+Railway Free Tier:
+- $5 credit/month
+- Runs out quickly
+- Webhooks break often
+- Trial limits
+
+
+IMPORTANT NOTES
+---------------
+1. Render free tier sleeps after 15 minutes of inactivity
+2. First request after sleep takes 30 seconds to wake up
+3. For 24/7 uptime, upgrade to $7/month (optional)
+4. Keep Railway database (it's separate, still works)
+
+
+NEED HELP?
+----------
+Tell me when you reach Step 5 and I'll help you update the frontend.

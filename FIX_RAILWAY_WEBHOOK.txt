@@ -1,0 +1,69 @@
+RAILWAY WEBHOOK IS DEAD - MANUAL FIX REQUIRED
+=============================================
+
+Your Railway webhook stopped working. Here's the ONLY solution:
+
+STEP 1: Disconnect GitHub
+--------------------------
+1. Go to: https://railway.com/project/477122d8-1d79-437f-8513-5bb901527f41/service/ce549504-cde6-4d20-a142-01dc10f54b5f/settings
+
+2. Scroll to "Source Repo" section
+
+3. Click "Disconnect" button
+
+4. Confirm disconnection
+
+
+STEP 2: Reconnect GitHub (Creates New Webhook)
+-----------------------------------------------
+1. Click "Connect to GitHub" button
+
+2. Authorize Railway if prompted
+
+3. Select repository: "Leonardus437/Morning_Quiz"
+
+4. Select branch: "master"
+
+5. Root directory: "/" (or leave empty)
+
+6. Click "Connect"
+
+
+STEP 3: Verify Auto-Deploy is ON
+---------------------------------
+1. Scroll to "Auto deploys when pushed to GitHub"
+
+2. Make sure toggle is ON (blue)
+
+3. If OFF, click to enable
+
+
+STEP 4: Trigger First Deploy
+-----------------------------
+1. Go to Deployments: https://railway.com/project/477122d8-1d79-437f-8513-5bb901527f41/service/ce549504-cde6-4d20-a142-01dc10f54b5f/deployments
+
+2. Click "New Deployment"
+
+3. Select "Deploy Latest Commit"
+
+4. Wait 2-3 minutes for build
+
+
+STEP 5: Test Auto-Deploy
+-------------------------
+After first deploy succeeds, test webhook:
+
+Run: c:\Users\Hp\Documents\Morning_Quiz-master\backend\test_autodeploy.bat
+
+This will push a test commit. Railway should auto-deploy within 1 minute.
+
+
+WHY THIS HAPPENS
+----------------
+Railway webhooks can break when:
+- GitHub token expires
+- Too many failed deployments
+- Railway service was paused/restarted
+- Network issues during webhook registration
+
+Disconnecting and reconnecting creates a fresh webhook.

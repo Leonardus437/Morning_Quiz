@@ -1,0 +1,52 @@
+MANUAL DEPLOYMENT STEPS
+========================
+
+Railway auto-deploy is broken. Here's how to fix it:
+
+METHOD 1: Manual Deploy (FASTEST - 30 seconds)
+-----------------------------------------------
+1. Go to: https://railway.com/project/477122d8-1d79-437f-8513-5bb901527f41/service/ce549504-cde6-4d20-a142-01dc10f54b5f/deployments
+
+2. Click "New Deployment" button (top right corner)
+
+3. Select "Deploy Latest Commit" 
+
+4. Done! Your latest code (ad3e685) will deploy in 2-3 minutes
+
+
+METHOD 2: Reset Webhook (PERMANENT FIX)
+----------------------------------------
+1. Go to Settings: https://railway.com/project/477122d8-1d79-437f-8513-5bb901527f41/service/ce549504-cde6-4d20-a142-01dc10f54b5f/settings
+
+2. Find "Auto deploys when pushed to GitHub"
+
+3. Click "Disable" button
+
+4. Wait 5 seconds
+
+5. Click "Enable" button
+
+6. Push any commit - it will auto-deploy from now on
+
+
+METHOD 3: Reconnect GitHub (NUCLEAR OPTION)
+--------------------------------------------
+1. Settings → Source Repo → Click "Disconnect"
+
+2. Click "Connect to GitHub"
+
+3. Select: Leonardus437/Morning_Quiz
+
+4. Branch: master
+
+5. Root: /
+
+6. Done!
+
+
+VERIFY DEPLOYMENT
+-----------------
+After deploying, test CORS fix:
+https://web-production-2c325.up.railway.app/hierarchy/provinces
+
+Should return JSON with provinces list (no CORS error)
