@@ -2714,6 +2714,10 @@ async def proctoring_websocket(websocket: WebSocket, quiz_id: int, user_id: int,
 # HIERARCHICAL SCHOOL SYSTEM ENDPOINTS
 # ============================================================================
 
+# Include cascading dropdown API
+from cascading_api import router as cascading_router
+app.include_router(cascading_router, tags=["Cascading Hierarchy"])
+
 @app.get("/trades")
 def get_trades(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     """Get trades for the logged-in teacher's school"""
