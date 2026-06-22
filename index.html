@@ -68,7 +68,7 @@
             padding: 18px 30px;
             border-radius: 12px;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -110,28 +110,6 @@
         .btn-secondary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
-        }
-
-        .btn-tertiary {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-
-        .btn-tertiary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            background: #ff6b6b;
-            color: white;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-left: 10px;
-            vertical-align: middle;
         }
 
         .divider {
@@ -199,16 +177,11 @@
 
         <div class="login-options">
             <a href="/hierarchical-login" class="login-btn btn-primary">
-                🏫 Student Login (Select Your School)
-                <span class="badge">NEW</span>
+                👨‍🎓 Student Login
             </a>
             
-            <a href="/login" class="login-btn btn-secondary">
-                👨‍🎓 Quick Student Login
-            </a>
-            
-            <a href="/teacher" class="login-btn btn-tertiary">
-                👨‍🏫 Teacher Login
+            <a href="/teacher" class="login-btn btn-secondary">
+                👨‍🏫 Teacher
             </a>
         </div>
 
@@ -233,7 +206,6 @@
     </div>
 
     <script>
-        // Add smooth animations
         document.querySelectorAll('.login-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 const ripple = document.createElement('span');
@@ -255,7 +227,6 @@
             });
         });
 
-        // Add CSS animation for ripple
         const style = document.createElement('style');
         style.textContent = `
             @keyframes ripple {
