@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login - Select Your School</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+        }
+        h1 { color: #333; font-size: 24px; margin-bottom: 30px; text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #555; font-weight: 600; }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        select:focus, input:focus { border-color: #667eea; outline: none; }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); }
+        .error { color: #e74c3c; margin-top: 10px; text-align: center; }
+        .loading { display: none; text-align: center; color: #667eea; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👨‍🎓 Student Login - Select Your School</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Province:</label>
+                <select id="province" required>
+                    <option value="">Select Province</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>District:</label>
+                <select id="district" required disabled>
+                    <option value="">Select Province first</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>School:</label>
+                <select id="school" required disabled>
+                    <option value="">Select District first</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Trade:</label>
+                <select id="trade" required disabled>
+                    <option value="">Select School first</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Level:</label>
+                <select id="level" required disabled>
+                    <option value="">Select Trade first</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" id="username" required placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" id="password" required placeholder="Enter your password">
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <div class="loading">Logging in...</div>
+            <div class="error" id="error"></div>
+        </form>
+    </div>
+
+    <script>
+        const API = 'https://morningquiz-production.up.railway.app/api';
+        
+        // Load provinces
+        fetch(`${API}/hierarchy/provinces`).then(r => r.json()).then(data => {
+            const select = document.getElementById('province');
+            data.forEach(p => {
+                select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
+            });
+        });
+
+        // Province change
+        document.getElementById('province').addEventListener('change', function() {
+            const districtSelect = document.getElementById('district');
+            districtSelect.disabled = true;
+            districtSelect.innerHTML = '<option value="">Loading...</option>';
+            
+            fetch(`${API}/hierarchy/districts/${this.value}`).then(r => r.json()).then(data => {
+                districtSelect.innerHTML = '<option value="">Select District</option>';
+                data.forEach(d => {
+                    districtSelect.innerHTML += `<option value="${d.id}">${d.name}</option>`;
+                });
+                districtSelect.disabled = false;
+            });
+        });
+
+        // District change
+        document.getElementById('district').addEventListener('change', function() {
+            const schoolSelect = document.getElementById('school');
+            schoolSelect.disabled = true;
+            schoolSelect.innerHTML = '<option value="">Loading...</option>';
+            
+            fetch(`${API}/hierarchy/schools/${this.value}`).then(r => r.json()).then(data => {
+                schoolSelect.innerHTML = '<option value="">Select School</option>';
+                data.forEach(s => {
+                    schoolSelect.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+                });
+                schoolSelect.disabled = false;
+            });
+        });
+
+        // School change
+        document.getElementById('school').addEventListener('change', function() {
+            const tradeSelect = document.getElementById('trade');
+            tradeSelect.disabled = true;
+            tradeSelect.innerHTML = '<option value="">Loading...</option>';
+            
+            fetch(`${API}/hierarchy/school-trades/${this.value}`).then(r => r.json()).then(data => {
+                tradeSelect.innerHTML = '<option value="">Select Trade</option>';
+                data.forEach(t => {
+                    tradeSelect.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+                });
+                tradeSelect.disabled = false;
+            });
+        });
+
+        // Trade change
+        document.getElementById('trade').addEventListener('change', function() {
+            const levelSelect = document.getElementById('level');
+            const schoolId = document.getElementById('school').value;
+            const tradeId = this.value;
+            
+            levelSelect.disabled = true;
+            levelSelect.innerHTML = '<option value="">Loading...</option>';
+            
+            fetch(`${API}/hierarchy/school-trades/${schoolId}`).then(r => r.json()).then(data => {
+                const trade = data.find(t => t.id == tradeId);
+                if (trade && trade.levels_offered) {
+                    levelSelect.innerHTML = '<option value="">Select Level</option>';
+                    trade.levels_offered.forEach(level => {
+                        levelSelect.innerHTML += `<option value="${level}">${level}</option>`;
+                    });
+                    levelSelect.disabled = false;
+                }
+            });
+        });
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            document.getElementById('error').textContent = '';
+            document.querySelector('.loading').style.display = 'block';
+            
+            try {
+                const response = await fetch(`${API}/auth/hierarchical-login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: document.getElementById('username').value,
+                        password: document.getElementById('password').value,
+                        school_id: parseInt(document.getElementById('school').value),
+                        trade_id: parseInt(document.getElementById('trade').value),
+                        level: document.getElementById('level').value
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('token', data.access_token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = '/student-dashboard.html';
+                } else {
+                    document.getElementById('error').textContent = data.detail || 'Login failed';
+                }
+            } catch (error) {
+                document.getElementById('error').textContent = 'Connection error. Please try again.';
+            } finally {
+                document.querySelector('.loading').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
